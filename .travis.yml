@@ -1,2 +1,7 @@
 language: cpp
 sudo: required
+dist: trusty
+env:
+  - GTK="3.*"
+script:
+  - make
