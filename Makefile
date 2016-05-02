@@ -16,10 +16,10 @@ math = si
 pthreads = si
 
 # Si es un programa GTK+, descomentar (quitar el '#' a) la siguiente línea.
-#gtk = si
+gtk = si
 
 # Si es un programa gtkmm, descomentar (quitar el '#' a) la siguiente línea.
-#gtkmm = si
+gtkmm = si
 
 # Descomentar si se quiere ver como se invoca al compilador
 #verbose = si
