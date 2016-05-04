@@ -1,5 +1,6 @@
 #include <cstdlib>
 
+#include "commonSocket.h"
 #include "serverMegamanServer.h"
 
 #define PORT_POS 1

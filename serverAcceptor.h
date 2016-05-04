@@ -6,6 +6,7 @@
 
 #include "commonSocket.h"
 #include "commonThread.h"
+#include "serverMatch.h"
 
 class QuitProtected {
 	private:

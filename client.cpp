@@ -1,5 +1,6 @@
 #include <cstdlib>
 
+#include "commonSocket.h"
 #include "clientMegamanClient.h"
 
 #define HOSTNAME_POS 1

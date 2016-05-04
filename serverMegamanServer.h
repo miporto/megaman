@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "commonSocket.h"
+#include "serverMatch.h"
 
 class MegamanServer {
 	private:
@@ -11,7 +12,7 @@ class MegamanServer {
 		//Log log;
 		Match match;
 
-		void configure_server_socket();
+		void configure_server_socket(const char* port);
 		void configure_factories();
 
 	public:

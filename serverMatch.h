@@ -7,7 +7,7 @@
 
 class Player {
     private:
-        Socket& peer;
+        Socket peer;
 
     public:
         Player(int fd);

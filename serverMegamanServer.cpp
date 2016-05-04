@@ -7,8 +7,9 @@
 #include "serverMegamanServer.h"
 #include "commonAddrInfo.h"
 #include "serverAcceptor.h"
+#include "serverMatch.h"
 
-void MegamanServer::configure_server_socket() {
+void MegamanServer::configure_server_socket(const char* port) {
 	ServerAddrInfo info(port);
 	this->server(info());
 	this->server.bind_and_listen(info());
@@ -20,7 +21,7 @@ void MegamanServer::configure_factories() {
 
 MegamanServer::MegamanServer(Socket& server, const char* port) :
 server(server) {
-	configure_server_socket();
+	configure_server_socket(port);
 	configure_factories();
 }
 

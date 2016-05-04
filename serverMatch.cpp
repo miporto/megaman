@@ -11,8 +11,8 @@ Host::Host(int fd) : Player(fd) {}
 
 Host::~Host() {}
 
-Host* host() {
-    return this->players[0];
+Host* Match::host() {
+    return (Host*)this->players[0];
 }
 
 void Match::add_player(int fd) {
