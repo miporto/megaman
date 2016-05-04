@@ -6,6 +6,8 @@
 #include "commonThread.h"
 #include "commonSocket.h"
 
+#define PLAYERS_MAX 4
+
 QuitProtected::QuitProtected() {
 	this->quit = false;
 }
@@ -27,7 +29,10 @@ Acceptor::Acceptor(Socket& server, QuitProtected& quit) : server(server),
 
 void Acceptor::run() {
 	//int peers_fd;
-	while (!this->quit()) {
+	for (unsigned int i = 0; !this->quit() && i < PLAYERS_MAX; ++i) {
+		/* Agregar condicion de corte de host iniciando la partida
+		 * antes de que se unan 4 jugadores
+		 */
 		try {
 			//peers_fd = this->server.accept();
 		} catch (const SocketError &e) {
