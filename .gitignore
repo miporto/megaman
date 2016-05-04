@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# abrden's IDEs
+.anjuta/
+*.anjuta
+*.anjuta_sym_db.db
+.idea/
