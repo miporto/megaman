@@ -22,10 +22,11 @@ class QuitProtected {
 class Acceptor : public Thread {
 	private:
 		Socket& server;
+		Match& match;
 		QuitProtected& quit;
 		
 	public:
-		Acceptor(Socket& server, QuitProtected& quit);
+		Acceptor(Socket& server, Match& match, QuitProtected& quit);
 		void run();
 		~Acceptor();
 };

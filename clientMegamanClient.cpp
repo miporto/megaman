@@ -13,7 +13,7 @@ const char* port) : client(client) {
 	bool connected = false;
 	ClientAddrInfo info(hostname, port);
 	
-	for (ptr = info(); ptr != NULL && connected == false; ptr = ptr->ai_next) {
+	for (ptr = info(); ptr != NULL && !connected; ptr = ptr->ai_next) {
 		this->client(ptr);
 		try {
 			this->client.connect(ptr);

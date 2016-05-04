@@ -8,6 +8,11 @@
 class MegamanServer {
 	private:
 		Socket& server;
+		//Log log;
+		Match match;
+
+		void configure_server_socket();
+		void configure_factories();
 
 	public:
 		MegamanServer(Socket& server, const char* port);
