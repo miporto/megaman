@@ -4,8 +4,8 @@
 #include <vector>
 #include <string>
 
-#include "commonSocket.h"
-#include "commonThread.h"
+#include "common/commonSocket.h"
+#include "common/commonThread.h"
 #include "serverMatch.h"
 
 class QuitProtected {

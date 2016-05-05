@@ -3,8 +3,8 @@
 #include <sstream>
 
 #include "serverAcceptor.h"
-#include "commonThread.h"
-#include "commonSocket.h"
+#include "common/commonThread.h"
+#include "common/commonSocket.h"
 #include "serverMatch.h"
 
 #define PLAYERS_MAX 4

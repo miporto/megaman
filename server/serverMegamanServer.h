@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "commonSocket.h"
+#include "common/commonSocket.h"
 #include "serverMatch.h"
 
 class MegamanServer {

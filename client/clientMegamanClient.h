@@ -1,7 +1,7 @@
 #ifndef MEGAMAN_CLIENT_H
 #define MEGAMAN_CLIENT_H
 
-#include "commonSocket.h"
+#include "common/commonSocket.h"
 
 class MegamanClient {
 	private:
