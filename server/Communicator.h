@@ -18,11 +18,11 @@ public:
     ~BufferProtected();
 };
 
-class Receiver: Thread {
+class Receiver: public Thread {
     private:
         Socket& peer;
-        QuitProtected& quit;
         BufferProtected& buffer;
+        QuitProtected& quit;
 
     public:
         Receiver(Socket& peer, BufferProtected& buffer, QuitProtected& quit);
@@ -30,11 +30,11 @@ class Receiver: Thread {
         ~Receiver();
 };
 
-class Sender : Thread {
+class Sender : public Thread {
     private:
         Socket& peer;
-        QuitProtected& quit;
         BufferProtected& buffer;
+        QuitProtected& quit;
 
     public:
         Sender(Socket& peer, BufferProtected& buffer, QuitProtected& quit);
