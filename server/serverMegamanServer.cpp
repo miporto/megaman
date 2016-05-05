@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include "serverMegamanServer.h"
-#include "commonAddrInfo.h"
+#include "common/commonAddrInfo.h"
 #include "serverAcceptor.h"
 #include "serverMatch.h"
 
