@@ -1,12 +1,9 @@
-#include <iostream>
-#include <sstream>
-#include <string.h>
-#include <vector>
 #include <stdio.h>
 
 #include "serverMegamanServer.h"
 #include "common/commonAddrInfo.h"
 #include "serverAcceptor.h"
+#include "QuitProtected.h"
 #include "serverMatch.h"
 
 void MegamanServer::configure_server_socket(const char* port) {

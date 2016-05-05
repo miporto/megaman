@@ -1,29 +1,10 @@
-#include <vector>
-#include <string>
-#include <sstream>
-
 #include "serverAcceptor.h"
 #include "common/commonThread.h"
 #include "common/commonSocket.h"
+#include "QuitProtected.h"
 #include "serverMatch.h"
 
 #define PLAYERS_MAX 4
-
-QuitProtected::QuitProtected() {
-	this->quit = false;
-}
-
-void QuitProtected::switch_to_true() {
-	Lock l(this->m);
-	this->quit = true;
-}
-
-bool QuitProtected::operator()() {
-	Lock l(this->m);
-	return this->quit;
-}
-
-QuitProtected::~QuitProtected() {}
 
 Acceptor::Acceptor(Socket& server, Match& match, QuitProtected& quit) :
 	server(server), match(match), quit(quit) {}

@@ -1,24 +1,10 @@
 #ifndef ACCEPTOR_H
 #define ACCEPTOR_H
 
-#include <vector>
-#include <string>
-
 #include "common/commonSocket.h"
 #include "common/commonThread.h"
+#include "QuitProtected.h"
 #include "serverMatch.h"
-
-class QuitProtected {
-	private:
-		Mutex m;
-		bool quit;
-	
-	public:
-		QuitProtected();
-		void switch_to_true();
-		bool operator()();
-		~QuitProtected();
-};
 
 class Acceptor : public Thread {
 	private:

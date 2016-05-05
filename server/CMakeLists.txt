@@ -8,7 +8,7 @@ set(SOURCES
     serverMatch.h
     serverMegamanServer.cpp
     serverMegamanServer.h
-)
+        Communicator.h Communicator.cpp QuitProtected.h QuitProtected.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
