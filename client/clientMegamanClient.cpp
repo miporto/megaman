@@ -4,8 +4,8 @@
 #include <string.h>
 
 #include "clientMegamanClient.h"
-#include "commonAddrInfo.h"
-#include "commonSocket.h"
+#include "common/commonAddrInfo.h"
+#include "common/commonSocket.h"
 
 MegamanClient::MegamanClient(Socket& client, const char* hostname, 
 const char* port) : client(client) {
