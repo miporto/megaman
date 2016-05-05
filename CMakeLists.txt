@@ -5,7 +5,7 @@ set (CMAKE_CXX_STANDARD 98)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     # Errors and warnings.
-    #set(CMAKE_CXX_FLAGS "-Wall -Werror -Wextra -Wconversion -Wtype-limits -pedantic -pedantic-errors")
+    set(CMAKE_CXX_FLAGS "-Wall -Werror -pedantic -pedantic-errors")
     # Valgrind and debug
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_RELEASE} -ggdb -DDEBUG")
     # Optimizing
