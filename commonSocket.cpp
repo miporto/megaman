@@ -62,12 +62,12 @@ int Socket::accept() {
 	return new_fd;
 }
 
-void Socket::send(const char* buffer, size_t size) {
-	int sent, sent_now;
+void Socket::send(const char* buffer, ssize_t size) {
+	ssize_t sent, sent_now;
 	sent = sent_now  = 0;
 	bool valid_socket = true;
 
-	while (sent < (signed)size && valid_socket) {
+	while (sent < size && valid_socket) {
 		sent_now = ::send(this->fd, &buffer[sent], size - sent, MSG_NOSIGNAL);
 		
 		if (!sent_now || sent_now == ERROR_CODE)
@@ -79,13 +79,13 @@ void Socket::send(const char* buffer, size_t size) {
 	if (!valid_socket) throw SocketError();
 }
 
-void Socket::receive(char* buffer, size_t size) {
-	int received, received_now;
+void Socket::receive(char* buffer, ssize_t size) {
+	ssize_t received, received_now;
 	received = received_now = 0;
 	bool valid_socket = true;
 
-	while (received < (signed)size && valid_socket) {
-		received_now = recv(this->fd, &buffer[received], 
+	while (received < size && valid_socket) {
+		received_now = recv(this->fd, &buffer[received],
 							size - received, MSG_NOSIGNAL);
       
 		if (!received_now || received_now == ERROR_CODE)
