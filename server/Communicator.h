@@ -7,6 +7,17 @@
 #include "common/commonSocket.h"
 #include "QuitProtected.h"
 
+class BufferProtected {
+private:
+    Mutex m;
+    std::queue<char> queue;
+
+public:
+    char get_char();
+    void append_char(char c);
+    ~BufferProtected();
+};
+
 class Receiver: Thread {
     private:
         Socket& peer;
@@ -29,17 +40,6 @@ class Sender : Thread {
         Sender(Socket& peer, BufferProtected& buffer, QuitProtected& quit);
         void run();
         ~Sender();
-};
-
-class BufferProtected {
-    private:
-        Mutex m;
-        std::queue<char> queue;
-
-    public:
-        char get_char();
-        void append_char(char c);
-        ~BufferProtected();
 };
 
 class Communicator {

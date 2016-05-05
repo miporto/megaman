@@ -5,6 +5,19 @@
 #include "QuitProtected.h"
 #include "Communicator.h"
 
+char BufferProtected::get_char() {
+    Lock l(this->m);
+    char c = this->queue.front();
+    this->queue.pop();
+    return c;
+}
+void BufferProtected::append_char(char c) {
+    Lock l(this->m);
+    this->queue.push(c);
+}
+
+BufferProtected::~BufferProtected() {}
+
 Receiver::Receiver(Socket& peer, BufferProtected& buffer, QuitProtected& quit) :
     peer(peer), buffer(buffer), quit(quit) {}
 
@@ -38,19 +51,6 @@ void Sender::run() {
 }
 
 Sender::~Sender() {}
-
-char BufferProtected::get_char() {
-    Lock l(this->m);
-    char c = this->queue.front();
-    this->queue.pop();
-    return c;
-}
-void BufferProtected::append_char(char c) {
-    Lock l(this->m);
-    this->queue.push(c);
-}
-
-BufferProtected::~BufferProtected() {}
 
 Communicator::Communicator(int fd) : peer(fd),
     sender(peer, sender_buffer, quit), receiver(peer, receiver_buffer, quit) {
