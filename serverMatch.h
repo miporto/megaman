@@ -17,6 +17,7 @@ class Player {
 class Host : public Player {
     public:
         Host(int fd);
+        bool waiting_for_players();
         ~Host();
 };
 
@@ -26,6 +27,7 @@ class Match {
 
     public:
         Host* host();
+        bool host_waiting();
         void add_player(int fd);
         ~Match();
 };

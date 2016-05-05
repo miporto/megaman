@@ -10,6 +10,7 @@ class MegamanClient {
 	public:
 		MegamanClient(Socket& client, const char* hostname, const char* port);
 		void operator()();
+		void pick_stage(char stage_id);
 		~MegamanClient();
 };
 

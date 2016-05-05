@@ -30,10 +30,7 @@ Acceptor::Acceptor(Socket& server, Match& match, QuitProtected& quit) :
 
 void Acceptor::run() {
 	int peers_fd;
-	for (unsigned int i = 0; !this->quit() && i < PLAYERS_MAX; ++i) {
-		/* Agregar condicion de corte de host iniciando la partida
-		 * antes de que se unan 4 jugadores
-		 */
+	for (unsigned int i = 0; !this->quit() && i < PLAYERS_MAX && this->match.host_waiting(); ++i) {
 		try {
 			peers_fd = this->server.accept();
 		} catch (const SocketError &e) {

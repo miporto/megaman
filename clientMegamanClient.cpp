@@ -27,8 +27,15 @@ const char* port) : client(client) {
 	}
 }
 
-void MegamanClient::operator()() {
+/*
+ * A partir de aca; metodos para todas las decisiones que toma el jugador
+ * que requieren un envio de informacion el server
+ */
 
+void MegamanClient::operator()() {}
+
+void MegamanClient::pick_stage(char stage_id) {
+	this->client.send(&stage_id, sizeof(char));
 }
 
 MegamanClient::~MegamanClient() {

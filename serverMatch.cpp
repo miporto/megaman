@@ -5,14 +5,25 @@
 
 Player::Player(int fd) : peer(fd) {}
 
-Player::~Player() {}
+Player::~Player() {
+    this->peer.shutdown();
+}
 
 Host::Host(int fd) : Player(fd) {}
+
+bool Host::waiting_for_players() {
+    //TODO
+    return true;
+}
 
 Host::~Host() {}
 
 Host* Match::host() {
     return (Host*)this->players[0];
+}
+
+bool Match::host_waiting() {
+    return this->host()->waiting_for_players();
 }
 
 void Match::add_player(int fd) {
