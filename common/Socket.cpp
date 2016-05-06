@@ -101,3 +101,21 @@ void Socket::shutdown() {
 	if (::shutdown(this->fd, SHUT_RDWR) == ERROR_CODE)
 		throw SocketError();
 }
+
+SocketProtected::SocketProtected(int fd) : socket(fd) {}
+
+SocketProtected::~SocketProtected() {}
+
+void SocketProtected::send(const char* buffer, ssize_t size) {
+	Lock l(this->m);
+	this->socket.send(buffer, size);
+}
+
+void SocketProtected::receive(char* buffer, ssize_t size) {
+	Lock l(this->m);
+	this->socket.receive(buffer, size);
+}
+
+void SocketProtected::shutdown() {
+	this->socket.shutdown();
+}

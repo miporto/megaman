@@ -5,20 +5,24 @@
 #include "QuitProtected.h"
 #include "Communicator.h"
 
-char BufferProtected::get_char() {
+char BufferProtected::pop_char() {
     Lock l(this->m);
     char c = this->queue.front();
     this->queue.pop();
     return c;
 }
-void BufferProtected::append_char(char c) {
+void BufferProtected::push_char(char c) {
     Lock l(this->m);
     this->queue.push(c);
 }
 
+bool BufferProtected::is_empty() {
+    return this->queue.size() == 0;
+}
+
 BufferProtected::~BufferProtected() {}
 
-Receiver::Receiver(Socket& peer, BufferProtected& buffer, QuitProtected& quit) :
+Receiver::Receiver(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit) :
     peer(peer), buffer(buffer), quit(quit) {}
 
 void Receiver::run() {
@@ -29,23 +33,25 @@ void Receiver::run() {
         } catch (const SocketError &e) {
             continue;
         }
-        this->buffer.append_char(c);
+        this->buffer.push_char(c);
     }
 }
 
 Receiver::~Receiver() {}
 
-Sender::Sender(Socket& peer, BufferProtected& buffer, QuitProtected& quit) :
+Sender::Sender(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit) :
     peer(peer), buffer(buffer), quit(quit) {}
 
 void Sender::run() {
     char c;
     while (!this->quit()) {
-        c = this->buffer.get_char(); //si es vacio q hacemo, guarda con hacer un isEmpty por la race cond
-        try {
-            this->peer.send(&c, sizeof(char));
-        } catch (const SocketError &e) {
-            continue;
+        if (!this->buffer.is_empty()) {
+            c = this->buffer.pop_char();
+            try {
+                this->peer.send(&c, sizeof(char));
+            } catch (const SocketError &e) {
+                continue;
+            }
         }
     }
 }
@@ -56,6 +62,14 @@ Communicator::Communicator(int fd) : peer(fd),
     sender(peer, sender_buffer, quit), receiver(peer, receiver_buffer, quit) {
     this->sender.start();
     this->receiver.start();
+}
+
+char Communicator::pop_from_receiver() {
+    return this->receiver_buffer.pop_char();
+}
+
+void Communicator::push_to_sender(char c) {
+    this->sender_buffer.push_char(c);
 }
 
 void Communicator::stop() {

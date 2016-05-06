@@ -13,38 +13,39 @@ private:
     std::queue<char> queue;
 
 public:
-    char get_char();
-    void append_char(char c);
+    char pop_char();
+    void push_char(char c);
+    bool is_empty();
     ~BufferProtected();
 };
 
 class Receiver: public Thread {
     private:
-        Socket& peer;
+        SocketProtected& peer;
         BufferProtected& buffer;
         QuitProtected& quit;
 
     public:
-        Receiver(Socket& peer, BufferProtected& buffer, QuitProtected& quit);
+        Receiver(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit);
         void run();
         ~Receiver();
 };
 
 class Sender : public Thread {
     private:
-        Socket& peer;
+        SocketProtected& peer;
         BufferProtected& buffer;
         QuitProtected& quit;
 
     public:
-        Sender(Socket& peer, BufferProtected& buffer, QuitProtected& quit);
+        Sender(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit);
         void run();
         ~Sender();
 };
 
 class Communicator {
     private:
-        Socket peer;
+        SocketProtected peer;
         QuitProtected quit;
         BufferProtected sender_buffer;
         Sender sender;
@@ -53,6 +54,8 @@ class Communicator {
 
     public:
         Communicator(int fd);
+        char pop_from_receiver();
+        void push_to_sender(char c);
         void stop();
         ~Communicator();
 };
