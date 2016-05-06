@@ -6,6 +6,8 @@ set (CMAKE_CXX_STANDARD 98)
 if(CMAKE_COMPILER_IS_GNUCXX)
     # Errors and warnings.
     set(CMAKE_CXX_FLAGS "-Wall -Werror -Wextra -Wconversion -Wtype-limits -pedantic -pedantic-errors")
+    # Gtkmm
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-inline -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGDKMM_DISABLE_DEPRECATED -DGTKMM_DISABLE_DEPRECATED")
     # Valgrind and debug
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_RELEASE} -ggdb -DDEBUG")
     # Optimizing
