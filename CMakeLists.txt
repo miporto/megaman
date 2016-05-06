@@ -19,6 +19,8 @@ pkg_check_modules(GTKMM3 REQUIRED gtkmm-3.0)
 pkg_check_modules(CAIROMM REQUIRED cairomm-1.0)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(SYSTEM ${CAIROMM_INCLUDE_DIRS})
+include_directories(SYSTEM ${GTKMM3_INCLUDE_DIRS})
 add_subdirectory(client)
 add_subdirectory(common)
 add_subdirectory(server)
