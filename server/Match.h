@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "common/Socket.h"
+#include "Communicator.h"
 
 class Player {
     private:
@@ -23,9 +24,11 @@ class Host : public Player {
 
 class Match {
     private:
+        std::vector<Communicator>& communicators;
         std::vector<Player*> players;
 
     public:
+        explicit Match(std::vector<Communicator>& communicators);
         Host* host();
         bool host_waiting();
         void add_player(int fd);

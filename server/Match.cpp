@@ -18,6 +18,9 @@ bool Host::waiting_for_players() {
 
 Host::~Host() {}
 
+Match::Match(std::vector<Communicator>& communicators) :
+    communicators(communicators) {}
+
 Host* Match::host() {
     return (Host*)this->players[0];
 }

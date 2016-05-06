@@ -20,6 +20,7 @@ void Acceptor::run() {
 		
 		this->match.add_player(peers_fd);
 	}
+	this->quit.switch_to_true();
 }
 
 Acceptor::~Acceptor() {}

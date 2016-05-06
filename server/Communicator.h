@@ -13,8 +13,9 @@ private:
     std::queue<char> queue;
 
 public:
-    char get_char();
-    void append_char(char c);
+    char pop_char();
+    void push_char(char c);
+    bool is_empty();
     ~BufferProtected();
 };
 
@@ -53,6 +54,8 @@ class Communicator {
 
     public:
         Communicator(int fd);
+        char pop_from_receiver();
+        void push_to_sender(char c);
         void stop();
         ~Communicator();
 };

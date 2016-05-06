@@ -17,7 +17,7 @@ void Server::configure_factories() {
 }
 
 Server::Server(Socket& server, const char* port) :
-server(server) {
+server(server), match(communicators) {
 	configure_server_socket(port);
 	configure_factories();
 }
