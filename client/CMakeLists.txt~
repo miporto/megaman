@@ -1,9 +1,0 @@
-project(client)
-
-set(SOURCES
-    main.cpp
-    clientMegamanClient.h
-    clientMegamanClient.cpp
-)
-
-add_executable(${PROJECT_NAME} ${SOURCES})
