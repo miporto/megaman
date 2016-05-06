@@ -27,6 +27,8 @@
 *.out
 *.app
 
+# Etc
+*~
 # abrden's IDEs
 .anjuta/
 *.anjuta
