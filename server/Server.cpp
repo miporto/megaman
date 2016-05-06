@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-#include "serverMegamanServer.h"
-#include "common/commonAddrInfo.h"
-#include "serverAcceptor.h"
+#include "Server.h"
+#include "common/AddrInfo.h"
+#include "Acceptor.h"
 #include "QuitProtected.h"
-#include "serverMatch.h"
+#include "Match.h"
 
 void MegamanServer::configure_server_socket(const char* port) {
 	ServerAddrInfo info(port);

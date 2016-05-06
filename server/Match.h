@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "common/commonSocket.h"
+#include "common/Socket.h"
 
 class Player {
     private:

@@ -1,7 +1,7 @@
 #include <queue>
 
-#include "common/commonThread.h"
-#include "common/commonSocket.h"
+#include "common/Thread.h"
+#include "common/Socket.h"
 #include "QuitProtected.h"
 #include "Communicator.h"
 
