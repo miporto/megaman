@@ -1,28 +1,28 @@
 #include <stdio.h>
 
-#include "serverMegamanServer.h"
-#include "common/commonAddrInfo.h"
-#include "serverAcceptor.h"
+#include "Server.h"
+#include "common/AddrInfo.h"
+#include "Acceptor.h"
 #include "QuitProtected.h"
-#include "serverMatch.h"
+#include "Match.h"
 
-void MegamanServer::configure_server_socket(const char* port) {
+void Server::configure_server_socket(const char* port) {
 	ServerAddrInfo info(port);
 	this->server(info());
 	this->server.bind_and_listen(info());
 }
 
-void MegamanServer::configure_factories() {
+void Server::configure_factories() {
 
 }
 
-MegamanServer::MegamanServer(Socket& server, const char* port) :
+Server::Server(Socket& server, const char* port) :
 server(server) {
 	configure_server_socket(port);
 	configure_factories();
 }
 
-void MegamanServer::operator()() {
+void Server::operator()() {
 	QuitProtected quit;
 	Acceptor acceptor(this->server, this->match, quit);
 	acceptor.start();
@@ -32,4 +32,4 @@ void MegamanServer::operator()() {
 	acceptor.join();
 }
 
-MegamanServer::~MegamanServer() {}
+Server::~Server() {}

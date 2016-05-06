@@ -1,12 +1,12 @@
 project(common)
 
 set(SOURCES
-    commonAddrInfo.cpp
-    commonAddrInfo.h
-    commonSocket.cpp
-    commonSocket.h
-    commonThread.cpp
-    commonThread.h
+    AddrInfo.cpp
+    AddrInfo.h
+    Socket.cpp
+    Socket.h
+    Thread.cpp
+    Thread.h
 )
 
 add_library(${PROJECT_NAME} ${SOURCES})

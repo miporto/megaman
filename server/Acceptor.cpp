@@ -1,8 +1,8 @@
-#include "serverAcceptor.h"
-#include "common/commonThread.h"
-#include "common/commonSocket.h"
+#include "Acceptor.h"
+#include "common/Thread.h"
+#include "common/Socket.h"
 #include "QuitProtected.h"
-#include "serverMatch.h"
+#include "Match.h"
 
 #define PLAYERS_MAX 4
 

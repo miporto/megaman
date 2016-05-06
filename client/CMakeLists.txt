@@ -2,8 +2,8 @@ project(client)
 
 set(SOURCES
     main.cpp
-    clientMegamanClient.h
-    clientMegamanClient.cpp
+    Client.h
+    Client.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

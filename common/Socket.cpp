@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 
-#include "commonSocket.h"
+#include "Socket.h"
 
 #define LISTEN_LIMIT 10
 #define ERROR_CODE -1

@@ -1,14 +1,17 @@
 project(server)
 
 set(SOURCES
-    serverAcceptor.cpp
-    serverAcceptor.h
-    server.cpp
-    serverMatch.cpp
-    serverMatch.h
-    serverMegamanServer.cpp
-    serverMegamanServer.h
-        Communicator.h Communicator.cpp QuitProtected.h QuitProtected.cpp)
+    Acceptor.cpp
+    Acceptor.h
+    main.cpp
+    Match.cpp
+    Match.h
+    Server.cpp
+    Server.h
+    Communicator.h 
+    Communicator.cpp 
+    QuitProtected.h 
+    QuitProtected.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

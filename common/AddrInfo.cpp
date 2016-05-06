@@ -1,7 +1,7 @@
 #include <netdb.h>
 #include <string.h>
 
-#include "commonAddrInfo.h"
+#include "AddrInfo.h"
 
 AddrInfo::AddrInfo(const char* hostname, const char* port, int flag) {
 	struct addrinfo hints;

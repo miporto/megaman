@@ -1,7 +1,7 @@
 #include <cstdlib>
 
-#include "common/commonSocket.h"
-#include "serverMegamanServer.h"
+#include "common/Socket.h"
+#include "Server.h"
 
 #define PORT_POS 1
 
@@ -10,7 +10,7 @@ int main(int argc, const char* argv[]) {
         return 1;
     }
 	Socket skt;
-	MegamanServer server(skt, argv[PORT_POS]);
+	Server server(skt, argv[PORT_POS]);
 	server();
 	return EXIT_SUCCESS;
 }

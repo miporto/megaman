@@ -3,11 +3,11 @@
 #include <string>
 #include <string.h>
 
-#include "clientMegamanClient.h"
-#include "common/commonAddrInfo.h"
-#include "common/commonSocket.h"
+#include "Client.h"
+#include "common/AddrInfo.h"
+#include "common/Socket.h"
 
-MegamanClient::MegamanClient(Socket& client, const char* hostname, 
+Client::Client(Socket& client, const char* hostname, 
 const char* port) : client(client) {
 	struct addrinfo* ptr;
 	bool connected = false;
@@ -32,12 +32,12 @@ const char* port) : client(client) {
  * que requieren un envio de informacion el server
  */
 
-void MegamanClient::operator()() {}
+void Client::operator()() {}
 
-void MegamanClient::pick_stage(char stage_id) {
+void Client::pick_stage(char stage_id) {
 	this->client.send(&stage_id, sizeof(char));
 }
 
-MegamanClient::~MegamanClient() {
+Client::~Client() {
 	this->client.shutdown();
 }

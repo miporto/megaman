@@ -1,7 +1,7 @@
 #include <vector>
 
-#include "serverMatch.h"
-#include "common/commonSocket.h"
+#include "Match.h"
+#include "common/Socket.h"
 
 Player::Player(int fd) : peer(fd) {}
 
