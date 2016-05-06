@@ -1,6 +1,6 @@
 #include <pthread.h>
 
-#include "commonThread.h"
+#include "Thread.h"
 
 Thread::Thread() {}
 
