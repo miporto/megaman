@@ -15,6 +15,9 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 find_package(PkgConfig REQUIRED)
 find_package (Threads REQUIRED)
 
+pkg_check_modules(GTKMM3 REQUIRED gtkmm-3.0)
+pkg_check_modules(CAIROMM REQUIRED cairomm-1.0)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(client)
 add_subdirectory(common)
