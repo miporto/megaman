@@ -3,9 +3,9 @@
 #include <string>
 #include <string.h>
 
-#include "clientMegamanClient.h"
-#include "common/commonAddrInfo.h"
-#include "common/commonSocket.h"
+#include "Client.h"
+#include "common/AddrInfo.h"
+#include "common/Socket.h"
 
 MegamanClient::MegamanClient(Socket& client, const char* hostname, 
 const char* port) : client(client) {

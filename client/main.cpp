@@ -1,7 +1,7 @@
 #include <cstdlib>
 
-#include "common/commonSocket.h"
-#include "clientMegamanClient.h"
+#include "common/Socket.h"
+#include "Client.h"
 
 #define HOSTNAME_POS 1
 #define PORT_POS 2
