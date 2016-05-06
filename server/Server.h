@@ -6,7 +6,7 @@
 #include "common/Socket.h"
 #include "Match.h"
 
-class MegamanServer {
+class Server {
 	private:
 		Socket& server;
 		//Log log;
@@ -16,9 +16,9 @@ class MegamanServer {
 		void configure_factories();
 
 	public:
-		MegamanServer(Socket& server, const char* port);
+		Server(Socket& server, const char* port);
 		void operator()();
-		~MegamanServer();
+		~Server();
 };
 
 #endif // MEGAMAN_SERVER_H

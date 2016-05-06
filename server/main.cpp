@@ -10,7 +10,7 @@ int main(int argc, const char* argv[]) {
         return 1;
     }
 	Socket skt;
-	MegamanServer server(skt, argv[PORT_POS]);
+	Server server(skt, argv[PORT_POS]);
 	server();
 	return EXIT_SUCCESS;
 }

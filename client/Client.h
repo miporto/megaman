@@ -3,15 +3,15 @@
 
 #include "common/Socket.h"
 
-class MegamanClient {
+class Client {
 	private:
 		Socket& client;
 	
 	public:
-		MegamanClient(Socket& client, const char* hostname, const char* port);
+		Client(Socket& client, const char* hostname, const char* port);
 		void operator()();
 		void pick_stage(char stage_id);
-		~MegamanClient();
+		~Client();
 };
 
 #endif // MEGAMAN_CLIENT_H
