@@ -18,7 +18,7 @@ void BufferProtected::append_char(char c) {
 
 BufferProtected::~BufferProtected() {}
 
-Receiver::Receiver(Socket& peer, BufferProtected& buffer, QuitProtected& quit) :
+Receiver::Receiver(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit) :
     peer(peer), buffer(buffer), quit(quit) {}
 
 void Receiver::run() {
@@ -35,7 +35,7 @@ void Receiver::run() {
 
 Receiver::~Receiver() {}
 
-Sender::Sender(Socket& peer, BufferProtected& buffer, QuitProtected& quit) :
+Sender::Sender(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit) :
     peer(peer), buffer(buffer), quit(quit) {}
 
 void Sender::run() {

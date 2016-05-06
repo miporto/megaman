@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include <netdb.h>
 
+#include "Thread.h"
+
 #define SocketError_BUFFER_LEN 256
 
 class SocketError : public std::exception {
@@ -29,6 +31,19 @@ class Socket {
 		void bind_and_listen(struct addrinfo* info);
 		void connect(struct addrinfo* info);
 		int accept();
+		void send(const char* buffer, ssize_t size);
+		void receive(char* buffer, ssize_t size);
+		void shutdown();
+};
+
+class SocketProtected {
+	private:
+		Mutex m;
+		Socket socket;
+
+	public:
+		explicit SocketProtected(int fd);
+		~SocketProtected();
 		void send(const char* buffer, ssize_t size);
 		void receive(char* buffer, ssize_t size);
 		void shutdown();

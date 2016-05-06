@@ -20,31 +20,31 @@ public:
 
 class Receiver: public Thread {
     private:
-        Socket& peer;
+        SocketProtected& peer;
         BufferProtected& buffer;
         QuitProtected& quit;
 
     public:
-        Receiver(Socket& peer, BufferProtected& buffer, QuitProtected& quit);
+        Receiver(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit);
         void run();
         ~Receiver();
 };
 
 class Sender : public Thread {
     private:
-        Socket& peer;
+        SocketProtected& peer;
         BufferProtected& buffer;
         QuitProtected& quit;
 
     public:
-        Sender(Socket& peer, BufferProtected& buffer, QuitProtected& quit);
+        Sender(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit);
         void run();
         ~Sender();
 };
 
 class Communicator {
     private:
-        Socket peer;
+        SocketProtected peer;
         QuitProtected quit;
         BufferProtected sender_buffer;
         Sender sender;
