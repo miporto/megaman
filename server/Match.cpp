@@ -21,12 +21,18 @@ Host::~Host() {}
 Match::Match(std::vector<Communicator>& communicators) :
     communicators(communicators) {}
 
+bool Match::has_host() {
+    return this->communicators.size() > 0;
+}
+
 Host* Match::host() {
     return (Host*)this->players[0];
 }
 
 bool Match::host_waiting() {
-    return this->host()->waiting_for_players();
+    if (this->has_host())
+        return this->host()->waiting_for_players();
+    return true;
 }
 
 void Match::add_player(int fd) {

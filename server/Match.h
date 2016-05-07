@@ -29,6 +29,7 @@ class Match {
 
     public:
         explicit Match(std::vector<Communicator>& communicators);
+        bool has_host();
         Host* host();
         bool host_waiting();
         void add_player(int fd);
