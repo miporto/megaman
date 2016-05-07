@@ -6,9 +6,7 @@
 #define PORT_POS 1
 
 int main(int argc, const char* argv[]) {
-    if (argc != 2) {
-        return 1;
-    }
+    if (argc != 2) return EXIT_FAILURE;
 	Socket skt;
 	Server server(skt, argv[PORT_POS]);
 	server();

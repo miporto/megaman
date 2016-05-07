@@ -26,10 +26,13 @@ void Server::operator()() {
 	QuitProtected quit;
 	Acceptor acceptor(this->server, this->match, quit);
 	acceptor.start();
-	while(!quit())
+	while (!quit())
 		if (getchar() == 'q') quit.switch_to_true();
 	this->server.shutdown();
 	acceptor.join();
 }
 
-Server::~Server() {}
+Server::~Server() {
+	for (unsigned int i = 0; i < communicators.size(); ++i)
+		delete communicators[i];
+}
