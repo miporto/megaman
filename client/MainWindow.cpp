@@ -1,29 +1,30 @@
-#include "MainWindow.h"
+
 #include <iostream>
 
-MainWindow::MainWindow()
-: m_button("Hello World")   // creates a new button with label "Hello World".
-{
-  // Sets the border width of the window.
-  set_border_width(10);
+#include "Client.h"
+#include "MainWindow.h"
+#include "common/Socket.h"
 
-  // When the button receives the "clicked" signal, it will call the
-  // on_button_clicked() method defined below.
-  m_button.signal_clicked().connect(sigc::mem_fun(*this,
-              &MainWindow::on_button_clicked));
+MainWindow::MainWindow(Socket& skt, const char* hostname, const char* port)
+    : m_button("Start Game!"), skt(skt), hostname(hostname), port(port){
+    // Sets the border width of the window.
+    set_border_width(10);
 
-  // This packs the button into the Window (a container).
-  add(m_button);
+    // When the button receives the "clicked" signal, it will call the
+    // on_button_clicked() method defined below.
+    m_button.signal_clicked().connect(
+        sigc::mem_fun(*this, &MainWindow::on_start_button_clicked));
 
-  // The final step is to display this newly created widget...
-  m_button.show();
+    // This packs the button into the Window (a container).
+    add(m_button);
+
+    // The final step is to display this newly created widget...
+    m_button.show();
 }
 
-MainWindow::~MainWindow()
-{
-}
+MainWindow::~MainWindow() {}
 
-void MainWindow::on_button_clicked()
-{
-  std::cout << "Hello World" << std::endl;
+void MainWindow::on_start_button_clicked() {
+    Client client(skt, hostname, port);
+    std::cout << "Client started" << std::endl;
 }

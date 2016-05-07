@@ -4,19 +4,25 @@
 #include <gtkmm/button.h>
 #include <gtkmm/window.h>
 
-class MainWindow : public Gtk::Window
-{
+#include "common/Socket.h"
 
-public:
-  MainWindow();
-  virtual ~MainWindow();
+class MainWindow : public Gtk::Window {
 
-protected:
-  //Signal handlers:
-  void on_button_clicked();
+   public:
+    MainWindow(Socket& skt, const char* hostname, const char* port);
+    virtual ~MainWindow();
 
-  //Member widgets:
-  Gtk::Button m_button;
+   protected:
+    // Signal handlers:
+    void on_start_button_clicked();
+
+    // Member widgets:
+    Gtk::Button m_button;
+
+   private:
+    Socket& skt;
+    const char* hostname;
+    const char* port;
 };
 
-#endif // GTKMM_MAINWINDOW_H
+#endif  // GTKMM_MAINWINDOW_H
