@@ -11,7 +11,7 @@ Acceptor::Acceptor(Socket& server, Match& match, QuitProtected& quit) :
 
 void Acceptor::run() {
 	int peers_fd;
-	for (unsigned int i = 0; !this->quit() && i < PLAYERS_MAX && this->match.host_waiting(); ++i) {
+	for (unsigned int i = 0; !this->quit() && i < PLAYERS_MAX && !this->match.started(); ++i) {
 		try {
 			peers_fd = this->server.accept();
 		} catch (const SocketError &e) {

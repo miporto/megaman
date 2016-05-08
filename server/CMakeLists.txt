@@ -11,7 +11,7 @@ set(SOURCES
     Communicator.h 
     Communicator.cpp 
     QuitProtected.h 
-    QuitProtected.cpp)
+    QuitProtected.cpp Packet.h Packet.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

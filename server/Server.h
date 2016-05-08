@@ -11,7 +11,7 @@ class Server {
 	private:
 		Socket& server;
 		//Log log;
-		std::vector<Communicator> communicators;
+		std::vector<Communicator*> communicators;
 		Match match;
 
 		void configure_server_socket(const char* port);

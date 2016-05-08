@@ -8,30 +8,28 @@
 
 class Player {
     private:
-        Socket peer;
 
     public:
-        Player(int fd);
         virtual ~Player();
 };
 
+// Ver si tiene sentido esta clase
 class Host : public Player {
     public:
-        Host(int fd);
-        bool waiting_for_players();
         ~Host();
 };
 
 class Match {
     private:
-        std::vector<Communicator>& communicators;
+        std::vector<Communicator*>& communicators;
         std::vector<Player*> players;
 
-    public:
-        explicit Match(std::vector<Communicator>& communicators);
         bool has_host();
-        Host* host();
-        bool host_waiting();
+        void new_player_notification();
+
+    public:
+        explicit Match(std::vector<Communicator*>& communicators);
+        bool started();
         void add_player(int fd);
         ~Match();
 };

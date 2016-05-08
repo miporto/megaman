@@ -1,32 +1,23 @@
 #ifndef COMMUNICATOR_H
 #define COMMUNICATOR_H
 
-#include <queue>
+#include <sstream>
 
 #include "common/Thread.h"
 #include "common/Socket.h"
+#include "Packet.h"
 #include "QuitProtected.h"
-
-class BufferProtected {
-private:
-    Mutex m;
-    std::queue<char> queue;
-
-public:
-    char pop_char();
-    void push_char(char c);
-    bool is_empty();
-    ~BufferProtected();
-};
 
 class Receiver: public Thread {
     private:
         SocketProtected& peer;
-        BufferProtected& buffer;
+        std::stringstream buffer;
+        PacketsProtected& packets;
         QuitProtected& quit;
 
     public:
-        Receiver(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit);
+        Receiver(SocketProtected& peer, PacketsProtected& packets, QuitProtected& quit);
+        void buffer_to_packet();
         void run();
         ~Receiver();
 };
@@ -34,11 +25,11 @@ class Receiver: public Thread {
 class Sender : public Thread {
     private:
         SocketProtected& peer;
-        BufferProtected& buffer;
+        PacketsProtected& packets;
         QuitProtected& quit;
 
     public:
-        Sender(SocketProtected& peer, BufferProtected& buffer, QuitProtected& quit);
+        Sender(SocketProtected& peer, PacketsProtected& packets, QuitProtected& quit);
         void run();
         ~Sender();
 };
@@ -47,16 +38,18 @@ class Communicator {
     private:
         SocketProtected peer;
         QuitProtected quit;
-        BufferProtected sender_buffer;
+        PacketsProtected packets_to_send;
         Sender sender;
-        BufferProtected receiver_buffer;
+        PacketsProtected packets_received;
         Receiver receiver;
+
+        Packet* pop_from_receiver();
+        void push_to_sender(Packet* packet);
 
     public:
         Communicator(int fd);
-        char pop_from_receiver();
-        void push_to_sender(char c);
-        void stop();
+        void send_new_player_notification();
+        int check_stage_pick();
         ~Communicator();
 };
 
