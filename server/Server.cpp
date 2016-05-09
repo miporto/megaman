@@ -3,8 +3,6 @@
 #include "Server.h"
 #include "common/AddrInfo.h"
 #include "Acceptor.h"
-#include "QuitProtected.h"
-#include "Match.h"
 
 void Server::configure_server_socket(const char* port) {
 	ServerAddrInfo info(port);

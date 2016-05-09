@@ -7,6 +7,7 @@
 #include "common/Socket.h"
 #include "Packet.h"
 #include "QuitProtected.h"
+#include "Stage.h"
 
 class Receiver: public Thread {
     private:
@@ -35,7 +36,7 @@ class Sender : public Thread {
 };
 
 class Communicator {
-    private:
+    protected: //TODO: Pablo me va a fajar
         SocketProtected peer;
         QuitProtected quit;
         PacketsProtected packets_to_send;
@@ -47,10 +48,20 @@ class Communicator {
         void push_to_sender(Packet* packet);
 
     public:
-        Communicator(int fd);
+        explicit Communicator(int fd);
         void send_new_player_notification();
-        int check_stage_pick();
-        ~Communicator();
+        virtual ~Communicator();
+};
+
+class HostCommunicator : public Communicator, public Thread {
+    private:
+        StageIDProtected& stage_id;
+
+    public:
+        explicit HostCommunicator(int fd, StageIDProtected& stage_id);
+        char check_stage_pick();
+        void run();
+        ~HostCommunicator();
 };
 
 #endif //COMMUNICATOR_H
