@@ -18,16 +18,22 @@ public:
     ~StageIDProtected();
 };
 
-class Stage {
+class StageFactory {
     private:
         char id;
+
+    public:
+        StageFactory(char id);
+        ~StageFactory();
+};
+
+class Stage {
+    private:
+        StageFactory factory;
         std::vector<Player*>& players;
-        //vector de enemigos
 
 public:
-    Stage(std::vector<Player*>& players);
-    bool has_started();
-    void operator()(char id);
+    Stage(char id, std::vector<Player*>& players);
     ~Stage();
 };
 

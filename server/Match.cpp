@@ -8,10 +8,12 @@ Match::Match(std::vector<Communicator*>& communicators) :
     communicators(communicators) {}
 
 bool Match::has_started() {
+    Lock l(this->m);
     return this->stage_id() != 0;
 }
 
 bool Match::is_full() {
+    Lock l(this->m);
     return this->communicators.size() >= PLAYERS_MAX;
 }
 
@@ -25,6 +27,7 @@ void Match::new_player_notification() {
 }
 
 void Match::add_player(int fd) {
+    Lock l(this->m);
     if (this->is_full()) throw MatchError("Mega Man Co-op match is full");
     if (this->has_started()) throw MatchError("Mega Man Co-op match has already started");
 
@@ -33,6 +36,8 @@ void Match::add_player(int fd) {
         hc->start();
         this->communicators.push_back(hc);
         this->players.push_back(new Host());
+
+
     } else {
         this->communicators.push_back(new Communicator(fd));
         this->players.push_back(new Player());
@@ -41,7 +46,8 @@ void Match::add_player(int fd) {
 }
 
 void Match::start_stage() {
-
+    ((HostCommunicator*)this->communicators[0])->join();
+    Stage stage(this->stage_id(), this->players);
 }
 
 Match::~Match() {

@@ -14,16 +14,10 @@ char StageIDProtected::operator()() {
 
 StageIDProtected::~StageIDProtected() {}
 
-Stage::Stage(std::vector<Player*>& players) : id(0), players(players) {}
+StageFactory::StageFactory(char id) : id(id) {}
 
-bool Stage::has_started() {
-    return this->id != 0;
-}
+StageFactory::~StageFactory() {}
 
-void Stage::operator()(char id) {
-    this->id = id;
-    //Armar el Stage correspondiente al numero que le llega
-    //probablemente instanciando una StageFactory?
-}
+Stage::Stage(char id, std::vector<Player*>& players) : factory(id), players(players) {}
 
 Stage::~Stage() {}

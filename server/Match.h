@@ -10,17 +10,18 @@
 
 class Match {
     private:
+        Mutex m;
         std::vector<Communicator*>& communicators;
         std::vector<Player*> players;
         StageIDProtected stage_id;
 
         bool has_host();
-        bool has_started();
-        bool is_full();
         void new_player_notification();
 
     public:
         explicit Match(std::vector<Communicator*>& communicators);
+        bool has_started();
+        bool is_full();
         void add_player(int fd);
         void start_stage();
         ~Match();

@@ -4,11 +4,13 @@
 #include <vector>
 
 #include "common/Socket.h"
-#include "Match.h"
+#include "common/Thread.h"
 #include "Communicator.h"
+#include "Match.h"
 
-class Server {
+class Server : public Thread {
 	private:
+		QuitProtected& quit;
 		Socket& server;
 		//Log log;
 		std::vector<Communicator*> communicators;
@@ -16,10 +18,13 @@ class Server {
 
 		void configure_server_socket(const char* port);
 		void configure_factories();
+		void wait_for_players();
+		void start_game();
 
 	public:
-		Server(Socket& server, const char* port);
-		void operator()();
+		Server(Socket& server, const char* port, QuitProtected& quit);
+		void run();
+		void shutdown();
 		~Server();
 };
 

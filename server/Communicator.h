@@ -50,6 +50,7 @@ class Communicator {
     public:
         explicit Communicator(int fd);
         void send_new_player_notification();
+        void shutdown();
         virtual ~Communicator();
 };
 

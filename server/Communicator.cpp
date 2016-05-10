@@ -89,6 +89,10 @@ void Communicator::send_new_player_notification() {
     this->push_to_sender(new Packet(NEW_PLAYER_ID));
 }
 
+void Communicator::shutdown() {
+    this->quit.switch_to_true();
+}
+
 Communicator::~Communicator() {
     this->quit.switch_to_true();
     this->peer.shutdown();
