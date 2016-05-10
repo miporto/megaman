@@ -6,9 +6,10 @@
 #include "Server.h"
 
 #define PORT_POS 1
+#define ARGS_LEN 2
 
 int main(int argc, const char* argv[]) {
-    if (argc != 2) return EXIT_FAILURE;
+    if (ARGS_LEN != 2) return EXIT_FAILURE;
 	QuitProtected quit;
 
 	Socket skt;
