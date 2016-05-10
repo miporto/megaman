@@ -36,7 +36,7 @@ class Sender : public Thread {
 };
 
 class Communicator {
-    protected: //TODO: Pablo me va a fajar
+    protected: //TODO: Cambiar a private
         SocketProtected peer;
         QuitProtected quit;
         PacketsProtected packets_to_send;
@@ -59,7 +59,7 @@ class HostCommunicator : public Communicator, public Thread {
         StageIDProtected& stage_id;
 
     public:
-        explicit HostCommunicator(int fd, StageIDProtected& stage_id);
+        HostCommunicator(int fd, StageIDProtected& stage_id);
         char check_stage_pick();
         void run();
         ~HostCommunicator();

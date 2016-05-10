@@ -9,7 +9,7 @@
 #define ARGS_LEN 2
 
 int main(int argc, const char* argv[]) {
-    if (ARGS_LEN != 2) return EXIT_FAILURE;
+    if (argc != ARGS_LEN) return EXIT_FAILURE;
 	QuitProtected quit;
 
 	Socket skt;
