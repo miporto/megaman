@@ -5,9 +5,10 @@
 
 #define HOSTNAME_POS 1
 #define PORT_POS 2
+#define ARGS_LEN 3
 
 int main(int argc, char** argv) {
-    if (argc != 3) return EXIT_FAILURE;
+    if (argc != ARGS_LEN) return EXIT_FAILURE;
 	Socket skt;
 	Client client(skt, argv[HOSTNAME_POS], argv[PORT_POS]);
 	client();

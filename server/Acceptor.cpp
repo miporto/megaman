@@ -1,26 +1,28 @@
-#include "Acceptor.h"
-#include "common/Thread.h"
-#include "common/Socket.h"
-#include "QuitProtected.h"
-#include "Match.h"
+#include <cstring>
 
-#define PLAYERS_MAX 4
+#include "Acceptor.h"
 
 Acceptor::Acceptor(Socket& server, Match& match, QuitProtected& quit) :
 	server(server), match(match), quit(quit) {}
 
 void Acceptor::run() {
 	int peers_fd;
-	for (unsigned int i = 0; !this->quit() && i < PLAYERS_MAX && !this->match.started(); ++i) {
+	while (!this->quit()) {
 		try {
 			peers_fd = this->server.accept();
 		} catch (const SocketError &e) {
-			continue;
+			break;
 		}
-		
-		this->match.add_player(peers_fd);
+		try {
+			this->match.add_player(peers_fd);
+		} catch (const MatchError &e) {
+			Socket skt(peers_fd);
+			const char* error_msg = e.what();
+			skt.send(error_msg, sizeof(char) * strlen(error_msg));
+			skt.shutdown();
+			break;
+		}
 	}
-	this->quit.switch_to_true();
 }
 
 Acceptor::~Acceptor() {}

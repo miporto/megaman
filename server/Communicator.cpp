@@ -24,7 +24,7 @@ void Receiver::buffer_to_packet() {
             this->packets.push(new StagePick(id, stage_id));
             break;
         default:
-            // Si el ID es desconocido, lo desecha el paquete
+            // Si el ID es desconocido, desecha el paquete
             break;
     }
 
@@ -89,7 +89,20 @@ void Communicator::send_new_player_notification() {
     this->push_to_sender(new Packet(NEW_PLAYER_ID));
 }
 
-int Communicator::check_stage_pick() {
+void Communicator::shutdown() {
+    this->quit.switch_to_true();
+}
+
+Communicator::~Communicator() {
+    this->quit.switch_to_true();
+    this->peer.shutdown();
+    this->sender.join();
+    this->receiver.join();
+}
+
+HostCommunicator::HostCommunicator(int fd, StageIDProtected& stage_id) : Communicator(fd), stage_id(stage_id) {}
+
+char HostCommunicator::check_stage_pick() {
     char stage_id = 0;
     if (!this->packets_received.is_empty()) {
         Packet* packet = this->packets_received.pop();
@@ -100,9 +113,12 @@ int Communicator::check_stage_pick() {
     return stage_id;
 }
 
-Communicator::~Communicator() {
-    this->quit.switch_to_true();
-    this->peer.shutdown();
-    this->sender.join();
-    this->receiver.join();
+void HostCommunicator::run() {
+    char stage_id;
+    do {
+        stage_id = this->check_stage_pick();
+    } while (!stage_id);
+    this->stage_id.set_id(stage_id);
 }
+
+HostCommunicator::~HostCommunicator() {}
