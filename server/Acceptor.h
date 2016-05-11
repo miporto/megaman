@@ -7,15 +7,15 @@
 #include "Match.h"
 
 class Acceptor : public Thread {
-	private:
-		Socket& server;
-		Match& match;
-		QuitProtected& quit;
-		
-	public:
-		Acceptor(Socket& server, Match& match, QuitProtected& quit);
-		void run();
-		~Acceptor();
+   private:
+    Socket& server;
+    Match& match;
+    QuitProtected& quit;
+
+   public:
+    Acceptor(Socket& server, Match& match, QuitProtected& quit);
+    void run();
+    ~Acceptor();
 };
 
-#endif // ACCEPTOR_H
+#endif  // ACCEPTOR_H
