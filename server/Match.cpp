@@ -1,11 +1,12 @@
+#include <string>
 #include <vector>
 
 #include "Match.h"
 
 #define PLAYERS_MAX 4
 
-Match::Match(std::vector<Communicator*>& communicators) :
-    communicators(communicators) {}
+Match::Match(std::vector<Communicator*>& communicators)
+    : communicators(communicators) {}
 
 bool Match::has_started() {
     Lock l(this->m);
@@ -17,9 +18,7 @@ bool Match::is_full() {
     return this->communicators.size() >= PLAYERS_MAX;
 }
 
-bool Match::has_host() {
-    return this->communicators.size() > 0;
-}
+bool Match::has_host() { return this->communicators.size() > 0; }
 
 void Match::new_player_notification() {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
@@ -28,15 +27,16 @@ void Match::new_player_notification() {
 
 void Match::add_player(int fd) {
     Lock l(this->m);
-    if (this->is_full()) throw MatchError("Mega Man Co-op match is full");
-    if (this->has_started()) throw MatchError("Mega Man Co-op match has already started");
+    if (this->is_full())
+        throw MatchError("Mega Man Co-op match is full");
+    if (this->has_started())
+        throw MatchError("Mega Man Co-op match has already started");
 
     if (!this->has_host()) {
         HostCommunicator* hc = new HostCommunicator(fd, this->stage_id);
         hc->start();
         this->communicators.push_back(hc);
         this->players.push_back(new Host());
-
 
     } else {
         this->communicators.push_back(new Communicator(fd));
@@ -55,10 +55,9 @@ Match::~Match() {
         delete this->players[i];
 }
 
-MatchError::MatchError(const std::string error_msg) throw() : error_msg(error_msg) {}
+MatchError::MatchError(const std::string error_msg) throw()
+    : error_msg(error_msg) {}
 
-const char* MatchError::what() const throw() {
-    return error_msg.c_str();
-}
+const char* MatchError::what() const throw() { return error_msg.c_str(); }
 
 MatchError::~MatchError() throw() {}

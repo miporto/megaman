@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Stage.h"
 
 StageIDProtected::StageIDProtected() : stage_id(0) {}
@@ -18,6 +20,7 @@ StageFactory::StageFactory(char id) : id(id) {}
 
 StageFactory::~StageFactory() {}
 
-Stage::Stage(char id, std::vector<Player*>& players) : factory(id), players(players) {}
+Stage::Stage(char id, std::vector<Player*>& players)
+    : factory(id), players(players) {}
 
 Stage::~Stage() {}

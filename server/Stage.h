@@ -7,11 +7,11 @@
 #include "Player.h"
 
 class StageIDProtected {
-private:
+   private:
     Mutex m;
     char stage_id;
 
-public:
+   public:
     StageIDProtected();
     void set_id(char stage_id);
     char operator()();
@@ -19,22 +19,22 @@ public:
 };
 
 class StageFactory {
-    private:
-        char id;
+   private:
+    char id;
 
-    public:
-        StageFactory(char id);
-        ~StageFactory();
+   public:
+    explicit StageFactory(char id);
+    ~StageFactory();
 };
 
 class Stage {
-    private:
-        StageFactory factory;
-        std::vector<Player*>& players;
+   private:
+    StageFactory factory;
+    std::vector<Player*>& players;
 
-public:
+   public:
     Stage(char id, std::vector<Player*>& players);
     ~Stage();
 };
 
-#endif //STAGE_H
+#endif  // STAGE_H

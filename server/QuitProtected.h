@@ -4,15 +4,15 @@
 #include "common/Thread.h"
 
 class QuitProtected {
-private:
+   private:
     Mutex m;
     bool quit;
 
-public:
+   public:
     QuitProtected();
     void switch_to_true();
     bool operator()();
     ~QuitProtected();
 };
 
-#endif //QUITPROTECTED_H
+#endif  // QUITPROTECTED_H

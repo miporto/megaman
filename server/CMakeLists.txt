@@ -11,9 +11,20 @@ set(SOURCES
     Communicator.h 
     Communicator.cpp 
     QuitProtected.h 
-    QuitProtected.cpp Packet.h Packet.cpp Stage.h Stage.cpp Player.h Player.cpp)
+    QuitProtected.cpp 
+    Packet.h 
+    Packet.cpp 
+    Stage.h 
+    Stage.cpp 
+    Player.h 
+    Player.cpp
+)
+include(CppLint)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
+
+add_style_check_target(${PROJECT_NAME}-lint "${SOURCES}")
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}-lint)
 
 add_dependencies(${PROJECT_NAME} common)
 
