@@ -1,9 +1,7 @@
 #include "QuitProtected.h"
 #include "common/Thread.h"
 
-QuitProtected::QuitProtected() {
-    this->quit = false;
-}
+QuitProtected::QuitProtected() { this->quit = false; }
 
 void QuitProtected::switch_to_true() {
     Lock l(this->m);

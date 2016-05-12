@@ -42,4 +42,4 @@ class Stage {
         ~Stage();
 };
 
-#endif //STAGE_H
+#endif  // STAGE_H

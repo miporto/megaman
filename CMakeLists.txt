@@ -12,8 +12,10 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-find_package(PkgConfig REQUIRED)
+set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+find_package (PkgConfig REQUIRED)
 find_package (Threads REQUIRED)
+include(CppLint)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(client)

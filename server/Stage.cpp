@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Stage.h"
 
 #define MET_ID 1
