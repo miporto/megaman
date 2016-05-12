@@ -24,9 +24,11 @@ class StageFactory {
         char id;
 
     public:
-        StageFactory(char id);
-        std::vector<char> positions_of_spawns(const int screen, const int enemy_id);
-        std::vector<char> positions_of_objects(const int screen, const int object_id);
+        explicit StageFactory(char id);
+        std::vector<char> positions_of_spawns
+                (const int screen, const int enemy_id);
+        std::vector<char> positions_of_objects
+                (const int screen, const int object_id);
         ~StageFactory();
 };
 

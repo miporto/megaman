@@ -28,7 +28,8 @@ StageIDProtected::~StageIDProtected() {}
 
 StageFactory::StageFactory(char id) : id(id) {}
 
-std::vector<char> StageFactory::positions_of_spawns(const int screen, const int enemy_id) {
+std::vector<char> StageFactory::positions_of_spawns
+        (const int screen, const int enemy_id) {
     std::vector<char> positions;
 
     // uso de variables para que compile
@@ -42,7 +43,8 @@ std::vector<char> StageFactory::positions_of_spawns(const int screen, const int 
     return positions;
 }
 
-std::vector<char> StageFactory::positions_of_objects(const int screen, const int object_id) {
+std::vector<char> StageFactory::positions_of_objects
+        (const int screen, const int object_id) {
     std::vector<char> positions;
 
     // uso de variables para que compile
