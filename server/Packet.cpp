@@ -21,7 +21,7 @@ StagePick::StagePick(char id, char stage_id) :
 }
 
 char StagePick::get_stage_id() const {
-    return stage_id;
+    return this->stage_id;
 }
 
 std::string StagePick::get_str() const {
@@ -29,6 +29,25 @@ std::string StagePick::get_str() const {
 }
 
 StagePick::~StagePick() {}
+
+StageInfo::StageInfo(char id, char position) :
+        Packet(id), type(0), position(position) {
+    str.push_back(id);
+    str.push_back(position);
+}
+
+StageInfo::StageInfo(char id, char type, char position) :
+    Packet(id), type(type), position(position) {
+    str.push_back(id);
+    str.push_back(type);
+    str.push_back(position);
+}
+
+std::string StageInfo::get_str() const {
+    return this->str;
+}
+
+StageInfo::~StageInfo() {}
 
 Packet* PacketsProtected::pop() {
     Lock l(this->m);

@@ -37,7 +37,6 @@ void Match::add_player(int fd) {
         this->communicators.push_back(hc);
         this->players.push_back(new Host());
 
-
     } else {
         this->communicators.push_back(new Communicator(fd));
         this->players.push_back(new Player());
@@ -48,6 +47,7 @@ void Match::add_player(int fd) {
 void Match::start_stage() {
     ((HostCommunicator*)this->communicators[0])->join();
     Stage stage(this->stage_id(), this->players);
+    //TODO Continuar
 }
 
 Match::~Match() {

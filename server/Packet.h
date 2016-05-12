@@ -30,6 +30,19 @@ class StagePick : public Packet {
         ~StagePick();
 };
 
+class StageInfo : public Packet {
+    private:
+        const char type;
+        const char position; //Cambiar por tupla de valores x,y ???
+        std::string str;
+
+    public:
+        StageInfo(char id, char position);
+        StageInfo(char id, char type, char position);
+        std::string get_str() const;
+        ~StageInfo();
+};
+
 class PacketsProtected {
 private:
     Mutex m;

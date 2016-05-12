@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <cstdio>
-#include <iostream>
 
 #include "common/Socket.h"
 #include "Server.h"
