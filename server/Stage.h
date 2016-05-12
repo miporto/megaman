@@ -6,6 +6,8 @@
 #include "common/Thread.h"
 #include "Player.h"
 #include "Packet.h"
+#include "Object.h"
+#include "Enemy.h"
 
 class StageIDProtected {
     private:
@@ -23,12 +25,14 @@ class StageFactory {
     private:
         char id;
 
-    public:
-        explicit StageFactory(char id);
         std::vector<char> positions_of_spawns
                 (const int screen, const int enemy_id);
         std::vector<char> positions_of_objects
                 (const int screen, const int object_id);
+
+    public:
+        explicit StageFactory(char id);
+        std::vector<StageInfo*> screen_info(const int screen);
         ~StageFactory();
 };
 
@@ -36,6 +40,8 @@ class Stage {
     private:
         StageFactory factory;
         std::vector<Player*>& players;
+        std::vector<Enemy*> enemies;
+        std::vector<Object*> objects;
         int current_screen;
 
     public:

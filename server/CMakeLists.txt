@@ -18,7 +18,7 @@ set(SOURCES
     Stage.cpp 
     Player.h 
     Player.cpp
-)
+        Object.h Object.cpp Enemy.h Enemy.cpp)
 include(CppLint)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
