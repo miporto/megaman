@@ -5,14 +5,14 @@
 #include <vector>
 
 #include "common/Socket.h"
-#include "Communicator.h"
+#include "ServerCommunicator.h"
 #include "Player.h"
 #include "Stage.h"
 
 class Match {
     private:
         Mutex m;
-        std::vector<Communicator*>& communicators;
+        std::vector<ServerCommunicator*>& communicators;
         std::vector<Player*> players;
         StageIDProtected stage_id;
 
@@ -20,7 +20,7 @@ class Match {
         void new_player_notification(std::string& name);
 
     public:
-        explicit Match(std::vector<Communicator*>& communicators);
+        explicit Match(std::vector<ServerCommunicator*>& communicators);
         bool has_started();
         bool is_full();
         void add_player(int fd);

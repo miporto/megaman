@@ -5,7 +5,7 @@
 
 #define PLAYERS_MAX 4
 
-Match::Match(std::vector<Communicator*>& communicators)
+Match::Match(std::vector<ServerCommunicator*>& communicators)
     : communicators(communicators) {}
 
 bool Match::has_started() {
@@ -41,7 +41,7 @@ void Match::add_player(int fd) {
         this->players.push_back(new Player(name));
 
     } else {
-        Communicator* c = new Communicator(fd);
+        ServerCommunicator* c = new ServerCommunicator(fd);
         std::string name = c->receive_name();
         this->communicators.push_back(c);
         this->players.push_back(new Player(name));

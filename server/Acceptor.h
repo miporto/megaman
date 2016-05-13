@@ -3,7 +3,7 @@
 
 #include "common/Socket.h"
 #include "common/Thread.h"
-#include "QuitProtected.h"
+#include "common/QuitProtected.h"
 #include "Match.h"
 
 class Acceptor : public Thread {

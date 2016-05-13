@@ -4,7 +4,9 @@ set(SOURCES
     main.cpp
     Client.h
     Client.cpp
-)
+    ClientCommunicator.h
+    ClientCommunicator.cpp)
+
 include(CppLint)
 
 add_executable(${PROJECT_NAME} ${SOURCES})

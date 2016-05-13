@@ -5,7 +5,7 @@
 
 #include "common/Socket.h"
 #include "common/Thread.h"
-#include "Communicator.h"
+#include "ServerCommunicator.h"
 #include "Match.h"
 
 class Server : public Thread {
@@ -13,7 +13,7 @@ class Server : public Thread {
     QuitProtected& quit;
     Socket& server;
     // Log log;
-    std::vector<Communicator*> communicators;
+    std::vector<ServerCommunicator*> communicators;
     Match match;
 
     void configure_server_socket(const char* port);

@@ -8,17 +8,17 @@ set(SOURCES
     Match.h
     Server.cpp
     Server.h
-    Communicator.h 
-    Communicator.cpp 
-    QuitProtected.h 
-    QuitProtected.cpp
-        ../common/Packet.h
-        ../common/Packet.cpp
+    ServerCommunicator.h
+    ServerCommunicator.cpp
     Stage.h 
     Stage.cpp 
     Player.h 
     Player.cpp
-        Object.h Object.cpp Enemy.h Enemy.cpp)
+    Object.h
+    Object.cpp
+    Enemy.h
+    Enemy.cpp)
+
 include(CppLint)
 
 add_executable(${PROJECT_NAME} ${SOURCES})

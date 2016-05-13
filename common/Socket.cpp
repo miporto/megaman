@@ -102,9 +102,19 @@ void Socket::shutdown() {
 		throw SocketError();
 }
 
+SocketProtected::SocketProtected() {}
+
 SocketProtected::SocketProtected(int fd) : socket(fd) {}
 
+void SocketProtected::operator()(struct addrinfo* info) {
+	this->socket(info);
+}
+
 SocketProtected::~SocketProtected() {}
+
+void SocketProtected::connect(struct addrinfo* info) {
+	this->socket.connect(info);
+}
 
 void SocketProtected::send(const char* buffer, ssize_t size) {
 	Lock l(this->m);

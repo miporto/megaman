@@ -1,14 +1,10 @@
 #include <iostream>
-#include <sstream>
-#include <string>
-#include <string.h>
 
 #include "Client.h"
 #include "common/AddrInfo.h"
-#include "common/Socket.h"
 
-Client::Client(Socket& client, const char* hostname, const char* port)
-    : client(client) {
+Client::Client(SocketProtected& client, const char* hostname, const char* port)
+        : client(client) {
     struct addrinfo* ptr;
     bool connected = false;
     ClientAddrInfo info(hostname, port);

@@ -1,18 +1,14 @@
 #include <queue>
 #include <string>
 
-#include "common/Thread.h"
-#include "common/Socket.h"
-#include "common/Packet.h"
-#include "QuitProtected.h"
-#include "Communicator.h"
+#include "ServerCommunicator.h"
 
-Receiver::Receiver(SocketProtected& peer,
-                   PacketsProtected& packets,
-                   QuitProtected& quit)
-    : peer(peer), packets(packets), quit(quit) {}
+ServerReceiver::ServerReceiver(SocketProtected& peer,
+                               PacketsProtected& packets,
+                               QuitProtected& quit)
+        : Receiver(peer, packets, quit) {}
 
-void Receiver::buffer_to_packet() {
+void ServerReceiver::buffer_to_packet() {
     char id;
     this->buffer >> id;
 
@@ -36,51 +32,9 @@ void Receiver::buffer_to_packet() {
     this->buffer.str("");
 }
 
-void Receiver::run() {
-    char c;
-    while (!this->quit()) {
-        try {
-            this->peer.receive(&c, sizeof(char));
-        }
-        catch (const SocketError& e) {
-            continue;
-        }
+ServerReceiver::~ServerReceiver() {}
 
-        this->buffer << c;
-        if (c == '\n')
-            buffer_to_packet();
-    }
-}
-
-Receiver::~Receiver() {}
-
-Sender::Sender(SocketProtected& peer,
-               PacketsProtected& packets,
-               QuitProtected& quit)
-    : peer(peer), packets(packets), quit(quit) {}
-
-void Sender::run() {
-    Packet* packet;
-    std::string str;
-    while (!this->quit()) {
-        if (!this->packets.is_empty()) {
-            packet = this->packets.pop();
-            str = packet->get_str();
-            str.push_back('\n');
-            try {
-                this->peer.send(str.c_str(), sizeof(char) * str.size());
-            }
-            catch (const SocketError& e) {
-                continue;
-            }
-            delete packet;
-        }
-    }
-}
-
-Sender::~Sender() {}
-
-Communicator::Communicator(int fd)
+ServerCommunicator::ServerCommunicator(int fd)
     : peer(fd),
       sender(peer, packets_to_send, quit),
       receiver(peer, packets_received, quit) {
@@ -88,19 +42,19 @@ Communicator::Communicator(int fd)
     this->receiver.start();
 }
 
-Packet* Communicator::pop_from_receiver() {
+Packet* ServerCommunicator::pop_from_receiver() {
     return this->packets_received.pop();
 }
 
-void Communicator::push_to_sender(Packet* packet) {
+void ServerCommunicator::push_to_sender(Packet* packet) {
     this->packets_to_send.push(packet);
 }
 
-void Communicator::send_new_player_notification(const std::string& name) {
+void ServerCommunicator::send_new_player_notification(const std::string& name) {
     this->push_to_sender(new NewPlayer(name));
 }
 
-std::string Communicator::receive_name() {
+std::string ServerCommunicator::receive_name() {
     std::string name;
     bool received = false;
     while (!received) {
@@ -116,9 +70,9 @@ std::string Communicator::receive_name() {
     return name;
 }
 
-void Communicator::shutdown() { this->quit.switch_to_true(); }
+void ServerCommunicator::shutdown() { this->quit.switch_to_true(); }
 
-Communicator::~Communicator() {
+ServerCommunicator::~ServerCommunicator() {
     this->quit.switch_to_true();
     this->peer.shutdown();
     this->sender.join();
@@ -126,7 +80,7 @@ Communicator::~Communicator() {
 }
 
 HostCommunicator::HostCommunicator(int fd, StageIDProtected& stage_id)
-    : Communicator(fd), stage_id(stage_id) {}
+    : ServerCommunicator(fd), stage_id(stage_id) {}
 
 char HostCommunicator::check_stage_pick() {
     char stage_id = 0;
