@@ -70,7 +70,10 @@ std::string ServerCommunicator::receive_name() {
     return name;
 }
 
-void ServerCommunicator::shutdown() { this->quit.switch_to_true(); }
+void ServerCommunicator::shutdown() {
+    this->quit.switch_to_true();
+    this->peer.shutdown();
+}
 
 ServerCommunicator::~ServerCommunicator() {
     this->quit.switch_to_true();

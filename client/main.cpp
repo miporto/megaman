@@ -12,6 +12,8 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     SocketProtected skt;
     Client client(skt, argv[HOSTNAME_POS], argv[PORT_POS]);
-    client();
+
+    //TODO
+
     return EXIT_SUCCESS;
 }

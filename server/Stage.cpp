@@ -43,6 +43,8 @@ StageFactory::~StageFactory() {}
 Stage::Stage(char id, std::vector<Player*>& players) :
         factory(id), players(players), current_screen(0) {}
 
+// Que devuelva objetito container de info del screen para que le
+// llegue al Communicator y lo convierta en Packets a enviar
 std::vector<StageInfo*> Stage::next_screen() {
     this->current_screen++;
 

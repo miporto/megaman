@@ -1,3 +1,5 @@
+#include <string>
+
 #include "client/ClientCommunicator.h"
 
 ClientReceiver::ClientReceiver(SocketProtected& socket,
@@ -12,7 +14,11 @@ void ClientReceiver::buffer_to_packet() {
     switch (id) {
         // Solo cases para los paquetes que pueden ser recibidos
         case STAGE_INFO: {
-            //TODO
+            char type, position;
+            this->buffer >> type;
+            this->buffer >> position;
+            this->packets.push(new StageInfo(type, position));
+            break;
         } default:
             // Si el ID es desconocido, desecha el paquete
             break;
@@ -31,4 +37,22 @@ ClientCommunicator::ClientCommunicator(SocketProtected& client)
     this->receiver.start();
 }
 
-ClientCommunicator::~ClientCommunicator() {}
+Packet* ClientCommunicator::pop_from_receiver() {
+    return this->packets_received.pop();
+}
+
+void ClientCommunicator::push_to_sender(Packet* packet) {
+    this->packets_to_send.push(packet);
+}
+
+void ClientCommunicator::send_name(std::string& name) {
+    this->push_to_sender(new NewPlayer(name));
+}
+
+void ClientCommunicator::send_stage_pick(char& stage_id) {
+    this->push_to_sender(new StagePick(stage_id));
+}
+
+ClientCommunicator::~ClientCommunicator() {
+    this->client.shutdown();
+}
