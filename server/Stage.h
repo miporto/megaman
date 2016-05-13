@@ -5,7 +5,7 @@
 
 #include "common/Thread.h"
 #include "Player.h"
-#include "Packet.h"
+#include "common/Packet.h"
 #include "Object.h"
 #include "Enemy.h"
 

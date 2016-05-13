@@ -6,7 +6,7 @@
 
 #include "common/Thread.h"
 #include "common/Socket.h"
-#include "Packet.h"
+#include "common/Packet.h"
 #include "QuitProtected.h"
 #include "Stage.h"
 

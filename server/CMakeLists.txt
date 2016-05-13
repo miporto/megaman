@@ -11,9 +11,9 @@ set(SOURCES
     Communicator.h 
     Communicator.cpp 
     QuitProtected.h 
-    QuitProtected.cpp 
-    Packet.h 
-    Packet.cpp 
+    QuitProtected.cpp
+        ../common/Packet.h
+        ../common/Packet.cpp
     Stage.h 
     Stage.cpp 
     Player.h 
