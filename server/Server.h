@@ -4,23 +4,28 @@
 #include <vector>
 
 #include "common/Socket.h"
-#include "Match.h"
+#include "common/Thread.h"
 #include "Communicator.h"
+#include "Match.h"
 
-class Server {
-	private:
-		Socket& server;
-		//Log log;
-		std::vector<Communicator*> communicators;
-		Match match;
+class Server : public Thread {
+   private:
+    QuitProtected& quit;
+    Socket& server;
+    // Log log;
+    std::vector<Communicator*> communicators;
+    Match match;
 
-		void configure_server_socket(const char* port);
-		void configure_factories();
+    void configure_server_socket(const char* port);
+    void configure_factories();
+    void wait_for_players();
+    void start_game();
 
-	public:
-		Server(Socket& server, const char* port);
-		void operator()();
-		~Server();
+   public:
+    Server(Socket& server, const char* port, QuitProtected& quit);
+    void run();
+    void shutdown();
+    ~Server();
 };
 
-#endif // MEGAMAN_SERVER_H
+#endif  // MEGAMAN_SERVER_H
