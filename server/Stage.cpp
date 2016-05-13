@@ -22,15 +22,6 @@ std::vector<char> StageFactory::positions_of_spawns
         (const int screen, const int enemy_id) {
     std::vector<char> positions;
     //TODO leer .JSON
-
-    // error: unused parameter [-Werror=unused-parameter]
-    int i, j;
-    i = screen;
-    j = enemy_id;
-    i++;
-    j++;
-    //
-
     return positions;
 }
 
@@ -38,28 +29,12 @@ std::vector<char> StageFactory::positions_of_objects
         (const int screen, const int object_id) {
     std::vector<char> positions;
     //TODO leer .JSON
-
-    // error: unused parameter [-Werror=unused-parameter]
-    int i, j;
-    i = screen;
-    j = object_id;
-    i++;
-    j++;
-    //
-
     return positions;
 }
 
 std::vector<StageInfo*> StageFactory::screen_info(const int screen) {
     std::vector<StageInfo*> screen_info;
     //TODO
-
-    // error: unused parameter [-Werror=unused-parameter]
-    int i;
-    i = screen;
-    i++;
-    //
-
     return screen_info;
 }
 
