@@ -29,8 +29,10 @@
 
 # Etc
 *~
+
 # abrden's IDEs
 .anjuta/
 *.anjuta
 *.anjuta_sym_db.db
 .idea/
+build/

@@ -42,8 +42,11 @@ class SocketProtected {
 		Socket socket;
 
 	public:
+		SocketProtected();
 		explicit SocketProtected(int fd);
+		void operator()(struct addrinfo* info);
 		~SocketProtected();
+		void connect(struct addrinfo* info);
 		void send(const char* buffer, ssize_t size);
 		void receive(char* buffer, ssize_t size);
 		void shutdown();

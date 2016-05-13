@@ -7,7 +7,15 @@ set(SOURCES
     Socket.h
     Thread.cpp
     Thread.h
-)
+    Sender.h
+    Sender.cpp
+    Receiver.h
+    Receiver.cpp
+    QuitProtected.h
+    QuitProtected.cpp
+    Packet.h
+    Packet.cpp)
+
 include(CppLint)
 
 add_library(${PROJECT_NAME} ${SOURCES})

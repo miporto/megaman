@@ -1,7 +1,7 @@
 #ifndef QUITPROTECTED_H
 #define QUITPROTECTED_H
 
-#include "common/Thread.h"
+#include "Thread.h"
 
 class QuitProtected {
    private:

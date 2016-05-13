@@ -1,5 +1,7 @@
+#include <string>
+
 #include "Player.h"
 
-Player::~Player() {}
+Player::Player(const std::string& name) : name(name) {}
 
-Host::~Host() {}
+Player::~Player() {}

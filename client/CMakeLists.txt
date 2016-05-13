@@ -6,7 +6,9 @@ set(SOURCES
     main.cpp
     MainWindow.cpp
     MainWindow.h
-)
+    ClientCommunicator.h
+    ClientCommunicator.cpp)
+
 include(CppLint)
 
 include_directories(${GTKMM_INCLUDE_DIRS})

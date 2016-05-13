@@ -1,5 +1,4 @@
 #include "QuitProtected.h"
-#include "common/Thread.h"
 
 QuitProtected::QuitProtected() { this->quit = false; }
 
