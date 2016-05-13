@@ -7,10 +7,6 @@
 #include "QuitProtected.h"
 #include "Communicator.h"
 
-// TODO pasar a enum
-#define NEW_PLAYER_ID 1
-#define STAGE_PICK_ID 2
-
 Receiver::Receiver(SocketProtected& peer,
                    PacketsProtected& packets,
                    QuitProtected& quit)
@@ -21,14 +17,20 @@ void Receiver::buffer_to_packet() {
     this->buffer >> id;
 
     switch (id) {
-    case 2:
-        char stage_id;
-        this->buffer >> stage_id;
-        this->packets.push(new StagePick(id, stage_id));
-        break;
-    default:
-        // Si el ID es desconocido, desecha el paquete
-        break;
+        // Solo cases para los paquetes que pueden ser recibidos
+        case NEW_PLAYER: {
+            std::string name;
+            this->buffer >> name;
+            this->packets.push(new NewPlayer(name));
+            break;
+        } case STAGE_PICK: {
+            char stage_id;
+            this->buffer >> stage_id;
+            this->packets.push(new StagePick(stage_id));
+            break;
+        } default:
+            // Si el ID es desconocido, desecha el paquete
+            break;
     }
 
     this->buffer.str("");
@@ -79,9 +81,9 @@ void Sender::run() {
 Sender::~Sender() {}
 
 Communicator::Communicator(int fd)
-    : peer(fd)
-    , sender(peer, packets_to_send, quit)
-    , receiver(peer, packets_received, quit) {
+    : peer(fd),
+      sender(peer, packets_to_send, quit),
+      receiver(peer, packets_received, quit) {
     this->sender.start();
     this->receiver.start();
 }
@@ -94,9 +96,24 @@ void Communicator::push_to_sender(Packet* packet) {
     this->packets_to_send.push(packet);
 }
 
-void Communicator::send_new_player_notification() {
-    // TODO hacer nuevo packet NewPlayer
-    this->push_to_sender(new Packet(NEW_PLAYER_ID));
+void Communicator::send_new_player_notification(const std::string& name) {
+    this->push_to_sender(new NewPlayer(name));
+}
+
+std::string Communicator::receive_name() {
+    std::string name;
+    bool received = false;
+    while (!received) {
+        if (!this->packets_received.is_empty()) {
+            Packet *packet = this->pop_from_receiver();
+            if (packet->get_id() == NEW_PLAYER) {
+                name = ((NewPlayer*) packet)->get_name();
+                received = true;
+            }
+            delete packet;
+        }
+    }
+    return name;
 }
 
 void Communicator::shutdown() { this->quit.switch_to_true(); }
@@ -114,8 +131,8 @@ HostCommunicator::HostCommunicator(int fd, StageIDProtected& stage_id)
 char HostCommunicator::check_stage_pick() {
     char stage_id = 0;
     if (!this->packets_received.is_empty()) {
-        Packet* packet = this->packets_received.pop();
-        if (packet->get_id() == STAGE_PICK_ID)
+        Packet* packet = this->pop_from_receiver();
+        if (packet->get_id() == STAGE_PICK)
             stage_id = ((StagePick*)packet)->get_stage_id();
         delete packet;
     }

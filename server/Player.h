@@ -1,17 +1,15 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-class Player {
-   private:
-   public:
-    virtual ~Player();
-};
+#include <string>
 
-// Ver si el comportamiento difiere de Player
-class Host : public Player {
-   private:
-   public:
-    ~Host();
+class Player {
+    private:
+        const std::string name;
+
+    public:
+        explicit Player(const std::string& name);
+        virtual ~Player();
 };
 
 #endif  // PLAYER_H

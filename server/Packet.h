@@ -9,53 +9,69 @@
 
 #include "common/Thread.h"
 
-class Packet {
-   private:
-    const char id;
-    std::string str;
+typedef enum _packet_id {
+    NEW_PLAYER = 1,
+    STAGE_PICK,
+    STAGE_INFO
+} packet_id_t;
 
-   public:
-    explicit Packet(char id);
-    char get_id() const;
-    virtual std::string get_str() const;
-    virtual ~Packet();
+class Packet {
+    public:
+        virtual char get_id() const = 0;
+        virtual std::string get_str() const = 0;
+        virtual ~Packet();
+};
+
+class NewPlayer : public Packet {
+    private:
+        static const char id = NEW_PLAYER;
+        const std::string name;
+
+    public:
+        explicit NewPlayer(const std::string name);
+        const std::string get_name() const;
+        char get_id() const;
+        std::string get_str() const;
+        ~NewPlayer();
 };
 
 class StagePick : public Packet {
-   private:
-    const char stage_id;
-    std::string str;
+    private:
+        static const char id = STAGE_PICK;
+        const char stage_id;
 
-   public:
-    StagePick(char id, char stage_id);
-    char get_stage_id() const;
-    std::string get_str() const;
-    ~StagePick();
+    public:
+        explicit StagePick(const char stage_id);
+        char get_stage_id() const;
+        char get_id() const;
+        std::string get_str() const;
+        ~StagePick();
 };
 
 class StageInfo : public Packet {
     private:
+        static const char id = STAGE_INFO;
         const char type;
-        const char position; //Cambiar por tupla de valores x,y ???
-        std::string str;
+        const char position;
 
     public:
-        StageInfo(char id, char position);
-        StageInfo(char id, char type, char position);
+        explicit StageInfo(const char position);
+        StageInfo(const char type, const char position);
+        char get_id() const;
         std::string get_str() const;
         ~StageInfo();
 };
 
 class PacketsProtected {
-   private:
-    Mutex m;
-    std::vector<Packet*> packets;
+    private:
+        Mutex m;
+        std::vector<Packet*> packets;
 
-   public:
-    Packet* pop();
-    void push(Packet* packet);
-    bool is_empty();
-    ~PacketsProtected();
+    public:
+        Packet* pop();
+        void push(Packet* packet);
+        bool is_empty();
+        ~PacketsProtected();
 };
 
 #endif  // PACKET_H

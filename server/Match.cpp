@@ -20,13 +20,14 @@ bool Match::is_full() {
 
 bool Match::has_host() { return this->communicators.size() > 0; }
 
-void Match::new_player_notification() {
+void Match::new_player_notification(std::string& name) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
-        this->communicators[i]->send_new_player_notification();
+        this->communicators[i]->send_new_player_notification(name);
 }
 
 void Match::add_player(int fd) {
     Lock l(this->m);
+
     if (this->is_full())
         throw MatchError("Mega Man Co-op match is full");
     if (this->has_started())
@@ -34,21 +35,24 @@ void Match::add_player(int fd) {
 
     if (!this->has_host()) {
         HostCommunicator* hc = new HostCommunicator(fd, this->stage_id);
+        std::string name = hc->receive_name();
         hc->start();
         this->communicators.push_back(hc);
-        this->players.push_back(new Host());
+        this->players.push_back(new Player(name));
 
     } else {
-        this->communicators.push_back(new Communicator(fd));
-        this->players.push_back(new Player());
-        this->new_player_notification();
+        Communicator* c = new Communicator(fd);
+        std::string name = c->receive_name();
+        this->communicators.push_back(c);
+        this->players.push_back(new Player(name));
+        this->new_player_notification(name);
     }
 }
 
 void Match::start_stage() {
     ((HostCommunicator*)this->communicators[0])->join();
     Stage stage(this->stage_id(), this->players);
-    //TODO Continuar
+    //TODO
 }
 
 Match::~Match() {
@@ -57,7 +61,7 @@ Match::~Match() {
 }
 
 MatchError::MatchError(const std::string error_msg) throw()
-    : error_msg(error_msg) {}
+        : error_msg(error_msg) {}
 
 const char* MatchError::what() const throw() { return error_msg.c_str(); }
 

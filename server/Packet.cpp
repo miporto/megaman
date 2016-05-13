@@ -2,42 +2,51 @@
 
 #include "Packet.h"
 
-Packet::Packet(char id) : id(id) { str.push_back(id); }
-
-char Packet::get_id() const { return this->id; }
-
-std::string Packet::get_str() const { return this->str; }
-
 Packet::~Packet() {}
 
-StagePick::StagePick(char id, char stage_id) : Packet(id), stage_id(stage_id) {
-    str.push_back(id);
-    str.push_back(stage_id);
+NewPlayer::NewPlayer(const std::string name) : name(name) {}
+
+const std::string NewPlayer::get_name() const { return this->name; }
+
+char NewPlayer::get_id() const { return this->id; }
+
+std::string NewPlayer::get_str() const {
+    std::string str;
+    str.push_back(this->id);
+    str.append(this->name);
+    return str;
 }
 
-char StagePick::get_stage_id() const {
-    return this->stage_id;
-}
+NewPlayer::~NewPlayer() {}
 
-std::string StagePick::get_str() const { return this->str; }
+StagePick::StagePick(const char stage_id) : stage_id(stage_id) {}
+
+char StagePick::get_stage_id() const { return this->stage_id; }
+
+char StagePick::get_id() const { return this->id; }
+
+std::string StagePick::get_str() const {
+    std::string str;
+    str.push_back(this->id);
+    str.push_back(this->stage_id);
+    return str;
+}
 
 StagePick::~StagePick() {}
 
-StageInfo::StageInfo(char id, char position) :
-        Packet(id), type(0), position(position) {
-    str.push_back(id);
-    str.push_back(position);
-}
+StageInfo::StageInfo(const char position) : type(0), position(position) {}
 
-StageInfo::StageInfo(char id, char type, char position) :
-    Packet(id), type(type), position(position) {
-    str.push_back(id);
-    str.push_back(type);
-    str.push_back(position);
-}
+StageInfo::StageInfo(const char type, const char position) :
+        type(type), position(position) {}
+
+char StageInfo::get_id() const { return this->id; }
 
 std::string StageInfo::get_str() const {
-    return this->str;
+    std::string str;
+    str.push_back(this->id);
+    str.push_back(this->type);
+    str.push_back(this->position);
+    return str;
 }
 
 StageInfo::~StageInfo() {}

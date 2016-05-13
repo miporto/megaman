@@ -52,4 +52,9 @@ std::vector<StageInfo*> Stage::next_screen() {
     return this->factory.screen_info(this->current_screen);
 }
 
-Stage::~Stage() {}
+Stage::~Stage() {
+    for (unsigned int i = 0; i < this->enemies.size(); ++i)
+        delete this->enemies[i];
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        delete this->objects[i];
+}
