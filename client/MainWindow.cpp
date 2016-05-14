@@ -5,14 +5,16 @@
 
 #include "MainWindow.h"
 
+#define CONTAINER_NAME "container"
+
 MainWindow::MainWindow(const char* hostname, const char* port) :
-		main_frame(), welcome_screen(), hostname(hostname), port(port) {
+		main_frame(), hostname(hostname), port(port) {
 	set_title("Megaman");
 	set_size_request(600, 400);
 	set_border_width(6);
 	init_welcome_screen();
 
-	main_frame.pack_start(*prueba);
+	main_frame.pack_start(*welcome_screen);
 	add(main_frame);
 	show_all();
 //	// Set signal handlers
@@ -31,29 +33,39 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 }
 
 void MainWindow::on_new_game_btn_clicked() {
-//	skt = Socket();
-//	Client client(skt, hostname, port);
+	//skt = Socket();
+	//Client client(skt, hostname, port);
 	std::cout << "Client started" << std::endl;
 }
 
 void MainWindow::on_exit_game_btn_clicked() {
 	std::cout << "Exit game" << std::endl;
+	unset_application();
 }
 
 MainWindow::~MainWindow() {
 }
 
 void MainWindow::init_welcome_screen() {
-	GtkBuilder builder = load_glade_file("view/example.glade");
+	welcome_screen = NULL;
+	GtkBuilder builder = load_glade_file("view/welcome_screen.glade",
+			&welcome_screen);
 	Gtk::Button* btn = NULL;
-	builder->get_widget("ex_btn", btn);
+	builder->get_widget("start_game_btn", btn);
 	if (btn) {
 		btn->signal_clicked().connect(
 				sigc::mem_fun(*this, &MainWindow::on_new_game_btn_clicked));
 	}
+	builder->get_widget("about_btn", btn);
+	builder->get_widget("exit_btn", btn);
+	if (btn) {
+		btn->signal_clicked().connect(
+				sigc::mem_fun(*this, &MainWindow::on_exit_game_btn_clicked));
+	}
 }
 
-MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename) {
+MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename,
+		Gtk::Box** container) {
 	GtkBuilder builder = Gtk::Builder::create();
 	try {
 		builder->add_from_file(filename);
@@ -64,6 +76,9 @@ MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename) {
 	} catch (const Gtk::BuilderError& ex) {
 		std::cerr << "BuilderError: " << ex.what() << std::endl;
 	}
-	builder->get_widget("ex_box", prueba);
+
+	// All glade files loaded **must** have a top level container
+	// (not a window, of any kind) named as CONTAINER_NAME
+	builder->get_widget(CONTAINER_NAME, *container);
 	return builder;
 }

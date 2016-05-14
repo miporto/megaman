@@ -15,9 +15,8 @@ public:
 	virtual ~MainWindow();
 
 protected:
-	Gtk::Box* prueba;
 	Gtk::Box main_frame;
-	Gtk::Box welcome_screen;
+	Gtk::Box* welcome_screen;
 	//Gtk::Button nw_game_btn;
 	//Gtk::Button exit_btn;
 	//Gtk::Label game_name_lbl;
@@ -32,7 +31,7 @@ private:
 	const char* port;
 	Socket skt;
 	void init_welcome_screen();
-	GtkBuilder load_glade_file(std::string filename);
+	GtkBuilder load_glade_file(std::string filename, Gtk::Box** container);
 };
 
 #endif  // GTKMM_MAINWINDOW_H
