@@ -12,6 +12,7 @@ before_install:
 
 script:
   - pwd
+  - ls
   - cd manuporto/megaman/
   - mkdir build
   - cd build
