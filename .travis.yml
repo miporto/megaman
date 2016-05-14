@@ -8,9 +8,12 @@ before_install:
   - export DEBIAN_FRONTEND=noninteractive
   - sudo -E apt-get -yq update &>> ~/apt-get-update.log
   - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install libgtkmm-3.0-dev libgtest-dev
-  - cd tmp/ && mkdir .build && cd .build/ cmake --DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/ && make && sudo mv libg* /usr/lib
+  - "cd /tmp/ && mkdir .build && cd .build/ && cmake --DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/ && make && sudo mv libg* /usr/lib/ ; cd --"
 
 script:
+  - pwd
+  - cd $TRAVIS_BUILD_DIR
+  - pwd
   - mkdir build
   - cd build
   - cmake -G "Unix Makefiles" ..
