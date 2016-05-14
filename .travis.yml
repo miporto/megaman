@@ -7,7 +7,9 @@ os: linux
 before_install:
   - export DEBIAN_FRONTEND=noninteractive
   - sudo -E apt-get -yq update &>> ~/apt-get-update.log
-  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install libgtkmm-3.0-dev libcppunit-dev liblog4cpp5-dev libgoocanvasmm-2.0-dev libxml++2.6-dev
+  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install libgtkmm-3.0-dev libgtest-dev
+  - cd tmp/ && mkdir .build && cd .build/ cmake --DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/ && make && sudo mv libg* /usr/lib
+
 script:
   - mkdir build
   - cd build
