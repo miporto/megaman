@@ -12,8 +12,8 @@ before_install:
 
 script:
   - pwd
-  - ls
-  - cd manuporto/megaman/
+  - cd $TRAVIS_BUILD_DIR
+  - pwd
   - mkdir build
   - cd build
   - cmake -G "Unix Makefiles" ..
