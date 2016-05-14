@@ -20,9 +20,14 @@ bool Match::is_full() {
 
 bool Match::has_host() { return this->communicators.size() > 0; }
 
-void Match::new_player_notification(std::string& name) {
+void Match::send_new_player_notification(std::string& name) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
         this->communicators[i]->send_new_player_notification(name);
+}
+
+void Match::send_screen_info(ScreenInfo* info) {
+    for (unsigned int i = 0; i < this->communicators.size(); ++i)
+        this->communicators[i]->send_screen_info(info);
 }
 
 void Match::add_player(int fd) {
@@ -45,14 +50,19 @@ void Match::add_player(int fd) {
         std::string name = c->receive_name();
         this->communicators.push_back(c);
         this->players.push_back(new Player(name));
-        this->new_player_notification(name);
+        this->send_new_player_notification(name);
     }
 }
 
 void Match::start_stage() {
     ((HostCommunicator*)this->communicators[0])->join();
+
+    //TODO ver donde dejar referencia a la instancia de Stage
     Stage stage(this->stage_id(), this->players);
-    //TODO
+
+    ScreenInfo* info = stage.next_screen();
+    this->send_screen_info(info);
+    delete info;
 }
 
 Match::~Match() {

@@ -2,6 +2,7 @@
 #define STAGE_H
 
 #include <vector>
+#include <common/ScreenInfo.h>
 
 #include "common/Thread.h"
 #include "Player.h"
@@ -32,7 +33,7 @@ class StageFactory {
 
     public:
         explicit StageFactory(char id);
-        std::vector<StageInfo*> screen_info(const int screen);
+        ScreenInfo* screen_info(const int screen);
         ~StageFactory();
 };
 
@@ -46,7 +47,7 @@ class Stage {
 
     public:
         Stage(char id, std::vector<Player*>& players);
-        std::vector<StageInfo*> next_screen();
+        ScreenInfo* next_screen();
         ~Stage();
 };
 

@@ -15,6 +15,16 @@ typedef enum _packet_id {
     STAGE_INFO
 } packet_id_t;
 
+typedef enum _stage_info_type_t {
+    MET = 1,
+    BUMBY,
+    SNIPER,
+    JUMPING_SNIPER,
+    BLOCK,
+    STAIRS,
+    SPIKE
+} stage_info_type_t;
+
 class Packet {
     public:
         virtual char get_id() const = 0;
@@ -58,6 +68,8 @@ class StageInfo : public Packet {
         explicit StageInfo(const char position);
         StageInfo(const char type, const char position);
         char get_id() const;
+        char get_type() const;
+        char get_position() const;
         std::string get_str() const;
         ~StageInfo();
 };
