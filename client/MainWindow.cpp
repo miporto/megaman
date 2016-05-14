@@ -12,6 +12,9 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 	set_border_width(6);
 	init_welcome_screen();
 
+	main_frame.pack_start(*prueba);
+	add(main_frame);
+	show_all();
 //	// Set signal handlers
 //	nw_game_btn.signal_clicked().connect(
 //			sigc::mem_fun(*this, &MainWindow::on_new_game_btn_clicked));
@@ -61,6 +64,6 @@ MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename) {
 	} catch (const Gtk::BuilderError& ex) {
 		std::cerr << "BuilderError: " << ex.what() << std::endl;
 	}
-	//builder->get_widget_derived("", parent);
+	builder->get_widget("ex_box", prueba);
 	return builder;
 }

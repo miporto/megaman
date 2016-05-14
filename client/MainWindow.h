@@ -15,6 +15,7 @@ public:
 	virtual ~MainWindow();
 
 protected:
+	Gtk::Box* prueba;
 	Gtk::Box main_frame;
 	Gtk::Box welcome_screen;
 	//Gtk::Button nw_game_btn;
