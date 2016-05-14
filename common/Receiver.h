@@ -21,7 +21,7 @@ class Receiver : public Thread {
                  QuitProtected& quit);
         virtual void buffer_to_packet() = 0;
         void run();
-        ~Receiver();
+        virtual ~Receiver();
 };
 
 #endif //RECEIVER_H

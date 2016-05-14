@@ -32,10 +32,9 @@ std::vector<char> StageFactory::positions_of_objects
     return positions;
 }
 
-std::vector<StageInfo*> StageFactory::screen_info(const int screen) {
-    std::vector<StageInfo*> screen_info;
-    //TODO
-    return screen_info;
+ScreenInfo* StageFactory::screen_info(const int screen) {
+    //TODO crean ScreenInfo con metodos anteriores
+    return NULL;
 }
 
 StageFactory::~StageFactory() {}
@@ -43,13 +42,12 @@ StageFactory::~StageFactory() {}
 Stage::Stage(char id, std::vector<Player*>& players) :
         factory(id), players(players), current_screen(0) {}
 
-std::vector<StageInfo*> Stage::next_screen() {
+ScreenInfo* Stage::next_screen() {
     this->current_screen++;
-
+    ScreenInfo* info = factory.screen_info(this->current_screen);
     //TODO Actualizar vector de enemigos
     //TODO Actualizar vector de objetos
-
-    return this->factory.screen_info(this->current_screen);
+    return info;
 }
 
 Stage::~Stage() {

@@ -41,6 +41,10 @@ StageInfo::StageInfo(const char type, const char position) :
 
 char StageInfo::get_id() const { return this->id; }
 
+char StageInfo::get_type() const { return this->type; }
+
+char StageInfo::get_position() const { return this->position; }
+
 std::string StageInfo::get_str() const {
     std::string str;
     str.push_back(this->id);

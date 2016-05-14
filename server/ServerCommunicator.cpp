@@ -1,4 +1,4 @@
-#include <queue>
+#include <vector>
 #include <string>
 
 #include "ServerCommunicator.h"
@@ -70,7 +70,36 @@ std::string ServerCommunicator::receive_name() {
     return name;
 }
 
-void ServerCommunicator::shutdown() { this->quit.switch_to_true(); }
+void ServerCommunicator::send_screen_info(ScreenInfo* info) {
+    std::vector<char> positions;
+
+    positions = info->get_met_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageInfo(MET, positions[i]));
+    positions = info->get_bumby_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageInfo(BUMBY, positions[i]));
+    positions = info->get_sniper_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageInfo(SNIPER, positions[i]));
+    positions = info->get_jumping_sniper_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageInfo(JUMPING_SNIPER, positions[i]));
+    positions = info->get_block_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageInfo(BLOCK, positions[i]));
+    positions = info->get_stairs_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageInfo(STAIRS, positions[i]));
+    positions = info->get_spike_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageInfo(SPIKE, positions[i]));
+}
+
+void ServerCommunicator::shutdown() {
+    this->quit.switch_to_true();
+    this->peer.shutdown();
+}
 
 ServerCommunicator::~ServerCommunicator() {
     this->quit.switch_to_true();
