@@ -3,9 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "Client.h"
 #include "MainWindow.h"
-#include "common/Socket.h"
 
 MainWindow::MainWindow(const char* hostname, const char* port) :
 		main_frame(), welcome_screen(), hostname(hostname), port(port) {

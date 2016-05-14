@@ -10,8 +10,9 @@
 #define ARGS_LEN 3
 
 int main(int argc, char** argv) {
-	if (argc != 3)
+	if (argc != ARGS_LEN)
 		return EXIT_FAILURE;
+
 	int argc1 = 1;
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc1, argv,
 			"org.gtkmm.megaman");
