@@ -7,6 +7,7 @@
 #include <gtkmm/window.h>
 #include <string>
 
+#include "Client.h"
 #include "common/Socket.h"
 
 class MainWindow: public Gtk::Window {
@@ -27,9 +28,8 @@ protected:
 
 private:
 	typedef Glib::RefPtr<Gtk::Builder> GtkBuilder;
-	const char* hostname;
-	const char* port;
-	Socket skt;
+	Client client;
+	
 	void init_welcome_screen();
 	GtkBuilder load_glade_file(std::string filename, Gtk::Box** container);
 };

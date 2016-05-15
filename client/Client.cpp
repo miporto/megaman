@@ -4,12 +4,13 @@
 #include "Client.h"
 #include "common/AddrInfo.h"
 
-//Se instancia una vez que el usuario clickeo START
-
-void Client::connect_to_server(const char* hostname, const char* port) {
+Client::Client(const char* hostname, const char* port)
+        : hostname(hostname), port(port), communicator(this->client) {}
+        
+void Client::connect_to_server() {
     struct addrinfo* ptr;
     bool connected = false;
-    ClientAddrInfo info(hostname, port);
+    ClientAddrInfo info(this->hostname, this->port);
 
     for (ptr = info(); ptr != NULL && !connected; ptr = ptr->ai_next) {
         this->client(ptr);
@@ -25,12 +26,6 @@ void Client::connect_to_server(const char* hostname, const char* port) {
         connected = true;
     }
 }
-
-Client::Client(SocketProtected& client, const char* hostname, const char* port)
-        : client(client), communicator(this->client) {
-    this->connect_to_server(hostname, port);
-}
-
 /*
  * A partir de aca; metodos para todas las decisiones que toma el jugador
  * que requieren un envio de informacion el server

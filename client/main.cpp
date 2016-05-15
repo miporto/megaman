@@ -14,8 +14,8 @@ int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 
 	int argc1 = 1;
-	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc1, argv,
-			"org.gtkmm.megaman");
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create
+		(argc1, argv, "org.gtkmm.megaman");
 	// Shows the window and returns when it is closed.
 	MainWindow mainwindow(argv[HOSTNAME_POS], argv[PORT_POS]);
 	return app->run(mainwindow);

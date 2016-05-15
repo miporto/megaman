@@ -8,14 +8,15 @@
 #define CONTAINER_NAME "container"
 
 MainWindow::MainWindow(const char* hostname, const char* port) :
-		main_frame(), hostname(hostname), port(port) {
-	set_title("Megaman");
-	set_size_request(600, 400);
+		main_frame(), client(hostname, port) { //Hace falta el main_frame() ??
+	set_title("Mega Man");
+	set_size_request(640, 480);
 	set_border_width(6);
 	init_welcome_screen();
 
 	main_frame.pack_start(*welcome_screen);
 	add(main_frame);
+	std::cout << "Mirame hacer show_all() y volar por los aires" << std::endl;
 	show_all();
 //	// Set signal handlers
 //	nw_game_btn.signal_clicked().connect(
@@ -33,8 +34,7 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 }
 
 void MainWindow::on_new_game_btn_clicked() {
-	//skt = Socket();
-	//Client client(skt, hostname, port);
+	this->client.connect_to_server();
 	std::cout << "Client started" << std::endl;
 }
 
