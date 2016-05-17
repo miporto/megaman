@@ -6,6 +6,8 @@
 #include <gtkmm/button.h>
 #include <gtkmm/window.h>
 #include <string>
+#include <gtkmm/image.h>
+#include <gtkmm/layout.h>
 
 #include "Client.h"
 #include "common/Socket.h"
@@ -18,6 +20,9 @@ public:
 protected:
 	Gtk::Box main_frame;
 	Gtk::Box* welcome_screen;
+
+	Gtk::Layout layout;
+	Gtk::Image bg_image;
 	//Gtk::Button nw_game_btn;
 	//Gtk::Button exit_btn;
 	//Gtk::Label game_name_lbl;

@@ -8,14 +8,21 @@
 #define CONTAINER_NAME "container"
 
 MainWindow::MainWindow(const char* hostname, const char* port) :
-		main_frame(), client(hostname, port) { //Hace falta el main_frame() ??
+		main_frame(), layout(), bg_image("view/bg.jpg"), client(hostname, port) {
 	set_title("Mega Man");
 	set_size_request(640, 480);
-	set_border_width(6);
-	init_welcome_screen();
+	set_border_width(0);
+	set_resizable(false);
 
-	main_frame.pack_start(*welcome_screen);
-	add(main_frame);
+	this->layout.put(this->bg_image, 0, 0);
+
+	init_welcome_screen();
+	this->main_frame.pack_start(*welcome_screen);
+	//add(main_frame);
+	this->layout.put(main_frame, 280, 0);
+
+	this->add(this->layout);
+
 	show_all();
 
 //	// Set signal handlers
