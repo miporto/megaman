@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+#include "AboutWindow.h"
 #include "MainWindow.h"
 
 #define CONTAINER_NAME "container"
@@ -14,14 +15,14 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 	set_border_width(0);
 	set_resizable(false);
 
-	this->layout.put(this->bg_image, 0, 0);
+	layout.put(bg_image, 0, 0);
 
 	init_welcome_screen();
-	this->main_frame.pack_start(*welcome_screen);
+	main_frame.pack_start(*welcome_screen);
 	//add(main_frame);
-	this->layout.put(main_frame, 280, 0);
+	layout.put(main_frame, 280, 0);
 
-	this->add(this->layout);
+	add(layout);
 
 	show_all();
 
@@ -50,6 +51,10 @@ void MainWindow::on_confirm_name_btn_clicked() {
 	//this->client.send_name(name);
 }
 
+void MainWindow::on_about_btn_clicked() {
+	about_w = new AboutWindow();
+	about_w->show();
+}
 void MainWindow::on_exit_game_btn_clicked() {
 	std::cout << "Exit game" << std::endl;
 	unset_application();
@@ -69,6 +74,10 @@ void MainWindow::init_welcome_screen() {
 				sigc::mem_fun(*this, &MainWindow::on_new_game_btn_clicked));
 	}
 	builder->get_widget("about_btn", btn);
+	if (btn) {
+		btn->signal_clicked().connect(
+				sigc::mem_fun(*this, &MainWindow::on_about_btn_clicked));
+	}
 	builder->get_widget("exit_btn", btn);
 	if (btn) {
 		btn->signal_clicked().connect(

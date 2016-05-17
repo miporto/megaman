@@ -9,6 +9,7 @@
 #include <gtkmm/image.h>
 #include <gtkmm/layout.h>
 
+#include "AboutWindow.h"
 #include "Client.h"
 #include "common/Socket.h"
 
@@ -18,6 +19,7 @@ public:
 	virtual ~MainWindow();
 
 protected:
+	AboutWindow* about_w;
 	Gtk::Box main_frame;
 	Gtk::Box* welcome_screen;
 
@@ -29,6 +31,7 @@ protected:
 
 	//Signal Handlers
 	void on_new_game_btn_clicked();
+	void on_about_btn_clicked();
 	void on_exit_game_btn_clicked();
 	void on_confirm_name_btn_clicked();
 
