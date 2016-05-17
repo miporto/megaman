@@ -25,6 +25,7 @@ protected:
 	//Signal Handlers
 	void on_new_game_btn_clicked();
 	void on_exit_game_btn_clicked();
+	void on_confirm_name_btn_clicked();
 
 private:
 	typedef Glib::RefPtr<Gtk::Builder> GtkBuilder;

@@ -16,8 +16,8 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 
 	main_frame.pack_start(*welcome_screen);
 	add(main_frame);
-	std::cout << "Mirame hacer show_all() y volar por los aires" << std::endl;
 	show_all();
+
 //	// Set signal handlers
 //	nw_game_btn.signal_clicked().connect(
 //			sigc::mem_fun(*this, &MainWindow::on_new_game_btn_clicked));
@@ -34,8 +34,13 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 }
 
 void MainWindow::on_new_game_btn_clicked() {
-	this->client.connect_to_server();
+	//TODO Cambiar pantalla a la de ingreso de nombre
+}
+
+void MainWindow::on_confirm_name_btn_clicked() {
 	std::cout << "Client started" << std::endl;
+	this->client.connect_to_server();
+	//this->client.send_name(name);
 }
 
 void MainWindow::on_exit_game_btn_clicked() {

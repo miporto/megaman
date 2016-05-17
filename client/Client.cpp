@@ -25,6 +25,8 @@ void Client::connect_to_server() {
         }
         connected = true;
     }
+
+    this->communicator.start_communication();
 }
 /*
  * A partir de aca; metodos para todas las decisiones que toma el jugador

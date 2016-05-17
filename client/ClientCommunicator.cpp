@@ -33,7 +33,9 @@ ClientReceiver::~ClientReceiver() {}
 ClientCommunicator::ClientCommunicator(SocketProtected& client)
         : client(this->client),
           sender(this->client, this->packets_to_send, this->quit),
-          receiver(this->client, this->packets_received, this->quit) {
+          receiver(this->client, this->packets_received, this->quit) {}
+
+void ClientCommunicator::start_communication() {
     this->sender.start();
     this->receiver.start();
 }
@@ -113,6 +115,4 @@ ScreenInfo* ClientCommunicator::receive_stage_info() {
                           spike_positions);
 }
 
-ClientCommunicator::~ClientCommunicator() {
-    this->client.shutdown();
-}
+ClientCommunicator::~ClientCommunicator() {}
