@@ -1,6 +1,8 @@
 project(client)
 
 set(SOURCES
+    AboutWindow.cpp
+    AboutWindow.h
     Client.cpp
     Client.h
     main.cpp
