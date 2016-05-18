@@ -17,7 +17,7 @@ set(SOURCES
     Object.h
     Object.cpp
     Enemy.h
-    Enemy.cpp)
+    Enemy.cpp MegaMan.cpp MegaMan.h)
 
 include(CppLint)
 
