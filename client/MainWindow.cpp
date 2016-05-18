@@ -10,7 +10,7 @@
 #define CONTAINER_NAME "container"
 
 MainWindow::MainWindow(const char* hostname, const char* port) :
-		layout(), bg_image("view/bg.jpg"), client(hostname, port) {
+		layout(), bg_image("view/background.png"), client(hostname, port) {
 	set_title("Mega Man");
 	set_size_request(640, 480);
 	set_border_width(0);
