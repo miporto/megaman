@@ -14,7 +14,7 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 	set_title("Mega Man");
 	set_size_request(640, 480);
 	set_border_width(0);
-	set_resizable(false);
+	//set_resizable(false);
 
 	layout.put(bg_image, 0, 0);
 
@@ -39,8 +39,8 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 
 	Glib::RefPtr<const Gtk::EntryBuffer> buffer = text_entry->get_buffer();
 	Glib::ustring name = buffer->get_text();
-	std::cout << (std::string) name << std::endl;
-	this->client.send_name(name);
+	std::cout << name.c_str() << std::endl;
+	//this->client.send_name(name);
 }
 
 void MainWindow::on_about_btn_clicked() {
@@ -87,7 +87,8 @@ void MainWindow::init_insert_name() {
 	builder->get_widget("confirm_name_btn", btn);
 	if (btn) {
 		btn->signal_clicked().connect(
-				sigc::mem_fun(*this, &MainWindow::on_confirm_name_btn_clicked()(entry)));
+				sigc::bind<Gtk::Entry*>(sigc::mem_fun(*this, 
+                        &MainWindow::on_confirm_name_btn_clicked), entry));
 	}
 }
 
