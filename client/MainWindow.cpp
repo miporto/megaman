@@ -40,7 +40,8 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	Glib::RefPtr<const Gtk::EntryBuffer> buffer = text_entry->get_buffer();
 	Glib::ustring name = buffer->get_text();
 	std::cout << name.c_str() << std::endl;
-	//this->client.send_name(name);
+    std::string sname = name.raw();
+	this->client.send_name(sname);
 }
 
 void MainWindow::on_about_btn_clicked() {
