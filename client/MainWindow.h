@@ -8,6 +8,7 @@
 #include <string>
 #include <gtkmm/image.h>
 #include <gtkmm/layout.h>
+#include <gtkmm/entry.h>
 
 #include "AboutWindow.h"
 #include "Client.h"
@@ -19,27 +20,29 @@ public:
 	virtual ~MainWindow();
 
 protected:
-	AboutWindow* about_w;
-	Gtk::Box main_frame;
-	Gtk::Box* welcome_screen;
-
 	Gtk::Layout layout;
 	Gtk::Image bg_image;
-	//Gtk::Button nw_game_btn;
-	//Gtk::Button exit_btn;
-	//Gtk::Label game_name_lbl;
+
+	Gtk::Box* welcome_screen;
+	Gtk::Box* insert_name;
+	Gtk::Box* stage_pick;
+	Gtk::Box* loading;
+	Gtk::Box* about;
+
+	AboutWindow* about_w;
 
 	//Signal Handlers
 	void on_new_game_btn_clicked();
 	void on_about_btn_clicked();
 	void on_exit_game_btn_clicked();
-	void on_confirm_name_btn_clicked();
+	void on_confirm_name_btn_clicked(Gtk::Entry* text_entry);
 
 private:
 	typedef Glib::RefPtr<Gtk::Builder> GtkBuilder;
 	Client client;
 	
 	void init_welcome_screen();
+	void init_insert_name();
 	GtkBuilder load_glade_file(std::string filename, Gtk::Box** container);
 };
 

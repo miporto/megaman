@@ -9,7 +9,7 @@ set(SOURCES
     MainWindow.cpp
     MainWindow.h
     ClientCommunicator.h
-    ClientCommunicator.cpp)
+    ClientCommunicator.cpp GladeLoader.cpp GladeLoader.h)
 
 include(CppLint)
 

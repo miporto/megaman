@@ -6,24 +6,13 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
-    <property name="homogeneous">True</property>
     <child>
-      <object class="GtkImage" id="image1">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="stock">gtk-missing-image</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
+      <placeholder/>
     </child>
     <child>
       <object class="GtkBox" id="box2">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="homogeneous">True</property>
         <child>
           <placeholder/>
         </child>
@@ -34,11 +23,11 @@
             <property name="orientation">vertical</property>
             <property name="homogeneous">True</property>
             <child>
-              <object class="GtkButton" id="start_game_btn">
-                <property name="label" translatable="yes">Start Game!</property>
+              <object class="GtkLabel" id="label">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Insert your name</property>
+                <property name="angle">0.059999999999999998</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -47,11 +36,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="about_btn">
-                <property name="label" translatable="yes">About</property>
+              <object class="GtkEntry" id="name_entry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="shadow_type">etched-out</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -60,11 +48,12 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="exit_btn">
-                <property name="label" translatable="yes">Exit</property>
+              <object class="GtkButton" id="confirm_name_btn">
+                <property name="label" translatable="yes">Start</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="relief">none</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -74,8 +63,8 @@
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">False</property>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
