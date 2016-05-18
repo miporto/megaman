@@ -8,10 +8,10 @@
     <property name="orientation">vertical</property>
     <property name="homogeneous">True</property>
     <child>
-      <object class="GtkImage" id="image1">
+      <object class="GtkImage" id="logo">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="stock">gtk-missing-image</property>
+        <property name="pixbuf">logo.png</property>
       </object>
       <packing>
         <property name="expand">False</property>
@@ -35,7 +35,7 @@
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkButton" id="start_game_btn">
-                <property name="label" translatable="yes">Start Game!</property>
+                <property name="label" translatable="yes">Start Game</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
