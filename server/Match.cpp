@@ -25,7 +25,7 @@ void Match::send_new_player_notification(std::string& name) {
         this->communicators[i]->send_new_player_notification(name);
 }
 
-void Match::send_screen_info(ScreenInfo* info) {
+void Match::send_stage_info(ScreenInfo* info) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
         this->communicators[i]->send_screen_info(info);
 }
@@ -60,8 +60,8 @@ void Match::start_stage() {
     //TODO ver donde dejar referencia a la instancia de Stage
     Stage stage(this->stage_id(), this->players);
 
-    ScreenInfo* info = stage.next_screen();
-    this->send_screen_info(info);
+    ScreenInfo* info = stage.get_stage_info();
+    this->send_stage_info(info);
     delete info;
 }
 

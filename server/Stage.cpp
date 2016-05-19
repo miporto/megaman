@@ -16,23 +16,21 @@ char StageIDProtected::operator()() {
 
 StageIDProtected::~StageIDProtected() {}
 
-StageFactory::StageFactory(char id) : id(id) {}
-
 std::vector<char> StageFactory::positions_of_spawns
-        (const int screen, const int enemy_id) {
+        (const int stage_id, const int enemy_id) {
     std::vector<char> positions;
     //TODO leer .JSON
     return positions;
 }
 
 std::vector<char> StageFactory::positions_of_objects
-        (const int screen, const int object_id) {
+        (const int stage_id, const int object_id) {
     std::vector<char> positions;
     //TODO leer .JSON
     return positions;
 }
 
-ScreenInfo* StageFactory::screen_info(const int screen) {
+ScreenInfo* StageFactory::operator()(const int stage_id) {
     //TODO crean ScreenInfo con metodos anteriores
     return NULL;
 }
@@ -40,11 +38,11 @@ ScreenInfo* StageFactory::screen_info(const int screen) {
 StageFactory::~StageFactory() {}
 
 Stage::Stage(char id, std::vector<Player*>& players) :
-        factory(id), players(players), current_screen(0) {}
+        id(id), players(players) {}
 
-ScreenInfo* Stage::next_screen() {
-    this->current_screen++;
-    ScreenInfo* info = factory.screen_info(this->current_screen);
+ScreenInfo* Stage::get_stage_info() {
+    StageFactory factory;
+    ScreenInfo* info = factory(this->id);
     //TODO Actualizar vector de enemigos
     //TODO Actualizar vector de objetos
     return info;
