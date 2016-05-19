@@ -1,33 +1,12 @@
 #include "MegaMan.h"
+#include "Factory.h"
 
-#define AMMO_KINDS 6
-
-// A reemplazar por .JSON
-#define AMMO_MAX 330
-#define AMMO_VEL 5 // Cada tipo de ammo tiene vel diferente
-#define AMMO_DAMAGE 5 // Cada tipo de ammo tiene damage diferente
-#define MAX_ENERGY 50
-#define INITIAL_LIVES 3
-//
-
-Ammo::Ammo() : max(AMMO_MAX),
-               damage(AMMO_DAMAGE),
-               vel(AMMO_VEL),
-               quantity(AMMO_MAX) {}
-
-void Ammo::use() {
-
+EnergyTank::EnergyTank(int initial_lives, int max_energy) {
+    EnergyTankFactory factory;
+    this->lives = factory.initial_lives();
+    this->max_energy = factory.maximum_energy();
+    this->current_energy = factory.maximum_energy();
 }
-
-Ammo::~Ammo() {}
-
-Cannon::Cannon() : ammos(AMMO_KINDS) {}
-
-Cannon::~Cannon() {}
-
-EnergyTank::EnergyTank() : lives(INITIAL_LIVES),
-                           max_energy(MAX_ENERGY),
-                           current_energy(MAX_ENERGY) {}
 
 void EnergyTank::increase_energy(int amount) {
     this->current_energy += amount;
@@ -55,7 +34,5 @@ void EnergyTank::reset() {
 }
 
 EnergyTank::~EnergyTank() {}
-
-MegaMan::MegaMan() {}
 
 MegaMan::~MegaMan() {}

@@ -3,38 +3,18 @@
 
 #include <vector>
 
-class Ammo {
-private:
-    const int max;
-    const int damage;
-    const int vel;
-    int quantity;
-
-public:
-    Ammo();
-    void use();
-    ~Ammo();
-};
-
-class Cannon {
-    private:
-        std::vector<Ammo> ammos;
-
-    public:
-        Cannon();
-        ~Cannon();
-};
+#include "Cannon.h"
 
 class EnergyTank {
     private:
         int lives;
-        const int max_energy;
+        int max_energy;
         int current_energy;
 
         void reset();
 
     public:
-        EnergyTank();
+        EnergyTank(int initial_lives, int max_energy);
         void increase_energy(int amount);
         void decrease_energy(int amount);
         bool is_empty();
@@ -47,7 +27,6 @@ class MegaMan {
         Cannon cannon;
 
     public:
-        MegaMan();
         ~MegaMan();
 };
 

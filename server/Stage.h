@@ -9,6 +9,7 @@
 #include "common/Packet.h"
 #include "Object.h"
 #include "Enemy.h"
+#include "Factory.h"
 
 class StageIDProtected {
     private:
@@ -20,21 +21,6 @@ class StageIDProtected {
         void set_id(char stage_id);
         char operator()();
         ~StageIDProtected();
-};
-
-class StageFactory {
-    private:
-        char id;
-
-        std::vector<char> positions_of_spawns
-                (const int screen, const int enemy_id);
-        std::vector<char> positions_of_objects
-                (const int screen, const int object_id);
-
-    public:
-        explicit StageFactory(char id);
-        ScreenInfo* screen_info(const int screen);
-        ~StageFactory();
 };
 
 class Stage {
