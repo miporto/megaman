@@ -1,11 +1,9 @@
 cmake_minimum_required (VERSION 2.8.4)
 project (MegaMan)
 
-set (CMAKE_CXX_STANDARD 98)
-
 if(CMAKE_COMPILER_IS_GNUCXX)
     # Errors and warnings.
-    set(CMAKE_CXX_FLAGS "-Wall -Werror -Wno-unused-parameter -Wextra -Wconversion -Wtype-limits -pedantic -pedantic-errors")
+    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Werror -Wno-unused-parameter -Wextra -Wconversion -Wtype-limits -pedantic -pedantic-errors")
     # Valgrind and debug
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_RELEASE} -ggdb -DDEBUG")
     # Optimizing
@@ -20,4 +18,6 @@ include(CppLint)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(client)
 add_subdirectory(common)
+add_subdirectory(extern)
+add_subdirectory(json_example)
 add_subdirectory(server)

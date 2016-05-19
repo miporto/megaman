@@ -3,7 +3,7 @@
 
 #include <vector>
 
-class ScreenInfo {
+class StageInfo {
     private:
         const std::vector<char> met_positions;
         const std::vector<char> bumby_positions;
@@ -14,7 +14,7 @@ class ScreenInfo {
         const std::vector<char> spike_positions;
 
     public:
-        ScreenInfo(std::vector<char>& met_positions,
+        StageInfo(std::vector<char>& met_positions,
                   std::vector<char>& bumby_positions,
                   std::vector<char>& sniper_positions,
                   std::vector<char>& jumping_sniper_positions,
@@ -28,7 +28,7 @@ class ScreenInfo {
         const std::vector<char> get_block_positions();
         const std::vector<char> get_stairs_positions();
         const std::vector<char> get_spike_positions();
-        ~ScreenInfo();
+        ~StageInfo();
 };
 
 #endif //SCREENINFO_H

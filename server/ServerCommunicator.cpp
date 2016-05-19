@@ -70,30 +70,30 @@ std::string ServerCommunicator::receive_name() {
     return name;
 }
 
-void ServerCommunicator::send_screen_info(ScreenInfo* info) {
+void ServerCommunicator::send_screen_info(StageInfo* info) {
     std::vector<char> positions;
 
     positions = info->get_met_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
-        this->push_to_sender(new StageInfo(MET, positions[i]));
+        this->push_to_sender(new StageElement(MET, positions[i]));
     positions = info->get_bumby_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
-        this->push_to_sender(new StageInfo(BUMBY, positions[i]));
+        this->push_to_sender(new StageElement(BUMBY, positions[i]));
     positions = info->get_sniper_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
-        this->push_to_sender(new StageInfo(SNIPER, positions[i]));
+        this->push_to_sender(new StageElement(SNIPER, positions[i]));
     positions = info->get_jumping_sniper_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
-        this->push_to_sender(new StageInfo(JUMPING_SNIPER, positions[i]));
+        this->push_to_sender(new StageElement(JUMPING_SNIPER, positions[i]));
     positions = info->get_block_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
-        this->push_to_sender(new StageInfo(BLOCK, positions[i]));
+        this->push_to_sender(new StageElement(BLOCK, positions[i]));
     positions = info->get_stairs_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
-        this->push_to_sender(new StageInfo(STAIRS, positions[i]));
+        this->push_to_sender(new StageElement(STAIRS, positions[i]));
     positions = info->get_spike_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
-        this->push_to_sender(new StageInfo(SPIKE, positions[i]));
+        this->push_to_sender(new StageElement(SPIKE, positions[i]));
 }
 
 void ServerCommunicator::shutdown() {

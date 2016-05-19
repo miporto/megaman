@@ -2,10 +2,10 @@
 #define STAGE_H
 
 #include <vector>
-#include <common/ScreenInfo.h>
 
 #include "common/Thread.h"
 #include "Player.h"
+#include "common/StageInfo.h"
 #include "common/Packet.h"
 #include "Object.h"
 #include "Enemy.h"
@@ -25,15 +25,14 @@ class StageIDProtected {
 
 class Stage {
     private:
-        StageFactory factory;
+        const int id;
         std::vector<Player*>& players;
         std::vector<Enemy*> enemies;
         std::vector<Object*> objects;
-        int current_screen;
 
     public:
         Stage(char id, std::vector<Player*>& players);
-        ScreenInfo* next_screen();
+        StageInfo* get_stage_info();
         ~Stage();
 };
 

@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#include "common/ScreenInfo.h"
+#include "common/StageInfo.h"
 #include "Cannon.h"
 
 class EnergyTankFactory {
@@ -27,18 +27,15 @@ class AmmoFactory {
 };
 
 class StageFactory {
-private:
-    const char id;
+    private:
+        std::vector<char> positions_of_spawns
+                (const int stage_id, const int enemy_id);
+        std::vector<char> positions_of_objects
+                (const int stage_id, const int object_id);
 
-    std::vector<char> positions_of_spawns
-            (const int screen, const int enemy_id);
-    std::vector<char> positions_of_objects
-            (const int screen, const int object_id);
-
-public:
-    explicit StageFactory(char id);
-    ScreenInfo* screen_info(const int screen);
-    ~StageFactory();
+    public:
+        StageInfo* operator()(const int stage_id);
+        ~StageFactory();
 };
 
 #endif //FACTORY_H

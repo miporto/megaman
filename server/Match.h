@@ -18,7 +18,7 @@ class Match {
 
         bool has_host();
         void send_new_player_notification(std::string& name);
-        void send_screen_info(ScreenInfo* info);
+        void send_stage_info(StageInfo* info);
 
     public:
         explicit Match(std::vector<ServerCommunicator*>& communicators);

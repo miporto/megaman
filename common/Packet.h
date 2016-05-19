@@ -12,7 +12,7 @@
 typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,
-    STAGE_INFO
+    STAGE_ELEMENT
 } packet_id_t;
 
 typedef enum _stage_info_type_t {
@@ -58,20 +58,20 @@ class StagePick : public Packet {
         ~StagePick();
 };
 
-class StageInfo : public Packet {
+class StageElement : public Packet {
     private:
-        static const char id = STAGE_INFO;
+        static const char id = STAGE_ELEMENT;
         const char type;
         const char position;
 
     public:
-        explicit StageInfo(const char position);
-        StageInfo(const char type, const char position);
+        explicit StageElement(const char position);
+        StageElement(const char type, const char position);
         char get_id() const;
         char get_type() const;
         char get_position() const;
         std::string get_str() const;
-        ~StageInfo();
+        ~StageElement();
 };
 
 class PacketsProtected {

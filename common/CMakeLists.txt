@@ -13,8 +13,12 @@ set(SOURCES
     Receiver.cpp
     QuitProtected.h
     QuitProtected.cpp
+    Position.h
+    Position.cpp
     Packet.h
-    Packet.cpp ScreenInfo.h ScreenInfo.cpp Position.cpp Position.h)
+    Packet.cpp
+    StageInfo.h
+    StageInfo.cpp)
 
 include(CppLint)
 

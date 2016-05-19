@@ -17,11 +17,11 @@ char StageIDProtected::operator()() {
 StageIDProtected::~StageIDProtected() {}
 
 Stage::Stage(char id, std::vector<Player*>& players) :
-        factory(id), players(players), current_screen(0) {}
+        id(id), players(players) {}
 
-ScreenInfo* Stage::next_screen() {
-    this->current_screen++;
-    ScreenInfo* info = factory.screen_info(this->current_screen);
+StageInfo* Stage::get_stage_info() {
+    StageFactory factory;
+    StageInfo* info = factory(this->id);
     //TODO Actualizar vector de enemigos
     //TODO Actualizar vector de objetos
     return info;
