@@ -1,0 +1,14 @@
+{
+  "pi": 3.141,
+  "happy": true,
+  "name": "Nacho",
+  "nothing": null,
+  "answer": {
+    "everything": 42
+  },
+  "list": [{"x": 1, "y":2}, {"x": 3, "y":4}],
+  "object": {
+    "currency": "USD",
+    "value": 42.99
+  }
+}
