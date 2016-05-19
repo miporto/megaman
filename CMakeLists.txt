@@ -1,11 +1,9 @@
 cmake_minimum_required (VERSION 2.8.4)
 project (Megaman)
 
-set (CMAKE_CXX_STANDARD 98)
-
 if(CMAKE_COMPILER_IS_GNUCXX)
     # Errors and warnings.
-    set(CMAKE_CXX_FLAGS "-Wall -Werror -Wno-unused-parameter -Wextra -Wconversion -Wtype-limits -pedantic -pedantic-errors")
+    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Werror -Wno-unused-parameter -Wextra -Wconversion -Wtype-limits -pedantic -pedantic-errors")
     # Gtkmm
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-inline -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGDKMM_DISABLE_DEPRECATED -DGTKMM_DISABLE_DEPRECATED")
     # Valgrind and debug
@@ -27,4 +25,6 @@ include_directories(SYSTEM ${CAIROMM_INCLUDE_DIRS})
 include_directories(SYSTEM ${GTKMM3_INCLUDE_DIRS})
 add_subdirectory(client)
 add_subdirectory(common)
+add_subdirectory(extern)
+add_subdirectory(json_example)
 add_subdirectory(server)

@@ -14,11 +14,11 @@ void ClientReceiver::buffer_to_packet() {
 
     switch (id) {
         // Solo cases para los paquetes que pueden ser recibidos
-        case STAGE_INFO: {
+        case STAGE_ELEMENT: {
             char type, position;
             this->buffer >> type;
             this->buffer >> position;
-            this->packets.push(new StageInfo(type, position));
+            this->packets.push(new StageElement(type, position));
             break;
         } default:
             // Si el ID es desconocido, desecha el paquete
@@ -56,7 +56,7 @@ void ClientCommunicator::send_stage_pick(char& stage_id) {
     this->push_to_sender(new StagePick(stage_id));
 }
 
-ScreenInfo* ClientCommunicator::receive_stage_info() {
+StageInfo* ClientCommunicator::receive_stage_info() {
     std::vector<char> met_positions;
     std::vector<char> bumby_positions;
     std::vector<char> sniper_positions;
@@ -68,8 +68,8 @@ ScreenInfo* ClientCommunicator::receive_stage_info() {
     while (!this->packets_received.is_empty()) {
         Packet* packet = this->pop_from_receiver();
 
-        if (packet->get_id() == STAGE_INFO) {
-            StageInfo* stage_info = (StageInfo*) packet;
+        if (packet->get_id() == STAGE_ELEMENT) {
+            StageElement* stage_info = (StageElement*) packet;
             switch (stage_info->get_type()) {
                 case MET:
                     met_positions.push_back
@@ -106,7 +106,7 @@ ScreenInfo* ClientCommunicator::receive_stage_info() {
         delete packet;
     }
 
-    return new ScreenInfo(met_positions,
+    return new StageInfo(met_positions,
                           bumby_positions,
                           sniper_positions,
                           jumping_sniper_positions,
