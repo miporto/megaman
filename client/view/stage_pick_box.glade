@@ -14,10 +14,16 @@
         <property name="homogeneous">True</property>
         <child>
           <object class="GtkButton" id="button1">
-            <property name="label" translatable="yes">button</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage" id="image1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Bombsprite.png</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -30,10 +36,16 @@
         </child>
         <child>
           <object class="GtkButton" id="button2">
-            <property name="label" translatable="yes">button</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage" id="image2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Firesprite.png</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -58,10 +70,16 @@
         </child>
         <child>
           <object class="GtkButton" id="button3">
-            <property name="label" translatable="yes">button</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage" id="image3">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Sparksprite.png</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -86,10 +104,16 @@
         <property name="homogeneous">True</property>
         <child>
           <object class="GtkButton" id="button4">
-            <property name="label" translatable="yes">button</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage" id="image4">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Magnetsprite.png</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -102,10 +126,16 @@
         </child>
         <child>
           <object class="GtkButton" id="button5">
-            <property name="label" translatable="yes">button</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage" id="image5">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Ringsprite.png</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
