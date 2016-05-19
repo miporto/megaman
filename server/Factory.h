@@ -16,7 +16,7 @@ class EnergyTankFactory {
 
 class ProjectileFactory {
     public:
-        Projectile* operator()(const std::string& name);
+        Projectile* operator()(const std::string& name, Position& position);
         ~ProjectileFactory();
 };
 

@@ -15,8 +15,10 @@ int EnergyTankFactory::maximum_energy() {
 
 EnergyTankFactory::~EnergyTankFactory() {}
 
-Projectile* ProjectileFactory::operator()(const std::string& name) {
+Projectile* ProjectileFactory::operator()(const std::string& name,
+                                          Position& position) {
     //TODO leer .JSON
+    // TODO la position que se recibe es la inicial del proyectil
     return NULL;
 }
 

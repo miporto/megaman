@@ -1,7 +1,9 @@
+#include <string>
+
 #include "MegaMan.h"
 #include "Factory.h"
 
-EnergyTank::EnergyTank(int initial_lives, int max_energy) {
+EnergyTank::EnergyTank() {
     EnergyTankFactory factory;
     this->lives = factory.initial_lives();
     this->max_energy = factory.maximum_energy();
@@ -34,5 +36,31 @@ void EnergyTank::reset() {
 }
 
 EnergyTank::~EnergyTank() {}
+
+MegaMan::MegaMan() : position(0,0) {}
+
+void MegaMan::decrease_energy(int amount) {
+    this->tank.decrease_energy(amount);
+}
+
+bool MegaMan::is_dead() {
+    return this->tank.is_empty();
+}
+
+Projectile* MegaMan::shoot() {
+    return this->cannon.shoot(this->position);
+}
+
+void MegaMan::change_ammo(unsigned int ammo_id) {
+    this->cannon.change_current_ammo(ammo_id);
+}
+
+void MegaMan::receive_new_ammo(std::string& name) {
+    this->cannon.receive_new_ammo(name);
+}
+
+void MegaMan::move(int x_amount, int y_amount) {
+    this->position.move(x_amount, y_amount);
+}
 
 MegaMan::~MegaMan() {}

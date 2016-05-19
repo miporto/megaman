@@ -2,7 +2,9 @@
 #define MEGAMAN_H
 
 #include <vector>
+#include <string>
 
+#include "common/Position.h"
 #include "Cannon.h"
 
 class EnergyTank {
@@ -14,7 +16,7 @@ class EnergyTank {
         void reset();
 
     public:
-        EnergyTank(int initial_lives, int max_energy);
+        EnergyTank();
         void increase_energy(int amount);
         void decrease_energy(int amount);
         bool is_empty();
@@ -25,8 +27,18 @@ class MegaMan {
     private:
         EnergyTank tank;
         Cannon cannon;
+        Position position;
 
     public:
+        MegaMan();
+        void decrease_energy(int amount);
+        bool is_dead();
+        Projectile* shoot();
+        void change_ammo(unsigned int ammo_id);
+        void receive_new_ammo(std::string& name);
+        //x_amount y y_amount tienen que venir con sentido,
+        // ej: si retrocede x_amount es negativo
+        void move(int x_amount, int y_amount);
         ~MegaMan();
 };
 
