@@ -52,6 +52,10 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	std::cout << name.c_str() << std::endl;
     std::string sname = name.raw();
 	this->client.send_name(sname);
+	init_stage_pick_screen();
+	layout.remove(*insert_name);
+	layout.put(*stage_pick, 250, 0);
+	stage_pick->show();
 }
 
 void MainWindow::on_cancel_btn_clicked() {
@@ -104,6 +108,11 @@ void MainWindow::init_insert_name() {
 	}
 }
 
+void MainWindow::init_stage_pick_screen() {
+	stage_pick = NULL;
+	GtkBuilder builder = load_glade_file
+				("view/stage_pick_box.glade", &stage_pick);
+}
 
 MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename,
 		Gtk::Box** container) {
