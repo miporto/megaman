@@ -14,7 +14,9 @@ set(SOURCES
     QuitProtected.h
     QuitProtected.cpp
     Packet.h
-    Packet.cpp ScreenInfo.h ScreenInfo.cpp)
+    Packet.cpp
+    StageInfo.h
+    StageInfo.cpp)
 
 include(CppLint)
 

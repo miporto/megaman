@@ -30,8 +30,8 @@ std::vector<char> StageFactory::positions_of_objects
     return positions;
 }
 
-ScreenInfo* StageFactory::operator()(const int stage_id) {
-    //TODO crean ScreenInfo con metodos anteriores
+StageInfo* StageFactory::operator()(const int stage_id) {
+    //TODO crean StageInfo con metodos anteriores
     return NULL;
 }
 
@@ -40,9 +40,9 @@ StageFactory::~StageFactory() {}
 Stage::Stage(char id, std::vector<Player*>& players) :
         id(id), players(players) {}
 
-ScreenInfo* Stage::get_stage_info() {
+StageInfo* Stage::get_stage_info() {
     StageFactory factory;
-    ScreenInfo* info = factory(this->id);
+    StageInfo* info = factory(this->id);
     //TODO Actualizar vector de enemigos
     //TODO Actualizar vector de objetos
     return info;

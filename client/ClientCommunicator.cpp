@@ -54,7 +54,7 @@ void ClientCommunicator::send_stage_pick(char& stage_id) {
     this->push_to_sender(new StagePick(stage_id));
 }
 
-ScreenInfo* ClientCommunicator::receive_stage_info() {
+StageInfo* ClientCommunicator::receive_stage_info() {
     std::vector<char> met_positions;
     std::vector<char> bumby_positions;
     std::vector<char> sniper_positions;
@@ -104,7 +104,7 @@ ScreenInfo* ClientCommunicator::receive_stage_info() {
         delete packet;
     }
 
-    return new ScreenInfo(met_positions,
+    return new StageInfo(met_positions,
                           bumby_positions,
                           sniper_positions,
                           jumping_sniper_positions,

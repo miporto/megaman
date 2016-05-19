@@ -2,7 +2,7 @@
 #define COMMUNICATOR_H
 
 #include <string>
-#include <common/ScreenInfo.h>
+#include <common/StageInfo.h>
 
 #include "common/Receiver.h"
 #include "common/Packet.h"
@@ -35,7 +35,7 @@ class ClientCommunicator {
         explicit ClientCommunicator(SocketProtected& client);
         void send_name(std::string& name);
         void send_stage_pick(char& stage_id);
-        ScreenInfo* receive_stage_info();
+        StageInfo* receive_stage_info();
         virtual ~ClientCommunicator();
 };
 
