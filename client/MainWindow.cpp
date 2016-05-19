@@ -33,6 +33,16 @@ void MainWindow::on_new_game_btn_clicked() {
 	layout.put(*insert_name, 250, 0);
 }
 
+void MainWindow::on_about_btn_clicked() {
+	about_w = new AboutWindow();
+	about_w->show();
+}
+
+void MainWindow::on_exit_game_btn_clicked() {
+	std::cout << "Exit game" << std::endl;
+	unset_application();
+}
+
 void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	std::cout << "Client started" << std::endl;
 	this->client.connect_to_server();
@@ -44,17 +54,13 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	this->client.send_name(sname);
 }
 
-void MainWindow::on_about_btn_clicked() {
-	about_w = new AboutWindow();
-	about_w->show();
+void MainWindow::on_cancel_btn_clicked() {
+	std::cout << "Going back to welcome screen" << std::endl;
+	//insert_name->hide();
+	layout.remove(*insert_name);
+	layout.put(*welcome_screen, 250, 0);
+	welcome_screen->show();
 }
-
-void MainWindow::on_exit_game_btn_clicked() {
-	std::cout << "Exit game" << std::endl;
-	unset_application();
-}
-
-MainWindow::~MainWindow() {}
 
 void MainWindow::init_welcome_screen() {
 	welcome_screen = NULL;
@@ -91,7 +97,13 @@ void MainWindow::init_insert_name() {
 				sigc::bind<Gtk::Entry*>(sigc::mem_fun(*this, 
                         &MainWindow::on_confirm_name_btn_clicked), entry));
 	}
+	builder->get_widget("cancel_btn", btn);
+	if (btn) {
+		btn->signal_clicked().connect(
+				sigc::mem_fun(*this, &MainWindow::on_cancel_btn_clicked));
+	}
 }
+
 
 MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename,
 		Gtk::Box** container) {
@@ -111,3 +123,5 @@ MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename,
 	builder->get_widget(CONTAINER_NAME, *container);
 	return builder;
 }
+
+MainWindow::~MainWindow() {}
