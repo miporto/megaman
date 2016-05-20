@@ -1,14 +1,15 @@
-#ifndef GTKMM_MAINWINDOW_H
-#define GTKMM_MAINWINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <gtkmm/box.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 #include <gtkmm/window.h>
-#include <string>
 #include <gtkmm/image.h>
 #include <gtkmm/layout.h>
 #include <gtkmm/entry.h>
+#include <map>
+#include <string>
 
 #include "Client.h"
 #include "common/Socket.h"
@@ -16,6 +17,7 @@
 class MainWindow: public Gtk::Window {
 public:
 	MainWindow(const char* hostname, const char* port);
+	void process_signal(int signal);
 	virtual ~MainWindow();
 
 protected:
@@ -23,10 +25,10 @@ protected:
 	Gtk::Image bg_image;
 
 	Gtk::Box* welcome_screen;
+	Gtk::Box* about;
 	Gtk::Box* insert_name;
 	Gtk::Box* stage_pick;
 	Gtk::Box* loading;
-	Gtk::Box* about;
 
 	//Signal Handlers
 	void on_new_game_btn_clicked();
@@ -36,12 +38,13 @@ protected:
 	void on_cancel_btn_clicked();
 
 private:
-	typedef Glib::RefPtr<Gtk::Builder> GtkBuilder;
 	Client client;
-	
+	typedef std::map<int, Gtk::Box*> SignalsMap;
+	SignalsMap sig_map;
+	void init_signal_map();
 	void init_welcome_screen();
 	void init_insert_name();
 	void init_stage_pick_screen();
 };
 
-#endif  // GTKMM_MAINWINDOW_H
+#endif  // MAINWINDOW_H
