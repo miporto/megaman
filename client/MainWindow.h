@@ -45,7 +45,7 @@ private:
 	void init_welcome_screen();
 	void init_insert_name();
 	void init_stage_pick_screen();
-	GtkBuilder load_glade_file(std::string filename, Gtk::Box** container);
+	//GtkBuilder load_glade_file(std::string filename, Gtk::Box** container);
 };
 
 #endif  // GTKMM_MAINWINDOW_H

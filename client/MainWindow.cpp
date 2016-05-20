@@ -4,7 +4,9 @@
 #include <string>
 #include <gtkmm/entry.h>
 #include <gtkmm/entrybuffer.h>
+
 #include "AboutWindow.h"
+#include "GladeLoader.h"
 #include "MainWindow.h"
 
 #define CONTAINER_NAME "container"
@@ -46,11 +48,10 @@ void MainWindow::on_exit_game_btn_clicked() {
 void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	std::cout << "Client started" << std::endl;
 	this->client.connect_to_server();
-
 	Glib::RefPtr<const Gtk::EntryBuffer> buffer = text_entry->get_buffer();
 	Glib::ustring name = buffer->get_text();
 	std::cout << name.c_str() << std::endl;
-    std::string sname = name.raw();
+	std::string sname = name.raw();
 	this->client.send_name(sname);
 	init_stage_pick_screen();
 	layout.remove(*insert_name);
@@ -68,8 +69,10 @@ void MainWindow::on_cancel_btn_clicked() {
 
 void MainWindow::init_welcome_screen() {
 	welcome_screen = NULL;
-	GtkBuilder builder = load_glade_file
-			("view/welcome_screen.glade", &welcome_screen);
+	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
+			"view/welcome_screen.glade", &welcome_screen);
+//	GtkBuilder builder = load_glade_file("view/welcome_screen.glade",
+//			&welcome_screen);
 	Gtk::Button* btn = NULL;
 	builder->get_widget("start_game_btn", btn);
 	if (btn) {
@@ -90,16 +93,20 @@ void MainWindow::init_welcome_screen() {
 
 void MainWindow::init_insert_name() {
 	insert_name = NULL;
-	GtkBuilder builder = load_glade_file
-			("view/insert_name.glade", &insert_name);
+	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
+			"view/insert_name.glade", &insert_name);
+//	GtkBuilder builder = load_glade_file("view/insert_name.glade",
+//			&insert_name);
 	Gtk::Button* btn = NULL;
 	Gtk::Entry* entry = NULL;
 	builder->get_widget("name_entry", entry);
 	builder->get_widget("confirm_name_btn", btn);
 	if (btn) {
 		btn->signal_clicked().connect(
-				sigc::bind<Gtk::Entry*>(sigc::mem_fun(*this, 
-                        &MainWindow::on_confirm_name_btn_clicked), entry));
+				sigc::bind<Gtk::Entry*>(
+						sigc::mem_fun(*this,
+								&MainWindow::on_confirm_name_btn_clicked),
+						entry));
 	}
 	builder->get_widget("cancel_btn", btn);
 	if (btn) {
@@ -110,27 +117,30 @@ void MainWindow::init_insert_name() {
 
 void MainWindow::init_stage_pick_screen() {
 	stage_pick = NULL;
-	GtkBuilder builder = load_glade_file
-				("view/stage_pick_box.glade", &stage_pick);
+	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
+			"view/stage_pick_box.glade", &stage_pick);
+//	GtkBuilder builder = load_glade_file("view/stage_pick_box.glade",
+//			&stage_pick);
 }
 
-MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename,
-		Gtk::Box** container) {
-	GtkBuilder builder = Gtk::Builder::create();
-	try {
-		builder->add_from_file(filename);
-	} catch (const Glib::FileError& ex) {
-		std::cerr << "FileError: " << ex.what() << std::endl;
-	} catch (const Glib::MarkupError& ex) {
-		std::cerr << "MarkupError: " << ex.what() << std::endl;
-	} catch (const Gtk::BuilderError& ex) {
-		std::cerr << "BuilderError: " << ex.what() << std::endl;
-	}
+//MainWindow::GtkBuilder MainWindow::load_glade_file(std::string filename,
+//		Gtk::Box** container) {
+//	GtkBuilder builder = Gtk::Builder::create();
+//	try {
+//		builder->add_from_file(filename);
+//	} catch (const Glib::FileError& ex) {
+//		std::cerr << "FileError: " << ex.what() << std::endl;
+//	} catch (const Glib::MarkupError& ex) {
+//		std::cerr << "MarkupError: " << ex.what() << std::endl;
+//	} catch (const Gtk::BuilderError& ex) {
+//		std::cerr << "BuilderError: " << ex.what() << std::endl;
+//	}
+//
+//	// All glade files loaded **must** have a top level container
+//	// (not a window, of any kind) named as CONTAINER_NAME
+//	builder->get_widget(CONTAINER_NAME, *container);
+//	return builder;
+//}
 
-	// All glade files loaded **must** have a top level container
-	// (not a window, of any kind) named as CONTAINER_NAME
-	builder->get_widget(CONTAINER_NAME, *container);
-	return builder;
+MainWindow::~MainWindow() {
 }
-
-MainWindow::~MainWindow() {}

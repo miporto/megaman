@@ -8,7 +8,6 @@
 class GladeLoader {
     public:
         typedef Glib::RefPtr<Gtk::Builder> ScreenBuilder;
-
         static ScreenBuilder load_glade_file
                 (std::string filename, Gtk::Box** container);
 };
