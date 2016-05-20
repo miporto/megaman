@@ -11,10 +11,10 @@ class MainWindow;
 
 class AboutScreen: public Gtk::Box {
 private:
-	MainWindow& main_w;
+	MainWindow* main_w;
 	void on_exit_btn_clicked();
 public:
-	explicit AboutScreen(MainWindow& main_w);
+	explicit AboutScreen(MainWindow* main_w);
 	virtual ~AboutScreen();
 };
 

@@ -5,8 +5,10 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/entrybuffer.h>
 
+#include "AboutScreen.h"
 #include "GladeLoader.h"
 #include "MainWindow.h"
+#include "SignalProtocol.h"
 
 #define CONTAINER_NAME "container"
 
@@ -27,15 +29,29 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 	show_all();
 }
 
+void MainWindow::init_signal_map() {
+	sig_map[ABOUT_BACK] = welcome_screen;
+}
+
+void MainWindow::process_signal(int signal) {
+	sig_map[signal]->show();
+}
+
 void MainWindow::on_new_game_btn_clicked() {
-	std::cout << "" << std::endl;
+	std::cout << std::endl;
 	layout.remove(*welcome_screen);
+	//welcome_screen->hide();
 	init_insert_name();
 	layout.put(*insert_name, 250, 0);
 }
 
 void MainWindow::on_about_btn_clicked() {
-	return;
+	//welcome_screen->hide();
+	layout.remove(*welcome_screen);
+	about = (Gtk::Box*) new AboutScreen(this);
+	layout.put(*about, 250, 0);
+	//layout.show_all();
+	//about->show();
 }
 
 void MainWindow::on_exit_game_btn_clicked() {
