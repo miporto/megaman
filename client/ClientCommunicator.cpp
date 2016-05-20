@@ -31,11 +31,10 @@ void ClientReceiver::buffer_to_packet() {
 ClientReceiver::~ClientReceiver() {}
 
 ClientCommunicator::ClientCommunicator(SocketProtected& client)
-        : client(this->client),
-          sender(this->client, this->packets_to_send, this->quit),
-          receiver(this->client, this->packets_received, this->quit) {}
+        : sender(client, this->packets_to_send, this->quit),
+          receiver(client, this->packets_received, this->quit) {}
 
-void ClientCommunicator::start_communication() {
+void ClientCommunicator::start_communication() { //TODO vuela vuela
     this->sender.start();
     this->receiver.start();
 }

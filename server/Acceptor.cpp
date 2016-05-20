@@ -1,4 +1,5 @@
 #include <cstring>
+#include <iostream>
 
 #include "Acceptor.h"
 
@@ -10,8 +11,10 @@ void Acceptor::run() {
     while (!this->quit()) {
         try {
             peers_fd = this->server.accept();
+            std::cout << "Accepted with fd: " << peers_fd << std::endl;
         }
         catch (const SocketError& e) {
+            std::cout << e.what() << std::endl;
             break;
         }
         try {

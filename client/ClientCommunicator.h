@@ -21,7 +21,6 @@ class ClientReceiver : public Receiver {
 
 class ClientCommunicator {
     private:
-        SocketProtected& client;
         QuitProtected quit;
         PacketsProtected packets_to_send;
         Sender sender;
