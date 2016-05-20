@@ -8,13 +8,14 @@
 
 class Client {
     private:
-        SocketProtected& client;
+		const char* hostname;
+		const char* port;
+        SocketProtected client;
         ClientCommunicator communicator;
 
-        void connect_to_server(const char* hostname, const char* port);
-
     public:
-        Client(SocketProtected& client, const char* hostname, const char* port);
+        Client(const char* hostname, const char* port);
+        void connect_to_server();
         void send_name(std::string& name);
         void pick_stage(char& stage_id);
         ~Client();

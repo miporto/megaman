@@ -39,6 +39,7 @@ void Socket::operator()(struct addrinfo* info) {
 }
 
 Socket::~Socket() {
+	if (!this->fd) return;
 	close(this->fd);
 }
 
@@ -98,6 +99,7 @@ void Socket::receive(char* buffer, ssize_t size) {
 }
 
 void Socket::shutdown() {
+	if (!this->fd) return;
 	if (::shutdown(this->fd, SHUT_RDWR) == ERROR_CODE)
 		throw SocketError();
 }

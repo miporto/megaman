@@ -1,19 +1,22 @@
 #include <cstdlib>
+#include <gtkmm/application.h>
 
 #include "common/Socket.h"
 #include "Client.h"
+#include "MainWindow.h"
 
 #define HOSTNAME_POS 1
 #define PORT_POS 2
 #define ARGS_LEN 3
 
 int main(int argc, char** argv) {
-    if (argc != ARGS_LEN)
-        return EXIT_FAILURE;
-    SocketProtected skt;
-    Client client(skt, argv[HOSTNAME_POS], argv[PORT_POS]);
+	if (argc != ARGS_LEN)
+		return EXIT_FAILURE;
 
-    //TODO
-
-    return EXIT_SUCCESS;
+	int argc1 = 1;
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create
+		(argc1, argv, "org.gtkmm.megaman");
+	// Shows the window and returns when it is closed.
+	MainWindow mainwindow(argv[HOSTNAME_POS], argv[PORT_POS]);
+	return app->run(mainwindow);
 }

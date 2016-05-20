@@ -33,6 +33,7 @@ class ClientCommunicator {
 
     public:
         explicit ClientCommunicator(SocketProtected& client);
+        void start_communication();
         void send_name(std::string& name);
         void send_stage_pick(char& stage_id);
         StageInfo* receive_stage_info();
