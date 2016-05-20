@@ -10,7 +10,7 @@ class Client {
     private:
 		const char* hostname;
 		const char* port;
-        SocketProtected client;
+        Socket client;
         ClientCommunicator communicator;
 
     public:

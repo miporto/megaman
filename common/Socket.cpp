@@ -87,7 +87,7 @@ void Socket::receive(char* buffer, size_t size) {
 	received = received_now = 0;
 	bool valid_socket = true;
 
-	while (received < size && valid_socket) {
+	while (received < (signed)size && valid_socket) {
 		received_now = recv(this->fd, &buffer[received],
 							size - received, MSG_NOSIGNAL);
       
@@ -104,32 +104,4 @@ void Socket::shutdown() {
 	if (!this->fd) return;
 	if (::shutdown(this->fd, SHUT_RDWR) == ERROR_CODE)
 		throw SocketError();
-}
-
-SocketProtected::SocketProtected() {}
-
-SocketProtected::SocketProtected(int fd) : socket(fd) {}
-
-void SocketProtected::operator()(struct addrinfo* info) {
-	this->socket(info);
-}
-
-SocketProtected::~SocketProtected() {}
-
-void SocketProtected::connect(struct addrinfo* info) {
-	this->socket.connect(info);
-}
-
-void SocketProtected::send(const char* buffer, size_t size) {
-	Lock l(this->m);
-	this->socket.send(buffer, size);
-}
-
-void SocketProtected::receive(char* buffer, size_t size) {
-	Lock l(this->m);
-	this->socket.receive(buffer, size);
-}
-
-void SocketProtected::shutdown() {
-	this->socket.shutdown();
 }

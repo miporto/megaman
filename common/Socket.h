@@ -36,20 +36,4 @@ class Socket {
 		void shutdown();
 };
 
-class SocketProtected {
-	private:
-		Mutex m;
-		Socket socket;
-
-	public:
-		SocketProtected();
-		explicit SocketProtected(int fd);
-		void operator()(struct addrinfo* info);
-		~SocketProtected();
-		void connect(struct addrinfo* info);
-		void send(const char* buffer, size_t size);
-		void receive(char* buffer, size_t size);
-		void shutdown();
-};
-
 #endif // SOCKET_H

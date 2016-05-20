@@ -4,7 +4,8 @@
 
 Packet::~Packet() {}
 
-NewPlayer::NewPlayer(const std::string name) : name(name) {}
+NewPlayer::NewPlayer(const std::string name) :
+        name(name.substr(0, NAME_LENGTH)) {}
 
 const std::string NewPlayer::get_name() const { return this->name; }
 

@@ -11,19 +11,20 @@
 #include "common/Sender.h"
 
 class ClientReceiver : public Receiver {
+    private:
+        void receive_packet(const char id);
     public:
-        ClientReceiver(SocketProtected& socket,
+        ClientReceiver(Socket& socket,
                        PacketsProtected& packets,
                        QuitProtected& quit);
-        void buffer_to_packet();
         ~ClientReceiver();
 };
 
 class ClientCommunicator {
     private:
+        Socket& socket;
         QuitProtected quit;
         PacketsProtected packets_to_send;
-        Sender sender;
         PacketsProtected packets_received;
         ClientReceiver receiver;
 
@@ -31,8 +32,7 @@ class ClientCommunicator {
         void push_to_sender(Packet* packet);
 
     public:
-        explicit ClientCommunicator(SocketProtected& client);
-        void start_communication();
+        explicit ClientCommunicator(Socket& socket);
         void send_name(std::string& name);
         void send_stage_pick(char& stage_id);
         StageInfo* receive_stage_info();
