@@ -10,7 +10,6 @@
 #include <gtkmm/layout.h>
 #include <gtkmm/entry.h>
 
-#include "AboutWindow.h"
 #include "Client.h"
 #include "common/Socket.h"
 
@@ -28,8 +27,6 @@ protected:
 	Gtk::Box* stage_pick;
 	Gtk::Box* loading;
 	Gtk::Box* about;
-
-	AboutWindow* about_w;
 
 	//Signal Handlers
 	void on_new_game_btn_clicked();

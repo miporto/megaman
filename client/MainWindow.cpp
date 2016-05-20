@@ -5,7 +5,6 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/entrybuffer.h>
 
-#include "AboutWindow.h"
 #include "GladeLoader.h"
 #include "MainWindow.h"
 
@@ -36,8 +35,7 @@ void MainWindow::on_new_game_btn_clicked() {
 }
 
 void MainWindow::on_about_btn_clicked() {
-	about_w = new AboutWindow();
-	about_w->show();
+	return;
 }
 
 void MainWindow::on_exit_game_btn_clicked() {
