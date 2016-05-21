@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#include "common/Position.h"
+#include "Position.h"
 #include "Cannon.h"
 
 class EnergyTank {

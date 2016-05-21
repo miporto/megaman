@@ -1,7 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "common/Position.h"
+#include "Position.h"
 #include "MegaMan.h"
 
 class Object {
