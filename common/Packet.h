@@ -22,7 +22,8 @@ typedef enum _stage_info_type_t {
     JUMPING_SNIPER,
     BLOCK,
     STAIRS,
-    SPIKE
+    SPIKE,
+    CLIFF
 } stage_info_type_t;
 
 class Packet {

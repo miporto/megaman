@@ -1,31 +1,45 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include "common/Position.h"
+#include "MegaMan.h"
+
 class Object {
-    private:
-        const char position;
+    protected:
+        const Position position;
 
     public:
-        explicit Object(const char position);
+        Object(const int x, const int y);
+        virtual void interact(MegaMan& mm) = 0;
         virtual ~Object();
 };
 
 class Stairs : public Object {
     public:
-        explicit Stairs(const char position);
+        Stairs(const int x, const int y);
+        void interact(MegaMan& mm);
         ~Stairs();
 };
 
 class Spike : public Object {
     public:
-        explicit Spike(const char position);
+        Spike(const int x, const int y);
+        void interact(MegaMan& mm);
         ~Spike();
 };
 
 class Block : public Object {
     public:
-        explicit Block(const char position);
+        Block(const int x, const int y);
+        void interact(MegaMan& mm);
         ~Block();
+};
+
+class Cliff : public Object {
+    public:
+        Cliff(const int x, const int y);
+        void interact(MegaMan& mm);
+        ~Cliff();
 };
 
 #endif //OBJECT_H

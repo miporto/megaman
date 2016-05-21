@@ -94,6 +94,9 @@ void ServerCommunicator::send_screen_info(StageInfo* info) {
     positions = info->get_spike_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->push_to_sender(new StageElement(SPIKE, positions[i]));
+    positions = info->get_cliff_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageElement(CLIFF, positions[i]));
 }
 
 void ServerCommunicator::shutdown() {

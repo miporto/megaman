@@ -64,6 +64,7 @@ StageInfo* ClientCommunicator::receive_stage_info() {
     std::vector<char> block_positions;
     std::vector<char> stairs_positions;
     std::vector<char> spike_positions;
+    std::vector<char> cliff_positions;
 
     while (!this->packets_received.is_empty()) {
         Packet* packet = this->pop_from_receiver();
@@ -99,6 +100,10 @@ StageInfo* ClientCommunicator::receive_stage_info() {
                     spike_positions.push_back
                             (stage_info->get_position());
                     break;
+                case CLIFF:
+                    cliff_positions.push_back
+                            (stage_info->get_position());
+                    break;
                 default:
                     break;
             }
@@ -112,7 +117,8 @@ StageInfo* ClientCommunicator::receive_stage_info() {
                           jumping_sniper_positions,
                           block_positions,
                           stairs_positions,
-                          spike_positions);
+                          spike_positions,
+                         cliff_positions);
 }
 
 ClientCommunicator::~ClientCommunicator() {}

@@ -11,6 +11,8 @@ class Position {
         Position(int x, int y);
         void move(int x_amount, int y_amount);
         std::pair<int, int> get_position();
+        void reset();
+        bool operator==(const Position& other) const;
         ~Position();
 };
 

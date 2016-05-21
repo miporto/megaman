@@ -13,4 +13,13 @@ std::pair<int, int> Position::get_position() {
     return std::make_pair(this->x, this->y);
 }
 
+void Position::reset() {
+    this->x = 0;
+    this->y = 0;
+}
+
+bool Position::operator==(const Position& other) const {
+    return (this->x == other.x && this->y == other.y);
+}
+
 Position::~Position() {}
