@@ -3,44 +3,36 @@
 
 #include "ServerCommunicator.h"
 
-ServerReceiver::ServerReceiver(SocketProtected& peer,
+ServerReceiver::ServerReceiver(Socket& peer,
                                PacketsProtected& packets,
                                QuitProtected& quit)
         : Receiver(peer, packets, quit) {}
 
-void ServerReceiver::buffer_to_packet() {
-    char id;
-    this->buffer >> id;
-
+void ServerReceiver::receive_packet(const char id) {
     switch (id) {
         // Solo cases para los paquetes que pueden ser recibidos
         case NEW_PLAYER: {
-            std::string name;
-            this->buffer >> name;
+            char name[NAME_LENGTH + 1];
+            name[NAME_LENGTH] = '\0';
+            this->socket.receive(name, sizeof(char) * NAME_LENGTH);
             this->packets.push(new NewPlayer(name));
             break;
         } case STAGE_PICK: {
             char stage_id;
-            this->buffer >> stage_id;
+            this->socket.receive(&stage_id, sizeof(char));
             this->packets.push(new StagePick(stage_id));
             break;
         } default:
             // Si el ID es desconocido, desecha el paquete
             break;
     }
-
-    this->buffer.str("");
 }
 
 ServerReceiver::~ServerReceiver() {}
 
 ServerCommunicator::ServerCommunicator(int fd)
     : peer(fd),
-      sender(peer, packets_to_send, quit),
-      receiver(peer, packets_received, quit) {
-    this->sender.start();
-    this->receiver.start();
-}
+      receiver(peer, packets_received, quit) {}
 
 Packet* ServerCommunicator::pop_from_receiver() {
     return this->packets_received.pop();
@@ -55,18 +47,17 @@ void ServerCommunicator::send_new_player_notification(const std::string& name) {
 }
 
 std::string ServerCommunicator::receive_name() {
-    std::string name;
-    bool received = false;
-    while (!received) {
-        if (!this->packets_received.is_empty()) {
-            Packet *packet = this->pop_from_receiver();
-            if (packet->get_id() == NEW_PLAYER) {
-                name = ((NewPlayer*) packet)->get_name();
-                received = true;
-            }
-            delete packet;
+    this->receiver.run();
+
+    std::string name("");
+    if (!this->packets_received.is_empty()) {
+        Packet *packet = this->pop_from_receiver();
+        if (packet->get_id() == NEW_PLAYER) {
+            name = ((NewPlayer*) packet)->get_name();
         }
+        delete packet;
     }
+
     return name;
 }
 
@@ -97,6 +88,8 @@ void ServerCommunicator::send_screen_info(StageInfo* info) {
     positions = info->get_cliff_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->push_to_sender(new StageElement(CLIFF, positions[i]));
+
+    Sender s(this->peer, this->packets_to_send, this->quit);
 }
 
 void ServerCommunicator::shutdown() {
@@ -107,19 +100,19 @@ void ServerCommunicator::shutdown() {
 ServerCommunicator::~ServerCommunicator() {
     this->quit.switch_to_true();
     this->peer.shutdown();
-    this->sender.join();
-    this->receiver.join();
 }
 
 HostCommunicator::HostCommunicator(int fd, StageIDProtected& stage_id)
     : ServerCommunicator(fd), stage_id(stage_id) {}
 
-char HostCommunicator::check_stage_pick() {
+char HostCommunicator::receive_stage_pick() {
+    this->receiver.run();
+
     char stage_id = 0;
-    if (!this->packets_received.is_empty()) {
+    while (!this->packets_received.is_empty()) {
         Packet* packet = this->pop_from_receiver();
         if (packet->get_id() == STAGE_PICK)
-            stage_id = ((StagePick*)packet)->get_stage_id();
+            stage_id = ((StagePick *) packet)->get_stage_id();
         delete packet;
     }
     return stage_id;
@@ -128,8 +121,8 @@ char HostCommunicator::check_stage_pick() {
 void HostCommunicator::run() {
     char stage_id;
     do {
-        stage_id = this->check_stage_pick();
-    } while (!stage_id);
+        stage_id = this->receive_stage_pick();
+    } while (!this->quit() && !stage_id);
     this->stage_id.set_id(stage_id);
 }
 

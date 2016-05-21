@@ -8,18 +8,19 @@
 #include "Packet.h"
 #include "QuitProtected.h"
 
-class Receiver : public Thread {
+class Receiver {
     protected:
-        SocketProtected& socket;
-        std::stringstream buffer;
+        Socket& socket;
         PacketsProtected& packets;
         QuitProtected& quit;
 
+        virtual void receive_packet(const char id) = 0;
+
     public:
-        Receiver(SocketProtected& socket,
+        Receiver(Socket& socket,
                  PacketsProtected& packets,
                  QuitProtected& quit);
-        virtual void buffer_to_packet() = 0;
+
         void run();
         virtual ~Receiver();
 };

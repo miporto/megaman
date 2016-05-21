@@ -13,20 +13,20 @@
 #include "Stage.h"
 
 class ServerReceiver : public Receiver {
+    private:
+        void receive_packet(const char id);
     public:
-        ServerReceiver(SocketProtected& peer,
+        ServerReceiver(Socket& peer,
                      PacketsProtected& packets,
                      QuitProtected& quit);
-        void buffer_to_packet();
         ~ServerReceiver();
 };
 
 class ServerCommunicator {
     protected:
-        SocketProtected peer;
+        Socket peer;
         QuitProtected quit;
         PacketsProtected packets_to_send;
-        Sender sender;
         PacketsProtected packets_received;
         ServerReceiver receiver;
 
@@ -45,10 +45,10 @@ class ServerCommunicator {
 class HostCommunicator : public ServerCommunicator, public Thread {
     private:
         StageIDProtected& stage_id;
+        char receive_stage_pick();
 
     public:
         HostCommunicator(int fd, StageIDProtected& stage_id);
-        char check_stage_pick();
         void run();
         ~HostCommunicator();
 };

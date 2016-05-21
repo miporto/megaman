@@ -1,23 +1,23 @@
+#include <iostream>
 #include "Receiver.h"
 
-Receiver::Receiver(SocketProtected& socket,
+Receiver::Receiver(Socket& socket,
                    PacketsProtected& packets,
                    QuitProtected& quit)
         : socket(socket), packets(packets), quit(quit) {}
 
 void Receiver::run() {
-    char c;
-    while (!this->quit()) {
+    char packet_id = 0;
+    while (!this->quit() && packet_id != '\n') {
         try {
-            this->socket.receive(&c, sizeof(char));
+            std::cout << "Receiving" << std::endl;
+            this->socket.receive(&packet_id, sizeof(char));
         }
         catch (const SocketError& e) {
+            std::cout << e.what() << std::endl;
             continue;
         }
-
-        this->buffer << c;
-        if (c == '\n')
-            buffer_to_packet();
+        this->receive_packet(packet_id);
     }
 }
 

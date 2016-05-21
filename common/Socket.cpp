@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <iostream>
 
 #include "Socket.h"
 
@@ -63,14 +64,15 @@ int Socket::accept() {
 	return new_fd;
 }
 
-void Socket::send(const char* buffer, ssize_t size) {
+void Socket::send(const char* buffer, size_t size) {
 	ssize_t sent, sent_now;
-	sent = sent_now  = 0;
+	sent = sent_now = 0;
 	bool valid_socket = true;
 
-	while (sent < size && valid_socket) {
+	while (sent < (signed)size && valid_socket) {
+		std::cout << "My fd: " << this->fd << std::endl;
 		sent_now = ::send(this->fd, &buffer[sent], size - sent, MSG_NOSIGNAL);
-		
+		std::cout << "Bytes sent: " << sent_now << std::endl;
 		if (!sent_now || sent_now == ERROR_CODE)
 			valid_socket = false;
 		else
@@ -80,14 +82,16 @@ void Socket::send(const char* buffer, ssize_t size) {
 	if (!valid_socket) throw SocketError();
 }
 
-void Socket::receive(char* buffer, ssize_t size) {
+void Socket::receive(char* buffer, size_t size) {
 	ssize_t received, received_now;
 	received = received_now = 0;
 	bool valid_socket = true;
 
-	while (received < size && valid_socket) {
+	while (received < (signed)size && valid_socket) {
+		std::cout << "My fd: " << this->fd << std::endl;
 		received_now = recv(this->fd, &buffer[received],
 							size - received, MSG_NOSIGNAL);
+		std::cout << "Bytes received: " << received_now << std::endl;
       
 		if (!received_now || received_now == ERROR_CODE)
 			valid_socket = false;
@@ -102,32 +106,4 @@ void Socket::shutdown() {
 	if (!this->fd) return;
 	if (::shutdown(this->fd, SHUT_RDWR) == ERROR_CODE)
 		throw SocketError();
-}
-
-SocketProtected::SocketProtected() {}
-
-SocketProtected::SocketProtected(int fd) : socket(fd) {}
-
-void SocketProtected::operator()(struct addrinfo* info) {
-	this->socket(info);
-}
-
-SocketProtected::~SocketProtected() {}
-
-void SocketProtected::connect(struct addrinfo* info) {
-	this->socket.connect(info);
-}
-
-void SocketProtected::send(const char* buffer, ssize_t size) {
-	Lock l(this->m);
-	this->socket.send(buffer, size);
-}
-
-void SocketProtected::receive(char* buffer, ssize_t size) {
-	Lock l(this->m);
-	this->socket.receive(buffer, size);
-}
-
-void SocketProtected::shutdown() {
-	this->socket.shutdown();
 }

@@ -31,24 +31,8 @@ class Socket {
 		void bind_and_listen(struct addrinfo* info);
 		void connect(struct addrinfo* info);
 		int accept();
-		void send(const char* buffer, ssize_t size);
-		void receive(char* buffer, ssize_t size);
-		void shutdown();
-};
-
-class SocketProtected {
-	private:
-		Mutex m;
-		Socket socket;
-
-	public:
-		SocketProtected();
-		explicit SocketProtected(int fd);
-		void operator()(struct addrinfo* info);
-		~SocketProtected();
-		void connect(struct addrinfo* info);
-		void send(const char* buffer, ssize_t size);
-		void receive(char* buffer, ssize_t size);
+		void send(const char* buffer, size_t size);
+		void receive(char* buffer, size_t size);
 		void shutdown();
 };
 

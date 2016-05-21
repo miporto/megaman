@@ -3,42 +3,31 @@
 
 #include "client/ClientCommunicator.h"
 
-ClientReceiver::ClientReceiver(SocketProtected& socket,
+ClientReceiver::ClientReceiver(Socket& socket,
                                PacketsProtected& packets,
                                QuitProtected& quit)
         : Receiver(socket, packets, quit) {}
 
-void ClientReceiver::buffer_to_packet() {
-    char id;
-    this->buffer >> id;
-
+void ClientReceiver::receive_packet(const char id) {
     switch (id) {
         // Solo cases para los paquetes que pueden ser recibidos
         case STAGE_ELEMENT: {
             char type, position;
-            this->buffer >> type;
-            this->buffer >> position;
+            this->socket.receive(&type, sizeof(char));
+            this->socket.receive(&position, sizeof(char));
             this->packets.push(new StageElement(type, position));
             break;
         } default:
             // Si el ID es desconocido, desecha el paquete
             break;
     }
-
-    this->buffer.str("");
 }
 
 ClientReceiver::~ClientReceiver() {}
 
-ClientCommunicator::ClientCommunicator(SocketProtected& client)
-        : client(this->client),
-          sender(this->client, this->packets_to_send, this->quit),
-          receiver(this->client, this->packets_received, this->quit) {}
-
-void ClientCommunicator::start_communication() {
-    this->sender.start();
-    this->receiver.start();
-}
+ClientCommunicator::ClientCommunicator(Socket& socket)
+        : socket(socket),
+          receiver(socket, this->packets_received, this->quit) {}
 
 Packet* ClientCommunicator::pop_from_receiver() {
     return this->packets_received.pop();
@@ -46,6 +35,7 @@ Packet* ClientCommunicator::pop_from_receiver() {
 
 void ClientCommunicator::push_to_sender(Packet* packet) {
     this->packets_to_send.push(packet);
+    Sender s(this->socket, this->packets_to_send, this->quit);
 }
 
 void ClientCommunicator::send_name(std::string& name) {
@@ -65,6 +55,8 @@ StageInfo* ClientCommunicator::receive_stage_info() {
     std::vector<char> stairs_positions;
     std::vector<char> spike_positions;
     std::vector<char> cliff_positions;
+
+    this->receiver.run();
 
     while (!this->packets_received.is_empty()) {
         Packet* packet = this->pop_from_receiver();
