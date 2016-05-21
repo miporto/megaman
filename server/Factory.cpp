@@ -31,16 +31,16 @@ Ammo* AmmoFactory::operator()(const std::string& name) {
 
 AmmoFactory::~AmmoFactory() {}
 
-std::vector<char> StageFactory::positions_of_spawns
+std::vector<Position*> StageFactory::positions_of_spawns
         (const int stage_id, const int enemy_id) {
-    std::vector<char> positions;
+    std::vector<Position*> positions;
     //TODO leer .JSON
     return positions;
 }
 
-std::vector<char> StageFactory::positions_of_objects
+std::vector<Position*> StageFactory::positions_of_objects
         (const int stage_id, const int object_id) {
-    std::vector<char> positions;
+    std::vector<Position*> positions;
     //TODO leer .JSON
     return positions;
 }

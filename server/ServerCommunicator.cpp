@@ -62,7 +62,7 @@ std::string ServerCommunicator::receive_name() {
 }
 
 void ServerCommunicator::send_screen_info(StageInfo* info) {
-    std::vector<char> positions;
+    std::vector<Position*> positions;
 
     positions = info->get_met_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)

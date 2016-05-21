@@ -3,7 +3,13 @@
 
 #include <string>
 
-class Position {
+class Clonable {
+    public:
+        virtual Clonable* clone() const = 0;
+        virtual ~Clonable() {}
+};
+
+class Position : public Clonable {
     private:
         int x, y;
 
@@ -12,7 +18,8 @@ class Position {
         void move(int x_amount, int y_amount);
         void reset();
         bool operator==(const Position& other) const;
-        std::string str();
+        std::string str() const;
+        Position* clone() const;
         ~Position();
 };
 

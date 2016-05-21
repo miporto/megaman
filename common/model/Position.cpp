@@ -18,11 +18,13 @@ bool Position::operator==(const Position& other) const {
     return (this->x == other.x && this->y == other.y);
 }
 
-std::string Position::str() {
+std::string Position::str() const {
     std::string str;
     str.append((char*)&this->x);
     str.append((char*)&this->y);
     return str;
 }
+
+Position* Position::clone() const { return new Position(*this); }
 
 Position::~Position() {}

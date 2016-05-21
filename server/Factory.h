@@ -28,9 +28,9 @@ class AmmoFactory {
 
 class StageFactory {
     private:
-        std::vector<char> positions_of_spawns
+        std::vector<Position*> positions_of_spawns
                 (const int stage_id, const int enemy_id);
-        std::vector<char> positions_of_objects
+        std::vector<Position*> positions_of_objects
                 (const int stage_id, const int object_id);
 
     public:

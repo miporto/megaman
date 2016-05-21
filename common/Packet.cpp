@@ -38,26 +38,31 @@ std::string StagePick::get_str() const {
 
 StagePick::~StagePick() {}
 
-StageElement::StageElement(const char position) : type(0), position(position) {}
+StageElement::StageElement(Position* position) : type(0), position(position) {}
 
-StageElement::StageElement(const char type, const char position) :
+StageElement::StageElement(const char type, Position* position) :
         type(type), position(position) {}
 
 char StageElement::get_id() const { return this->id; }
 
 char StageElement::get_type() const { return this->type; }
 
-char StageElement::get_position() const { return this->position; }
+Position* StageElement::get_position() const {
+    Position* position_clone = this->position->clone();
+    return position_clone;
+}
 
 std::string StageElement::get_str() const {
     std::string str;
     str.push_back(this->id);
     str.push_back(this->type);
-    str.push_back(this->position);
+    str.append(this->position->str());
     return str;
 }
 
-StageElement::~StageElement() {}
+StageElement::~StageElement() {
+    delete this->position;
+}
 
 Packet* PacketsProtected::pop() {
     Lock l(this->m);

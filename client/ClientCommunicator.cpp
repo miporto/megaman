@@ -12,10 +12,12 @@ void ClientReceiver::receive_packet(const char id) {
     switch (id) {
         // Solo cases para los paquetes que pueden ser recibidos
         case STAGE_ELEMENT: {
-            char type, position;
+            char type;
+            int x, y;
             this->socket.receive(&type, sizeof(char));
-            this->socket.receive(&position, sizeof(char));
-            this->packets.push(new StageElement(type, position));
+            this->socket.receive((char*)&x, sizeof(int));
+            this->socket.receive((char*)&y, sizeof(int));
+            this->packets.push(new StageElement(type, new Position(x, y)));
             break;
         } default:
             // Si el ID es desconocido, desecha el paquete
@@ -47,14 +49,14 @@ void ClientCommunicator::send_stage_pick(char& stage_id) {
 }
 
 StageInfo* ClientCommunicator::receive_stage_info() {
-    std::vector<char> met_positions;
-    std::vector<char> bumby_positions;
-    std::vector<char> sniper_positions;
-    std::vector<char> jumping_sniper_positions;
-    std::vector<char> block_positions;
-    std::vector<char> stairs_positions;
-    std::vector<char> spike_positions;
-    std::vector<char> cliff_positions;
+    std::vector<Position*> met_positions;
+    std::vector<Position*> bumby_positions;
+    std::vector<Position*> sniper_positions;
+    std::vector<Position*> jumping_sniper_positions;
+    std::vector<Position*> block_positions;
+    std::vector<Position*> stairs_positions;
+    std::vector<Position*> spike_positions;
+    std::vector<Position*> cliff_positions;
 
     this->receiver.run();
 
@@ -62,39 +64,39 @@ StageInfo* ClientCommunicator::receive_stage_info() {
         Packet* packet = this->pop_from_receiver();
 
         if (packet->get_id() == STAGE_ELEMENT) {
-            StageElement* stage_info = (StageElement*) packet;
-            switch (stage_info->get_type()) {
+            StageElement* stage_element = (StageElement*) packet;
+            switch (stage_element->get_type()) {
                 case MET:
                     met_positions.push_back
-                            (stage_info->get_position());
+                            (stage_element->get_position());
                     break;
                 case BUMBY:
                     bumby_positions.push_back
-                            (stage_info->get_position());
+                            (stage_element->get_position());
                     break;
                 case SNIPER:
                     sniper_positions.push_back
-                            (stage_info->get_position());
+                            (stage_element->get_position());
                     break;
                 case JUMPING_SNIPER:
                     jumping_sniper_positions.push_back
-                            (stage_info->get_position());
+                            (stage_element->get_position());
                     break;
                 case BLOCK:
                     block_positions.push_back
-                            (stage_info->get_position());
+                            (stage_element->get_position());
                     break;
                 case STAIRS:
                     stairs_positions.push_back
-                            (stage_info->get_position());
+                            (stage_element->get_position());
                     break;
                 case SPIKE:
                     spike_positions.push_back
-                            (stage_info->get_position());
+                            (stage_element->get_position());
                     break;
                 case CLIFF:
                     cliff_positions.push_back
-                            (stage_info->get_position());
+                            (stage_element->get_position());
                     break;
                 default:
                     break;

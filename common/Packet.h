@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <common/model/Position.h>
 
 #include "common/Thread.h"
 
@@ -65,14 +66,14 @@ class StageElement : public Packet {
     private:
         static const char id = STAGE_ELEMENT;
         const char type;
-        const char position;
+        Position* position;
 
     public:
-        explicit StageElement(const char position);
-        StageElement(const char type, const char position);
+        explicit StageElement(Position* position);
+        StageElement(const char type, Position* position);
         char get_id() const;
         char get_type() const;
-        char get_position() const;
+        Position* get_position() const;
         std::string get_str() const;
         ~StageElement();
 };
