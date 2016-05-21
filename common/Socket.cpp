@@ -88,8 +88,10 @@ void Socket::receive(char* buffer, size_t size) {
 	bool valid_socket = true;
 
 	while (received < (signed)size && valid_socket) {
+		std::cout << "My fd: " << this->fd << std::endl;
 		received_now = recv(this->fd, &buffer[received],
 							size - received, MSG_NOSIGNAL);
+		std::cout << "Bytes received: " << received_now << std::endl;
       
 		if (!received_now || received_now == ERROR_CODE)
 			valid_socket = false;

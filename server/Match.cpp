@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "Match.h"
 
@@ -33,14 +34,22 @@ void Match::send_stage_info(StageInfo* info) {
 void Match::add_player(int fd) {
     Lock l(this->m);
 
+    if (this->communicators.size() >= PLAYERS_MAX)
+        throw MatchError("Mega Man Co-op match is full");
+    if (this->stage_id() != 0)
+        throw MatchError("Mega Man Co-op match has already started");
+
+    /*
     if (this->is_full())
         throw MatchError("Mega Man Co-op match is full");
     if (this->has_started())
         throw MatchError("Mega Man Co-op match has already started");
+    */
 
     if (!this->has_host()) {
         HostCommunicator* hc = new HostCommunicator(fd, this->stage_id);
         std::string name = hc->receive_name();
+        std::cout << "Host name: " << name << std::endl;
         hc->start();
         this->communicators.push_back(hc);
         this->players.push_back(new Player(name));
@@ -48,6 +57,7 @@ void Match::add_player(int fd) {
     } else {
         ServerCommunicator* c = new ServerCommunicator(fd);
         std::string name = c->receive_name();
+        std::cout << "Player name: " << name << std::endl;
         this->communicators.push_back(c);
         this->players.push_back(new Player(name));
         this->send_new_player_notification(name);

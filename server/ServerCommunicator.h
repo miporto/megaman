@@ -45,7 +45,6 @@ class ServerCommunicator {
 class HostCommunicator : public ServerCommunicator, public Thread {
     private:
         StageIDProtected& stage_id;
-
         char receive_stage_pick();
 
     public:

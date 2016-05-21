@@ -37,7 +37,7 @@ class Packet {
 class NewPlayer : public Packet {
     private:
         static const char id = NEW_PLAYER;
-        const std::string name;
+        std::string name;
 
     public:
         explicit NewPlayer(const std::string name);

@@ -5,7 +5,10 @@
 Packet::~Packet() {}
 
 NewPlayer::NewPlayer(const std::string name) :
-        name(name.substr(0, NAME_LENGTH)) {}
+        name(name.substr(0, NAME_LENGTH)) {
+    for (size_t i = name.size(); i < NAME_LENGTH; ++i)
+        this->name.push_back('\0');
+}
 
 const std::string NewPlayer::get_name() const { return this->name; }
 

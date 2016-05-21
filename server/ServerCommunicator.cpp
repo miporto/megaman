@@ -119,7 +119,7 @@ void HostCommunicator::run() {
     char stage_id;
     do {
         stage_id = this->receive_stage_pick();
-    } while (!stage_id);
+    } while (!this->quit() && !stage_id);
     this->stage_id.set_id(stage_id);
 }
 
