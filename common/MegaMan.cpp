@@ -1,7 +1,7 @@
 #include <string>
 
 #include "MegaMan.h"
-#include "Factory.h"
+#include "server/Factory.h"
 
 EnergyTank::EnergyTank() {
     EnergyTankFactory factory;

@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "Cannon.h"
-#include "Factory.h"
+#include "server/Factory.h"
 
 Projectile::Projectile(int damage,
                        int velocity,

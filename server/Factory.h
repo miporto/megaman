@@ -5,7 +5,7 @@
 #include <string>
 
 #include "common/StageInfo.h"
-#include "Cannon.h"
+#include "common/Cannon.h"
 
 class EnergyTankFactory {
     public:

@@ -9,9 +9,8 @@ Stairs::Stairs(const int x, const int y) :
         Object(x, y) {}
 
 void Stairs::interact(MegaMan& mm) {
-    //TODO
-    //if (this->position == mm.get_position())
-    //    mm.enable_vertical_movement();
+    //TODO Cuando mm esta encima, se puede
+    // mover verticalmente sin limitaciones
 }
 
 Stairs::~Stairs() {}
@@ -30,7 +29,8 @@ Block::Block(const int x, const int y) :
         Object(x, y) {}
 
 void Block::interact(MegaMan& mm) {
-    //TODO
+    //TODO Cuando mm esta en una celda adyacente,
+    // no se puede mover para ese lado
 }
 
 Block::~Block() {}

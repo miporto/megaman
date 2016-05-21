@@ -18,7 +18,19 @@ set(SOURCES
     Packet.h
     Packet.cpp
     StageInfo.h
-    StageInfo.cpp)
+    StageInfo.cpp
+        Player.h
+        Player.cpp
+        Object.h
+        Object.cpp
+        Enemy.h
+        Enemy.cpp
+        MegaMan.h
+        MegaMan.cpp
+        Cannon.h
+        Cannon.cpp
+        Map.h
+        Map.cpp)
 
 include(CppLint)
 
