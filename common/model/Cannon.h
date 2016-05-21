@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <string>
-#include <utility>
 #include <common/model/Position.h>
 
 class Projectile {
@@ -17,7 +16,6 @@ class Projectile {
                    int velocity,
                    Position& initial_position);
         virtual void move() = 0;
-        std::pair<int, int> get_position();
         virtual ~Projectile();
 };
 

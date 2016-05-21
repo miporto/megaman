@@ -1,7 +1,7 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-#include <utility>
+#include <string>
 
 class Position {
     private:
@@ -10,9 +10,9 @@ class Position {
     public:
         Position(int x, int y);
         void move(int x_amount, int y_amount);
-        std::pair<int, int> get_position();
         void reset();
         bool operator==(const Position& other) const;
+        std::string str();
         ~Position();
 };
 
