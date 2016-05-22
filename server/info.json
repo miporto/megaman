@@ -1,0 +1,31 @@
+{
+    "stage":{
+        "0":{
+            "spawn":{
+                "1": [{"x": 0, "y": 1}], "2": [{"x": 2, "y": 3}], "3": [{"x": 4, "y": 5}], "4": [{"x": 6, "y": 7}]
+            },
+            "object":{
+                "4": [{"x": 10, "y": 11}], "5": [{"x": 12, "y": 13}], "6": [{"x": 14, "y": 15}]  
+            }
+        }
+    },
+    "info":{
+        "energy_tank": {"initial_lives": 30, "max_energy": 31},
+        "projectile": {
+            "plasma": {"damage": 40, "velocity": 41},
+            "bomb": {"damage": 50, "velocity": 51},
+            "magnet": {"damage": 60, "velocity": 61},
+            "spark": {"damage": 70, "velocity": 71},
+            "fire": {"damage": 80, "velocity": 81},
+            "ring": {"damage": 90, "velocity": 91}
+        },
+        "ammo":{
+            "plasma": {"max_ammo": 100},
+            "bomb": {"max_ammo": 101},
+            "magnet": {"max_ammo": 102},
+            "spark": {"max_ammo": 103},
+            "fire": {"max_ammo": 104},
+            "ring": {"max_ammo": 105}
+        }
+    }
+}
