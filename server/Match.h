@@ -6,7 +6,7 @@
 
 #include "common/Socket.h"
 #include "ServerCommunicator.h"
-#include "Player.h"
+#include "common/model/Player.h"
 #include "Stage.h"
 
 class Match {

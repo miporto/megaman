@@ -6,7 +6,7 @@
 
 #include "extern/json.hpp"
 #include "common/StageInfo.h"
-#include "Cannon.h"
+#include "common/model/Cannon.h"
 
 using json = nlohmann::json;
 
@@ -43,7 +43,7 @@ class AmmoFactory {
 
 class StageFactory {
     private:
-        std::vector<Position> positions_of
+        std::vector<Position*> positions_of
                 (const char* type, const int enemy_id);
         json stage_json;
 

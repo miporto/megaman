@@ -13,12 +13,24 @@ set(SOURCES
     Receiver.cpp
     QuitProtected.h
     QuitProtected.cpp
-    Position.h
-    Position.cpp
     Packet.h
     Packet.cpp
     StageInfo.h
-    StageInfo.cpp)
+    StageInfo.cpp
+        model/Position.h
+        model/Position.cpp
+        model/Player.h
+        model/Player.cpp
+        model/Object.h
+        model/Object.cpp
+        model/Enemy.h
+        model/Enemy.cpp
+        model/MegaMan.h
+        model/MegaMan.cpp
+        model/Cannon.h
+        model/Cannon.cpp
+        model/Map.h
+        model/Map.cpp)
 
 include(CppLint)
 

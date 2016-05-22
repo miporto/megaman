@@ -62,7 +62,7 @@ std::string ServerCommunicator::receive_name() {
 }
 
 void ServerCommunicator::send_screen_info(StageInfo* info) {
-    std::vector<char> positions;
+    std::vector<Position*> positions;
 
     positions = info->get_met_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
@@ -85,6 +85,9 @@ void ServerCommunicator::send_screen_info(StageInfo* info) {
     positions = info->get_spike_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->push_to_sender(new StageElement(SPIKE, positions[i]));
+    positions = info->get_cliff_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i)
+        this->push_to_sender(new StageElement(CLIFF, positions[i]));
 
     Sender s(this->peer, this->packets_to_send, this->quit);
 }

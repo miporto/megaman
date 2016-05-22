@@ -113,9 +113,9 @@ Ammo* AmmoFactory::operator()(const std::string& name) {
 
 AmmoFactory::~AmmoFactory() {}
 
-std::vector<Position> StageFactory::positions_of
+std::vector<Position*> StageFactory::positions_of
     (const char* type, const int object_id) {
-    std::vector<Position> positions;
+    std::vector<Position*> positions;
     // JSON ids cannot be numbers
     std::stringstream ss;
     ss << object_id;
@@ -125,7 +125,7 @@ std::vector<Position> StageFactory::positions_of
         ++i){
         int x = (int)this->stage_json[type][s_object_id][X_COORD];
         int y = (int)this->stage_json[type][s_object_id][Y_COORD];
-        positions.push_back(Position(x, y));
+        positions.push_back(new Position(x, y));
     }
 
     return positions;
@@ -148,25 +148,25 @@ StageInfo* StageFactory::operator()(const int stage_id) {
 
     this->stage_json = json_file[STAGE][s_id];
 
-    std::vector<Position> met_positions = 
+    std::vector<Position*> met_positions = 
         this->positions_of(SPAWN, MET_ID);
     
-    std::vector<Position> bumby_positions =
+    std::vector<Position*> bumby_positions =
         this->positions_of(SPAWN, BUMBY_ID);
     
-    std::vector<Position> sniper_positions = 
+    std::vector<Position*> sniper_positions = 
         this->positions_of(SPAWN, SNIPER_ID);
     
-    std::vector<Position> jumping_sniper_positions = 
+    std::vector<Position*> jumping_sniper_positions = 
         this->positions_of(SPAWN, JUMPING_SNIPER_ID);
     
-    std::vector<Position> block_positions = 
+    std::vector<Position*> block_positions = 
         this->positions_of(OBJ, BLOCK_ID);
     
-    std::vector<Position> stairs_positions = 
+    std::vector<Position*> stairs_positions = 
         this->positions_of(OBJ, STAIRS_ID);
     
-    std::vector<Position> spike_positions = 
+    std::vector<Position*> spike_positions = 
         this->positions_of(OBJ, SPIKE_ID);
     
     StageInfo* ret_value = new StageInfo( met_positions,

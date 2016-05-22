@@ -11,13 +11,9 @@ set(SOURCES
     ServerCommunicator.h
     ServerCommunicator.cpp
     Stage.h 
-    Stage.cpp 
-    Player.h 
-    Player.cpp
-    Object.h
-    Object.cpp
-    Enemy.h
-    Enemy.cpp MegaMan.cpp MegaMan.h Cannon.cpp Cannon.h Factory.cpp Factory.h)
+    Stage.cpp
+    Factory.cpp
+    Factory.h)
 
 include(CppLint)
 

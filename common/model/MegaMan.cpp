@@ -1,7 +1,7 @@
 #include <string>
 
 #include "MegaMan.h"
-#include "Factory.h"
+#include "server/Factory.h"
 
 EnergyTank::EnergyTank() {
     EnergyTankFactory factory;
@@ -31,7 +31,7 @@ bool EnergyTank::is_empty() {
 }
 
 void EnergyTank::reset() {
-    this->lives--;
+    if (this->lives) this->lives--;
     this->current_energy = this->max_energy;
 }
 
@@ -41,6 +41,11 @@ MegaMan::MegaMan() : position(0,0) {}
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);
+}
+
+void MegaMan::kill() {
+    this->tank.reset();
+    this->position.reset();
 }
 
 bool MegaMan::is_dead() {
@@ -61,6 +66,10 @@ void MegaMan::receive_new_ammo(std::string& name) {
 
 void MegaMan::move(int x_amount, int y_amount) {
     this->position.move(x_amount, y_amount);
+}
+
+Position& MegaMan::get_position() {
+    return this->position;
 }
 
 MegaMan::~MegaMan() {}
