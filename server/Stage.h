@@ -23,17 +23,4 @@ class StageIDProtected {
         ~StageIDProtected();
 };
 
-class Stage {
-    private:
-        const int id;
-        std::vector<Player*>& players;
-        std::vector<Enemy*> enemies;
-        std::vector<Object*> objects;
-
-    public:
-        Stage(char id, std::vector<Player*>& players);
-        StageInfo* get_stage_info();
-        ~Stage();
-};
-
 #endif  // STAGE_H
