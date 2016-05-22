@@ -7,7 +7,7 @@
 #include "Factory.h"
 #include "Cannon.h"
 #include "extern/json.hpp"
-#include "common/Position.h"
+#include "common/model/Position.h"
 
 using json = nlohmann::json;
 
@@ -39,6 +39,7 @@ using json = nlohmann::json;
 #define BLOCK_ID 4
 #define STAIRS_ID 5
 #define SPIKE_ID 6
+#define CLIFF_ID 7
 
 EnergyTankFactory::EnergyTankFactory() {
     std::ifstream info(INFO_FILE);
@@ -168,14 +169,18 @@ StageInfo* StageFactory::operator()(const int stage_id) {
     
     std::vector<Position*> spike_positions = 
         this->positions_of(OBJ, SPIKE_ID);
+
+    std::vector<Position*> cliff_positions =
+        this->positions_of(OBJ, CLIFF_ID);
     
-    StageInfo* ret_value = new StageInfo( met_positions,
-                                            bumby_positions,
-                                            sniper_positions,
-                                            jumping_sniper_positions,
-                                            block_positions,
-                                            stairs_positions,
-                                            spike_positions);
+    StageInfo* ret_value = new StageInfo(met_positions,
+                                        bumby_positions,
+                                        sniper_positions,
+                                        jumping_sniper_positions,
+                                        block_positions,
+                                        stairs_positions,
+                                        spike_positions,
+                                        cliff_positions);
     return ret_value;
 }
 
