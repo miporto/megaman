@@ -17,7 +17,7 @@ class Client {
         Client(const char* hostname, const char* port);
         void connect_to_server();
         void send_name(std::string& name);
-        void pick_stage(char& stage_id);
+        void pick_stage(char stage_id);
         ~Client();
 };
 

@@ -30,7 +30,7 @@ set(SOURCES
         model/Cannon.h
         model/Cannon.cpp
         model/Map.h
-        model/Map.cpp)
+        model/Map.cpp model/Game.cpp model/Game.h GameInfo.cpp GameInfo.h)
 
 include(CppLint)
 
