@@ -10,7 +10,7 @@
 class EnergyTank {
     private:
         int lives;
-        int max_energy;
+        const int max_energy;
         int current_energy;
 
     public:
@@ -29,10 +29,10 @@ class MegaMan {
         EnergyTank tank;
         Cannon cannon;
         Position position;
-        int velocity;
+        const int velocity;
 
     public:
-        explicit MegaMan(int velocity);
+        MegaMan();
         void decrease_energy(int amount);
         void kill();
         bool is_dead();

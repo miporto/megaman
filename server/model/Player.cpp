@@ -4,6 +4,6 @@
 #include "Player.h"
 
 Player::Player(const std::string& name) :
-        name(name), megaman(MegaManFactory::velocity()) {}
+        name(name) {}
 
 Player::~Player() {}
