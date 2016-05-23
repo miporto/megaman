@@ -2,12 +2,7 @@
 
 #include "Game.h"
 
-void Game::set(GameInfo* info) {
-    this->info = info;
-}
-
 void Game::new_player(std::string& name) {
-    //Sacar de GameInfo atributos faltantes de Player
     this->players.push_back(new Player(name));
 }
 

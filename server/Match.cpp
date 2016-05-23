@@ -7,12 +7,7 @@
 #define PLAYERS_MAX 4
 
 Match::Match(std::vector<ServerCommunicator*>& communicators)
-    : communicators(communicators) {
-    //TODO settear Game con GameInfo
-    //GameFactory factory;
-    //GameInfo* info = factory();
-    //this->game.set(info);
-}
+    : communicators(communicators) {}
 
 bool Match::has_started() {
     Lock l(this->m);
@@ -66,8 +61,7 @@ void Match::start_stage() {
     ((HostCommunicator*)this->communicators[0])->join();
     char stage_id = this->stage_id();
 
-    StageFactory factory;
-    StageInfo* info = factory(stage_id);
+    StageInfo* info = StageFactory::stage_info(stage_id);
 
     this->send_stage_info(info);
     this->game.start_stage(info);

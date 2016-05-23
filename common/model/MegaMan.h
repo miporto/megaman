@@ -29,9 +29,10 @@ class MegaMan {
         EnergyTank tank;
         Cannon cannon;
         Position position;
+        int velocity;
 
     public:
-        MegaMan();
+        explicit MegaMan(int velocity);
         void decrease_energy(int amount);
         void kill();
         bool is_dead();

@@ -7,22 +7,29 @@
 #include "common/StageInfo.h"
 #include "common/model/Cannon.h"
 
+class MegaManFactory {
+    public:
+        static int velocity();
+        ~MegaManFactory();
+};
+
 class EnergyTankFactory {
     public:
-        int initial_lives();
-        int maximum_energy();
+        static int initial_lives();
+        static int maximum_energy();
         ~EnergyTankFactory();
 };
 
 class ProjectileFactory {
     public:
-        Projectile* operator()(const std::string& name, Position& position);
+        static Projectile* projectile
+                (const std::string& name, Position& position);
         ~ProjectileFactory();
 };
 
 class AmmoFactory {
     public:
-        Ammo* operator()(const std::string& name);
+        static Ammo* ammo(const std::string& name);
         ~AmmoFactory();
 };
 
@@ -34,7 +41,7 @@ class StageFactory {
                 (const int stage_id, const int object_id);
 
     public:
-        StageInfo* operator()(const int stage_id);
+        static StageInfo* stage_info(const int stage_id);
         ~StageFactory();
 };
 

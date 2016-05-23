@@ -59,8 +59,7 @@ Ammo::Ammo(std::string& name, int max) : name(name), max(max), quantity(max) {}
 Projectile* Ammo::use(Position& position) {
     if (this->quantity) {
         this->quantity--;
-        ProjectileFactory factory;
-        return factory(this->name, position);
+        return ProjectileFactory::projectile(this->name, position);
     }
     return NULL;
 }
@@ -68,14 +67,12 @@ Projectile* Ammo::use(Position& position) {
 Ammo::~Ammo() {}
 
 Cannon::Cannon() {
-    AmmoFactory factory;
-    this->ammos.push_back(factory("Plasma"));
+    this->ammos.push_back(AmmoFactory::ammo("Plasma"));
     this->current_ammo = this->ammos[0];
 }
 
 void Cannon::receive_new_ammo(std::string& name) {
-    AmmoFactory factory;
-    this->ammos.push_back(factory(name));
+    this->ammos.push_back(AmmoFactory::ammo(name));
 }
 
 void Cannon::change_current_ammo(unsigned int ammo_id) {
