@@ -24,6 +24,7 @@ protected:
 	Gtk::Layout layout;
 	Gtk::Image bg_image;
 
+	Gtk::Box* current_screen;
 	Gtk::Box* welcome_screen;
 	Gtk::Box* about;
 	Gtk::Box* insert_name;

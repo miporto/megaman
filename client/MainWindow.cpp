@@ -17,15 +17,12 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 	set_title("Mega Man");
 	set_size_request(640, 480);
 	set_border_width(0);
-	//set_resizable(false);
-
 	layout.put(bg_image, 0, 0);
-
 	init_welcome_screen();
+	init_signal_map();
 	layout.put(*welcome_screen, 280, 0);
-
+	current_screen = welcome_screen;
 	add(layout);
-
 	show_all();
 }
 
@@ -34,24 +31,25 @@ void MainWindow::init_signal_map() {
 }
 
 void MainWindow::process_signal(int signal) {
-	sig_map[signal]->show();
+	layout.remove(*current_screen);
+	layout.put(*sig_map[signal], 250, 0);
+	current_screen = sig_map[signal];
 }
 
 void MainWindow::on_new_game_btn_clicked() {
 	std::cout << std::endl;
 	layout.remove(*welcome_screen);
-	//welcome_screen->hide();
 	init_insert_name();
 	layout.put(*insert_name, 250, 0);
 }
 
 void MainWindow::on_about_btn_clicked() {
-	//welcome_screen->hide();
-	layout.remove(*welcome_screen);
-	about = (Gtk::Box*) new AboutScreen(this);
+	layout.remove(*current_screen);
+	AboutScreen about_s(this);
+	about = about_s.get_screen();
 	layout.put(*about, 250, 0);
-	//layout.show_all();
-	//about->show();
+	current_screen = about;
+	about->show();
 }
 
 void MainWindow::on_exit_game_btn_clicked() {
@@ -75,7 +73,6 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 
 void MainWindow::on_cancel_btn_clicked() {
 	std::cout << "Going back to welcome screen" << std::endl;
-	//insert_name->hide();
 	layout.remove(*insert_name);
 	layout.put(*welcome_screen, 250, 0);
 	welcome_screen->show();
