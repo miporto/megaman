@@ -1,6 +1,7 @@
 #ifndef POSITION_H
 #define POSITION_H
 
+#include <utility>
 #include <string>
 
 class Clonable {
@@ -18,6 +19,7 @@ class Position : public Clonable {
         void move(int x_amount, int y_amount);
         void reset();
         bool operator==(const Position& other) const;
+        std::pair<int, int> get_position();
         std::string str() const;
         Position* clone() const;
         ~Position();

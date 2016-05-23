@@ -1,4 +1,5 @@
 #include <vector>
+#include <utility>
 
 #include "common/StageInfo.h"
 #include "Map.h"
@@ -16,15 +17,83 @@ Cell::~Cell() {
         delete this->enemies[i];
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         delete this->objects[i];
+    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
+        delete this->projectiles[i];
 }
 
-Map::Map() : cells(HEIGTH, std::vector<Cell>(WIDTH)) {}
+Map::Map() {
+    for (unsigned int i = 0; i < WIDTH; ++i) {
+        std::vector<Cell*> col;
+        for (unsigned int j = 0; j < HEIGHT; ++j) {
+            col.push_back(new Cell());
+        }
+        this->cells.push_back(col);
+    }
+}
 
 void Map::set(StageInfo* info) {
-    //TODO Crear vector enemigos y objetos
-    //Para los enemigos, que otros datos necesito?
-    // velocidad
-    // cantidad de vida
+    std::vector<Position*> positions;
+    std::pair<int, int> position;
+
+    // Completa vector objects de las celdas
+    positions = info->get_block_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i) {
+        position = positions[i]->get_position();
+        this->cells[position.first][position.second]->add
+                (new Block(position.first, position.second));
+        delete positions[i];
+    }
+    positions = info->get_stairs_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i) {
+        position = positions[i]->get_position();
+        this->cells[position.first][position.second]->add
+                (new Stairs(position.first, position.second));
+        delete positions[i];
+    }
+    positions = info->get_spike_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i) {
+        position = positions[i]->get_position();
+        this->cells[position.first][position.second]->add
+                (new Spike(position.first, position.second));
+        delete positions[i];
+    }
+    positions = info->get_cliff_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i) {
+        position = positions[i]->get_position();
+        this->cells[position.first][position.second]->add
+                (new Cliff(position.first, position.second));
+        delete positions[i];
+    }
+
+    // Completa vector enemies de las celdas
+    positions = info->get_met_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i) {
+        position = positions[i]->get_position();
+        this->cells[position.first][position.second]->add
+                (new Met(position.first, position.second));
+        delete positions[i];
+    }
+    positions = info->get_bumby_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i) {
+        position = positions[i]->get_position();
+        this->cells[position.first][position.second]->add
+                (new Bumby(position.first, position.second));
+        delete positions[i];
+    }
+    positions = info->get_sniper_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i) {
+        position = positions[i]->get_position();
+        this->cells[position.first][position.second]->add
+                (new Sniper(position.first, position.second));
+        delete positions[i];
+    }
+    positions = info->get_jumping_sniper_positions();
+    for (unsigned int i = 0; i < positions.size(); ++i) {
+        position = positions[i]->get_position();
+        this->cells[position.first][position.second]->add
+                (new JumpingSniper(position.first, position.second));
+        delete positions[i];
+    }
 }
 
 Map::~Map() {}

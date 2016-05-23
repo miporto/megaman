@@ -7,14 +7,15 @@
 #include "Object.h"
 
 #define WIDTH 640
-#define HEIGTH 480
+#define HEIGHT 480
 
 class Cell {
     private:
         //vector de GameObject?
         //Padre de Enemy, MM, Object, Projectile y PowerUp?
-        std::vector<Enemy*> enemies;
         std::vector<Object*> objects;
+        std::vector<Enemy*> enemies;
+        std::vector<Projectile*> projectiles;
     public:
         void add(Enemy* object);
         void add(Object* object);
@@ -23,7 +24,7 @@ class Cell {
 
 class Map {
     private:
-        std::vector<std::vector<Cell>> cells;
+        std::vector<std::vector<Cell*>> cells;
     public:
         Map();
         void set(StageInfo* info);

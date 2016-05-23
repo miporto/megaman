@@ -1,4 +1,5 @@
 #include <string>
+#include <utility>
 
 #include "Position.h"
 
@@ -16,6 +17,10 @@ void Position::reset() {
 
 bool Position::operator==(const Position& other) const {
     return (this->x == other.x && this->y == other.y);
+}
+
+std::pair<int, int> Position::get_position() {
+    return std::make_pair(this->x, this->y);
 }
 
 std::string Position::str() const {
