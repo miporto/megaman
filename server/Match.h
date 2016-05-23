@@ -4,19 +4,23 @@
 #include <string>
 #include <vector>
 
+
 #include "common/Socket.h"
 #include "ServerCommunicator.h"
-#include "common/model/Player.h"
+#include "model/Game.h"
+#include "model/Player.h"
 #include "Stage.h"
 
 class Match {
     private:
         Mutex m;
         std::vector<ServerCommunicator*>& communicators;
-        std::vector<Player*> players;
+        Game game;
         StageIDProtected stage_id;
 
         bool has_host();
+        //Match realiza envio de informacion cuando esta se debe mandar a todos
+        // los jugadores por igual
         void send_new_player_notification(std::string& name);
         void send_stage_info(StageInfo* info);
 

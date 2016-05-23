@@ -12,8 +12,22 @@ set(SOURCES
     ServerCommunicator.cpp
     Stage.h 
     Stage.cpp
-    Factory.cpp
-    Factory.h)
+        model/Factory.cpp
+        model/Factory.h
+        model/Player.h
+        model/Player.cpp
+        model/Object.h
+        model/Object.cpp
+        model/Enemy.h
+        model/Enemy.cpp
+        model/MegaMan.h
+        model/MegaMan.cpp
+        model/Cannon.h
+        model/Cannon.cpp
+        model/Map.h
+        model/Map.cpp
+        model/Game.cpp
+        model/Game.h model/Mortal.h model/Shooter.h model/Tickable.h)
 
 include(CppLint)
 

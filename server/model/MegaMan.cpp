@@ -1,14 +1,12 @@
 #include <string>
 
 #include "MegaMan.h"
-#include "server/Factory.h"
+#include "Factory.h"
 
-EnergyTank::EnergyTank() {
-    EnergyTankFactory factory;
-    this->lives = factory.initial_lives();
-    this->max_energy = factory.maximum_energy();
-    this->current_energy = factory.maximum_energy();
-}
+EnergyTank::EnergyTank() :
+        lives(EnergyTankFactory::initial_lives()),
+        max_energy(EnergyTankFactory::maximum_energy()),
+        current_energy(EnergyTankFactory::maximum_energy()) {}
 
 void EnergyTank::increase_energy(int amount) {
     this->current_energy += amount;
@@ -37,7 +35,8 @@ void EnergyTank::reset() {
 
 EnergyTank::~EnergyTank() {}
 
-MegaMan::MegaMan() : position(0,0) {}
+MegaMan::MegaMan() :
+        position(0,0), velocity(MegaManFactory::velocity()) {}
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);

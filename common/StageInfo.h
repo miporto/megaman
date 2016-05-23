@@ -2,7 +2,7 @@
 #define SCREENINFO_H
 
 #include <vector>
-#include <common/model/Position.h>
+#include <common/Position.h>
 
 class StageInfo {
     private:

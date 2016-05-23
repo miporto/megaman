@@ -3,6 +3,25 @@
 
 #include "Factory.h"
 
+int EnemyFactory::energy(std::string name) {
+    //TODO leer .JSON
+    return 0;
+}
+
+int EnemyFactory::velocity(std::string name) {
+    //TODO leer .JSON
+    return 0;
+}
+
+EnemyFactory::~EnemyFactory() {}
+
+int MegaManFactory::velocity() {
+    //TODO leer .JSON
+    return 0;
+}
+
+MegaManFactory::~MegaManFactory() {}
+
 int EnergyTankFactory::initial_lives() {
     //TODO leer .JSON
     return 0;
@@ -15,7 +34,7 @@ int EnergyTankFactory::maximum_energy() {
 
 EnergyTankFactory::~EnergyTankFactory() {}
 
-Projectile* ProjectileFactory::operator()(const std::string& name,
+Projectile* ProjectileFactory::projectile(const std::string& name,
                                           Position& position) {
     //TODO leer .JSON
     // TODO la position que se recibe es la inicial del proyectil
@@ -24,7 +43,7 @@ Projectile* ProjectileFactory::operator()(const std::string& name,
 
 ProjectileFactory::~ProjectileFactory() {}
 
-Ammo* AmmoFactory::operator()(const std::string& name) {
+Ammo* AmmoFactory::ammo(const std::string& name) {
     //TODO leer .JSON
     return NULL;
 }
@@ -45,7 +64,7 @@ std::vector<Position*> StageFactory::positions_of_objects
     return positions;
 }
 
-StageInfo* StageFactory::operator()(const int stage_id) {
+StageInfo* StageFactory::stage_info(const int stage_id) {
     //TODO crean StageInfo con metodos anteriores
     return NULL;
 }

@@ -4,13 +4,15 @@
 #include <vector>
 #include <string>
 
-#include "Position.h"
+#include "common/Position.h"
 #include "Cannon.h"
+#include "Mortal.h"
+#include "Shooter.h"
 
 class EnergyTank {
     private:
         int lives;
-        int max_energy;
+        const int max_energy;
         int current_energy;
 
     public:
@@ -22,13 +24,14 @@ class EnergyTank {
         ~EnergyTank();
 };
 
-class MegaMan {
+class MegaMan : public Mortal, public Shooter {
     friend class Object;
 
     private:
         EnergyTank tank;
         Cannon cannon;
         Position position;
+        const int velocity;
 
     public:
         MegaMan();

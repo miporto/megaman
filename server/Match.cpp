@@ -39,46 +39,39 @@ void Match::add_player(int fd) {
     if (this->stage_id() != 0)
         throw MatchError("Mega Man Co-op match has already started");
 
-    /*
-    if (this->is_full())
-        throw MatchError("Mega Man Co-op match is full");
-    if (this->has_started())
-        throw MatchError("Mega Man Co-op match has already started");
-    */
-
     if (!this->has_host()) {
         HostCommunicator* hc = new HostCommunicator(fd, this->stage_id);
         std::string name = hc->receive_name();
         std::cout << "Host name: " << name << std::endl;
         hc->start();
         this->communicators.push_back(hc);
-        this->players.push_back(new Player(name));
+        this->game.new_player(name);
 
     } else {
         ServerCommunicator* c = new ServerCommunicator(fd);
         std::string name = c->receive_name();
         std::cout << "Player name: " << name << std::endl;
         this->communicators.push_back(c);
-        this->players.push_back(new Player(name));
+        this->game.new_player(name);
         this->send_new_player_notification(name);
     }
 }
 
 void Match::start_stage() {
     ((HostCommunicator*)this->communicators[0])->join();
+    char stage_id = this->stage_id();
 
-    //TODO ver donde dejar referencia a la instancia de Stage
-    Stage stage(this->stage_id(), this->players);
+    StageInfo* info = StageFactory::stage_info(stage_id);
 
-    StageInfo* info = stage.get_stage_info();
     this->send_stage_info(info);
+    this->game.start_stage(info);
+
+    //TODO continuara
+
     delete info;
 }
 
-Match::~Match() {
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        delete this->players[i];
-}
+Match::~Match() {}
 
 MatchError::MatchError(const std::string error_msg) throw()
         : error_msg(error_msg) {}

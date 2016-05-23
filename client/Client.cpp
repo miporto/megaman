@@ -36,7 +36,7 @@ void Client::send_name(std::string& name) {
     this->communicator.send_name(name);
 }
 
-void Client::pick_stage(char& stage_id) {
+void Client::pick_stage(char stage_id) {
     this->communicator.send_stage_pick(stage_id);
 }
 

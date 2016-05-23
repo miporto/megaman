@@ -1,6 +1,6 @@
 #include <string>
 
-#include "common/Packet.h"
+#include "Packet.h"
 
 Packet::~Packet() {}
 
