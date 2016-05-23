@@ -17,20 +17,8 @@ set(SOURCES
     Packet.cpp
     StageInfo.h
     StageInfo.cpp
-        model/Position.h
-        model/Position.cpp
-        model/Player.h
-        model/Player.cpp
-        model/Object.h
-        model/Object.cpp
-        model/Enemy.h
-        model/Enemy.cpp
-        model/MegaMan.h
-        model/MegaMan.cpp
-        model/Cannon.h
-        model/Cannon.cpp
-        model/Map.h
-        model/Map.cpp model/Game.cpp model/Game.h)
+    Position.h
+    Position.cpp)
 
 include(CppLint)
 

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include <common/model/Position.h>
+#include <common/Position.h>
 
 class Projectile {
     protected:

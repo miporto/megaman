@@ -4,12 +4,12 @@
 #include <vector>
 
 #include "common/Thread.h"
-#include "common/model/Player.h"
+#include "model/Player.h"
 #include "common/StageInfo.h"
 #include "common/Packet.h"
-#include "common/model/Object.h"
-#include "common/model/Enemy.h"
-#include "Factory.h"
+#include "model/Object.h"
+#include "model/Enemy.h"
+#include "model/Factory.h"
 
 class StageIDProtected {
     private:

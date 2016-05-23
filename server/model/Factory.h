@@ -5,7 +5,7 @@
 #include <string>
 
 #include "common/StageInfo.h"
-#include "common/model/Cannon.h"
+#include "Cannon.h"
 
 class MegaManFactory {
     public:

@@ -1,7 +1,7 @@
 #include <string>
 
 #include "MegaMan.h"
-#include "server/Factory.h"
+#include "Factory.h"
 
 EnergyTank::EnergyTank() {
     this->lives = EnergyTankFactory::initial_lives();

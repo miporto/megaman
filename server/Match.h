@@ -3,11 +3,12 @@
 
 #include <string>
 #include <vector>
-#include <common/model/Game.h>
+
 
 #include "common/Socket.h"
 #include "ServerCommunicator.h"
-#include "common/model/Player.h"
+#include "model/Game.h"
+#include "model/Player.h"
 #include "Stage.h"
 
 class Match {

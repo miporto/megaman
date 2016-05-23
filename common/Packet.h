@@ -6,9 +6,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <common/model/Position.h>
 
-#include "common/Thread.h"
+#include "Position.h"
+#include "Thread.h"
 
 #define NAME_LENGTH 8
 

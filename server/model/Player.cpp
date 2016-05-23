@@ -1,6 +1,6 @@
 #include <string>
 
-#include "server/Factory.h"
+#include "Factory.h"
 #include "Player.h"
 
 Player::Player(const std::string& name) :
