@@ -7,6 +7,13 @@
 #include "common/StageInfo.h"
 #include "Cannon.h"
 
+class EnemyFactory {
+public:
+    static int energy(std::string name);
+    static int velocity(std::string name);
+    ~EnemyFactory();
+};
+
 class MegaManFactory {
     public:
         static int velocity();

@@ -4,8 +4,9 @@
 #include <vector>
 #include <string>
 #include <common/Position.h>
+#include "Tickable.h"
 
-class Projectile {
+class Projectile : public Tickable {
     protected:
         const int damage;
         const int velocity;
@@ -15,44 +16,44 @@ class Projectile {
         Projectile(int damage,
                    int velocity,
                    Position& initial_position);
-        virtual void move() = 0;
+        virtual void tick() = 0;
         virtual ~Projectile();
 };
 
 class Plasma : public Projectile {
     public:
         Plasma(int damage, int velocity, Position& initial_position);
-        void move();
+        void tick();
 };
 
 class Bomb : public Projectile {
     public:
         Bomb(int damage, int velocity, Position& initial_position);
-        void move();
+        void tick();
 };
 
 class Magnet : public Projectile {
     public:
         Magnet(int damage, int velocity, Position& initial_position);
-        void move();
+        void tick();
 };
 
 class Spark : public Projectile {
     public:
         Spark(int damage, int velocity, Position& initial_position);
-        void move();
+        void tick();
 };
 
 class Fire : public Projectile {
     public:
         Fire(int damage, int velocity, Position& initial_position);
-        void move();
+        void tick();
 };
 
 class Ring : public Projectile {
     public:
         Ring(int damage, int velocity, Position& initial_position);
-        void move();
+        void tick();
 };
 
 class Ammo {

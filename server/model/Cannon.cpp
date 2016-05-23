@@ -14,42 +14,42 @@ Projectile::~Projectile() {}
 Plasma::Plasma(int damage, int velocity, Position& initial_position) :
         Projectile(damage, velocity, initial_position) {}
 
-void Plasma::move() {
+void Plasma::tick() {
     //TODO
 }
 
 Bomb::Bomb(int damage, int velocity, Position& initial_position) :
         Projectile(damage, velocity, initial_position) {}
 
-void Bomb::move() {
+void Bomb::tick() {
     //TODO
 }
 
 Magnet::Magnet(int damage, int velocity, Position& initial_position) :
         Projectile(damage, velocity, initial_position) {}
 
-void Magnet::move() {
+void Magnet::tick() {
     //TODO
 }
 
 Spark::Spark(int damage, int velocity, Position& initial_position) :
         Projectile(damage, velocity, initial_position) {}
 
-void Spark::move() {
+void Spark::tick() {
     //TODO
 }
 
 Fire::Fire(int damage, int velocity, Position& initial_position) :
         Projectile(damage, velocity, initial_position) {}
 
-void Fire::move() {
+void Fire::tick() {
     //TODO
 }
 
 Ring::Ring(int damage, int velocity, Position& initial_position) :
         Projectile(damage, velocity, initial_position) {}
 
-void Ring::move() {
+void Ring::tick() {
     //TODO
 }
 

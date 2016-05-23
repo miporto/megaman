@@ -6,6 +6,8 @@
 
 #include "common/Position.h"
 #include "Cannon.h"
+#include "Mortal.h"
+#include "Shooter.h"
 
 class EnergyTank {
     private:
@@ -22,7 +24,7 @@ class EnergyTank {
         ~EnergyTank();
 };
 
-class MegaMan {
+class MegaMan : public Mortal, public Shooter {
     friend class Object;
 
     private:

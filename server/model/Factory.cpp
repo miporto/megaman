@@ -3,6 +3,18 @@
 
 #include "Factory.h"
 
+int EnemyFactory::energy(std::string name) {
+    //TODO leer .JSON
+    return 0;
+}
+
+int EnemyFactory::velocity(std::string name) {
+    //TODO leer .JSON
+    return 0;
+}
+
+EnemyFactory::~EnemyFactory() {}
+
 int MegaManFactory::velocity() {
     //TODO leer .JSON
     return 0;
