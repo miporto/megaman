@@ -12,6 +12,17 @@ void Cell::add(Object* object) {
     this->objects.push_back(object);
 }
 
+void Cell::add(Projectile* projectile) {
+    this->projectiles.push_back(projectile);
+}
+
+void Cell::tick() {
+    for (unsigned int i = 0; i < this->enemies.size(); ++i)
+        this->enemies[i]->tick();
+    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
+        this->projectiles[i]->tick();
+}
+
 Cell::~Cell() {
     for (unsigned int i = 0; i < this->enemies.size(); ++i)
         delete this->enemies[i];
@@ -24,9 +35,8 @@ Cell::~Cell() {
 Map::Map() {
     for (unsigned int i = 0; i < WIDTH; ++i) {
         std::vector<Cell*> col;
-        for (unsigned int j = 0; j < HEIGHT; ++j) {
+        for (unsigned int j = 0; j < HEIGHT; ++j)
             col.push_back(new Cell());
-        }
         this->cells.push_back(col);
     }
 }
@@ -94,6 +104,12 @@ void Map::set(StageInfo* info) {
                 (new JumpingSniper(position.first, position.second));
         delete positions[i];
     }
+}
+
+void Map::tick() {
+    for (unsigned int i = 0; i < WIDTH; ++i)
+        for (unsigned int j = 0; j < HEIGHT; ++j)
+            this->cells[i][j]->tick();
 }
 
 Map::~Map() {}

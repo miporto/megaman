@@ -64,7 +64,7 @@ void Match::start_stage() {
     StageInfo* info = StageFactory::stage_info(stage_id);
 
     this->send_stage_info(info);
-    this->game.start_stage(info);
+    this->game.set_stage(info);
 
     //TODO continuara
 

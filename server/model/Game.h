@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <common/Thread.h>
 
 #include "common/StageInfo.h"
 #include "Player.h"
@@ -15,7 +16,8 @@ class Game {
 
     public:
         void new_player(std::string& name);
-        void start_stage(StageInfo* info);
+        void set_stage(StageInfo* info);
+        void tick();
         ~Game();
 };
 

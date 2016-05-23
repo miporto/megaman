@@ -19,6 +19,8 @@ class Cell {
     public:
         void add(Enemy* object);
         void add(Object* object);
+        void add(Projectile* projectile);
+        void tick();
         ~Cell();
 };
 
@@ -28,6 +30,7 @@ class Map {
     public:
         Map();
         void set(StageInfo* info);
+        void tick();
         ~Map();
 };
 
