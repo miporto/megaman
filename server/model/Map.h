@@ -6,9 +6,6 @@
 #include "Enemy.h"
 #include "Object.h"
 
-#define WIDTH 640
-#define HEIGHT 480
-
 class Cell {
     private:
         //vector de GameObject?
@@ -28,6 +25,7 @@ class Cell {
 
 class Map {
     private:
+        const unsigned int width, height;
         std::vector<std::vector<Cell*>> cells;
 
         void tick_enemies_on_cell(Cell* cell);

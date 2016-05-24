@@ -70,3 +70,15 @@ StageInfo* StageFactory::stage_info(const int stage_id) {
 }
 
 StageFactory::~StageFactory() {}
+
+unsigned int MapFactory::width() {
+    //TODO leer .JSON
+    return 0;
+}
+
+unsigned int MapFactory::height() {
+    //TODO leer .JSON
+    return 0;
+}
+
+MapFactory::~MapFactory() {}
