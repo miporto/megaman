@@ -5,9 +5,9 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/entrybuffer.h>
 
+#include "MainWindow.h"
 #include "AboutScreen.h"
 #include "GladeLoader.h"
-#include "MainWindow.h"
 #include "SignalProtocol.h"
 #include "common/communication/Packet.h"
 
