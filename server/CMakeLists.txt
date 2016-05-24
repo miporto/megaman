@@ -27,7 +27,7 @@ set(SOURCES
         model/Map.h
         model/Map.cpp
         model/Game.cpp
-        model/Game.h model/Mortal.h model/Shooter.h model/Tickable.h)
+        model/Game.h model/Mortal.h model/Shooter.h)
 
 include(CppLint)
 

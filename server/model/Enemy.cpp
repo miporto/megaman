@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "Enemy.h"
 #include "Factory.h"
 
@@ -13,6 +15,10 @@ void Enemy::decrease_energy(int amount) {
 
 bool Enemy::is_dead() { return this->energy == 0; }
 
+std::pair<int, int> Enemy::get_position() {
+    return this->position.get_position();
+}
+
 Enemy::~Enemy() {}
 
 Met::Met(int x, int y) :
@@ -24,8 +30,9 @@ Projectile* Met::shoot() {
     return NULL;
 }
 
-void Met::tick() {
+Projectile* Met::tick() {
     //TODO
+    return NULL;
 }
 
 Met::~Met() {}
@@ -39,8 +46,9 @@ Projectile* Bumby::shoot() {
     return NULL;
 }
 
-void Bumby::tick() {
+Projectile* Bumby::tick() {
     //TODO
+    return NULL;
 }
 
 Bumby::~Bumby() {}
@@ -54,8 +62,9 @@ Projectile* Sniper::shoot() {
     return NULL;
 }
 
-void Sniper::tick() {
+Projectile* Sniper::tick() {
     //TODO
+    return NULL;
 }
 
 Sniper::~Sniper() {}
@@ -69,8 +78,9 @@ Projectile* JumpingSniper::shoot() {
     return NULL;
 }
 
-void JumpingSniper::tick() {
+Projectile* JumpingSniper::tick() {
     //TODO
+    return NULL;
 }
 
 JumpingSniper::~JumpingSniper() {}
