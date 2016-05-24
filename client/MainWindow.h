@@ -11,7 +11,7 @@
 #include <map>
 #include <string>
 
-#include "Client.h"
+#include "client/communication/Client.h"
 #include "common/Socket.h"
 
 class MainWindow: public Gtk::Window {

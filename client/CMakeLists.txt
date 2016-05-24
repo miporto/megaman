@@ -3,13 +3,13 @@ project(client)
 set(SOURCES
     AboutScreen.cpp
     AboutScreen.h
-    Client.cpp
-    Client.h
+        communication/Client.cpp
+        communication/Client.h
     main.cpp
     MainWindow.cpp
     MainWindow.h
-    ClientCommunicator.h
-    ClientCommunicator.cpp 
+        communication/ClientCommunicator.h
+        communication/ClientCommunicator.cpp
     GladeLoader.cpp 
     GladeLoader.h
     SignalProtocol.h)

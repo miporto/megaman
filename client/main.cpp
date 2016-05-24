@@ -2,7 +2,7 @@
 #include <gtkmm/application.h>
 
 #include "common/Socket.h"
-#include "Client.h"
+#include "client/communication/Client.h"
 #include "MainWindow.h"
 
 #define HOSTNAME_POS 1
