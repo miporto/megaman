@@ -18,7 +18,15 @@ typedef enum _packet_id {
     STAGE_ELEMENT
 } packet_id_t;
 
-typedef enum _stage_info_type_t {
+typedef enum _stage_id {
+    BOMBMAN = 1,
+    SPARKMAN,
+    FIREMAN,
+    RINGMAN,
+    MAGNETMAN
+} stage_id_t;
+
+typedef enum _stage_element_type_t {
     MET = 1,
     BUMBY,
     SNIPER,
@@ -27,7 +35,7 @@ typedef enum _stage_info_type_t {
     STAIRS,
     SPIKE,
     CLIFF
-} stage_info_type_t;
+} stage_element_type_t;
 
 class Packet {
     public:

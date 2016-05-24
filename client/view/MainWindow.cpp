@@ -9,6 +9,7 @@
 #include "GladeLoader.h"
 #include "MainWindow.h"
 #include "SignalProtocol.h"
+#include "common/communication/Packet.h"
 
 #define CONTAINER_NAME "container"
 
