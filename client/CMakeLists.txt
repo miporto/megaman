@@ -1,18 +1,18 @@
 project(client)
 
 set(SOURCES
-    AboutScreen.cpp
-    AboutScreen.h
-    Client.cpp
-    Client.h
-    main.cpp
-    MainWindow.cpp
-    MainWindow.h
-    ClientCommunicator.h
-    ClientCommunicator.cpp 
-    GladeLoader.cpp 
-    GladeLoader.h
-    SignalProtocol.h)
+        view/AboutScreen.cpp
+        view/AboutScreen.h
+        communication/Client.cpp
+        communication/Client.h
+        main.cpp
+        view/MainWindow.cpp
+        view/MainWindow.h
+        communication/ClientCommunicator.h
+        communication/ClientCommunicator.cpp
+        view/GladeLoader.cpp
+        view/GladeLoader.h
+        view/SignalProtocol.h)
 
 include(CppLint)
 

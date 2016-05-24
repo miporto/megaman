@@ -1,5 +1,5 @@
 #include "Server.h"
-#include "common/AddrInfo.h"
+#include "common/communication/AddrInfo.h"
 #include "Acceptor.h"
 
 void Server::configure_server_socket(const char* port) {

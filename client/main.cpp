@@ -1,9 +1,9 @@
 #include <cstdlib>
 #include <gtkmm/application.h>
 
-#include "common/Socket.h"
-#include "Client.h"
-#include "MainWindow.h"
+#include "common/communication/Socket.h"
+#include "client/communication/Client.h"
+#include "client/view/MainWindow.h"
 
 #define HOSTNAME_POS 1
 #define PORT_POS 2

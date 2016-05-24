@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 
-#include "client/ClientCommunicator.h"
+#include "ClientCommunicator.h"
 
 ClientReceiver::ClientReceiver(Socket& socket,
                                PacketsProtected& packets,

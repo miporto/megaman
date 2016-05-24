@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "common/Socket.h"
+#include "common/communication/Socket.h"
 #include "common/Thread.h"
 #include "ServerCommunicator.h"
 #include "Match.h"
