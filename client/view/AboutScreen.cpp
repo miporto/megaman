@@ -9,7 +9,7 @@
 AboutScreen::AboutScreen(MainWindow* main_w) :
 		main_w(main_w) {
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
-			"view/about.glade", this);
+			"resources/about.glade", this);
 	Gtk::Button* btn = NULL;
 	builder->get_widget("back_btn", btn);
 	if (btn) {

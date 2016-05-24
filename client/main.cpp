@@ -3,7 +3,7 @@
 
 #include "common/communication/Socket.h"
 #include "client/communication/Client.h"
-#include "MainWindow.h"
+#include "client/view/MainWindow.h"
 
 #define HOSTNAME_POS 1
 #define PORT_POS 2
