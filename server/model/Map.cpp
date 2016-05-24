@@ -16,11 +16,22 @@ void Cell::add(Projectile* projectile) {
     this->projectiles.push_back(projectile);
 }
 
-void Cell::tick() {
-    for (unsigned int i = 0; i < this->enemies.size(); ++i)
-        this->enemies[i]->tick();
-    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
-        this->projectiles[i]->tick();
+std::vector<Enemy*>& Cell::get_enemies() {
+    return this->enemies;
+}
+
+std::vector<Projectile*>& Cell::get_projectiles() {
+    return this->projectiles;
+}
+
+void Cell::get_rid_of_corpses() {
+    for (unsigned int i = 0; i < this->enemies.size(); ++i) {
+        if (this->enemies[i]->is_dead()) {
+            Enemy* dead_enemy = this->enemies[i];
+            this->enemies.erase(this->enemies.begin() + i);
+            delete dead_enemy;
+        }
+    }
 }
 
 Cell::~Cell() {
@@ -106,10 +117,51 @@ void Map::set(StageInfo* info) {
     }
 }
 
+void Map::tick_enemies_on_cell(Cell* cell) {
+    std::vector<Enemy*> enemies = cell->get_enemies();
+    std::pair<int, int> position;
+
+    while (enemies.size() != 0) {
+        Projectile* projectile = enemies.front()->tick();
+
+        if (projectile) {
+            position = projectile->get_position();
+            cells[position.first][position.second]->add(projectile);
+        }
+
+        position = enemies.front()->get_position();
+        cells[position.first][position.second]->add(enemies.front());
+
+        enemies.erase(enemies.begin());
+    }
+}
+
+void Map::tick_projectiles_on_cell(Cell* cell) {
+    std::vector<Projectile*> projectiles = cell->get_projectiles();
+    std::pair<int, int> position;
+
+    while (projectiles.size() != 0) {
+        projectiles.front()->tick();
+
+        position = projectiles.front()->get_position();
+        cells[position.first][position.second]->add(projectiles.front());
+
+        projectiles.erase(projectiles.begin());
+    }
+}
+
 void Map::tick() {
     for (unsigned int i = 0; i < WIDTH; ++i)
+        for (unsigned int j = 0; j < HEIGHT; ++j) {
+            this->tick_enemies_on_cell(cells[i][j]);
+            this->tick_projectiles_on_cell(cells[i][j]);
+        }
+}
+
+void Map::get_rid_of_corpses() {
+    for (unsigned int i = 0; i < WIDTH; ++i)
         for (unsigned int j = 0; j < HEIGHT; ++j)
-            this->cells[i][j]->tick();
+            this->cells[i][j]->get_rid_of_corpses();
 }
 
 Map::~Map() {}

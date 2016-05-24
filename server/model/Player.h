@@ -11,6 +11,7 @@ class Player {
 
     public:
         explicit Player(const std::string& name);
+        bool is_dead();
         virtual ~Player();
 };
 

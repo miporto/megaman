@@ -20,17 +20,24 @@ class Cell {
         void add(Enemy* object);
         void add(Object* object);
         void add(Projectile* projectile);
-        void tick();
+        std::vector<Enemy*>& get_enemies();
+        std::vector<Projectile*>& get_projectiles();
+        void get_rid_of_corpses();
         ~Cell();
 };
 
 class Map {
     private:
         std::vector<std::vector<Cell*>> cells;
+
+        void tick_enemies_on_cell(Cell* cell);
+        void tick_projectiles_on_cell(Cell* cell);
+
     public:
         Map();
         void set(StageInfo* info);
         void tick();
+        void get_rid_of_corpses();
         ~Map();
 };
 

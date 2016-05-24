@@ -14,6 +14,8 @@ class Game {
         std::vector<Player*> players;
         Map map;
 
+        void get_rid_of_corpses();
+
     public:
         void new_player(std::string& name);
         void set_stage(StageInfo* info);
