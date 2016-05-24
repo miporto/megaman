@@ -133,12 +133,15 @@ void MainWindow::init_stage_pick_screen() {
 	builder->get_widget("bombman_btn", btn);
 	if (btn) {
 		btn->signal_clicked().connect(
-						sigc::mem_fun(*this, &MainWindow::on_boss_pick_btn_clicked));
+				sigc::bind<char>(
+						sigc::mem_fun(*this,
+								&MainWindow::on_boss_pick_btn_clicked), BOMBMAN));
 	}
 }
-void MainWindow::on_boss_pick_btn_clicked() {
+void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
-	client.pick_stage(BOMBMAN);
+	client.pick_stage(stage_id);
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() {
+}
