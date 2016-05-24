@@ -5,7 +5,7 @@ set(SOURCES
         view/AboutScreen.h
         communication/Client.cpp
         communication/Client.h
-    main.cpp
+        main.cpp
         view/MainWindow.cpp
         view/MainWindow.h
         communication/ClientCommunicator.h

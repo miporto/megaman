@@ -129,7 +129,7 @@ void MainWindow::init_insert_name() {
 void MainWindow::init_stage_pick_screen() {
 	stage_pick = NULL;
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
-			"view/stage_pick_box.glade", &stage_pick);
+			"resources/stage_pick_box.glade", &stage_pick);
 	Gtk::Button* btn = NULL;
 	builder->get_widget("bombman_btn", btn);
 	if (btn) {
