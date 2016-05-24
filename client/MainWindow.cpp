@@ -129,6 +129,16 @@ void MainWindow::init_stage_pick_screen() {
 	stage_pick = NULL;
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
 			"view/stage_pick_box.glade", &stage_pick);
+	Gtk::Button* btn = NULL;
+	builder->get_widget("bombman_btn", btn);
+	if (btn) {
+		btn->signal_clicked().connect(
+						sigc::mem_fun(*this, &MainWindow::on_boss_pick_btn_clicked));
+	}
+}
+void MainWindow::on_boss_pick_btn_clicked() {
+	std::cout << "Boss selected" << std::endl;
+	client.pick_stage(BOMBMAN);
 }
 
 MainWindow::~MainWindow() {}

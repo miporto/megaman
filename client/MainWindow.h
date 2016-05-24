@@ -36,6 +36,7 @@ protected:
 	void on_exit_game_btn_clicked();
 	void on_confirm_name_btn_clicked(Gtk::Entry* text_entry);
 	void on_cancel_btn_clicked();
+	void on_boss_pick_btn_clicked();
 
 private:
 	Client client;
