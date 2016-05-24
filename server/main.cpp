@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "common/Socket.h"
+#include "common/communication/Socket.h"
 #include "server/communication/Server.h"
 
 #define PORT_POS 1

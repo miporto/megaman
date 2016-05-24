@@ -5,8 +5,8 @@
 
 #include "common/Thread.h"
 #include "server/model/Player.h"
-#include "common/StageInfo.h"
-#include "common/Packet.h"
+#include "common/communication/StageInfo.h"
+#include "common/communication/Packet.h"
 #include "server/model/Object.h"
 #include "server/model/Enemy.h"
 #include "server/model/Factory.h"

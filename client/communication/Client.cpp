@@ -2,7 +2,7 @@
 #include <string>
 
 #include "Client.h"
-#include "common/AddrInfo.h"
+#include "common/communication/AddrInfo.h"
 
 Client::Client(const char* hostname, const char* port)
         : hostname(hostname), port(port), communicator(this->client) {}

@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <gtkmm/application.h>
 
-#include "common/Socket.h"
+#include "common/communication/Socket.h"
 #include "client/communication/Client.h"
 #include "MainWindow.h"
 

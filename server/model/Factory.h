@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#include "common/StageInfo.h"
+#include "common/communication/StageInfo.h"
 #include "Cannon.h"
 
 class EnemyFactory {

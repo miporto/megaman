@@ -1,7 +1,7 @@
 #include <vector>
 #include <utility>
 
-#include "common/StageInfo.h"
+#include "common/communication/StageInfo.h"
 #include "Map.h"
 
 void Cell::add(Enemy* enemy) {

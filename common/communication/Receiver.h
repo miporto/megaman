@@ -3,7 +3,7 @@
 
 #include <sstream>
 
-#include "Thread.h"
+#include "common/Thread.h"
 #include "Socket.h"
 #include "Packet.h"
 #include "QuitProtected.h"

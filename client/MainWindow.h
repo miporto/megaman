@@ -12,7 +12,7 @@
 #include <string>
 
 #include "client/communication/Client.h"
-#include "common/Socket.h"
+#include "common/communication/Socket.h"
 
 class MainWindow: public Gtk::Window {
 public:

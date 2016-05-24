@@ -5,7 +5,7 @@
 #include <vector>
 
 
-#include "common/Socket.h"
+#include "common/communication/Socket.h"
 #include "ServerCommunicator.h"
 #include "server/model/Game.h"
 #include "server/model/Player.h"
