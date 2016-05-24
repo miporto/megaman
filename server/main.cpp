@@ -2,7 +2,7 @@
 #include <cstdio>
 
 #include "common/Socket.h"
-#include "Server.h"
+#include "server/communication/Server.h"
 
 #define PORT_POS 1
 #define ARGS_LEN 2

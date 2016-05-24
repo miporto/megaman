@@ -7,8 +7,8 @@
 
 #include "common/Socket.h"
 #include "ServerCommunicator.h"
-#include "model/Game.h"
-#include "model/Player.h"
+#include "server/model/Game.h"
+#include "server/model/Player.h"
 #include "Stage.h"
 
 class Match {
