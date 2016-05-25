@@ -7,8 +7,8 @@
 #include <string>
 #include <vector>
 
-#include "Position.h"
-#include "Thread.h"
+#include "common/Position.h"
+#include "common/Thread.h"
 
 #define NAME_LENGTH 8
 

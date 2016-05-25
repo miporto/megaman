@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "common/Socket.h"
-#include "Server.h"
+#include "common/communication/Socket.h"
+#include "server/communication/Server.h"
 
 #define PORT_POS 1
 #define ARGS_LEN 2

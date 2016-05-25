@@ -13,7 +13,7 @@
 #define CONTAINER_NAME "container"
 
 MainWindow::MainWindow(const char* hostname, const char* port) :
-		layout(), bg_image("view/background.png"), client(hostname, port) {
+		layout(), bg_image("resources/background.png"), client(hostname, port) {
 	set_title("Mega Man");
 	set_size_request(640, 480);
 	set_border_width(0);
@@ -84,7 +84,7 @@ void MainWindow::on_cancel_btn_clicked() {
 void MainWindow::init_welcome_screen() {
 	welcome_screen = NULL;
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
-			"view/welcome_screen.glade", &welcome_screen);
+			"resources/welcome_screen.glade", &welcome_screen);
 	Gtk::Button* btn = NULL;
 	builder->get_widget("start_game_btn", btn);
 	if (btn) {
@@ -106,7 +106,7 @@ void MainWindow::init_welcome_screen() {
 void MainWindow::init_insert_name() {
 	insert_name = NULL;
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
-			"view/insert_name.glade", &insert_name);
+			"resources/insert_name.glade", &insert_name);
 	Gtk::Button* btn = NULL;
 	Gtk::Entry* entry = NULL;
 	builder->get_widget("name_entry", entry);
@@ -128,7 +128,7 @@ void MainWindow::init_insert_name() {
 void MainWindow::init_stage_pick_screen() {
 	stage_pick = NULL;
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
-			"view/stage_pick_box.glade", &stage_pick);
+			"resources/stage_pick_box.glade", &stage_pick);
 	Gtk::Button* btn = NULL;
 	builder->get_widget("bombman_btn", btn);
 	if (btn) {
