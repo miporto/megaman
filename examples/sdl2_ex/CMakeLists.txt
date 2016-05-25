@@ -1,4 +1,4 @@
-project(sdl)
+project(sdl2ex)
 
 set(SOURCES
         main.cpp)

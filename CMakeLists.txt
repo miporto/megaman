@@ -20,6 +20,10 @@ include(CppLint)
 pkg_check_modules(GTKMM3 REQUIRED gtkmm-3.0)
 pkg_check_modules(CAIROMM REQUIRED cairomm-1.0)
 pkg_check_modules(SDL2 REQUIRED sdl2)
+# Configure SDL2 wrapper
+SET(SDL2PP_WITH_IMAGE ON)
+SET(SDL2PP_WITH_TTF ON)
+add_subdirectory(extern/libSDL2pp)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(SYSTEM ${CAIROMM_INCLUDE_DIRS})
