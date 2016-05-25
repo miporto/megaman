@@ -29,7 +29,8 @@ bool EnergyTank::is_empty() {
 }
 
 void EnergyTank::reset() {
-    if (this->lives) this->lives--;
+    if (!this->lives) return;
+    this->lives--;
     this->current_energy = this->max_energy;
 }
 

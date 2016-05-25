@@ -1,22 +1,22 @@
 project(common)
 
 set(SOURCES
-    AddrInfo.cpp
-    AddrInfo.h
-    Socket.cpp
-    Socket.h
+        communication/AddrInfo.cpp
+        communication/AddrInfo.h
+        communication/Socket.cpp
+        communication/Socket.h
     Thread.cpp
     Thread.h
-    Sender.h
-    Sender.cpp
-    Receiver.h
-    Receiver.cpp
-    QuitProtected.h
-    QuitProtected.cpp
-    Packet.h
-    Packet.cpp
-    StageInfo.h
-    StageInfo.cpp
+        communication/Sender.h
+        communication/Sender.cpp
+        communication/Receiver.h
+        communication/Receiver.cpp
+        communication/QuitProtected.h
+        communication/QuitProtected.cpp
+        communication/Packet.h
+        communication/Packet.cpp
+        communication/StageInfo.h
+        communication/StageInfo.cpp
     Position.h
     Position.cpp)
 

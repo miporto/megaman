@@ -3,10 +3,11 @@
 
 #include <vector>
 #include <string>
-#include <common/Position.h>
-#include "Tickable.h"
+#include <utility>
 
-class Projectile : public Tickable {
+#include "common/Position.h"
+
+class Projectile {
     protected:
         const int damage;
         const int velocity;
@@ -17,6 +18,7 @@ class Projectile : public Tickable {
                    int velocity,
                    Position& initial_position);
         virtual void tick() = 0;
+        std::pair<int, int> get_position();
         virtual ~Projectile();
 };
 

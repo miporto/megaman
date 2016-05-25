@@ -44,6 +44,7 @@ void ServerCommunicator::push_to_sender(Packet* packet) {
 
 void ServerCommunicator::send_new_player_notification(const std::string& name) {
     this->push_to_sender(new NewPlayer(name));
+    Sender s(this->peer, this->packets_to_send, this->quit);
 }
 
 std::string ServerCommunicator::receive_name() {

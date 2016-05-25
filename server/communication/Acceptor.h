@@ -1,9 +1,9 @@
 #ifndef ACCEPTOR_H
 #define ACCEPTOR_H
 
-#include "common/Socket.h"
+#include "common/communication/Socket.h"
 #include "common/Thread.h"
-#include "common/QuitProtected.h"
+#include "common/communication/QuitProtected.h"
 #include "Match.h"
 
 class Acceptor : public Thread {

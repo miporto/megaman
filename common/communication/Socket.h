@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <netdb.h>
 
-#include "Thread.h"
+#include "common/Thread.h"
 
 #define SocketError_BUFFER_LEN 256
 

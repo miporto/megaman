@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "common/Socket.h"
+#include "common/communication/Socket.h"
 #include "ClientCommunicator.h"
 
 typedef enum _stage_id {

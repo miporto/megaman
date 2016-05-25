@@ -3,8 +3,9 @@
 
 #include <string>
 #include <vector>
+#include <common/Thread.h>
 
-#include "common/StageInfo.h"
+#include "common/communication/StageInfo.h"
 #include "Player.h"
 #include "Map.h"
 
@@ -13,9 +14,12 @@ class Game {
         std::vector<Player*> players;
         Map map;
 
+        void get_rid_of_corpses();
+
     public:
         void new_player(std::string& name);
-        void start_stage(StageInfo* info);
+        void set_stage(StageInfo* info);
+        void tick();
         ~Game();
 };
 

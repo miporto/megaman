@@ -1,17 +1,17 @@
 project(server)
 
 set(SOURCES
-    Acceptor.cpp
-    Acceptor.h
+        communication/Acceptor.cpp
+        communication/Acceptor.h
     main.cpp
-    Match.cpp
-    Match.h
-    Server.cpp
-    Server.h
-    ServerCommunicator.h
-    ServerCommunicator.cpp
-    Stage.h 
-    Stage.cpp
+        communication/Match.cpp
+        communication/Match.h
+        communication/Server.cpp
+        communication/Server.h
+        communication/ServerCommunicator.h
+        communication/ServerCommunicator.cpp
+        communication/Stage.h
+        communication/Stage.cpp
         model/Factory.cpp
         model/Factory.h
         model/Player.h
@@ -27,7 +27,7 @@ set(SOURCES
         model/Map.h
         model/Map.cpp
         model/Game.cpp
-        model/Game.h model/Mortal.h model/Shooter.h model/Tickable.h)
+        model/Game.h model/Mortal.h model/Shooter.h)
 
 include(CppLint)
 

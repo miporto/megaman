@@ -5,11 +5,11 @@
 #include <string>
 
 #include "common/Thread.h"
-#include "common/Socket.h"
-#include "common/Sender.h"
-#include "common/Receiver.h"
-#include "common/Packet.h"
-#include "common/QuitProtected.h"
+#include "common/communication/Socket.h"
+#include "common/communication/Sender.h"
+#include "common/communication/Receiver.h"
+#include "common/communication/Packet.h"
+#include "common/communication/QuitProtected.h"
 #include "Stage.h"
 
 class ServerReceiver : public Receiver {
