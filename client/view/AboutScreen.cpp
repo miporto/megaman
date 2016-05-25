@@ -23,6 +23,5 @@ AboutScreen::AboutScreen(MainWindow* main_w) :
 
 void AboutScreen::on_exit_btn_clicked() {
 	hide();
-	main_w->process_signal(ABOUT_BACK);
 }
 AboutScreen::~AboutScreen() {}

@@ -8,7 +8,6 @@
 #include <gtkmm/image.h>
 #include <gtkmm/layout.h>
 #include <gtkmm/entry.h>
-#include <map>
 #include <string>
 
 #include "client/communication/Client.h"
@@ -17,7 +16,6 @@
 class MainWindow: public Gtk::Window {
 public:
 	MainWindow(const char* hostname, const char* port);
-	void process_signal(int signal);
 	virtual ~MainWindow();
 
 protected:
@@ -40,9 +38,6 @@ protected:
 
 private:
 	Client client;
-	typedef std::map<int, Gtk::Box*> SignalsMap;
-	SignalsMap sig_map;
-	void init_signal_map();
 	void init_welcome_screen();
 	void init_insert_name();
 	void init_stage_pick_screen();
