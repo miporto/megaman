@@ -20,7 +20,7 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 	set_border_width(0);
 	layout.put(bg_image, 0, 0);
 	init_welcome_screen();
-	layout.put(*welcome_screen, 280, 0);
+	layout.put(*welcome_screen, 0, 0);
 	add(layout);
 	show_all();
 }
@@ -53,7 +53,7 @@ void MainWindow::on_new_game_btn_clicked() {
 	std::cout << std::endl;
 	layout.remove(*welcome_screen);
 	init_insert_name();
-	layout.put(*insert_name, 250, 0);
+	layout.put(*insert_name, 0, 0);
 }
 
 void MainWindow::on_about_btn_clicked() {}
@@ -96,14 +96,14 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	this->client.send_name(sname);
 	init_stage_pick_screen();
 	layout.remove(*insert_name);
-	layout.put(*stage_pick, 250, 0);
+	layout.put(*stage_pick, 0, 0);
 	stage_pick->show();
 }
 
 void MainWindow::on_cancel_btn_clicked() {
 	std::cout << "Going back to welcome screen" << std::endl;
 	layout.remove(*insert_name);
-	layout.put(*welcome_screen, 250, 0);
+	layout.put(*welcome_screen, 0, 0);
 	welcome_screen->show();
 }
 
