@@ -1,19 +1,33 @@
 project(server)
 
 set(SOURCES
-    Acceptor.cpp
-    Acceptor.h
+        communication/Acceptor.cpp
+        communication/Acceptor.h
     main.cpp
-    Match.cpp
-    Match.h
-    Server.cpp
-    Server.h
-    ServerCommunicator.h
-    ServerCommunicator.cpp
-    Stage.h 
-    Stage.cpp
-    Factory.cpp
-    Factory.h)
+        communication/Match.cpp
+        communication/Match.h
+        communication/Server.cpp
+        communication/Server.h
+        communication/ServerCommunicator.h
+        communication/ServerCommunicator.cpp
+        communication/Stage.h
+        communication/Stage.cpp
+        model/Factory.cpp
+        model/Factory.h
+        model/Player.h
+        model/Player.cpp
+        model/Object.h
+        model/Object.cpp
+        model/Enemy.h
+        model/Enemy.cpp
+        model/MegaMan.h
+        model/MegaMan.cpp
+        model/Cannon.h
+        model/Cannon.cpp
+        model/Map.h
+        model/Map.cpp
+        model/Game.cpp
+        model/Game.h model/Mortal.h model/Shooter.h)
 
 include(CppLint)
 
