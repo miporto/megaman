@@ -28,7 +28,7 @@ void Match::send_new_player_notification(std::string& name) {
 
 void Match::send_stage_info(StageInfo* info) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
-        this->communicators[i]->send_screen_info(info);
+        this->communicators[i]->send_stage_info(info);
 }
 
 void Match::add_player(int fd) {
