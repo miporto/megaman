@@ -12,7 +12,9 @@ set(SOURCES
         communication/ClientCommunicator.cpp
         view/GladeLoader.cpp
         view/GladeLoader.h
-        view/SignalProtocol.h)
+        view/SignalProtocol.h
+        view/StageSurface.cpp
+        view/StageSurface.h)
 
 include(CppLint)
 

@@ -22,6 +22,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
 #include <gtkmm/window.h>
+#include <gdk/gdkx.h>
 
 #define CONTAINER_NAME "container"
 
@@ -151,6 +152,11 @@ void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
 	client.pick_stage(stage_id);
 	// TODO: tell client to load stage_id map and call scene screen
+//    { char SDL_windowhack[32];
+//        sprintf(SDL_windowhack,"SDL_WINDOWID=%ld",
+//                GDK_WINDOW_XWINDOW(this->window));
+//        putenv(SDL_windowhack);
+//    }
 }
 
 MainWindow::~MainWindow() { }
