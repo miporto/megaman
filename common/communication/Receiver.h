@@ -20,7 +20,6 @@ class Receiver {
         Receiver(Socket& socket,
                  PacketsProtected& packets,
                  QuitProtected& quit);
-
         void run();
         virtual ~Receiver();
 };

@@ -52,4 +52,11 @@ class StageFactory {
         ~StageFactory();
 };
 
+class MapFactory {
+    public:
+        static unsigned int width();
+        static unsigned int height();
+        ~MapFactory();
+};
+
 #endif //FACTORY_H

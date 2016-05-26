@@ -107,16 +107,56 @@
       </packing>
     </child>
     <child>
-      <placeholder/>
+      <object class="GtkImage" id="image6">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="pixbuf">Megasprite.png</property>
+      </object>
+      <packing>
+        <property name="left_attach">1</property>
+        <property name="top_attach">0</property>
+        <property name="width">1</property>
+        <property name="height">1</property>
+      </packing>
     </child>
     <child>
-      <placeholder/>
+      <object class="GtkImage" id="image7">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="pixbuf">Megasprite.png</property>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">1</property>
+        <property name="width">1</property>
+        <property name="height">1</property>
+      </packing>
     </child>
     <child>
-      <placeholder/>
+      <object class="GtkImage" id="image8">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="pixbuf">Megasprite.png</property>
+      </object>
+      <packing>
+        <property name="left_attach">2</property>
+        <property name="top_attach">1</property>
+        <property name="width">1</property>
+        <property name="height">1</property>
+      </packing>
     </child>
     <child>
-      <placeholder/>
+      <object class="GtkImage" id="image9">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="pixbuf">Megasprite.png</property>
+      </object>
+      <packing>
+        <property name="left_attach">1</property>
+        <property name="top_attach">2</property>
+        <property name="width">1</property>
+        <property name="height">1</property>
+      </packing>
     </child>
   </object>
 </interface>

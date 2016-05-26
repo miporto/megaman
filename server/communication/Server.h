@@ -17,7 +17,6 @@ class Server : public Thread {
     Match match;
 
     void configure_server_socket(const char* port);
-    void configure_factories();
     void wait_for_players();
     void start_game();
 

@@ -37,7 +37,7 @@ class ServerCommunicator {
         explicit ServerCommunicator(int fd);
         void send_new_player_notification(const std::string& name);
         std::string receive_name();
-        void send_screen_info(StageInfo* info);
+        void send_stage_info(StageInfo* info);
         void shutdown();
         virtual ~ServerCommunicator();
 };

@@ -6,14 +6,6 @@
 #include "common/communication/Socket.h"
 #include "ClientCommunicator.h"
 
-typedef enum _stage_id {
-	BOMBMAN = 1,
-	SPARKMAN,
-	FIREMAN,
-	RINGMAN,
-	MAGNETMAN
-} stage_id_t;
-
 class Client {
     private:
 		const char* hostname;

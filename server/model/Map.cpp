@@ -3,6 +3,7 @@
 
 #include "common/communication/StageInfo.h"
 #include "Map.h"
+#include "Factory.h"
 
 void Cell::add(Enemy* enemy) {
     this->enemies.push_back(enemy);
@@ -43,10 +44,10 @@ Cell::~Cell() {
         delete this->projectiles[i];
 }
 
-Map::Map() {
-    for (unsigned int i = 0; i < WIDTH; ++i) {
+Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {
+    for (unsigned int i = 0; i < this->width; ++i) {
         std::vector<Cell*> col;
-        for (unsigned int j = 0; j < HEIGHT; ++j)
+        for (unsigned int j = 0; j < this->height; ++j)
             col.push_back(new Cell());
         this->cells.push_back(col);
     }
@@ -151,16 +152,16 @@ void Map::tick_projectiles_on_cell(Cell* cell) {
 }
 
 void Map::tick() {
-    for (unsigned int i = 0; i < WIDTH; ++i)
-        for (unsigned int j = 0; j < HEIGHT; ++j) {
+    for (unsigned int i = 0; i < this->width; ++i)
+        for (unsigned int j = 0; j < this->height; ++j) {
             this->tick_enemies_on_cell(cells[i][j]);
             this->tick_projectiles_on_cell(cells[i][j]);
         }
 }
 
 void Map::get_rid_of_corpses() {
-    for (unsigned int i = 0; i < WIDTH; ++i)
-        for (unsigned int j = 0; j < HEIGHT; ++j)
+    for (unsigned int i = 0; i < this->width; ++i)
+        for (unsigned int j = 0; j < this->height; ++j)
             this->cells[i][j]->get_rid_of_corpses();
 }
 

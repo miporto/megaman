@@ -8,14 +8,9 @@ void Server::configure_server_socket(const char* port) {
     this->server.bind_and_listen(info());
 }
 
-void Server::configure_factories() {
-    //TODO
-}
-
 Server::Server(Socket& server, const char* port, QuitProtected& quit)
     : quit(quit), server(server), match(communicators) {
     configure_server_socket(port);
-    configure_factories();
 }
 
 void Server::wait_for_players() {
