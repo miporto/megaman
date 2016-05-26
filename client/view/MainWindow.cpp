@@ -11,18 +11,39 @@
 #include "SignalProtocol.h"
 #include "common/communication/Packet.h"
 
+#include <iostream>
+#include <gtkmm/main.h>
+#include <gtkmm/alignment.h>
+#include <gtkmm/box.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/eventbox.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/image.h>
+#include <gtkmm/label.h>
+#include <gtkmm/table.h>
+#include <gtkmm/window.h>
+
 #define CONTAINER_NAME "container"
 
 MainWindow::MainWindow(const char* hostname, const char* port) :
-		layout(), bg_image("resources/background.png"), client(hostname, port) {
+        bg_image("resources/background.png"), client(hostname, port) {
 	set_title("Mega Man");
 	set_size_request(640, 480);
+    set_position(Gtk::WIN_POS_CENTER);
 	set_border_width(0);
 	layout.put(bg_image, 0, 0);
 	init_welcome_screen();
-	layout.put(*welcome_screen, 0, 0);
-	add(layout);
+    init_insert_name();
+    init_stage_pick_screen();
+    main_frame.pack_start(*welcome_screen);
+    main_frame.pack_start(*insert_name);
+    main_frame.pack_start(*stage_pick);
+    add(main_frame);
+	//layout.put(*welcome_screen, 0, 0);
+	//add(layout);
 	show_all();
+    insert_name->hide();
+    stage_pick->hide();
 }
 
 
@@ -51,9 +72,11 @@ void MainWindow::init_welcome_screen() {
 
 void MainWindow::on_new_game_btn_clicked() {
 	std::cout << std::endl;
-	layout.remove(*welcome_screen);
-	init_insert_name();
-	layout.put(*insert_name, 0, 0);
+    welcome_screen->hide();
+    insert_name->show();
+	//layout.remove(*welcome_screen);
+	//init_insert_name();
+	//layout.put(*insert_name, 0, 0);
 }
 
 void MainWindow::on_about_btn_clicked() {}
@@ -94,16 +117,18 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	std::cout << name.c_str() << std::endl;
 	std::string sname = name.raw();
 	this->client.send_name(sname);
-	init_stage_pick_screen();
+	//init_stage_pick_screen();
 	layout.remove(*insert_name);
 	layout.put(*stage_pick, 0, 0);
+    insert_name->hide();
 	stage_pick->show();
 }
 
 void MainWindow::on_cancel_btn_clicked() {
 	std::cout << "Going back to welcome screen" << std::endl;
-	layout.remove(*insert_name);
-	layout.put(*welcome_screen, 0, 0);
+	//layout.remove(*insert_name);
+	//layout.put(*welcome_screen, 0, 0);
+    insert_name->hide();
 	welcome_screen->show();
 }
 
