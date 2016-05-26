@@ -22,7 +22,8 @@ protected:
 	Gtk::Layout layout;
 	Gtk::Image bg_image;
 
-	Gtk::Box* welcome_screen;
+    Gtk::Box main_frame;
+    Gtk::Box* welcome_screen;
 	Gtk::Box* about;
 	Gtk::Box* insert_name;
 	Gtk::Box* stage_pick;
