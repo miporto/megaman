@@ -25,8 +25,6 @@ class EnergyTank {
 };
 
 class MegaMan : public Mortal, public Shooter {
-    friend class Object;
-
     private:
         EnergyTank tank;
         Cannon cannon;

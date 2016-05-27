@@ -3,6 +3,10 @@
 #include "MegaMan.h"
 #include "Factory.h"
 
+#define INITIAL_X 0
+#define INITIAL_Y 0
+#define INITIAL_DIRECTION 1
+
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
         max_energy(EnergyTankFactory::maximum_energy()),
@@ -37,7 +41,8 @@ void EnergyTank::reset() {
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan() :
-        position(0,0), velocity(MegaManFactory::velocity()) {}
+        position(INITIAL_X, INITIAL_Y, INITIAL_DIRECTION),
+        velocity(MegaManFactory::velocity()) {}
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);

@@ -1,10 +1,10 @@
-#include <utility>
+#include <vector>
 
 #include "Enemy.h"
 #include "Factory.h"
 
-Enemy::Enemy(int x, int y, int energy) :
-        position(x, y), energy(energy) {}
+Enemy::Enemy(const std::vector<int>& position, int energy) :
+        position(position), energy(energy) {}
 
 void Enemy::decrease_energy(int amount) {
     if (this->energy < amount)
@@ -15,14 +15,14 @@ void Enemy::decrease_energy(int amount) {
 
 bool Enemy::is_dead() { return this->energy == 0; }
 
-std::pair<int, int> Enemy::get_position() {
+std::vector<int> Enemy::get_position() {
     return this->position.get_position();
 }
 
 Enemy::~Enemy() {}
 
-Met::Met(int x, int y) :
-        Enemy(x, y, EnemyFactory::energy("Met")),
+Met::Met(const std::vector<int>& position) :
+        Enemy(position, EnemyFactory::energy("Met")),
         velocity(EnemyFactory::velocity("Met")) {}
 
 Projectile* Met::shoot() {
@@ -37,8 +37,8 @@ Projectile* Met::tick() {
 
 Met::~Met() {}
 
-Bumby::Bumby(int x, int y) :
-        Enemy(x, y, EnemyFactory::energy("Bumby")),
+Bumby::Bumby(const std::vector<int>& position) :
+        Enemy(position, EnemyFactory::energy("Bumby")),
         velocity(EnemyFactory::velocity("Bumby")) {}
 
 Projectile* Bumby::shoot() {
@@ -53,8 +53,8 @@ Projectile* Bumby::tick() {
 
 Bumby::~Bumby() {}
 
-Sniper::Sniper(int x, int y) :
-        Enemy(x, y, EnemyFactory::energy("Sniper")),
+Sniper::Sniper(const std::vector<int>& position) :
+        Enemy(position, EnemyFactory::energy("Sniper")),
         velocity(EnemyFactory::velocity("Sniper")) {}
 
 Projectile* Sniper::shoot() {
@@ -69,8 +69,8 @@ Projectile* Sniper::tick() {
 
 Sniper::~Sniper() {}
 
-JumpingSniper::JumpingSniper(int x, int y) :
-        Enemy(x, y, EnemyFactory::energy("JumpingSniper")),
+JumpingSniper::JumpingSniper(const std::vector<int>& position) :
+        Enemy(position, EnemyFactory::energy("JumpingSniper")),
         velocity(EnemyFactory::velocity("JumpingSniper")) {}
 
 Projectile* JumpingSniper::shoot() {

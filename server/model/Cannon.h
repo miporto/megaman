@@ -18,7 +18,7 @@ class Projectile {
                    int velocity,
                    Position& initial_position);
         virtual void tick() = 0;
-        std::pair<int, int> get_position();
+        std::vector<int> get_position();
         virtual ~Projectile();
 };
 

@@ -5,6 +5,9 @@
 #include "Map.h"
 #include "Factory.h"
 
+#define X_COORD_POS 0
+#define Y_COORD_POS 1
+
 void Cell::add(Enemy* enemy) {
     this->enemies.push_back(enemy);
 }
@@ -55,35 +58,35 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {
 
 void Map::set(StageInfo* info) {
     std::vector<Position*> positions;
-    std::pair<int, int> position;
+    std::vector<int> position;
 
     // Completa vector objects de las celdas
     positions = info->get_block_positions();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Block(position.first, position.second));
+        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
+                (new Block(position));
         delete positions[i];
     }
     positions = info->get_stairs_positions();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Stairs(position.first, position.second));
+        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
+                (new Stairs(position));
         delete positions[i];
     }
     positions = info->get_spike_positions();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Spike(position.first, position.second));
+        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
+                (new Spike(position));
         delete positions[i];
     }
     positions = info->get_cliff_positions();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Cliff(position.first, position.second));
+        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
+                (new Cliff(position));
         delete positions[i];
     }
 
@@ -91,47 +94,49 @@ void Map::set(StageInfo* info) {
     positions = info->get_met_positions();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Met(position.first, position.second));
+        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
+                (new Met(position));
         delete positions[i];
     }
     positions = info->get_bumby_positions();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Bumby(position.first, position.second));
+        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
+                (new Bumby(position));
         delete positions[i];
     }
     positions = info->get_sniper_positions();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Sniper(position.first, position.second));
+        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
+                (new Sniper(position));
         delete positions[i];
     }
     positions = info->get_jumping_sniper_positions();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new JumpingSniper(position.first, position.second));
+        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
+                (new JumpingSniper(position));
         delete positions[i];
     }
 }
 
 void Map::tick_enemies_on_cell(Cell* cell) {
     std::vector<Enemy*> enemies = cell->get_enemies();
-    std::pair<int, int> position;
+    std::vector<int> position;
 
     while (enemies.size() != 0) {
         Projectile* projectile = enemies.front()->tick();
 
         if (projectile) {
             position = projectile->get_position();
-            cells[position.first][position.second]->add(projectile);
+            cells[position[X_COORD_POS]][position[Y_COORD_POS]]
+                    ->add(projectile);
         }
 
         position = enemies.front()->get_position();
-        cells[position.first][position.second]->add(enemies.front());
+        cells[position[X_COORD_POS]][position[Y_COORD_POS]]
+                ->add(enemies.front());
 
         enemies.erase(enemies.begin());
     }
@@ -139,13 +144,14 @@ void Map::tick_enemies_on_cell(Cell* cell) {
 
 void Map::tick_projectiles_on_cell(Cell* cell) {
     std::vector<Projectile*> projectiles = cell->get_projectiles();
-    std::pair<int, int> position;
+    std::vector<int> position;
 
     while (projectiles.size() != 0) {
         projectiles.front()->tick();
 
         position = projectiles.front()->get_position();
-        cells[position.first][position.second]->add(projectiles.front());
+        cells[position[X_COORD_POS]][position[Y_COORD_POS]]
+                ->add(projectiles.front());
 
         projectiles.erase(projectiles.begin());
     }

@@ -1,6 +1,6 @@
 #include <string>
 #include <algorithm>
-#include <utility>
+#include <vector>
 
 #include "Cannon.h"
 #include "Factory.h"
@@ -10,7 +10,7 @@ Projectile::Projectile(int damage,
                        Position& initial_position) :
         damage(damage), velocity(velocity), position(initial_position) {}
 
-std::pair<int, int> Projectile::get_position() {
+std::vector<int> Projectile::get_position() {
     return this->position.get_position();
 }
 

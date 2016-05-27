@@ -1,12 +1,14 @@
+#include <vector>
+
 #include "Object.h"
 
-Object::Object(const int x, const int y) :
-        position(x, y) {}
+Object::Object(const std::vector<int>& position) :
+        position(position) {}
 
 Object::~Object() {}
 
-Stairs::Stairs(const int x, const int y) :
-        Object(x, y) {}
+Stairs::Stairs(const std::vector<int>& position) :
+        Object(position) {}
 
 void Stairs::interact(MegaMan& mm) {
     //TODO Cuando mm esta encima, se puede
@@ -15,8 +17,8 @@ void Stairs::interact(MegaMan& mm) {
 
 Stairs::~Stairs() {}
 
-Spike::Spike(const int x, const int y) :
-        Object(x, y) {}
+Spike::Spike(const std::vector<int>& position) :
+        Object(position) {}
 
 void Spike::interact(MegaMan& mm) {
     if (this->position == mm.get_position())
@@ -25,8 +27,8 @@ void Spike::interact(MegaMan& mm) {
 
 Spike::~Spike() {}
 
-Block::Block(const int x, const int y) :
-        Object(x, y) {}
+Block::Block(const std::vector<int>& position) :
+        Object(position) {}
 
 void Block::interact(MegaMan& mm) {
     //TODO Cuando mm esta en una celda adyacente,
@@ -35,8 +37,8 @@ void Block::interact(MegaMan& mm) {
 
 Block::~Block() {}
 
-Cliff::Cliff(const int x, const int y) :
-        Object(x, y) {}
+Cliff::Cliff(const std::vector<int>& position) :
+        Object(position) {}
 
 void Cliff::interact(MegaMan& mm) {
     if (this->position == mm.get_position())
