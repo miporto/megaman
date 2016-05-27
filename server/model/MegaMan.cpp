@@ -41,8 +41,10 @@ void EnergyTank::reset() {
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan() :
-        position(INITIAL_X, INITIAL_Y, INITIAL_DIRECTION),
-        velocity(MegaManFactory::velocity()) {}
+        Movable(INITIAL_X,
+                INITIAL_Y,
+                INITIAL_DIRECTION,
+                MegaManFactory::velocity()) {}
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);
@@ -50,7 +52,7 @@ void MegaMan::decrease_energy(int amount) {
 
 void MegaMan::kill() {
     this->tank.reset();
-    this->position.reset();
+    this->reset_position();
 }
 
 bool MegaMan::is_dead() {
@@ -58,7 +60,7 @@ bool MegaMan::is_dead() {
 }
 
 Projectile* MegaMan::shoot() {
-    return this->cannon.shoot(this->position);
+    return this->cannon.shoot(this->get_position());
 }
 
 void MegaMan::change_ammo(unsigned int ammo_id) {
@@ -67,14 +69,6 @@ void MegaMan::change_ammo(unsigned int ammo_id) {
 
 void MegaMan::receive_new_ammo(std::string& name) {
     this->cannon.receive_new_ammo(name);
-}
-
-void MegaMan::move(int x_amount, int y_amount) {
-    this->position.move(x_amount, y_amount);
-}
-
-Position& MegaMan::get_position() {
-    return this->position;
 }
 
 MegaMan::~MegaMan() {}

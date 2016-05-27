@@ -6,26 +6,20 @@
 #include "common/Position.h"
 #include "Cannon.h"
 #include "Mortal.h"
-#include "Shooter.h"
 
-class Enemy : public Mortal, public Shooter {
-    protected:
-        Position position;
+class Enemy : public Movable {
+    private:
         int energy;
-
     public:
-        Enemy(const std::vector<int>& position, int energy);
+        Enemy(const std::vector<int>& position, const int velocity, int energy);
         void decrease_energy(int amount);
         bool is_dead();
         virtual Projectile* shoot() = 0;
         virtual Projectile* tick() = 0;
-        std::vector<int> get_position();
         virtual ~Enemy();
 };
 
 class Met : public Enemy {
-    private:
-        const int velocity;
     public:
         explicit Met(const std::vector<int>& position);
         Projectile* shoot();
@@ -34,8 +28,6 @@ class Met : public Enemy {
 };
 
 class Bumby : public Enemy {
-    private:
-        const int velocity;
     public:
         explicit Bumby(const std::vector<int>& position);
         Projectile* shoot();
@@ -44,8 +36,6 @@ class Bumby : public Enemy {
 };
 
 class Sniper : public Enemy {
-    private:
-        const int velocity;
     public:
         explicit Sniper(const std::vector<int>& position);
         Projectile* shoot();
@@ -54,8 +44,6 @@ class Sniper : public Enemy {
 };
 
 class JumpingSniper : public Enemy {
-    private:
-        const int velocity;
     public:
         explicit JumpingSniper(const std::vector<int>& position);
         Projectile* shoot();

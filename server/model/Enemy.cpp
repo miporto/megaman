@@ -3,8 +3,11 @@
 #include "Enemy.h"
 #include "Factory.h"
 
-Enemy::Enemy(const std::vector<int>& position, int energy) :
-        position(position), energy(energy) {}
+Enemy::Enemy(const std::vector<int>& position,
+             const int velocity,
+             int energy) :
+        Movable(position, velocity),
+        energy(energy) {}
 
 void Enemy::decrease_energy(int amount) {
     if (this->energy < amount)
@@ -15,15 +18,12 @@ void Enemy::decrease_energy(int amount) {
 
 bool Enemy::is_dead() { return this->energy == 0; }
 
-std::vector<int> Enemy::get_position() {
-    return this->position.get_position();
-}
-
 Enemy::~Enemy() {}
 
 Met::Met(const std::vector<int>& position) :
-        Enemy(position, EnemyFactory::energy("Met")),
-        velocity(EnemyFactory::velocity("Met")) {}
+        Enemy(position,
+              EnemyFactory::velocity("Met"),
+              EnemyFactory::energy("Met")) {}
 
 Projectile* Met::shoot() {
     //TODO
@@ -38,8 +38,9 @@ Projectile* Met::tick() {
 Met::~Met() {}
 
 Bumby::Bumby(const std::vector<int>& position) :
-        Enemy(position, EnemyFactory::energy("Bumby")),
-        velocity(EnemyFactory::velocity("Bumby")) {}
+        Enemy(position,
+              EnemyFactory::velocity("Bumby"),
+              EnemyFactory::energy("Bumby")) {}
 
 Projectile* Bumby::shoot() {
     //TODO
@@ -54,8 +55,9 @@ Projectile* Bumby::tick() {
 Bumby::~Bumby() {}
 
 Sniper::Sniper(const std::vector<int>& position) :
-        Enemy(position, EnemyFactory::energy("Sniper")),
-        velocity(EnemyFactory::velocity("Sniper")) {}
+        Enemy(position,
+              EnemyFactory::velocity("Sniper"),
+              EnemyFactory::energy("Sniper")) {}
 
 Projectile* Sniper::shoot() {
     //TODO
@@ -70,8 +72,9 @@ Projectile* Sniper::tick() {
 Sniper::~Sniper() {}
 
 JumpingSniper::JumpingSniper(const std::vector<int>& position) :
-        Enemy(position, EnemyFactory::energy("JumpingSniper")),
-        velocity(EnemyFactory::velocity("JumpingSniper")) {}
+        Enemy(position,
+              EnemyFactory::velocity("JumpingSniper"),
+              EnemyFactory::energy("JumpingSniper")) {}
 
 Projectile* JumpingSniper::shoot() {
     //TODO

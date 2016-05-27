@@ -7,7 +7,6 @@
 #include "common/Position.h"
 #include "Cannon.h"
 #include "Mortal.h"
-#include "Shooter.h"
 
 class EnergyTank {
     private:
@@ -24,12 +23,10 @@ class EnergyTank {
         ~EnergyTank();
 };
 
-class MegaMan : public Mortal, public Shooter {
+class MegaMan : public Movable {
     private:
         EnergyTank tank;
         Cannon cannon;
-        Position position;
-        const int velocity;
 
     public:
         MegaMan();
@@ -39,10 +36,6 @@ class MegaMan : public Mortal, public Shooter {
         Projectile* shoot();
         void change_ammo(unsigned int ammo_id);
         void receive_new_ammo(std::string& name);
-        //x_amount y y_amount tienen que venir con sentido,
-        // ej: si retrocede x_amount es negativo
-        void move(int x_amount, int y_amount);
-        Position& get_position();
         ~MegaMan();
 };
 

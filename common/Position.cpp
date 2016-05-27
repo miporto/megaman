@@ -16,20 +16,25 @@ Position::Position(const std::vector<int>& position)
           direction(position[DIRECTION_POS]) {}
 
 void Position::move(int x_amount, int y_amount) {
-    this->x += x_amount;
-    this->y += y_amount;
+    this->x += (this->direction) * x_amount;
+    this->y += (this->direction) * y_amount;
+}
+
+void Position::change_direction() {
+    this->direction *= (-1);
 }
 
 void Position::reset() {
     this->x = 0;
     this->y = 0;
+    this->direction = 1;
 }
 
 bool Position::operator==(const Position& other) const {
     return (this->x == other.x && this->y == other.y);
 }
 
-std::vector<int> Position::get_position() {
+std::vector<int> Position::get_position() const {
     std::vector<int> pos;
     pos.push_back(this->x);
     pos.push_back(this->y);

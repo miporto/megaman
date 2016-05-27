@@ -30,7 +30,7 @@ class EnergyTankFactory {
 class ProjectileFactory {
     public:
         static Projectile* projectile
-                (const std::string& name, Position& position);
+                (const std::string& name, const std::vector<int>& position);
         ~ProjectileFactory();
 };
 
