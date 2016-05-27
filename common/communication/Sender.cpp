@@ -3,8 +3,6 @@
 
 #include "Sender.h"
 
-//#define END_OF_MESSAGE '\n'
-
 Sender::Sender(Socket& socket,
                PacketsQueueProtected& packets)
         : socket(socket), packets(packets) {
@@ -27,13 +25,6 @@ void Sender::run() {
         }
         delete packet;
     }
-
-    /*
-    if (!this->quit) {
-        char EOM = END_OF_MESSAGE;
-        this->socket.send(&EOM, sizeof(char));
-    }
-     */
 }
 
 Sender::~Sender() {

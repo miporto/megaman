@@ -7,7 +7,7 @@ Receiver::Receiver(Socket& socket,
 
 void Receiver::run() {
     char packet_id = 0;
-    while (!this->quit) { //} && packet_id != '\n') {
+    while (!this->quit) {
         try {
             std::cout << "Receiving" << std::endl;
             this->socket.receive(&packet_id, sizeof(char));
