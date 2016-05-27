@@ -8,19 +8,19 @@
 #include "Packet.h"
 #include "QuitProtected.h"
 
-class Receiver {
+class Receiver : public Thread {
     protected:
         Socket& socket;
-        PacketsProtected& packets;
-        QuitProtected& quit;
+        ReceivedPacketsProtected& packets;
+        bool quit;
 
         virtual void receive_packet(const char id) = 0;
 
     public:
         Receiver(Socket& socket,
-                 PacketsProtected& packets,
-                 QuitProtected& quit);
+                 ReceivedPacketsProtected& packets);
         void run();
+        void shutdown();
         virtual ~Receiver();
 };
 

@@ -1,4 +1,6 @@
 #include <string>
+#include <vector>
+#include <map>
 
 #include "Packet.h"
 
@@ -64,21 +66,52 @@ StageElement::~StageElement() {
     delete this->position;
 }
 
-Packet* PacketsProtected::pop() {
+bool PacketsQueueProtected::is_empty() {
+    Lock l(this->m);
+    return this->packets.size() == 0;
+}
+
+Packet* PacketsQueueProtected::pop() {
     Lock l(this->m);
     Packet* packet = this->packets[0];
     this->packets.erase(this->packets.begin());
     return packet;
 }
 
-void PacketsProtected::push(Packet* packet) {
+void PacketsQueueProtected::push(Packet* packet) {
     Lock l(this->m);
     this->packets.push_back(packet);
 }
 
-bool PacketsProtected::is_empty() { return this->packets.size() == 0; }
-
-PacketsProtected::~PacketsProtected() {
+PacketsQueueProtected::~PacketsQueueProtected() {
     for (unsigned int i = 0; i < this->packets.size(); ++i)
         delete this->packets[i];
+}
+
+bool ReceivedPacketsProtected::is_empty(const char id) {
+    Lock l(this->m);
+    return this->packets[id].size() == 0;
+}
+
+Packet* ReceivedPacketsProtected::pop(const char id) {
+    Lock l(this->m);
+    Packet* packet = this->packets[id][0];
+    this->packets[id].erase(this->packets[id].begin());
+    return packet;
+}
+
+void ReceivedPacketsProtected::push(Packet* packet) {
+    Lock l(this->m);
+    this->packets[packet->get_id()].push_back(packet);
+}
+
+ReceivedPacketsProtected::~ReceivedPacketsProtected() {
+    typedef std::map<char, std::vector<Packet*>>::iterator it_packets;
+    for (it_packets iterator = this->packets.begin();
+        iterator != this->packets.end();
+        ++iterator)
+        for (unsigned int i = 0;
+             i < this->packets[iterator->first].size();
+             ++i)
+            delete this->packets[iterator->first][i];
 }

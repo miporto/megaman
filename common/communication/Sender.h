@@ -8,13 +8,11 @@
 class Sender : public Thread {
     private:
         Socket& socket;
-        PacketsProtected& packets;
-        QuitProtected& quit;
+        PacketsQueueProtected& packets;
 
     public:
         Sender(Socket& socket,
-               PacketsProtected& packets,
-               QuitProtected& quit);
+               PacketsQueueProtected& packets);
         void run();
         ~Sender();
 };
