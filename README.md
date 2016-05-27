@@ -4,3 +4,6 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 de la FIUBA
 ## Integrantes
 * [Agustina Barbetta](https://github.com/abrden)
 * [Manuel Porto](https://github.com/manuporto)
+
+## Requerimientos para buildear el proyecto
+* CMake >= 2.8.4
