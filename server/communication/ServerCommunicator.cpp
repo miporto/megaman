@@ -4,34 +4,6 @@
 
 #include "ServerCommunicator.h"
 
-ServerReceiver::ServerReceiver(Socket& peer,
-                               ReceivedPacketsProtected& packets)
-        : Receiver(peer, packets) {
-    this->start();
-}
-
-void ServerReceiver::receive_packet(const char id) {
-    switch (id) {
-        // Solo cases para los paquetes que pueden ser recibidos
-        case NEW_PLAYER: {
-            char name[NAME_LENGTH + 1];
-            name[NAME_LENGTH] = '\0';
-            this->socket.receive(name, sizeof(char) * NAME_LENGTH);
-            this->packets.push(new NewPlayer(name));
-            break;
-        } case STAGE_PICK: {
-            char stage_id;
-            this->socket.receive(&stage_id, sizeof(char));
-            this->packets.push(new StagePick(stage_id));
-            break;
-        } default:
-            // Si el ID es desconocido, desecha el paquete
-            break;
-    }
-}
-
-ServerReceiver::~ServerReceiver() {}
-
 NameWaiter::NameWaiter(Player* player,
                        ReceivedPacketsProtected& packets_received)
         : player(player), packets_received(packets_received) {

@@ -12,15 +12,6 @@
 #include "common/communication/QuitProtected.h"
 #include "Stage.h"
 
-class ServerReceiver : public Receiver {
-    private:
-        void receive_packet(const char id);
-    public:
-        ServerReceiver(Socket& peer,
-                       ReceivedPacketsProtected& packets);
-        ~ServerReceiver();
-};
-
 class NameWaiter : public Thread {
     private:
         Player* player;
@@ -38,7 +29,7 @@ class ServerCommunicator {
         Socket peer;
         PacketsQueueProtected packets_to_send;
         ReceivedPacketsProtected packets_received;
-        ServerReceiver receiver;
+        Receiver receiver;
 
     public:
         explicit ServerCommunicator(Player* player, int fd);

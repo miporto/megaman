@@ -4,40 +4,6 @@
 
 #include "ClientCommunicator.h"
 
-ClientReceiver::ClientReceiver(Socket& socket,
-                               ReceivedPacketsProtected& packets)
-        : Receiver(socket, packets) {}
-
-void ClientReceiver::receive_packet(const char id) {
-    switch (id) {
-        // Solo cases para los paquetes que pueden ser recibidos
-        case NEW_PLAYER: {
-            char name[NAME_LENGTH + 1];
-            name[NAME_LENGTH] = '\0';
-            this->socket.receive(name, sizeof(char) * NAME_LENGTH);
-            this->packets.push(new NewPlayer(name));
-            break;
-        } case STAGE_PICK: {
-            char stage_id;
-            this->socket.receive(&stage_id, sizeof(char));
-            this->packets.push(new StagePick(stage_id));
-            break;
-        } case STAGE_ELEMENT: {
-            char type;
-            int x, y;
-            this->socket.receive(&type, sizeof(char));
-            this->socket.receive((char *) &x, sizeof(int));
-            this->socket.receive((char *) &y, sizeof(int));
-            this->packets.push(new StageElement(type, new Position(x, y)));
-            break;
-        } default:
-            // Si el ID es desconocido, desecha el paquete
-            break;
-    }
-}
-
-ClientReceiver::~ClientReceiver() {}
-
 TeamWaiter::TeamWaiter(std::vector<std::string>& teammates,
                        ReceivedPacketsProtected& packets_received) :
         teammates(teammates), packets_received(packets_received) {}

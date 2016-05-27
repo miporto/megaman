@@ -5,6 +5,34 @@ Receiver::Receiver(Socket& socket,
                    ReceivedPacketsProtected& packets)
         : socket(socket), packets(packets), quit(false) {}
 
+void Receiver::receive_packet(const char id) {
+    switch (id) {
+        case NEW_PLAYER: {
+            char name[NAME_LENGTH + 1];
+            name[NAME_LENGTH] = '\0';
+            this->socket.receive(name, sizeof(char) * NAME_LENGTH);
+            this->packets.push(new NewPlayer(name));
+            break;
+        } case STAGE_PICK: {
+            char stage_id;
+            this->socket.receive(&stage_id, sizeof(char));
+            this->packets.push(new StagePick(stage_id));
+            break;
+        } case STAGE_ELEMENT: {
+            char type;
+            int x, y;
+            this->socket.receive(&type, sizeof(char));
+            this->socket.receive((char *) &x, sizeof(int));
+            this->socket.receive((char *) &y, sizeof(int));
+            this->packets.push(new StageElement(type, new Position(x, y)));
+            break;
+        } default:
+            // Si el ID es desconocido, es posible que el resto del
+            // paquete quede en el pipe del socket, arruinando la comm
+            break;
+    }
+}
+
 void Receiver::run() {
     char packet_id = 0;
     while (!this->quit) {

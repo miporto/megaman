@@ -14,14 +14,14 @@ class Receiver : public Thread {
         ReceivedPacketsProtected& packets;
         bool quit;
 
-        virtual void receive_packet(const char id) = 0;
+        void receive_packet(const char id);
 
     public:
         Receiver(Socket& socket,
                  ReceivedPacketsProtected& packets);
         void run();
         void shutdown();
-        virtual ~Receiver();
+        ~Receiver();
 };
 
 #endif //RECEIVER_H

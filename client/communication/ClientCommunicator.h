@@ -11,15 +11,6 @@
 #include "common/communication/QuitProtected.h"
 #include "common/communication/Sender.h"
 
-class ClientReceiver : public Receiver {
-    private:
-        void receive_packet(const char id);
-    public:
-        ClientReceiver(Socket& socket,
-                       ReceivedPacketsProtected& packets);
-        ~ClientReceiver();
-};
-
 class TeamWaiter : public Thread {
     private:
         std::vector<std::string>& teammates;
@@ -36,7 +27,7 @@ class ClientCommunicator {
         Socket& socket;
         PacketsQueueProtected packets_to_send;
         ReceivedPacketsProtected packets_received;
-        ClientReceiver receiver;
+        Receiver receiver;
         TeamWaiter waiter;
 
         void push_to_sender(Packet* packet);
