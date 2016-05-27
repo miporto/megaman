@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "common/Position.h"
 #include "common/Thread.h"
@@ -86,16 +87,28 @@ class StageElement : public Packet {
         ~StageElement();
 };
 
-class PacketsProtected {
+class PacketsQueueProtected {
     private:
         Mutex m;
         std::vector<Packet*> packets;
 
     public:
+        bool is_empty();
         Packet* pop();
         void push(Packet* packet);
-        bool is_empty();
-        ~PacketsProtected();
+        ~PacketsQueueProtected();
+};
+
+class ReceivedPacketsProtected {
+    private:
+        Mutex m;
+        std::map<char, std::vector<Packet*>> packets;
+
+    public:
+        bool is_empty(const char id);
+        Packet* pop(const char id);
+        void push(Packet* packet);
+        ~ReceivedPacketsProtected();
 };
 
 #endif  // PACKET_H

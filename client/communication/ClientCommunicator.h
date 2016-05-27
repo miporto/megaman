@@ -2,8 +2,9 @@
 #define COMMUNICATOR_H
 
 #include <string>
-#include <common/communication/StageInfo.h>
+#include <vector>
 
+#include "common/communication/StageInfo.h"
 #include "common/communication/Receiver.h"
 #include "common/communication/Packet.h"
 #include "common/communication/Socket.h"
@@ -15,24 +16,33 @@ class ClientReceiver : public Receiver {
         void receive_packet(const char id);
     public:
         ClientReceiver(Socket& socket,
-                       PacketsProtected& packets,
-                       QuitProtected& quit);
+                       ReceivedPacketsProtected& packets);
         ~ClientReceiver();
+};
+
+class TeamWaiter : public Thread {
+    private:
+        std::vector<std::string>& teammates;
+        ReceivedPacketsProtected& packets_received;
+    public:
+        TeamWaiter(std::vector<std::string>& teammates,
+                   ReceivedPacketsProtected& packets_received);
+        void run();
+        ~TeamWaiter();
 };
 
 class ClientCommunicator {
     private:
         Socket& socket;
-        QuitProtected quit;
-        PacketsProtected packets_to_send;
-        PacketsProtected packets_received;
+        PacketsQueueProtected packets_to_send;
+        ReceivedPacketsProtected packets_received;
         ClientReceiver receiver;
+        TeamWaiter waiter;
 
-        Packet* pop_from_receiver();
         void push_to_sender(Packet* packet);
 
     public:
-        explicit ClientCommunicator(Socket& socket);
+        ClientCommunicator(Socket& socket, std::vector<std::string>& teammates);
         void send_name(std::string& name);
         void send_stage_pick(char& stage_id);
         StageInfo* receive_stage_info();

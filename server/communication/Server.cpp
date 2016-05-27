@@ -18,8 +18,10 @@ void Server::wait_for_players() {
     Acceptor acceptor(this->server, this->match, quit_acceptor);
     acceptor.start();
     while (!quit_acceptor() && !this->quit())
-        if (this->match.is_full() || this->match.has_started())
+        if (this->match.is_full() || this->match.has_started()) {
             quit_acceptor.switch_to_true();
+            this->server.shutdown();
+        }
     acceptor.join();
 }
 

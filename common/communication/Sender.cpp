@@ -3,19 +3,18 @@
 
 #include "Sender.h"
 
-#define END_OF_MESSAGE '\n'
+//#define END_OF_MESSAGE '\n'
 
 Sender::Sender(Socket& socket,
-               PacketsProtected& packets,
-               QuitProtected& quit)
-        : socket(socket), packets(packets), quit(quit) {
+               PacketsQueueProtected& packets)
+        : socket(socket), packets(packets) {
     this->start();
 }
 
 void Sender::run() {
     Packet* packet;
     std::string str;
-    while (!this->quit() && !this->packets.is_empty()) {
+    while (!this->packets.is_empty()) {
         packet = this->packets.pop();
         str = packet->get_str();
         try {
@@ -29,10 +28,12 @@ void Sender::run() {
         delete packet;
     }
 
-    if (!this->quit()) {
+    /*
+    if (!this->quit) {
         char EOM = END_OF_MESSAGE;
         this->socket.send(&EOM, sizeof(char));
     }
+     */
 }
 
 Sender::~Sender() {

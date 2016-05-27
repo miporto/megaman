@@ -17,7 +17,7 @@ class Game {
         void get_rid_of_corpses();
 
     public:
-        void new_player(std::string& name);
+        void new_player(Player* player);
         void set_stage(StageInfo* info);
         void tick();
         ~Game();
