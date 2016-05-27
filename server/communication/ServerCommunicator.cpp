@@ -74,38 +74,40 @@ const std::string& ServerCommunicator::name() {
 void ServerCommunicator::send_stage_info(StageInfo* info) {
     std::vector<Position*> positions;
 
+    //TODO arreglar memory leak de todos estos vectores
+
     positions = info->get_met_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(MET, positions[i]));
+                (new StageElement(MET, positions[i]->clone()));
     positions = info->get_bumby_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(BUMBY, positions[i]));
+                (new StageElement(BUMBY, positions[i]->clone()));
     positions = info->get_sniper_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(SNIPER, positions[i]));
+                (new StageElement(SNIPER, positions[i]->clone()));
     positions = info->get_jumping_sniper_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(JUMPING_SNIPER, positions[i]));
+                (new StageElement(JUMPING_SNIPER, positions[i]->clone()));
     positions = info->get_block_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(BLOCK, positions[i]));
+                (new StageElement(BLOCK, positions[i]->clone()));
     positions = info->get_stairs_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(STAIRS, positions[i]));
+                (new StageElement(STAIRS, positions[i]->clone()));
     positions = info->get_spike_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(SPIKE, positions[i]));
+                (new StageElement(SPIKE, positions[i]->clone()));
     positions = info->get_cliff_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(CLIFF, positions[i]));
+                (new StageElement(CLIFF, positions[i]->clone()));
 
     Sender s(this->peer, this->packets_to_send);
 }

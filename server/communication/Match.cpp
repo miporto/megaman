@@ -76,13 +76,11 @@ void Match::start_stage() {
     this->send_stage_pick_to_team(this->stage_id());
 
     StageInfo* info = StageFactory::stage_info(this->stage_id());
-
     this->send_stage_info(info);
     this->game.set_stage(info);
+    delete info;
 
     //TODO ...
-
-    delete info;
 }
 
 Match::~Match() {}
