@@ -40,8 +40,6 @@ std::string StagePick::get_str() const {
 
 StagePick::~StagePick() {}
 
-StageElement::StageElement(Position* position) : type(0), position(position) {}
-
 StageElement::StageElement(const char type, Position* position) :
         type(type), position(position) {}
 

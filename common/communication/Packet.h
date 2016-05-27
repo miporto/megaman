@@ -78,7 +78,6 @@ class StageElement : public Packet {
         Position* position;
 
     public:
-        explicit StageElement(Position* position);
         StageElement(const char type, Position* position);
         char get_id() const;
         char get_type() const;
