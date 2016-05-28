@@ -23,17 +23,23 @@ StageSurface::StageSurface() {
 
 bool StageSurface::init(::Window window_id) {
     try {
+        std::stringstream sdlhack;
+        sdlhack << "SDL_WINDOWID=" << window_id << std::ends;
+
+        char* winhack = new char[32];
+        snprintf(winhack, sizeof(*winhack), "%s", sdlhack.str().c_str());
+        putenv(winhack);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
-        SDL_Window *s_window = SDL_CreateWindowFrom((void *) window_id);
-        if (!s_window) {
-            std::cerr << "Couldn't create SDL window: " << SDL_GetError() <<
-            std::endl;
-            throw std::exception();
-        }
-        SDL2pp::Window window(s_window);
-//        window = new SDL2pp::Window ("Mega Man", SDL_WINDOWPOS_UNDEFINED,
-//                              SDL_WINDOWPOS_UNDEFINED, 640, 480,
-//                              SDL_WINDOW_RESIZABLE);
+//        SDL_Window *s_window = SDL_CreateWindowFrom((void *) window_id);
+//        if (!s_window) {
+//            std::cerr << "Couldn't create SDL window: " << SDL_GetError() <<
+//            std::endl;
+//            throw std::exception();
+//        }
+//        SDL2pp::Window window(s_window);
+        SDL2pp::Window window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
+                              SDL_WINDOWPOS_UNDEFINED, 640, 480,
+                              SDL_WINDOW_RESIZABLE);
         renderer = new SDL2pp::Renderer(window, -1, SDL_RENDERER_SOFTWARE);
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
@@ -59,7 +65,7 @@ bool StageSurface::run() {
         renderer->Copy(*sprites);
         renderer->Present();
         std::cout << "Check" << std::endl;
-        //SDL_Delay(5000);
+        SDL_Delay(5000);
         return true;
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
