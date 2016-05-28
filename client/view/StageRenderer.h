@@ -1,21 +1,19 @@
 #ifndef MEGAMAN_STAGERENDERER_H
 #define MEGAMAN_STAGERENDERER_H
 
-#include <cairomm/context.h>
-#include <giomm/resource.h>
-#include <gdkmm/general.h> // set_source_pixbuf()
-#include <gdkmm/pixbuf.h>
-#include <glibmm/fileutils.h>
 #include <gtkmm/drawingarea.h>
+#include <cairomm/context.h>
+
 
 class StageRenderer : public Gtk::DrawingArea {
 public:
     StageRenderer();
     ~StageRenderer();
 protected:
-    bool on_draw(const Cairo::RefPtr<Cairo::Context> &cr) override;
+    virtual bool on_draw(const Cairo::RefPtr<Cairo::Context> &cr);
 private:
-    Cairo::RefPtr<Cairo::SurfacePattern> bg;
+//    Cairo::SurfacePattern bg;
+    Glib::RefPtr< Gdk::Pixbuf > bg;
 };
 
 
