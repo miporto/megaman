@@ -6,7 +6,6 @@
 #include <gtkmm/entrybuffer.h>
 
 #include "MainWindow.h"
-#include "AboutScreen.h"
 #include "GladeLoader.h"
 #include "SignalProtocol.h"
 #include "common/communication/Packet.h"
@@ -153,9 +152,9 @@ void MainWindow::init_stage_pick_screen() {
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
 	//client.pick_stage(stage_id);
-    stage_pick->hide();
-    socket.show();
-    surface = new StageSurface(socket.get_id());
+//    stage_pick->hide();
+    //socket.show();
+    //surface = new StageSurface();
     //surface->run();
 }
 

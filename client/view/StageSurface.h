@@ -2,15 +2,17 @@
 #define MEGAMAN_STAGESCREEN_H
 
 #include <SDL2pp/SDL2pp.hh>
-#include <X11/Xlib.h>
+#include <gtkmm/window.h>
+#include <gtkmm/socket.h>
 
 
-class StageSurface {
+class StageSurface : Gtk::Window {
 public:
-    explicit StageSurface(::Window window_id);
+    StageSurface();
     void run();
     ~StageSurface();
 private:
+    Gtk::Socket socket;
     SDL2pp::SDL* sdl;
     SDL2pp::Window* window;
     SDL2pp::Renderer* renderer;
