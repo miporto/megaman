@@ -2,10 +2,12 @@
 #define MEGAMAN_STAGESCREEN_H
 
 #include <SDL2pp/SDL2pp.hh>
+#include <X11/Xlib.h>
+
 
 class StageSurface {
 public:
-    StageSurface();
+    explicit StageSurface(::Window window_id);
     void run();
     ~StageSurface();
 private:

@@ -8,10 +8,12 @@
 #include <gtkmm/image.h>
 #include <gtkmm/layout.h>
 #include <gtkmm/entry.h>
+#include <gtkmm/socket.h>
 #include <string>
 
 #include "client/communication/Client.h"
 #include "common/communication/Socket.h"
+#include "StageSurface.h"
 
 class MainWindow: public Gtk::Window {
 public:
@@ -21,6 +23,8 @@ public:
 protected:
 	Gtk::Layout layout;
 	Gtk::Image bg_image;
+	Gtk::Socket socket;
+    StageSurface* surface;
 
     Gtk::Box main_frame;
     Gtk::Box* welcome_screen;

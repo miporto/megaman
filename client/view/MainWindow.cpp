@@ -22,7 +22,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
 #include <gtkmm/window.h>
-#include <gdk/gdkx.h>
+
 
 #define CONTAINER_NAME "container"
 
@@ -39,12 +39,14 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
     main_frame.pack_start(*welcome_screen);
     main_frame.pack_start(*insert_name);
     main_frame.pack_start(*stage_pick);
+	main_frame.pack_start(socket);
     add(main_frame);
 	//layout.put(*welcome_screen, 0, 0);
 	//add(layout);
 	show_all();
     insert_name->hide();
     stage_pick->hide();
+	socket.hide();
 }
 
 
@@ -150,13 +152,11 @@ void MainWindow::init_stage_pick_screen() {
 
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
-	client.pick_stage(stage_id);
-	// TODO: tell client to load stage_id map and call scene screen
-//    { char SDL_windowhack[32];
-//        sprintf(SDL_windowhack,"SDL_WINDOWID=%ld",
-//                GDK_WINDOW_XWINDOW(this->window));
-//        putenv(SDL_windowhack);
-//    }
+	//client.pick_stage(stage_id);
+    stage_pick->hide();
+    socket.show();
+    surface = new StageSurface(socket.get_id());
+    //surface->run();
 }
 
 MainWindow::~MainWindow() { }
