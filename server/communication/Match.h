@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-
+#include <map>
 
 #include "common/communication/Socket.h"
 #include "ServerCommunicator.h"
@@ -15,10 +15,11 @@ class Match {
     private:
         Mutex m;
         std::vector<ServerCommunicator*>& communicators;
+        std::map<char, StageInfo*> stages;
         Game game;
-        StageIDProtected stage_id;
 
         bool has_host();
+        HostCommunicator* host_communicator();
         void send_team_to_new_player(ServerCommunicator* new_comm);
         void send_new_player_to_team(ServerCommunicator* new_comm);
         void send_stage_pick_to_team(const char stage_id);

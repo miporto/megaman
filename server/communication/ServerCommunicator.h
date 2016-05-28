@@ -44,13 +44,13 @@ class ServerCommunicator {
 
 class StageIdWaiter : public Thread {
     private:
-        StageIDProtected& stage_id;
+        StageIDProtected stage_id;
         ReceivedPacketsProtected& packets_received;
 
     public:
-        StageIdWaiter(StageIDProtected& stage_id,
-                      ReceivedPacketsProtected& packets_received);
+        explicit StageIdWaiter(ReceivedPacketsProtected& packets_received);
         void run();
+        char get_stage_id();
         ~StageIdWaiter();
 };
 
@@ -58,8 +58,9 @@ class HostCommunicator : public ServerCommunicator {
     private:
         StageIdWaiter waiter;
     public:
-        HostCommunicator(Player* player, int fd, StageIDProtected& stage_id);
-        void receive_stage_id();
+        HostCommunicator(Player* player, int fd);
+        char check_stage_id();
+        char receive_stage_id();
         ~HostCommunicator();
 };
 

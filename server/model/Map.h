@@ -2,7 +2,6 @@
 #define MAP_H
 
 #include <vector>
-//#include <extern/Box2D/Box2D.h>
 
 #include "Enemy.h"
 #include "Object.h"

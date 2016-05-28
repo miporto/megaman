@@ -22,7 +22,9 @@ NameWaiter::~NameWaiter() { this->join(); }
 ServerCommunicator::ServerCommunicator(Player* player, int fd)
     : player(player),
       peer(fd),
-      receiver(peer, packets_received) {}
+      receiver(peer, packets_received) {
+    this->receiver.start();
+}
 
 void ServerCommunicator::send_new_player_notification(const std::string& name) {
     std::cout << "Sending player name: "<< name << std::endl;
@@ -59,27 +61,27 @@ void ServerCommunicator::send_stage_info(StageInfo* info) {
     positions = info->get_sniper_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(SNIPER, positions[i]->clone()));
+                (new StageElement(SNIPER, positions[i]));
     positions = info->get_jumping_sniper_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(JUMPING_SNIPER, positions[i]->clone()));
+                (new StageElement(JUMPING_SNIPER, positions[i]));
     positions = info->get_block_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(BLOCK, positions[i]->clone()));
+                (new StageElement(BLOCK, positions[i]));
     positions = info->get_stairs_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(STAIRS, positions[i]->clone()));
+                (new StageElement(STAIRS, positions[i]));
     positions = info->get_spike_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(SPIKE, positions[i]->clone()));
+                (new StageElement(SPIKE, positions[i]));
     positions = info->get_cliff_positions();
     for (unsigned int i = 0; i < positions.size(); ++i)
         this->packets_to_send.push
-                (new StageElement(CLIFF, positions[i]->clone()));
+                (new StageElement(CLIFF, positions[i]));
 
     Sender s(this->peer, this->packets_to_send);
 }
@@ -92,9 +94,8 @@ ServerCommunicator::~ServerCommunicator() {
     this->peer.shutdown();
 }
 
-StageIdWaiter::StageIdWaiter(StageIDProtected& stage_id,
-                             ReceivedPacketsProtected& packets_received) :
-        stage_id(stage_id), packets_received(packets_received) {}
+StageIdWaiter::StageIdWaiter(ReceivedPacketsProtected& packets_received)
+        : packets_received(packets_received) {}
 
 void StageIdWaiter::run() {
     while (this->packets_received.is_empty(STAGE_PICK)) {}
@@ -104,18 +105,25 @@ void StageIdWaiter::run() {
     delete packet;
 }
 
+char StageIdWaiter::get_stage_id() {
+    return this->stage_id();
+}
+
 StageIdWaiter::~StageIdWaiter() {}
 
-HostCommunicator::HostCommunicator(Player* player,
-                                   int fd,
-                                   StageIDProtected& stage_id) :
+HostCommunicator::HostCommunicator(Player* player, int fd) :
         ServerCommunicator(player, fd),
-        waiter(stage_id, this->packets_received) {
+        waiter(this->packets_received) {
     this->waiter.start();
 }
 
-void HostCommunicator::receive_stage_id() {
+char HostCommunicator::check_stage_id() {
+    return this->waiter.get_stage_id();
+}
+
+char HostCommunicator::receive_stage_id() {
     this->waiter.join();
+    return this->waiter.get_stage_id();
 }
 
 HostCommunicator::~HostCommunicator() {}
