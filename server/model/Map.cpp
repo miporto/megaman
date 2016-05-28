@@ -47,7 +47,8 @@ Cell::~Cell() {
         delete this->projectiles[i];
 }
 
-Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {
+Map::Map() : //gravity(0.0f, -10.0f), world(this->gravity),
+             width(MapFactory::width()), height(MapFactory::height()) {
     for (unsigned int i = 0; i < this->width; ++i) {
         std::vector<Cell*> col;
         for (unsigned int j = 0; j < this->height; ++j)

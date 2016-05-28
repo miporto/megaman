@@ -2,14 +2,13 @@
 #define MAP_H
 
 #include <vector>
+//#include <extern/Box2D/Box2D.h>
 
 #include "Enemy.h"
 #include "Object.h"
 
 class Cell {
     private:
-        //vector de GameObject?
-        //Padre de Enemy, MM, Object, Projectile y PowerUp?
         std::vector<Object*> objects;
         std::vector<Enemy*> enemies;
         std::vector<Projectile*> projectiles;
@@ -25,7 +24,10 @@ class Cell {
 
 class Map {
     private:
+        //b2Vec2 gravity;
+        //b2World world;
         const unsigned int width, height;
+
         std::vector<std::vector<Cell*>> cells;
 
         void tick_enemies_on_cell(Cell* cell);
