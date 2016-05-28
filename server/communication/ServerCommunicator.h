@@ -17,39 +17,58 @@ class ServerReceiver : public Receiver {
         void receive_packet(const char id);
     public:
         ServerReceiver(Socket& peer,
-                     PacketsProtected& packets,
-                     QuitProtected& quit);
+                       ReceivedPacketsProtected& packets);
         ~ServerReceiver();
+};
+
+class NameWaiter : public Thread {
+    private:
+        Player* player;
+        ReceivedPacketsProtected& packets_received;
+
+    public:
+        NameWaiter(Player* player, ReceivedPacketsProtected& packets_received);
+        void run();
+        ~NameWaiter();
 };
 
 class ServerCommunicator {
     protected:
+        Player* player;
         Socket peer;
-        QuitProtected quit;
-        PacketsProtected packets_to_send;
-        PacketsProtected packets_received;
+        PacketsQueueProtected packets_to_send;
+        ReceivedPacketsProtected packets_received;
         ServerReceiver receiver;
 
-        Packet* pop_from_receiver();
-        void push_to_sender(Packet* packet);
-
     public:
-        explicit ServerCommunicator(int fd);
+        explicit ServerCommunicator(Player* player, int fd);
         void send_new_player_notification(const std::string& name);
-        std::string receive_name();
+        void send_stage_pick(const char stage_id);
+        void receive_name();
+        const std::string& name();
         void send_stage_info(StageInfo* info);
-        void shutdown();
+        virtual void shutdown();
         virtual ~ServerCommunicator();
 };
 
-class HostCommunicator : public ServerCommunicator, public Thread {
+class StageIdWaiter : public Thread {
     private:
         StageIDProtected& stage_id;
-        char receive_stage_pick();
+        ReceivedPacketsProtected& packets_received;
 
     public:
-        HostCommunicator(int fd, StageIDProtected& stage_id);
+        StageIdWaiter(StageIDProtected& stage_id,
+                      ReceivedPacketsProtected& packets_received);
         void run();
+        ~StageIdWaiter();
+};
+
+class HostCommunicator : public ServerCommunicator {
+    private:
+        StageIdWaiter waiter;
+    public:
+        HostCommunicator(Player* player, int fd, StageIDProtected& stage_id);
+        void receive_stage_id();
         ~HostCommunicator();
 };
 

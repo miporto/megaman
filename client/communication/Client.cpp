@@ -5,7 +5,8 @@
 #include "common/communication/AddrInfo.h"
 
 Client::Client(const char* hostname, const char* port)
-        : hostname(hostname), port(port), communicator(this->client) {}
+        : hostname(hostname), port(port),
+          communicator(this->client, this->teammates) {}
         
 void Client::connect_to_server() {
     struct addrinfo* ptr;

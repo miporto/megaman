@@ -14,8 +14,7 @@ void Acceptor::run() {
             std::cout << "Accepted with fd: " << peers_fd << std::endl;
         }
         catch (const SocketError& e) {
-            std::cout << e.what() << std::endl;
-            break;
+            continue;
         }
         try {
             this->match.add_player(peers_fd);

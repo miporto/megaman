@@ -2,13 +2,12 @@
 #include "Receiver.h"
 
 Receiver::Receiver(Socket& socket,
-                   PacketsProtected& packets,
-                   QuitProtected& quit)
-        : socket(socket), packets(packets), quit(quit) {}
+                   ReceivedPacketsProtected& packets)
+        : socket(socket), packets(packets), quit(false) {}
 
 void Receiver::run() {
     char packet_id = 0;
-    while (!this->quit() && packet_id != '\n') {
+    while (!this->quit) {
         try {
             std::cout << "Receiving" << std::endl;
             this->socket.receive(&packet_id, sizeof(char));
@@ -21,4 +20,11 @@ void Receiver::run() {
     }
 }
 
-Receiver::~Receiver() {}
+void Receiver::shutdown() {
+    this->quit = true;
+}
+
+Receiver::~Receiver() {
+    this->shutdown();
+    this->join();
+}

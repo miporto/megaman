@@ -119,8 +119,8 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	std::string sname = name.raw();
 	this->client.send_name(sname);
 	//init_stage_pick_screen();
-	layout.remove(*insert_name);
-	layout.put(*stage_pick, 0, 0);
+	//layout.remove(*insert_name);
+	//layout.put(*stage_pick, 0, 0);
     insert_name->hide();
 	stage_pick->show();
 }

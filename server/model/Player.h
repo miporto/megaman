@@ -6,11 +6,12 @@
 
 class Player {
     private:
-        const std::string name;
+        std::string name;
         MegaMan megaman;
 
     public:
-        explicit Player(const std::string& name);
+        void set_name(const std::string& name);
+        const std::string& get_name();
         bool is_dead();
         virtual ~Player();
 };

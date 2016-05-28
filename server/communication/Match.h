@@ -19,9 +19,9 @@ class Match {
         StageIDProtected stage_id;
 
         bool has_host();
-        //Match realiza envio de informacion cuando esta se debe mandar a todos
-        // los jugadores por igual
-        void send_new_player_notification(std::string& name);
+        void send_team_to_new_player(ServerCommunicator* new_comm);
+        void send_new_player_to_team(ServerCommunicator* new_comm);
+        void send_stage_pick_to_team(const char stage_id);
         void send_stage_info(StageInfo* info);
 
     public:

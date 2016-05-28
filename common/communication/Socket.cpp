@@ -70,9 +70,9 @@ void Socket::send(const char* buffer, size_t size) {
 	bool valid_socket = true;
 
 	while (sent < (signed)size && valid_socket) {
-		std::cout << "My fd: " << this->fd << std::endl;
 		sent_now = ::send(this->fd, &buffer[sent], size - sent, MSG_NOSIGNAL);
-		std::cout << "Bytes sent: " << sent_now << std::endl;
+		std::cout << "(fd: " << this->fd <<
+				") Bytes sent: " << sent_now << std::endl;
 		if (!sent_now || sent_now == ERROR_CODE)
 			valid_socket = false;
 		else
@@ -88,11 +88,10 @@ void Socket::receive(char* buffer, size_t size) {
 	bool valid_socket = true;
 
 	while (received < (signed)size && valid_socket) {
-		std::cout << "My fd: " << this->fd << std::endl;
 		received_now = recv(this->fd, &buffer[received],
 							size - received, MSG_NOSIGNAL);
-		std::cout << "Bytes received: " << received_now << std::endl;
-      
+		std::cout << "(fd: " << this->fd <<
+				") Bytes received: " << received_now << std::endl;
 		if (!received_now || received_now == ERROR_CODE)
 			valid_socket = false;
 		else

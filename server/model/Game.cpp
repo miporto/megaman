@@ -2,8 +2,8 @@
 
 #include "Game.h"
 
-void Game::new_player(std::string& name) {
-    this->players.push_back(new Player(name));
+void Game::new_player(Player* player) {
+    this->players.push_back(player);
 }
 
 void Game::set_stage(StageInfo* info) {
@@ -13,7 +13,7 @@ void Game::set_stage(StageInfo* info) {
 void Game::get_rid_of_corpses() {
     for (unsigned int i = 0; i < this->players.size(); ++i)
         if (this->players[i]->is_dead()) {
-            //TODO que se hace cuando un jugador muere
+            //TODO que se hace cuando un jugador muere?
         }
     map.get_rid_of_corpses();
 }
