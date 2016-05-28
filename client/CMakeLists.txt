@@ -1,8 +1,6 @@
 project(client)
 
 set(SOURCES
-        view/AboutScreen.cpp
-        view/AboutScreen.h
         communication/Client.cpp
         communication/Client.h
         main.cpp
@@ -14,7 +12,7 @@ set(SOURCES
         view/GladeLoader.h
         view/SignalProtocol.h
         view/StageSurface.cpp
-        view/StageSurface.h)
+        view/StageSurface.h)# view/StageRenderer.cpp view/StageRenderer.h)
 
 include(CppLint)
 

@@ -6,15 +6,15 @@
 #include <gtkmm/socket.h>
 
 
-class StageSurface : Gtk::Window {
+class StageSurface : public Gtk::Window {
 public:
     StageSurface();
-    void run();
+    bool init(::Window window_id);
+    bool run();
     ~StageSurface();
 private:
-    Gtk::Socket socket;
     SDL2pp::SDL* sdl;
-    SDL2pp::Window* window;
+    //SDL2pp::Window* window;
     SDL2pp::Renderer* renderer;
     SDL2pp::Texture* sprites;
 };

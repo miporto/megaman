@@ -14,6 +14,7 @@
 #include "client/communication/Client.h"
 #include "common/communication/Socket.h"
 #include "StageSurface.h"
+#include "StageRenderer.h"
 
 class MainWindow: public Gtk::Window {
 public:
@@ -23,7 +24,6 @@ public:
 protected:
 	Gtk::Layout layout;
 	Gtk::Image bg_image;
-	Gtk::Socket socket;
     StageSurface* surface;
 
     Gtk::Box main_frame;
@@ -32,6 +32,7 @@ protected:
 	Gtk::Box* insert_name;
 	Gtk::Box* stage_pick;
 	Gtk::Box* loading;
+    //StageRenderer stage;
 
 	//Signal Handlers
 	void on_new_game_btn_clicked();
