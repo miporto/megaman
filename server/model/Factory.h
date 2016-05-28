@@ -3,9 +3,13 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
+#include "extern/libjson/json.hpp"
 #include "common/communication/StageInfo.h"
 #include "Cannon.h"
+
+using json = nlohmann::json;
 
 class EnemyFactory {
 public:
@@ -42,13 +46,14 @@ class AmmoFactory {
 
 class StageFactory {
     private:
-        std::vector<Position*> positions_of_spawns
-                (const int stage_id, const int enemy_id);
-        std::vector<Position*> positions_of_objects
-                (const int stage_id, const int object_id);
+        json stage_json;
 
+        std::vector<Position*> positions_of(const std::string& stage_id,
+                                            const std::string& name,
+                                            const std::string& object_id);
     public:
-        static StageInfo* stage_info(const int stage_id);
+        StageFactory();
+        std::map<char, StageInfo*> stage_info();
         ~StageFactory();
 };
 

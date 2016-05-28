@@ -1,7 +1,14 @@
 #include <vector>
+#include <map>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <common/communication/Packet.h>
 
+#include "extern/libjson/json.hpp"
 #include "Factory.h"
+
+#define INFO_FILE "info.json"
 
 int EnemyFactory::energy(std::string name) {
     //TODO leer .JSON
@@ -50,23 +57,77 @@ Ammo* AmmoFactory::ammo(const std::string& name) {
 
 AmmoFactory::~AmmoFactory() {}
 
-std::vector<Position*> StageFactory::positions_of_spawns
-        (const int stage_id, const int enemy_id) {
-    std::vector<Position*> positions;
-    //TODO leer .JSON
-    return positions;
+StageFactory::StageFactory() {
+    std::ifstream stage_info(INFO_FILE);
+    std::string file_dump, buffer;
+    while (getline(stage_info, buffer))
+        file_dump += buffer;
+    stage_info.close();
+    json json_file = json::parse(file_dump);
+
+    this->stage_json = json_file["stage"];
 }
 
-std::vector<Position*> StageFactory::positions_of_objects
-        (const int stage_id, const int object_id) {
+std::vector<Position*> StageFactory::positions_of
+        (const std::string& stage_id,
+         const std::string& name,
+         const std::string& object_id) {
     std::vector<Position*> positions;
-    //TODO leer .JSON
+
+    json j_positions = this->stage_json[stage_id][name][object_id];
+
+    for (size_t i = 0; i < j_positions.size(); ++i){
+        int x = (int) j_positions[i]["x"];
+        int y = (int) j_positions[i]["y"];
+        int direction = (int) j_positions[i]["direction"];
+        positions.push_back(new Position(x, y, direction));
+    }
+
     return positions;
 }
+std::map<char, StageInfo*> StageFactory::stage_info() {
+    std::map<char, StageInfo*> stages;
 
-StageInfo* StageFactory::stage_info(const int stage_id) {
-    //TODO crean StageInfo con metodos anteriores
-    return NULL;
+    for (unsigned int i = 0; i < this->stage_json.size(); ++i) {
+        std::stringstream ss;
+        ss << (i + 1);
+        std::string stage_id = ss.str();
+
+        std::vector<Position*> met_positions =
+                this->positions_of(stage_id, "spawn", "met");
+
+        std::vector<Position*> bumby_positions =
+                this->positions_of(stage_id, "spawn", "bumby");
+
+        std::vector<Position*> sniper_positions =
+                this->positions_of(stage_id, "spawn", "sniper");
+
+        std::vector<Position*> jumping_sniper_positions =
+                this->positions_of(stage_id, "spawn", "jumping sniper");
+
+        std::vector<Position*> block_positions =
+                this->positions_of(stage_id, "object", "block");
+
+        std::vector<Position*> stairs_positions =
+                this->positions_of(stage_id, "object", "stairs");
+
+        std::vector<Position*> spike_positions =
+                this->positions_of(stage_id, "object", "spike");
+
+        std::vector<Position*> cliff_positions =
+                this->positions_of(stage_id, "object", "cliff");
+
+        stages[i] = new StageInfo(met_positions,
+                                  bumby_positions,
+                                  sniper_positions,
+                                  jumping_sniper_positions,
+                                  block_positions,
+                                  stairs_positions,
+                                  spike_positions,
+                                  cliff_positions);
+    }
+
+    return stages;
 }
 
 StageFactory::~StageFactory() {}
