@@ -6,7 +6,7 @@
 #include <gtkmm/socket.h>
 
 
-class StageSurface : public Gtk::Window {
+class StageSurface {
 public:
     StageSurface();
     bool init(::Window window_id);
@@ -14,7 +14,7 @@ public:
     ~StageSurface();
 private:
     SDL2pp::SDL* sdl;
-    //SDL2pp::Window* window;
+    SDL2pp::Window* window;
     SDL2pp::Renderer* renderer;
     SDL2pp::Texture* sprites;
 };
