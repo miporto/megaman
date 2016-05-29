@@ -44,16 +44,21 @@ class AmmoFactory {
         ~AmmoFactory();
 };
 
+typedef std::vector<std::vector<int>> StageFactoryPositions;
+typedef std::map<std::string,
+        std::vector<std::vector<int>>> StageFactoryInfo;
+
 class StageFactory {
     private:
         json stage_json;
 
-        std::vector<Position*> positions_of(const std::string& stage_id,
-                                            const std::string& name,
-                                            const std::string& object_id);
+        StageFactoryPositions positions_of(const std::string& info,
+                                           const std::string& name,
+                                           const std::string& object_id);
     public:
         StageFactory();
-        std::map<char, StageInfo*> stage_info();
+        const std::string initial_stage(const char stage_id);
+        StageFactoryInfo stage_info(const std::string& info);
         ~StageFactory();
 };
 

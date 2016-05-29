@@ -6,8 +6,8 @@ void Game::new_player(Player* player) {
     this->players.push_back(player);
 }
 
-void Game::set_stage(StageInfo* info) {
-    this->map.set(info);
+void Game::set_stage(const char stage_id) {
+    //this->map.set(info);
 }
 
 void Game::get_rid_of_corpses() {

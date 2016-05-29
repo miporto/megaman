@@ -18,7 +18,7 @@ class Game {
 
     public:
         void new_player(Player* player);
-        void set_stage(StageInfo* info);
+        void set_stage(const char stage_id);
         void tick();
         ~Game();
 };

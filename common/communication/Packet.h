@@ -12,11 +12,12 @@
 #include "common/Thread.h"
 
 #define NAME_LENGTH 8
+#define STAGE_INFO_LENGTH 1024
 
 typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,
-    STAGE_ELEMENT
+    STAGE
 } packet_id_t;
 
 typedef enum _stage_id {
@@ -26,17 +27,6 @@ typedef enum _stage_id {
     RINGMAN,
     MAGNETMAN
 } stage_id_t;
-
-typedef enum _stage_element_type_t {
-    MET = 1,
-    BUMBY,
-    SNIPER,
-    JUMPING_SNIPER,
-    BLOCK,
-    STAIRS,
-    SPIKE,
-    CLIFF
-} stage_element_type_t;
 
 class Packet {
     public:
@@ -71,19 +61,16 @@ class StagePick : public Packet {
         ~StagePick();
 };
 
-class StageElement : public Packet {
-    private:
-        static const char id = STAGE_ELEMENT;
-        const char type;
-        Position* position;
+class Stage : public Packet {
+private:
+    static const char id = STAGE;
+    std::string stage_info;
 
-    public:
-        StageElement(const char type, Position* position);
-        char get_id() const;
-        char get_type() const;
-        Position* get_position() const;
-        std::string get_str() const;
-        ~StageElement();
+public:
+    explicit Stage(const std::string stage_info);
+    char get_id() const;
+    std::string get_str() const;
+    ~Stage();
 };
 
 class PacketsQueueProtected {

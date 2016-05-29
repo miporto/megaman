@@ -1,7 +1,5 @@
-{
-    "stage":{
-		"1":{
-			"spawn":{
+{"stage": {
+		"1":{"spawn":{
 				"met": [{"x": 0, "y": 1, "direction": 1}], 
 				"bumby": [{"x": 2, "y": 3, "direction": -1}], 
 				"sniper": [{"x": 4, "y": 5, "direction": 1}], 

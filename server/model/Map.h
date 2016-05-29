@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include <vector>
+#include <string>
 
 #include "Enemy.h"
 #include "Object.h"
@@ -34,7 +35,7 @@ class Map {
 
     public:
         Map();
-        void set(StageInfo* info);
+        void set(const std::string& info);
         void tick();
         void get_rid_of_corpses();
         ~Map();

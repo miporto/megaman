@@ -1,5 +1,5 @@
 #include <vector>
-#include <utility>
+#include <string>
 
 #include "common/communication/StageInfo.h"
 #include "Map.h"
@@ -57,69 +57,9 @@ Map::Map() : //gravity(0.0f, -10.0f), world(this->gravity),
     }
 }
 
-void Map::set(StageInfo* info) {
-    std::vector<Position*> positions;
-    std::vector<int> position;
-
-    // Completa vector objects de las celdas
-    positions = info->get_block_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
-                (new Block(position));
-        delete positions[i];
-    }
-    positions = info->get_stairs_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
-                (new Stairs(position));
-        delete positions[i];
-    }
-    positions = info->get_spike_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
-                (new Spike(position));
-        delete positions[i];
-    }
-    positions = info->get_cliff_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
-                (new Cliff(position));
-        delete positions[i];
-    }
-
-    // Completa vector enemies de las celdas
-    positions = info->get_met_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
-                (new Met(position));
-        delete positions[i];
-    }
-    positions = info->get_bumby_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
-                (new Bumby(position));
-        delete positions[i];
-    }
-    positions = info->get_sniper_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
-                (new Sniper(position));
-        delete positions[i];
-    }
-    positions = info->get_jumping_sniper_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position[X_COORD_POS]][position[Y_COORD_POS]]->add
-                (new JumpingSniper(position));
-        delete positions[i];
-    }
+void Map::set(const std::string& info) {
+    //TODO parsear info con Factory y
+    // setear objetos y enemigos en mundo de box2d?
 }
 
 void Map::tick_enemies_on_cell(Cell* cell) {

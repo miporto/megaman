@@ -36,7 +36,7 @@ class ClientCommunicator {
         ClientCommunicator(Socket& socket, std::vector<std::string>& teammates);
         void send_name(std::string& name);
         void send_stage_pick(char& stage_id);
-        StageInfo* receive_stage_info();
+        const std::string receive_stage_info();
         virtual ~ClientCommunicator();
 };
 

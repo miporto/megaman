@@ -18,15 +18,11 @@ void Receiver::receive_packet(const char id) {
             this->socket.receive(&stage_id, sizeof(char));
             this->packets.push(new StagePick(stage_id));
             break;
-        } case STAGE_ELEMENT: {
-            char type;
-            int x, y, direction;
-            this->socket.receive(&type, sizeof(char));
-            this->socket.receive((char *) &x, sizeof(int));
-            this->socket.receive((char *) &y, sizeof(int));
-            this->socket.receive((char *) &direction, sizeof(int));
-            this->packets.push(new StageElement(type,
-                                                new Position(x, y, direction)));
+        } case STAGE: {
+            char info[STAGE_INFO_LENGTH];
+            this->socket.receive((char *) &info,
+                                 sizeof(char) * STAGE_INFO_LENGTH);
+            this->packets.push(new Stage(info));
             break;
         } default:
             // Si el ID es desconocido, es posible que el resto del
