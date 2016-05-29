@@ -8,7 +8,7 @@
 #define PLAYERS_MAX 4
 
 Match::Match(std::vector<ServerCommunicator*>& communicators)
-    : communicators(communicators), game(this) {}
+    : communicators(communicators), game(this, NULL) {} //TODO !!!
 
 bool Match::has_started() {
     Lock l(this->m);
