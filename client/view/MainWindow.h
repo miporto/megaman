@@ -32,7 +32,6 @@ protected:
 	Gtk::Box* insert_name;
 	Gtk::Box* stage_pick;
 	Gtk::Box* loading;
-    //StageRenderer stage;
 
 	//Signal Handlers
 	void on_new_game_btn_clicked();
