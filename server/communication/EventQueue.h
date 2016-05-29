@@ -9,6 +9,7 @@
 
 class EventQueue : public Thread {
     private:
+        Mutex m;
         std::queue<Action*> queue;
         PacketsQueueProtected& received_actions;
         bool quit;
@@ -16,6 +17,8 @@ class EventQueue : public Thread {
     public:
         explicit EventQueue(PacketsQueueProtected& received_actions);
         void run();
+        bool is_empty();
+        Action* pop();
         void shutdown();
         ~EventQueue();
 };
