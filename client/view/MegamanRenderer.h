@@ -9,7 +9,9 @@ public:
     void render();
     ~MegamanRenderer();
 private:
+    SDL2pp::Renderer* renderer;
     SDL2pp::Texture* sprites;
+    int run_phase;
 };
 
 #endif //MEGAMAN_MEGAMANRENDERER_H
