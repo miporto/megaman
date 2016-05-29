@@ -18,9 +18,15 @@ typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,
     STAGE,
-    ENEMIES,
-    PROJECTILES
+    ACTION
 } packet_id_t;
+
+typedef enum _action_packet_id {
+    RIGHT = 1,
+    LEFT,
+    UP,
+    SHOOT
+} action_packet_id_t;
 
 typedef enum _stage_id {
     BOMBMAN = 1,
@@ -64,15 +70,50 @@ class StagePick : public Packet {
 };
 
 class Stage : public Packet {
-private:
-    static const char id = STAGE;
-    std::string stage_info;
+    private:
+        static const char id = STAGE;
+        std::string stage_info;
 
-public:
-    explicit Stage(const std::string stage_info);
-    char get_id() const;
-    std::string get_str() const;
-    ~Stage();
+    public:
+        explicit Stage(const std::string stage_info);
+        char get_id() const;
+        std::string get_str() const;
+        ~Stage();
+};
+
+class Action : public Packet {
+    private:
+        static const char id = ACTION;
+        const char action_id;
+        const bool pressed;
+
+    public:
+        Action(const char action_id, const bool pressed);
+        char get_id() const;
+        char get_action() const;
+        bool is_pressed() const;
+        std::string get_str() const;
+        virtual ~Action();
+};
+
+class Right : public Action {
+    public:
+        explicit Right(const bool pressed);
+};
+
+class Left : public Action {
+    public:
+        explicit Left(const bool pressed);
+};
+
+class Up : public Action {
+    public:
+        explicit Up(const bool pressed);
+};
+
+class Shoot : public Action {
+    public:
+        explicit Shoot(const bool pressed);
 };
 
 class PacketsQueueProtected {

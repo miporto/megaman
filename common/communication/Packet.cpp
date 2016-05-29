@@ -5,6 +5,9 @@
 
 #include "Packet.h"
 
+#define PRESSED_CODE 1
+#define RELEASED_CODE 0
+
 Packet::~Packet() {}
 
 NewPlayer::NewPlayer(const std::string name) :
@@ -58,6 +61,36 @@ std::string Stage::get_str() const {
 }
 
 Stage::~Stage() {}
+
+Action::Action(const char action_id, const bool pressed)
+        : action_id(action_id), pressed(pressed) {}
+
+char Action::get_id() const { return this->id; }
+
+char Action::get_action() const { return this->action_id; }
+
+bool Action::is_pressed() const { return this->pressed != 0; }
+
+std::string Action::get_str() const {
+    std::string str;
+    str.push_back(this->id);
+    str.push_back(this->action_id);
+    if (pressed)
+        str.push_back(PRESSED_CODE);
+    else
+        str.push_back(RELEASED_CODE);
+    return str;
+}
+
+Action::~Action() {}
+
+Right::Right(const bool pressed) : Action(RIGHT, pressed) {}
+
+Left::Left(const bool pressed) : Action(LEFT, pressed) {}
+
+Up::Up(const bool pressed) : Action(UP, pressed) {}
+
+Shoot::Shoot(const bool pressed) : Action(SHOOT, pressed) {}
 
 bool PacketsQueueProtected::is_empty() {
     Lock l(this->m);
