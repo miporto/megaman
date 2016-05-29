@@ -132,11 +132,13 @@ class ReceivedPacketsProtected {
     private:
         Mutex m;
         std::map<char, std::vector<Packet*>> packets;
+        PacketsQueueProtected actions;
 
     public:
         bool is_empty(const char id);
         Packet* pop(const char id);
         void push(Packet* packet);
+        PacketsQueueProtected& get_actions();
         ~ReceivedPacketsProtected();
 };
 

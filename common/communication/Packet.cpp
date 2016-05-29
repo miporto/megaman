@@ -128,7 +128,14 @@ Packet* ReceivedPacketsProtected::pop(const char id) {
 
 void ReceivedPacketsProtected::push(Packet* packet) {
     Lock l(this->m);
-    this->packets[packet->get_id()].push_back(packet);
+    if (packet->get_id() == ACTION)
+        this->actions.push(packet);
+    else
+        this->packets[packet->get_id()].push_back(packet);
+}
+
+PacketsQueueProtected& ReceivedPacketsProtected::get_actions() {
+    return this->actions;
 }
 
 ReceivedPacketsProtected::~ReceivedPacketsProtected() {
