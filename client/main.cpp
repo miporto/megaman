@@ -2,6 +2,7 @@
 #include <gtkmm/application.h>
 
 #include "client/view/MainWindow.h"
+#include "view/StageSurface.h"
 
 #define HOSTNAME_POS 1
 #define PORT_POS 2
@@ -17,7 +18,10 @@ int main(int argc, char** argv) {
 			(app_argc, argv, "org.gtkmm.megaman", Gio::APPLICATION_NON_UNIQUE);
 
 	// Shows the window and returns when it is closed.
-	MainWindow mainwindow(argv[HOSTNAME_POS], argv[PORT_POS]);
+    MainWindow mainwindow(argv[HOSTNAME_POS], argv[PORT_POS]);
 
-	return app->run(mainwindow);
+    return app->run(mainwindow);
+
+    //StageSurface stageSurface;
+    //stageSurface.run();
 }
