@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-
+#include <map>
 
 #include "common/communication/Socket.h"
 #include "ServerCommunicator.h"
@@ -11,18 +11,19 @@
 #include "server/model/Player.h"
 #include "Stage.h"
 
+class Game;
 class Match {
     private:
         Mutex m;
         std::vector<ServerCommunicator*>& communicators;
         Game game;
-        StageIDProtected stage_id;
 
         bool has_host();
+        HostCommunicator* host_communicator();
         void send_team_to_new_player(ServerCommunicator* new_comm);
         void send_new_player_to_team(ServerCommunicator* new_comm);
         void send_stage_pick_to_team(const char stage_id);
-        void send_stage_info(StageInfo* info);
+        void send_stage_info(const std::string& info);
 
     public:
         explicit Match(std::vector<ServerCommunicator*>& communicators);
@@ -30,6 +31,7 @@ class Match {
         bool is_full();
         void add_player(int fd);
         void start_stage();
+        void send_tick(const std::string& tick_info);
         ~Match();
 };
 

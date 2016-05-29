@@ -7,7 +7,6 @@
 #include "common/Position.h"
 #include "Cannon.h"
 #include "Mortal.h"
-#include "Shooter.h"
 
 class EnergyTank {
     private:
@@ -21,30 +20,24 @@ class EnergyTank {
         void decrease_energy(int amount);
         void reset();
         bool is_empty();
+        int get_energy();
         ~EnergyTank();
 };
 
-class MegaMan : public Mortal, public Shooter {
-    friend class Object;
-
+class MegaMan : public Movable {
     private:
         EnergyTank tank;
         Cannon cannon;
-        Position position;
-        const int velocity;
 
     public:
         MegaMan();
         void decrease_energy(int amount);
+        int get_energy();
         void kill();
         bool is_dead();
         Projectile* shoot();
         void change_ammo(unsigned int ammo_id);
         void receive_new_ammo(std::string& name);
-        //x_amount y y_amount tienen que venir con sentido,
-        // ej: si retrocede x_amount es negativo
-        void move(int x_amount, int y_amount);
-        Position& get_position();
         ~MegaMan();
 };
 

@@ -3,6 +3,10 @@
 #include "MegaMan.h"
 #include "Factory.h"
 
+#define INITIAL_X 0
+#define INITIAL_Y 0
+#define INITIAL_DIRECTION 1
+
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
         max_energy(EnergyTankFactory::maximum_energy()),
@@ -34,18 +38,29 @@ void EnergyTank::reset() {
     this->current_energy = this->max_energy;
 }
 
+int EnergyTank::get_energy() {
+    return this->current_energy;
+}
+
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan() :
-        position(0,0), velocity(MegaManFactory::velocity()) {}
+        Movable(INITIAL_X,
+                INITIAL_Y,
+                INITIAL_DIRECTION,
+                MegaManFactory::velocity()) {}
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);
 }
 
+int MegaMan::get_energy() {
+    return this->tank.get_energy();
+}
+
 void MegaMan::kill() {
     this->tank.reset();
-    this->position.reset();
+    this->reset_position();
 }
 
 bool MegaMan::is_dead() {
@@ -53,7 +68,7 @@ bool MegaMan::is_dead() {
 }
 
 Projectile* MegaMan::shoot() {
-    return this->cannon.shoot(this->position);
+    return this->cannon.shoot(this->get_position());
 }
 
 void MegaMan::change_ammo(unsigned int ammo_id) {
@@ -62,14 +77,6 @@ void MegaMan::change_ammo(unsigned int ammo_id) {
 
 void MegaMan::receive_new_ammo(std::string& name) {
     this->cannon.receive_new_ammo(name);
-}
-
-void MegaMan::move(int x_amount, int y_amount) {
-    this->position.move(x_amount, y_amount);
-}
-
-Position& MegaMan::get_position() {
-    return this->position;
 }
 
 MegaMan::~MegaMan() {}

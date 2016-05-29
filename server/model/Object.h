@@ -1,6 +1,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <vector>
+
 #include "common/Position.h"
 #include "MegaMan.h"
 
@@ -9,35 +11,35 @@ class Object {
         const Position position;
 
     public:
-        Object(const int x, const int y);
+        explicit Object(const std::vector<int>& position);
         virtual void interact(MegaMan& mm) = 0;
         virtual ~Object();
 };
 
 class Stairs : public Object {
     public:
-        Stairs(const int x, const int y);
+        explicit Stairs(const std::vector<int>& position);
         void interact(MegaMan& mm);
         ~Stairs();
 };
 
 class Spike : public Object {
     public:
-        Spike(const int x, const int y);
+        explicit Spike(const std::vector<int>& position);
         void interact(MegaMan& mm);
         ~Spike();
 };
 
 class Block : public Object {
     public:
-        Block(const int x, const int y);
+        explicit Block(const std::vector<int>& position);
         void interact(MegaMan& mm);
         ~Block();
 };
 
 class Cliff : public Object {
     public:
-        Cliff(const int x, const int y);
+        explicit Cliff(const std::vector<int>& position);
         void interact(MegaMan& mm);
         ~Cliff();
 };

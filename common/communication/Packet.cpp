@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
 
 #include "Packet.h"
 
@@ -40,31 +41,23 @@ std::string StagePick::get_str() const {
 
 StagePick::~StagePick() {}
 
-StageElement::StageElement(Position* position) : type(0), position(position) {}
-
-StageElement::StageElement(const char type, Position* position) :
-        type(type), position(position) {}
-
-char StageElement::get_id() const { return this->id; }
-
-char StageElement::get_type() const { return this->type; }
-
-Position* StageElement::get_position() const {
-    Position* position_clone = this->position->clone();
-    return position_clone;
+Stage::Stage(const std::string stage_info)
+        : stage_info(stage_info.substr(0, INFO_LENGTH)) {
+    for (size_t i = stage_info.size(); i < INFO_LENGTH; ++i)
+        this->stage_info.push_back('\0');
+    std::cout << "info: " << this->stage_info << std::endl;
 }
 
-std::string StageElement::get_str() const {
+char Stage::get_id() const { return this->id; }
+
+std::string Stage::get_str() const {
     std::string str;
     str.push_back(this->id);
-    str.push_back(this->type);
-    str.append(this->position->str());
+    str.append(this->stage_info);
     return str;
 }
 
-StageElement::~StageElement() {
-    delete this->position;
-}
+Stage::~Stage() {}
 
 bool PacketsQueueProtected::is_empty() {
     Lock l(this->m);

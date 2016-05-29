@@ -12,15 +12,6 @@
 #include "common/communication/QuitProtected.h"
 #include "Stage.h"
 
-class ServerReceiver : public Receiver {
-    private:
-        void receive_packet(const char id);
-    public:
-        ServerReceiver(Socket& peer,
-                       ReceivedPacketsProtected& packets);
-        ~ServerReceiver();
-};
-
 class NameWaiter : public Thread {
     private:
         Player* player;
@@ -38,7 +29,7 @@ class ServerCommunicator {
         Socket peer;
         PacketsQueueProtected packets_to_send;
         ReceivedPacketsProtected packets_received;
-        ServerReceiver receiver;
+        Receiver receiver;
 
     public:
         explicit ServerCommunicator(Player* player, int fd);
@@ -46,20 +37,21 @@ class ServerCommunicator {
         void send_stage_pick(const char stage_id);
         void receive_name();
         const std::string& name();
-        void send_stage_info(StageInfo* info);
+        void send_stage_info(const std::string& info);
+        void send_tick_info(const std::string& tick_info);
         virtual void shutdown();
         virtual ~ServerCommunicator();
 };
 
 class StageIdWaiter : public Thread {
     private:
-        StageIDProtected& stage_id;
+        StageIDProtected stage_id;
         ReceivedPacketsProtected& packets_received;
 
     public:
-        StageIdWaiter(StageIDProtected& stage_id,
-                      ReceivedPacketsProtected& packets_received);
+        explicit StageIdWaiter(ReceivedPacketsProtected& packets_received);
         void run();
+        char get_stage_id();
         ~StageIdWaiter();
 };
 
@@ -67,8 +59,9 @@ class HostCommunicator : public ServerCommunicator {
     private:
         StageIdWaiter waiter;
     public:
-        HostCommunicator(Player* player, int fd, StageIDProtected& stage_id);
-        void receive_stage_id();
+        HostCommunicator(Player* player, int fd);
+        char check_stage_id();
+        char receive_stage_id();
         ~HostCommunicator();
 };
 

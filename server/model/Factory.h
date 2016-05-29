@@ -3,9 +3,12 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
-#include "common/communication/StageInfo.h"
+#include "extern/libjson/json.hpp"
 #include "Cannon.h"
+
+using json = nlohmann::json;
 
 class EnemyFactory {
 public:
@@ -30,7 +33,7 @@ class EnergyTankFactory {
 class ProjectileFactory {
     public:
         static Projectile* projectile
-                (const std::string& name, Position& position);
+                (const std::string& name, const std::vector<int>& position);
         ~ProjectileFactory();
 };
 
@@ -40,15 +43,13 @@ class AmmoFactory {
         ~AmmoFactory();
 };
 
-class StageFactory {
-    private:
-        std::vector<Position*> positions_of_spawns
-                (const int stage_id, const int enemy_id);
-        std::vector<Position*> positions_of_objects
-                (const int stage_id, const int object_id);
+typedef std::vector<std::vector<int>> StageFactoryPositions;
+typedef std::map<std::string,
+        std::vector<std::vector<int>>> StageFactoryInfo;
 
+class StageFactory {
     public:
-        static StageInfo* stage_info(const int stage_id);
+        static const std::string initial_stage(const char stage_id);
         ~StageFactory();
 };
 

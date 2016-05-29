@@ -12,7 +12,9 @@ set(SOURCES
         view/GladeLoader.h
         view/SignalProtocol.h
         view/StageSurface.cpp
-        view/StageSurface.h)
+        view/StageSurface.h
+        TickInfoParser.cpp
+        TickInfoParser.h)
         #view/StageRenderer.cpp
         #view/StageRenderer.h)
 

@@ -1,7 +1,14 @@
 #include <vector>
+#include <map>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <common/communication/Packet.h>
 
+#include "extern/libjson/json.hpp"
 #include "Factory.h"
+
+#define INFO_FILE "info.json"
 
 int EnemyFactory::energy(std::string name) {
     //TODO leer .JSON
@@ -35,7 +42,7 @@ int EnergyTankFactory::maximum_energy() {
 EnergyTankFactory::~EnergyTankFactory() {}
 
 Projectile* ProjectileFactory::projectile(const std::string& name,
-                                          Position& position) {
+                                          const std::vector<int>& position) {
     //TODO leer .JSON
     // TODO la position que se recibe es la inicial del proyectil
     return NULL;
@@ -50,23 +57,22 @@ Ammo* AmmoFactory::ammo(const std::string& name) {
 
 AmmoFactory::~AmmoFactory() {}
 
-std::vector<Position*> StageFactory::positions_of_spawns
-        (const int stage_id, const int enemy_id) {
-    std::vector<Position*> positions;
-    //TODO leer .JSON
-    return positions;
-}
+const std::string StageFactory::initial_stage(const char stage_id) {
+    std::ifstream game_info(INFO_FILE);
+    std::string file_dump, buffer;
+    while (getline(game_info, buffer))
+        file_dump += buffer;
+    game_info.close();
+    json json_file = json::parse(file_dump);
 
-std::vector<Position*> StageFactory::positions_of_objects
-        (const int stage_id, const int object_id) {
-    std::vector<Position*> positions;
-    //TODO leer .JSON
-    return positions;
-}
+    int i = stage_id;
+    std::stringstream ss;
+    std::string s_stage_id;
+    ss << i;
+    ss >> s_stage_id;
 
-StageInfo* StageFactory::stage_info(const int stage_id) {
-    //TODO crean StageInfo con metodos anteriores
-    return NULL;
+    json j_stage = json_file["stage"][s_stage_id];
+    return j_stage.dump();
 }
 
 StageFactory::~StageFactory() {}
