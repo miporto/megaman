@@ -5,10 +5,11 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <giomm.h>
 
-#include "StageSurface.h"
 #include "InputHandler.h"
-#include <X11/Xlib.h>
+#include "StageRenderer.h"
+#include "StageSurface.h"
 
+// TODO: relate with the client to communicate with the server
 StageSurface::StageSurface() {
     try {
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
@@ -18,6 +19,7 @@ StageSurface::StageSurface() {
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
+        stageRenderer = new StageRenderer(renderer);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
         throw e;
@@ -42,6 +44,7 @@ bool StageSurface::run() {
             prev_ticks = frame_ticks;
             input_handler.read_input();
             if (input_handler.is_window_closed()) {
+                // TODO: send sht_dwn signal to server
                 return 0;
             }
 //            while (SDL_PollEvent(&event)) {
@@ -74,6 +77,7 @@ bool StageSurface::run() {
             int vcenter = renderer->GetOutputHeight() / 2;
             // Clear screen
             renderer->Clear();
+            stageRenderer->render();
             int src_x = 8 + 51 * run_phase, src_y = 67;
             renderer->Copy(*sprites,
                            SDL2pp::Rect(src_x, src_y, 50, 50),
@@ -91,6 +95,7 @@ StageSurface::~StageSurface() {
     delete sprites;
     delete renderer;
     delete sdl;
+    delete stageRenderer;
 }
 
 
