@@ -49,16 +49,8 @@ typedef std::map<std::string,
         std::vector<std::vector<int>>> StageFactoryInfo;
 
 class StageFactory {
-    private:
-        json stage_json;
-
-        StageFactoryPositions positions_of(const std::string& info,
-                                           const std::string& name,
-                                           const std::string& object_id);
     public:
-        StageFactory();
-        const std::string initial_stage(const char stage_id);
-        StageFactoryInfo stage_info(const std::string& info);
+        static const std::string initial_stage(const char stage_id);
         ~StageFactory();
 };
 

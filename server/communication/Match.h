@@ -15,7 +15,6 @@ class Match {
     private:
         Mutex m;
         std::vector<ServerCommunicator*>& communicators;
-        std::map<char, std::string> stages;
         Game game;
 
         bool has_host();

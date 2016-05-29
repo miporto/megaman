@@ -18,7 +18,7 @@ set(SOURCES
         communication/StageInfo.h
         communication/StageInfo.cpp
     Position.h
-    Position.cpp)
+    Position.cpp StageParser.cpp StageParser.h)
 
 include(CppLint)
 

@@ -44,8 +44,7 @@ void Match::send_stage_pick_to_team(const char stage_id) {
 }
 
 void Match::send_stage_info(const char stage_id) {
-    StageFactory factory;
-    const std::string info = factory.initial_stage(stage_id);
+    const std::string info = StageFactory::initial_stage(stage_id);
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
         this->communicators[i]->send_stage_info(info);
 }
