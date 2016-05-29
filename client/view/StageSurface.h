@@ -5,6 +5,8 @@
 #include <gtkmm/window.h>
 #include <gtkmm/socket.h>
 
+#include "InputHandler.h"
+#include "StageRenderer.h"
 
 class StageSurface {
 public:
@@ -17,6 +19,8 @@ private:
     SDL2pp::Window* window;
     SDL2pp::Renderer* renderer;
     SDL2pp::Texture* sprites;
+    InputHandler input_handler;
+    StageRenderer* stageRenderer;
 };
 
 
