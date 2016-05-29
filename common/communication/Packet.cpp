@@ -42,8 +42,8 @@ std::string StagePick::get_str() const {
 StagePick::~StagePick() {}
 
 Stage::Stage(const std::string stage_info)
-        : stage_info(stage_info.substr(0, STAGE_INFO_LENGTH)) {
-    for (size_t i = stage_info.size(); i < STAGE_INFO_LENGTH; ++i)
+        : stage_info(stage_info.substr(0, INFO_LENGTH)) {
+    for (size_t i = stage_info.size(); i < INFO_LENGTH; ++i)
         this->stage_info.push_back('\0');
     std::cout << "info: " << this->stage_info << std::endl;
 }

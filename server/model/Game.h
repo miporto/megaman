@@ -3,22 +3,28 @@
 
 #include <string>
 #include <vector>
-#include <common/Thread.h>
 
+#include "common/Thread.h"
+#include "server/communication/Match.h"
 #include "Player.h"
 #include "Map.h"
 
-class Game {
+class Match;
+
+class Game : public Thread {
     private:
-        std::vector<Player*> players;
+        Match* match;
         Map map;
 
+        void tick();
         void get_rid_of_corpses();
+        const std::string status();
 
     public:
+        explicit Game(Match* match);
         void new_player(Player* player);
-        void set_stage(const char stage_id);
-        void tick();
+        void set_stage(const std::string& info);
+        void run();
         ~Game();
 };
 

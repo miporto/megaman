@@ -6,21 +6,7 @@
 
 #include "Enemy.h"
 #include "Object.h"
-
-class Cell {
-    private:
-        std::vector<Object*> objects;
-        std::vector<Enemy*> enemies;
-        std::vector<Projectile*> projectiles;
-    public:
-        void add(Enemy* object);
-        void add(Object* object);
-        void add(Projectile* projectile);
-        std::vector<Enemy*>& get_enemies();
-        std::vector<Projectile*>& get_projectiles();
-        void get_rid_of_corpses();
-        ~Cell();
-};
+#include "Player.h"
 
 class Map {
     private:
@@ -28,16 +14,18 @@ class Map {
         //b2World world;
         const unsigned int width, height;
 
-        std::vector<std::vector<Cell*>> cells;
-
-        void tick_enemies_on_cell(Cell* cell);
-        void tick_projectiles_on_cell(Cell* cell);
+        std::vector<Player*> players;
+        std::vector<Object*> objects;
+        std::vector<Enemy*> enemies;
+        std::vector<Projectile*> projectiles;
 
     public:
         Map();
+        void add_player(Player* player);
         void set(const std::string& info);
         void tick();
         void get_rid_of_corpses();
+        const std::string status();
         ~Map();
 };
 

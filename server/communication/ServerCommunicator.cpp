@@ -50,6 +50,11 @@ void ServerCommunicator::send_stage_info(const std::string& info) {
     Sender s(this->peer, this->packets_to_send);
 }
 
+void ServerCommunicator::send_tick_info(const std::string& tick_info) {
+    this->packets_to_send.push(new Stage(tick_info));
+    Sender s(this->peer, this->packets_to_send);
+}
+
 void ServerCommunicator::shutdown() {
     this->peer.shutdown();
 }

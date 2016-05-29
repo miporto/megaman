@@ -38,6 +38,7 @@ class ServerCommunicator {
         void receive_name();
         const std::string& name();
         void send_stage_info(const std::string& info);
+        void send_tick_info(const std::string& tick_info);
         virtual void shutdown();
         virtual ~ServerCommunicator();
 };

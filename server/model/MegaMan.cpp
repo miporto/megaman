@@ -38,6 +38,10 @@ void EnergyTank::reset() {
     this->current_energy = this->max_energy;
 }
 
+int EnergyTank::get_energy() {
+    return this->current_energy;
+}
+
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan() :
@@ -48,6 +52,10 @@ MegaMan::MegaMan() :
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);
+}
+
+int MegaMan::get_energy() {
+    return this->tank.get_energy();
 }
 
 void MegaMan::kill() {

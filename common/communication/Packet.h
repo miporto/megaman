@@ -12,12 +12,14 @@
 #include "common/Thread.h"
 
 #define NAME_LENGTH 8
-#define STAGE_INFO_LENGTH 1024
+#define INFO_LENGTH 1024
 
 typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,
-    STAGE
+    STAGE,
+    ENEMIES,
+    PROJECTILES
 } packet_id_t;
 
 typedef enum _stage_id {

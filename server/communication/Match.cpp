@@ -8,7 +8,7 @@
 #define PLAYERS_MAX 4
 
 Match::Match(std::vector<ServerCommunicator*>& communicators)
-    : communicators(communicators) {}
+    : communicators(communicators), game(this) {}
 
 bool Match::has_started() {
     Lock l(this->m);
@@ -43,8 +43,7 @@ void Match::send_stage_pick_to_team(const char stage_id) {
         this->communicators[i]->send_stage_pick(stage_id);
 }
 
-void Match::send_stage_info(const char stage_id) {
-    const std::string info = StageFactory::initial_stage(stage_id);
+void Match::send_stage_info(const std::string& info) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
         this->communicators[i]->send_stage_info(info);
 }
@@ -81,10 +80,17 @@ void Match::start_stage() {
     const char stage_id = this->host_communicator()->receive_stage_id();
     this->send_stage_pick_to_team(stage_id);
 
-    this->send_stage_info(stage_id);
-    this->game.set_stage(stage_id);
+    const std::string info = StageFactory::initial_stage(stage_id);
+    this->send_stage_info(info);
+    this->game.set_stage(info);
 
-    //TODO ...
+    this->game.start();
+}
+
+void Match::send_tick(const std::string& tick_info) {
+    for (unsigned int i = 0; i < this->communicators.size(); ++i) {
+        this->communicators[i]->send_tick_info(tick_info);
+    }
 }
 
 Match::~Match() {}
