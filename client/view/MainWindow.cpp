@@ -153,9 +153,8 @@ void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	//client.pick_stage(stage_id);
     stage_pick->hide();
     //stage.show();
-    //surface = new StageSurface();
-    //surface->run();
-	hide();
+    surface = new StageSurface();
+    surface->run();
 }
 
 MainWindow::~MainWindow() { }

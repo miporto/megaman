@@ -20,8 +20,8 @@ int main(int argc, char** argv) {
 	// Shows the window and returns when it is closed.
     MainWindow mainwindow(argv[HOSTNAME_POS], argv[PORT_POS]);
 
-    app->run(mainwindow);
+    return app->run(mainwindow);
 
-    StageSurface stageSurface;
-    stageSurface.run();
+    //StageSurface stageSurface;
+    //stageSurface.run();
 }
