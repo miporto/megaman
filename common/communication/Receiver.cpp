@@ -24,6 +24,15 @@ void Receiver::receive_packet(const char id) {
                                  sizeof(char) * INFO_LENGTH);
             this->packets.push(new Stage(info));
             break;
+        } case ACTION: {
+            char name[NAME_LENGTH + 1];
+            name[NAME_LENGTH] = '\0';
+            char action_id, pressed;
+            this->socket.receive(name, sizeof(char) * NAME_LENGTH);
+            this->socket.receive(&action_id, sizeof(char));
+            this->socket.receive(&pressed, sizeof(char));
+            this->packets.push(new Action(name, action_id, pressed));
+            break;
         } default:
             // Si el ID es desconocido, es posible que el resto del
             // paquete quede en el pipe del socket, arruinando la comm

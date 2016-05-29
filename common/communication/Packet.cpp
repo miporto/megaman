@@ -62,8 +62,18 @@ std::string Stage::get_str() const {
 
 Stage::~Stage() {}
 
-Action::Action(const char action_id, const bool pressed)
-        : action_id(action_id), pressed(pressed) {}
+Action::Action(const std::string& name,
+               const char action_id, const bool pressed)
+        : name(name.substr(0, NAME_LENGTH)),
+          action_id(action_id),
+          pressed(pressed) {
+    for (size_t i = name.size(); i < NAME_LENGTH; ++i)
+        this->name.push_back('\0');
+}
+
+Action::Action(const std::string& name,
+               const char action_id, const char pressed)
+        : name(name), action_id(action_id), pressed(pressed) {}
 
 char Action::get_id() const { return this->id; }
 
@@ -74,6 +84,7 @@ bool Action::is_pressed() const { return this->pressed != 0; }
 std::string Action::get_str() const {
     std::string str;
     str.push_back(this->id);
+    str.append(this->name);
     str.push_back(this->action_id);
     if (pressed)
         str.push_back(PRESSED_CODE);
@@ -84,13 +95,17 @@ std::string Action::get_str() const {
 
 Action::~Action() {}
 
-Right::Right(const bool pressed) : Action(RIGHT, pressed) {}
+Right::Right(const std::string& name, const bool pressed)
+        : Action(name, RIGHT, pressed) {}
 
-Left::Left(const bool pressed) : Action(LEFT, pressed) {}
+Left::Left(const std::string& name, const bool pressed)
+        : Action(name, LEFT, pressed) {}
 
-Up::Up(const bool pressed) : Action(UP, pressed) {}
+Up::Up(const std::string& name, const bool pressed)
+        : Action(name, UP, pressed) {}
 
-Shoot::Shoot(const bool pressed) : Action(SHOOT, pressed) {}
+Shoot::Shoot(const std::string& name, const bool pressed)
+        : Action(name, SHOOT, pressed) {}
 
 bool PacketsQueueProtected::is_empty() {
     Lock l(this->m);

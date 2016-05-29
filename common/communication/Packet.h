@@ -84,11 +84,15 @@ class Stage : public Packet {
 class Action : public Packet {
     private:
         static const char id = ACTION;
+        std::string name;
         const char action_id;
         const bool pressed;
 
     public:
-        Action(const char action_id, const bool pressed);
+        Action(const std::string& name,
+               const char action_id, const bool pressed);
+        Action(const std::string& name,
+               const char action_id, const char pressed);
         char get_id() const;
         char get_action() const;
         bool is_pressed() const;
@@ -98,22 +102,22 @@ class Action : public Packet {
 
 class Right : public Action {
     public:
-        explicit Right(const bool pressed);
+        explicit Right(const std::string& name, const bool pressed);
 };
 
 class Left : public Action {
     public:
-        explicit Left(const bool pressed);
+        explicit Left(const std::string& name, const bool pressed);
 };
 
 class Up : public Action {
     public:
-        explicit Up(const bool pressed);
+        explicit Up(const std::string& name, const bool pressed);
 };
 
 class Shoot : public Action {
     public:
-        explicit Shoot(const bool pressed);
+        explicit Shoot(const std::string& name, const bool pressed);
 };
 
 class PacketsQueueProtected {
