@@ -12,6 +12,7 @@ public:
 private:
     SDL_Event event;
     bool window_closed;
+    bool keys_held[5] = {false};
 };
 
 
