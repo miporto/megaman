@@ -1,31 +1,33 @@
 #include <vector>
-#include <utility>
+#include <string>
+#include <server/communication/TickInfoMaker.h>
 
-#include "common/communication/StageInfo.h"
 #include "Map.h"
 #include "Factory.h"
 
-void Cell::add(Enemy* enemy) {
-    this->enemies.push_back(enemy);
+#define X_COORD_POS 0
+#define Y_COORD_POS 1
+
+Map::Map() : //gravity(0.0f, -10.0f), world(this->gravity),
+             width(MapFactory::width()), height(MapFactory::height()) {}
+
+void Map::add_player(Player* player) {
+    this->players.push_back(player);
 }
 
-void Cell::add(Object* object) {
-    this->objects.push_back(object);
+void Map::set(const std::string& info) {
+    //TODO parsear info con Factory y
+    // setear objetos y enemigos en mundo de box2d?
 }
 
-void Cell::add(Projectile* projectile) {
-    this->projectiles.push_back(projectile);
+void Map::tick() {
+    for (unsigned int i = 0; i < this->enemies.size(); ++i)
+        this->enemies[i]->tick();
+    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
+        this->projectiles[i]->tick();
 }
 
-std::vector<Enemy*>& Cell::get_enemies() {
-    return this->enemies;
-}
-
-std::vector<Projectile*>& Cell::get_projectiles() {
-    return this->projectiles;
-}
-
-void Cell::get_rid_of_corpses() {
+void Map::get_rid_of_corpses() {
     for (unsigned int i = 0; i < this->enemies.size(); ++i) {
         if (this->enemies[i]->is_dead()) {
             Enemy* dead_enemy = this->enemies[i];
@@ -33,9 +35,38 @@ void Cell::get_rid_of_corpses() {
             delete dead_enemy;
         }
     }
+
+    for (unsigned int i = 0; i < this->players.size(); ++i) {
+        if (this->players[i]->is_dead()) {
+            //Player* dead_player = this->players[i];
+            //TODO Que se hace con jugadores muertos??
+        }
+    }
+
+    //TODO loop para sacar proyectiles out of range?
 }
 
-Cell::~Cell() {
+const std::string Map::status() {
+    TickInfoMaker info;
+    for (unsigned int i = 0; i < this->players.size(); ++i)
+        info.add_player(this->players[i]->get_name(),
+                        this->players[i]->get_position(),
+                        this->players[i]->get_energy());
+
+    for (unsigned int i = 0; i < this->enemies.size(); ++i)
+        info.add_enemy(this->enemies[i]->get_name(),
+                       this->enemies[i]->get_position());
+
+    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
+        info.add_projectile(this->projectiles[i]->get_name(),
+                            this->projectiles[i]->get_position());
+
+    return info.str();
+}
+
+Map::~Map() {
+    for (unsigned int i = 0; i < this->players.size(); ++i)
+        delete this->players[i];
     for (unsigned int i = 0; i < this->enemies.size(); ++i)
         delete this->enemies[i];
     for (unsigned int i = 0; i < this->objects.size(); ++i)
@@ -43,126 +74,3 @@ Cell::~Cell() {
     for (unsigned int i = 0; i < this->projectiles.size(); ++i)
         delete this->projectiles[i];
 }
-
-Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {
-    for (unsigned int i = 0; i < this->width; ++i) {
-        std::vector<Cell*> col;
-        for (unsigned int j = 0; j < this->height; ++j)
-            col.push_back(new Cell());
-        this->cells.push_back(col);
-    }
-}
-
-void Map::set(StageInfo* info) {
-    std::vector<Position*> positions;
-    std::pair<int, int> position;
-
-    // Completa vector objects de las celdas
-    positions = info->get_block_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Block(position.first, position.second));
-        delete positions[i];
-    }
-    positions = info->get_stairs_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Stairs(position.first, position.second));
-        delete positions[i];
-    }
-    positions = info->get_spike_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Spike(position.first, position.second));
-        delete positions[i];
-    }
-    positions = info->get_cliff_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Cliff(position.first, position.second));
-        delete positions[i];
-    }
-
-    // Completa vector enemies de las celdas
-    positions = info->get_met_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Met(position.first, position.second));
-        delete positions[i];
-    }
-    positions = info->get_bumby_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Bumby(position.first, position.second));
-        delete positions[i];
-    }
-    positions = info->get_sniper_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new Sniper(position.first, position.second));
-        delete positions[i];
-    }
-    positions = info->get_jumping_sniper_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i) {
-        position = positions[i]->get_position();
-        this->cells[position.first][position.second]->add
-                (new JumpingSniper(position.first, position.second));
-        delete positions[i];
-    }
-}
-
-void Map::tick_enemies_on_cell(Cell* cell) {
-    std::vector<Enemy*> enemies = cell->get_enemies();
-    std::pair<int, int> position;
-
-    while (enemies.size() != 0) {
-        Projectile* projectile = enemies.front()->tick();
-
-        if (projectile) {
-            position = projectile->get_position();
-            cells[position.first][position.second]->add(projectile);
-        }
-
-        position = enemies.front()->get_position();
-        cells[position.first][position.second]->add(enemies.front());
-
-        enemies.erase(enemies.begin());
-    }
-}
-
-void Map::tick_projectiles_on_cell(Cell* cell) {
-    std::vector<Projectile*> projectiles = cell->get_projectiles();
-    std::pair<int, int> position;
-
-    while (projectiles.size() != 0) {
-        projectiles.front()->tick();
-
-        position = projectiles.front()->get_position();
-        cells[position.first][position.second]->add(projectiles.front());
-
-        projectiles.erase(projectiles.begin());
-    }
-}
-
-void Map::tick() {
-    for (unsigned int i = 0; i < this->width; ++i)
-        for (unsigned int j = 0; j < this->height; ++j) {
-            this->tick_enemies_on_cell(cells[i][j]);
-            this->tick_projectiles_on_cell(cells[i][j]);
-        }
-}
-
-void Map::get_rid_of_corpses() {
-    for (unsigned int i = 0; i < this->width; ++i)
-        for (unsigned int j = 0; j < this->height; ++j)
-            this->cells[i][j]->get_rid_of_corpses();
-}
-
-Map::~Map() {}

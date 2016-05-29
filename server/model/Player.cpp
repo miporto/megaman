@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include <iostream>
 
 #include "Factory.h"
@@ -15,6 +16,14 @@ const std::string& Player::get_name() {
 
 bool Player::is_dead() {
     return this->megaman.is_dead();
+}
+
+const std::vector<int> Player::get_position() {
+    return this->megaman.get_position();
+}
+
+int Player::get_energy() {
+    return this->megaman.get_energy();
 }
 
 Player::~Player() {}

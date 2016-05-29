@@ -1,62 +1,60 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include <utility>
+#include <vector>
+#include <string>
 
 #include "common/Position.h"
 #include "Cannon.h"
 #include "Mortal.h"
-#include "Shooter.h"
 
-class Enemy : public Mortal, public Shooter {
-    protected:
-        Position position;
+#define MET_NAME "met"
+#define BUMBY_NAME "bumby"
+#define SNIPER_NAME "sniper"
+#define JUMPING_SNIPER_NAME "jumping sniper"
+
+class Enemy : public Movable {
+    private:
+        const std::string name;
         int energy;
     public:
-        Enemy(int x, int y, int energy);
+        Enemy(const std::string& name, const std::vector<int>& position,
+              const int velocity, int energy);
+        const std::string& get_name();
         void decrease_energy(int amount);
         bool is_dead();
         virtual Projectile* shoot() = 0;
         virtual Projectile* tick() = 0;
-        std::pair<int, int> get_position();
         virtual ~Enemy();
 };
 
 class Met : public Enemy {
-    private:
-        const int velocity;
     public:
-        Met(int x, int y);
+        explicit Met(const std::vector<int>& position);
         Projectile* shoot();
         Projectile* tick();
         ~Met();
 };
 
 class Bumby : public Enemy {
-    private:
-        const int velocity;
     public:
-        Bumby(int x, int y);
+        explicit Bumby(const std::vector<int>& position);
         Projectile* shoot();
         Projectile* tick();
         ~Bumby();
 };
 
 class Sniper : public Enemy {
-    private:
-        const int velocity;
     public:
-        Sniper(int x, int y);
+        explicit Sniper(const std::vector<int>& position);
         Projectile* shoot();
         Projectile* tick();
         ~Sniper();
 };
 
 class JumpingSniper : public Enemy {
-    private:
-        const int velocity;
     public:
-        JumpingSniper(int x, int y);
+        explicit JumpingSniper(const std::vector<int>& position);
         Projectile* shoot();
         Projectile* tick();
         ~JumpingSniper();

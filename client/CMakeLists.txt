@@ -18,7 +18,9 @@ set(SOURCES
         view/InputHandler.cpp
         view/InputHandler.h
         view/StageRenderer.cpp
-        view/StageRenderer.h)
+        view/StageRenderer.h
+        TickInfoParser.cpp
+        TickInfoParser.h)
 
 include(CppLint)
 

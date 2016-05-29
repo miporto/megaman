@@ -1,12 +1,17 @@
+#include <vector>
+
 #include "Object.h"
 
-Object::Object(const int x, const int y) :
-        position(x, y) {}
+#define X_COORD_POS 0
+#define Y_COORD_POS 1
+
+Object::Object(const std::vector<int>& position) :
+        position(position) {}
 
 Object::~Object() {}
 
-Stairs::Stairs(const int x, const int y) :
-        Object(x, y) {}
+Stairs::Stairs(const std::vector<int>& position) :
+        Object(position) {}
 
 void Stairs::interact(MegaMan& mm) {
     //TODO Cuando mm esta encima, se puede
@@ -15,18 +20,21 @@ void Stairs::interact(MegaMan& mm) {
 
 Stairs::~Stairs() {}
 
-Spike::Spike(const int x, const int y) :
-        Object(x, y) {}
+Spike::Spike(const std::vector<int>& position) :
+        Object(position) {}
 
 void Spike::interact(MegaMan& mm) {
-    if (this->position == mm.get_position())
+    const std::vector<int> obj_pos = this->position.get_position();
+    const std::vector<int> mm_pos = mm.get_position();
+    if (obj_pos[X_COORD_POS] == mm_pos[X_COORD_POS]
+        && obj_pos[Y_COORD_POS] == mm_pos[Y_COORD_POS])
         mm.kill();
 }
 
 Spike::~Spike() {}
 
-Block::Block(const int x, const int y) :
-        Object(x, y) {}
+Block::Block(const std::vector<int>& position) :
+        Object(position) {}
 
 void Block::interact(MegaMan& mm) {
     //TODO Cuando mm esta en una celda adyacente,
@@ -35,11 +43,14 @@ void Block::interact(MegaMan& mm) {
 
 Block::~Block() {}
 
-Cliff::Cliff(const int x, const int y) :
-        Object(x, y) {}
+Cliff::Cliff(const std::vector<int>& position) :
+        Object(position) {}
 
 void Cliff::interact(MegaMan& mm) {
-    if (this->position == mm.get_position())
+    const std::vector<int> obj_pos = this->position.get_position();
+    const std::vector<int> mm_pos = mm.get_position();
+    if (obj_pos[X_COORD_POS] == mm_pos[X_COORD_POS]
+        && obj_pos[Y_COORD_POS] == mm_pos[Y_COORD_POS])
         mm.kill();
 }
 

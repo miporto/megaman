@@ -1,67 +1,73 @@
 #include <string>
 #include <algorithm>
-#include <utility>
+#include <vector>
 
 #include "Cannon.h"
 #include "Factory.h"
 
-Projectile::Projectile(int damage,
+Projectile::Projectile(const std::string& name,
+                       int damage,
                        int velocity,
-                       Position& initial_position) :
-        damage(damage), velocity(velocity), position(initial_position) {}
+                       const std::vector<int>& initial_position) :
+        Movable(initial_position, velocity), name(name), damage(damage){}
 
-std::pair<int, int> Projectile::get_position() {
-    return this->position.get_position();
-}
+const std::string& Projectile::get_name() { return this->name; }
 
 Projectile::~Projectile() {}
 
-Plasma::Plasma(int damage, int velocity, Position& initial_position) :
-        Projectile(damage, velocity, initial_position) {}
+Plasma::Plasma(int damage, int velocity,
+               const std::vector<int>& initial_position)
+        : Projectile(PLASMA_NAME, damage, velocity, initial_position) {}
 
 void Plasma::tick() {
     //TODO
 }
 
-Bomb::Bomb(int damage, int velocity, Position& initial_position) :
-        Projectile(damage, velocity, initial_position) {}
+Bomb::Bomb(int damage, int velocity,
+           const std::vector<int>& initial_position)
+        : Projectile(BOMB_NAME, damage, velocity, initial_position) {}
 
 void Bomb::tick() {
     //TODO
 }
 
-Magnet::Magnet(int damage, int velocity, Position& initial_position) :
-        Projectile(damage, velocity, initial_position) {}
+Magnet::Magnet(int damage, int velocity,
+               const std::vector<int>& initial_position)
+        : Projectile(MAGNET_NAME, damage, velocity, initial_position) {}
 
 void Magnet::tick() {
     //TODO
 }
 
-Spark::Spark(int damage, int velocity, Position& initial_position) :
-        Projectile(damage, velocity, initial_position) {}
+Spark::Spark(int damage, int velocity,
+             const std::vector<int>& initial_position)
+        : Projectile(SPARK_NAME, damage, velocity, initial_position) {}
 
 void Spark::tick() {
     //TODO
 }
 
-Fire::Fire(int damage, int velocity, Position& initial_position) :
-        Projectile(damage, velocity, initial_position) {}
+Fire::Fire(int damage, int velocity,
+           const std::vector<int>& initial_position)
+        : Projectile(FIRE_NAME, damage, velocity, initial_position) {}
 
 void Fire::tick() {
     //TODO
 }
 
-Ring::Ring(int damage, int velocity, Position& initial_position) :
-        Projectile(damage, velocity, initial_position) {}
+Ring::Ring(int damage, int velocity,
+           const std::vector<int>& initial_position)
+        : Projectile(RING_NAME, damage, velocity, initial_position) {}
 
 void Ring::tick() {
     //TODO
 }
 
-Ammo::Ammo(std::string& name, int max) : name(name), max(max), quantity(max) {}
+Ammo::Ammo(std::string& name, int max) :
+        name(name), max(max), quantity(max) {}
 
 // Devuelve NULL si el jugador intenta disparar y no hay mas municiones
-Projectile* Ammo::use(Position& position) {
+Projectile* Ammo::use(const std::vector<int>& position) {
     if (this->quantity) {
         this->quantity--;
         return ProjectileFactory::projectile(this->name, position);
@@ -85,7 +91,7 @@ void Cannon::change_current_ammo(unsigned int ammo_id) {
         this->current_ammo = this->ammos[ammo_id];
 }
 
-Projectile* Cannon::shoot(Position& position) {
+Projectile* Cannon::shoot(const std::vector<int>& position) {
     return this->current_ammo->use(position);
 }
 
