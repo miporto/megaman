@@ -17,19 +17,6 @@ StageSurface::StageSurface() {
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
-        SDL_Event event;
-        while (true) {
-            while (SDL_PollEvent(&event)) {
-                if (event.type == SDL_QUIT) {
-                    return;
-                }
-            }
-            renderer->Clear();
-            renderer->Copy(*sprites);
-            renderer->Present();
-            std::cout << "Check" << std::endl;
-            SDL_Delay(5);
-        }
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
         throw e;
@@ -41,27 +28,59 @@ bool StageSurface::init(::Window window_id) {
 }
 
 bool StageSurface::run() {
-    SDL_Event event;
-    while (true) {
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                return true;
+    try {
+        bool is_running = false;
+        int run_phase = -1; // run animation phase
+        double position = 0.0;
+        unsigned int prev_ticks = SDL_GetTicks();
+        SDL_Event event;
+        while (true) {
+            // Timing
+            unsigned int frame_ticks = SDL_GetTicks();
+            unsigned int frame_delta = frame_ticks - prev_ticks;
+            prev_ticks = frame_ticks;
+            while (SDL_PollEvent(&event)) {
+                if (event.type == SDL_QUIT) {
+                    return 0;
+                } else if (event.type == SDL_KEYDOWN) {
+                    switch (event.key.keysym.sym) {
+                        case SDLK_RIGHT:
+                            is_running = true;
+                            break;
+                    }
+                } else if (event.type == SDL_KEYUP) {
+                    switch (event.key.keysym.sym) {
+                        case SDLK_RIGHT:
+                            is_running = false;
+                            break;
+                    }
+                }
             }
-        }
-        try {
+            // Update Game state
+            if (is_running) {
+                position += frame_delta * 0.2;
+                run_phase = (frame_ticks / 100) % 8;
+            } else {
+                run_phase = 0;
+            }
+            if (position > renderer->GetOutputWidth()) {
+                position = -50;
+            }
+            int vcenter = renderer->GetOutputHeight() / 2;
+            // Clear screen
             renderer->Clear();
-            renderer->Copy(*sprites);
+            int src_x = 8 + 51 * run_phase, src_y = 67;
+            renderer->Copy(*sprites,
+                           SDL2pp::Rect(src_x, src_y, 50, 50),
+                           SDL2pp::Rect((int) position, vcenter - 50, 50, 50));
             renderer->Present();
-            std::cout << "Check" << std::endl;
-            SDL_Delay(5000);
-            return true;
-        } catch (std::exception &e) {
-            std::cerr << e.what() << std::endl;
-            return false;
+            SDL_Delay(1);
         }
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
     }
 }
-
 
 StageSurface::~StageSurface() {
     delete sprites;

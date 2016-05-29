@@ -151,11 +151,11 @@ void MainWindow::init_stage_pick_screen() {
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
 	//client.pick_stage(stage_id);
-    //stage_pick->hide();
+    stage_pick->hide();
     //stage.show();
     //surface = new StageSurface();
     //surface->run();
-	unset_application();
+	hide();
 }
 
 MainWindow::~MainWindow() { }
