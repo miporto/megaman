@@ -6,7 +6,6 @@
 #include <map>
 
 #include "extern/libjson/json.hpp"
-#include "common/communication/StageInfo.h"
 #include "Cannon.h"
 
 using json = nlohmann::json;

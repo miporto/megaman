@@ -5,7 +5,6 @@
 #include <vector>
 #include <common/Thread.h>
 
-#include "common/communication/StageInfo.h"
 #include "Player.h"
 #include "Map.h"
 

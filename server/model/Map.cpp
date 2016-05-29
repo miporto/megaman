@@ -1,7 +1,6 @@
 #include <vector>
 #include <string>
 
-#include "common/communication/StageInfo.h"
 #include "Map.h"
 #include "Factory.h"
 

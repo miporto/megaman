@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "common/communication/StageInfo.h"
 #include "common/communication/Receiver.h"
 #include "common/communication/Packet.h"
 #include "common/communication/Socket.h"
