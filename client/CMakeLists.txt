@@ -1,8 +1,6 @@
 project(client)
 
 set(SOURCES
-        view/AboutScreen.cpp
-        view/AboutScreen.h
         communication/Client.cpp
         communication/Client.h
         main.cpp
@@ -12,12 +10,15 @@ set(SOURCES
         communication/ClientCommunicator.cpp
         view/GladeLoader.cpp
         view/GladeLoader.h
-        view/SignalProtocol.h TickInfoParser.cpp TickInfoParser.h)
+        view/SignalProtocol.h
+        view/StageSurface.cpp
+        view/StageSurface.h
+        TickInfoParser.cpp
+        TickInfoParser.h)
+        #view/StageRenderer.cpp
+        #view/StageRenderer.h)
 
 include(CppLint)
-
-include_directories(${GTKMM_INCLUDE_DIRS})
-link_directories(${GTKMM_LIBRARY_DIRS})
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -28,4 +29,5 @@ add_dependencies(${PROJECT_NAME} common)
 
 target_link_libraries(${PROJECT_NAME} ${CAIROMM_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} ${GTKMM3_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${SDL2PP_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} common)

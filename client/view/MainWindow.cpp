@@ -6,22 +6,21 @@
 #include <gtkmm/entrybuffer.h>
 
 #include "MainWindow.h"
-#include "AboutScreen.h"
 #include "GladeLoader.h"
 #include "SignalProtocol.h"
 #include "common/communication/Packet.h"
+#include "StageRenderer.h"
 
-#include <iostream>
 #include <gtkmm/main.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
-#include <gtkmm/entry.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
 #include <gtkmm/window.h>
+
 
 #define CONTAINER_NAME "container"
 
@@ -38,12 +37,14 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
     main_frame.pack_start(*welcome_screen);
     main_frame.pack_start(*insert_name);
     main_frame.pack_start(*stage_pick);
+	//main_frame.pack_start(stage);
     add(main_frame);
 	//layout.put(*welcome_screen, 0, 0);
 	//add(layout);
 	show_all();
     insert_name->hide();
     stage_pick->hide();
+	//stage.hide();
 }
 
 
@@ -149,7 +150,11 @@ void MainWindow::init_stage_pick_screen() {
 
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
-	client.pick_stage(stage_id);
+	//client.pick_stage(stage_id);
+    stage_pick->hide();
+    //stage.show();
+    surface = new StageSurface();
+    surface->run();
 }
 
 MainWindow::~MainWindow() { }

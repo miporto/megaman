@@ -5,8 +5,6 @@ set(SOURCES
 
 include(CppLint)
 
-include_directories(${SDL2PP_INCLUDE_DIRS})
-
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 add_style_check_target(${PROJECT_NAME}-lint "${SOURCES}")
