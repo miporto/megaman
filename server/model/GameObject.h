@@ -9,6 +9,10 @@
 class GameObject {
     private:
         b2Body* body;
+
+        void create_fixture(b2Shape* shape);
+        void add_rectangular_fixture_to_body();
+
     protected:
         Position position;
 
