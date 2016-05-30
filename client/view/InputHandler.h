@@ -7,6 +7,7 @@ class InputHandler {
 public:
     InputHandler();
     void read_input();
+    bool* get_input();
     bool is_window_closed();
     ~InputHandler();
 private:
