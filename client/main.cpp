@@ -23,5 +23,6 @@ int main(int argc, char** argv) {
 //    return app->run(mainwindow);
 
     StageSurface stageSurface;
-    return stageSurface.run();
+    stageSurface.run();
+    return 0;
 }
