@@ -5,6 +5,7 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <giomm.h>
 
+#include "client/communication/Client.h"
 #include "common/communication/Packet.h"
 #include "InputHandler.h"
 #include "StageRenderer.h"
@@ -33,7 +34,7 @@ void StageSurface::run() {
         double position = 0.0;
         unsigned int prev_ticks = SDL_GetTicks();
 //        bool* prev_input;
-        bool* new_input;
+        bool *new_input;
         while (true) {
             // Timing
             unsigned int frame_ticks = SDL_GetTicks();
@@ -43,7 +44,7 @@ void StageSurface::run() {
             // Input
 //            prev_input  = input_handler.get_input();
             input_handler.read_input();
-            new_input  = input_handler.get_input();
+            new_input = input_handler.get_input();
             if (input_handler.is_window_closed()) {
                 // TODO: send sht_dwn signal to server
                 return;
@@ -80,14 +81,17 @@ void StageSurface::run() {
  * Tells the client to send all the events that happened to the server. For
  * this it checks what keys changed it's status, and send those.
  */
-void StageSurface::send_events(bool* prev_input, bool* new_input) {
-    for (size_t i = 0; i < sizeof(*prev_input) / sizeof(prev_input[0]); ++i) {
-        if (prev_input[i] != new_input[i]) {
+void StageSurface::send_events(bool *prev_input, bool *new_input) {
+    size_t input_array_l = sizeof(*prev_input) / sizeof(prev_input[0]);
+    for (size_t action_id = 0; action_id < input_array_l; ++action_id) {
+        if (prev_input[action_id] != new_input[action_id]) {
             // TODO: Call client method to send the event
+            //client.send_action(action_id, new_input[action_id]);
             continue;
         }
     }
 }
+
 StageSurface::~StageSurface() {
     delete sprites;
     delete renderer;

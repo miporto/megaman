@@ -42,6 +42,8 @@ void Client::pick_stage(char stage_id) {
 }
 
 void Client::send_action(char action_id, bool pressed) {
+    // TODO: send the players name to the communicator
+    //this->communicator.send_action(action_id, pressed);
     return;
 }
 Client::~Client() { this->client.shutdown(); }
