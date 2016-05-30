@@ -36,31 +36,31 @@ StageParserInfo StageParser::stage_info(const std::string& info) {
 
     std::vector<std::vector<int>> bumby_positions =
             this->positions_of(info, "spawn", "bumby");
-    pos["bumby"] = met_positions;
+    pos["bumby"] = bumby_positions;
 
     std::vector<std::vector<int>> sniper_positions =
             this->positions_of(info, "spawn", "sniper");
-    pos["sniper"] = met_positions;
+    pos["sniper"] = sniper_positions;
 
     std::vector<std::vector<int>> jumping_sniper_positions =
             this->positions_of(info, "spawn", "jumping sniper");
-    pos["jumping sniper"] = met_positions;
+    pos["jumping sniper"] = jumping_sniper_positions;
 
     std::vector<std::vector<int>> block_positions =
             this->positions_of(info, "object", "block");
-    pos["block"] = met_positions;
+    pos["block"] = block_positions;
 
     std::vector<std::vector<int>> stairs_positions =
             this->positions_of(info, "object", "stairs");
-    pos["stairs"] = met_positions;
+    pos["stairs"] = stairs_positions;
 
     std::vector<std::vector<int>> spike_positions =
             this->positions_of(info, "object", "spike");
-    pos["spike"] = met_positions;
+    pos["spike"] = spike_positions;
 
     std::vector<std::vector<int>> cliff_positions =
             this->positions_of(info, "object", "cliff");
-    pos["cliff"] = met_positions;
+    pos["cliff"] = cliff_positions;
 
     return pos;
 }
