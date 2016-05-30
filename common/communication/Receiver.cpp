@@ -3,7 +3,12 @@
 
 Receiver::Receiver(Socket& socket,
                    ReceivedPacketsProtected& packets)
-        : socket(socket), packets(packets), quit(false) {}
+        : socket(socket), packets(packets), started(false), quit(false) {}
+
+void Receiver::start() {
+    this->started = true;
+    Thread::start();
+}
 
 void Receiver::receive_packet(const char id) {
     switch (id) {
@@ -61,5 +66,5 @@ void Receiver::shutdown() {
 
 Receiver::~Receiver() {
     this->shutdown();
-    this->join();
+    if (started) this->join();
 }
