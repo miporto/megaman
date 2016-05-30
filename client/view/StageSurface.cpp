@@ -27,17 +27,11 @@ StageSurface::StageSurface() {
     }
 }
 
-bool StageSurface::init(::Window window_id) {
-    return true;
-}
-
-bool StageSurface::run() {
+void StageSurface::run() {
     try {
-//        bool is_running = false;
         int run_phase = -1; // run animation phase
         double position = 0.0;
         unsigned int prev_ticks = SDL_GetTicks();
-//        SDL_Event event;
 //        bool* prev_input;
         bool* new_input;
         while (true) {
@@ -52,26 +46,10 @@ bool StageSurface::run() {
             new_input  = input_handler.get_input();
             if (input_handler.is_window_closed()) {
                 // TODO: send sht_dwn signal to server
-                return 0;
+                return;
             }
-//            while (SDL_PollEvent(&event)) {
-//                if (event.type == SDL_QUIT) {
-//                    return 0;
-//                } else if (event.type == SDL_KEYDOWN) {
-//                    switch (event.key.keysym.sym) {
-//                        case SDLK_RIGHT:
-//                            is_running = true;
-//                            break;
-//                    }
-//                } else if (event.type == SDL_KEYUP) {
-//                    switch (event.key.keysym.sym) {
-//                        case SDLK_RIGHT:
-//                            is_running = false;
-//                            break;
-//                    }
-//                }
-//            }
             // Update Game state
+//            send_events(prev_input, new_input);
             if (new_input[RIGHT]) {
                 position += frame_delta * 0.2;
                 run_phase = (frame_ticks / 100) % 8;
@@ -94,10 +72,22 @@ bool StageSurface::run() {
         }
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
-        return false;
+        throw e;
     }
 }
 
+/*
+ * Tells the client to send all the events that happened to the server. For
+ * this it checks what keys changed it's status, and send those.
+ */
+void StageSurface::send_events(bool* prev_input, bool* new_input) {
+    for (size_t i = 0; i < sizeof(*prev_input) / sizeof(prev_input[0]); ++i) {
+        if (prev_input[i] != new_input[i]) {
+            // TODO: Call client method to send the event
+            continue;
+        }
+    }
+}
 StageSurface::~StageSurface() {
     delete sprites;
     delete renderer;
