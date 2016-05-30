@@ -2,16 +2,25 @@
 #define ENEMY_H
 
 #include <vector>
+#include <string>
 
 #include "common/Position.h"
 #include "Cannon.h"
 #include "Mortal.h"
 
+#define MET_NAME "met"
+#define BUMBY_NAME "bumby"
+#define SNIPER_NAME "sniper"
+#define JUMPING_SNIPER_NAME "jumping sniper"
+
 class Enemy : public Movable {
     private:
+        const std::string name;
         int energy;
     public:
-        Enemy(const std::vector<int>& position, const int velocity, int energy);
+        Enemy(const std::string& name, const std::vector<int>& position,
+              const int velocity, int energy);
+        const std::string& get_name();
         void decrease_energy(int amount);
         bool is_dead();
         virtual Projectile* shoot() = 0;

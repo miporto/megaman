@@ -6,7 +6,6 @@
 #include <map>
 
 #include "extern/libjson/json.hpp"
-#include "common/communication/StageInfo.h"
 #include "Cannon.h"
 
 using json = nlohmann::json;
@@ -44,16 +43,13 @@ class AmmoFactory {
         ~AmmoFactory();
 };
 
-class StageFactory {
-    private:
-        json stage_json;
+typedef std::vector<std::vector<int>> StageFactoryPositions;
+typedef std::map<std::string,
+        std::vector<std::vector<int>>> StageFactoryInfo;
 
-        std::vector<Position*> positions_of(const std::string& stage_id,
-                                            const std::string& name,
-                                            const std::string& object_id);
+class StageFactory {
     public:
-        StageFactory();
-        std::map<char, StageInfo*> stage_info();
+        static const std::string initial_stage(const char stage_id);
         ~StageFactory();
 };
 

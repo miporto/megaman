@@ -1,29 +1,46 @@
 #include <string>
 
+#include "server/communication/Match.h"
 #include "Game.h"
 
+class Match;
+
+Game::Game(Match* match, EventQueue* events)
+        : match(match), events(events) {}
+
 void Game::new_player(Player* player) {
-    this->players.push_back(player);
+    this->map.add_player(player);
 }
 
-void Game::set_stage(StageInfo* info) {
+void Game::set_stage(const std::string& info) {
     this->map.set(info);
 }
 
-void Game::get_rid_of_corpses() {
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        if (this->players[i]->is_dead()) {
-            //TODO que se hace cuando un jugador muere?
-        }
-    map.get_rid_of_corpses();
+void Game::execute_events() {
+    while (!this->events->is_empty()) {
+        Action* action = this->events->pop();
+        //TODO execute event
+        delete action;
+    }
 }
 
 void Game::tick() {
-    this->get_rid_of_corpses();
     map.tick();
 }
 
-Game::~Game() {
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        delete this->players[i];
+void Game::get_rid_of_corpses() {
+    map.get_rid_of_corpses();
 }
+
+const std::string Game::status() {
+    return map.status();
+}
+
+void Game::run() {
+    this->execute_events();
+    this->tick();
+    this->get_rid_of_corpses();
+    this->match->send_tick(this->status());
+}
+
+Game::~Game() {}

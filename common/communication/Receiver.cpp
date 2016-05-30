@@ -3,7 +3,12 @@
 
 Receiver::Receiver(Socket& socket,
                    ReceivedPacketsProtected& packets)
-        : socket(socket), packets(packets), quit(false) {}
+        : socket(socket), packets(packets), started(false), quit(false) {}
+
+void Receiver::start() {
+    this->started = true;
+    Thread::start();
+}
 
 void Receiver::receive_packet(const char id) {
     switch (id) {
@@ -18,15 +23,20 @@ void Receiver::receive_packet(const char id) {
             this->socket.receive(&stage_id, sizeof(char));
             this->packets.push(new StagePick(stage_id));
             break;
-        } case STAGE_ELEMENT: {
-            char type;
-            int x, y, direction;
-            this->socket.receive(&type, sizeof(char));
-            this->socket.receive((char *) &x, sizeof(int));
-            this->socket.receive((char *) &y, sizeof(int));
-            this->socket.receive((char *) &direction, sizeof(int));
-            this->packets.push(new StageElement(type,
-                                                new Position(x, y, direction)));
+        } case STAGE: {
+            char info[INFO_LENGTH];
+            this->socket.receive((char *) &info,
+                                 sizeof(char) * INFO_LENGTH);
+            this->packets.push(new Stage(info));
+            break;
+        } case ACTION: {
+            char name[NAME_LENGTH + 1];
+            name[NAME_LENGTH] = '\0';
+            char action_id, pressed;
+            this->socket.receive(name, sizeof(char) * NAME_LENGTH);
+            this->socket.receive(&action_id, sizeof(char));
+            this->socket.receive(&pressed, sizeof(char));
+            this->packets.push(new Action(name, action_id, pressed));
             break;
         } default:
             // Si el ID es desconocido, es posible que el resto del
@@ -56,5 +66,5 @@ void Receiver::shutdown() {
 
 Receiver::~Receiver() {
     this->shutdown();
-    this->join();
+    if (started) this->join();
 }

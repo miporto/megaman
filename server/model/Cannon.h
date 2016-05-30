@@ -8,15 +8,25 @@
 #include "common/Position.h"
 #include "Movable.h"
 
+#define PLASMA_NAME "plasma"
+#define BOMB_NAME "bomb"
+#define MAGNET_NAME "magnet"
+#define SPARK_NAME "spark"
+#define FIRE_NAME "fire"
+#define RING_NAME "ring"
+
 class Projectile : public Movable {
     private:
+        const std::string name;
         const int damage;
 
     public:
-        Projectile(int damage,
+        Projectile(const std::string& name,
+                   int damage,
                    int velocity,
                    const std::vector<int>& initial_position);
         virtual void tick() = 0;
+        const std::string& get_name();
         virtual ~Projectile();
 };
 

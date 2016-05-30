@@ -45,44 +45,13 @@ const std::string& ServerCommunicator::name() {
     return this->player->get_name();
 }
 
-void ServerCommunicator::send_stage_info(StageInfo* info) {
-    std::vector<Position*> positions;
+void ServerCommunicator::send_stage_info(const std::string& info) {
+    this->packets_to_send.push(new Stage(info));
+    Sender s(this->peer, this->packets_to_send);
+}
 
-    //TODO arreglar memory leak de todos estos vectores
-
-    positions = info->get_met_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i)
-        this->packets_to_send.push
-                (new StageElement(MET, positions[i]->clone()));
-    positions = info->get_bumby_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i)
-        this->packets_to_send.push
-                (new StageElement(BUMBY, positions[i]->clone()));
-    positions = info->get_sniper_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i)
-        this->packets_to_send.push
-                (new StageElement(SNIPER, positions[i]));
-    positions = info->get_jumping_sniper_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i)
-        this->packets_to_send.push
-                (new StageElement(JUMPING_SNIPER, positions[i]));
-    positions = info->get_block_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i)
-        this->packets_to_send.push
-                (new StageElement(BLOCK, positions[i]));
-    positions = info->get_stairs_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i)
-        this->packets_to_send.push
-                (new StageElement(STAIRS, positions[i]));
-    positions = info->get_spike_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i)
-        this->packets_to_send.push
-                (new StageElement(SPIKE, positions[i]));
-    positions = info->get_cliff_positions();
-    for (unsigned int i = 0; i < positions.size(); ++i)
-        this->packets_to_send.push
-                (new StageElement(CLIFF, positions[i]));
-
+void ServerCommunicator::send_tick_info(const std::string& tick_info) {
+    this->packets_to_send.push(new Stage(tick_info));
     Sender s(this->peer, this->packets_to_send);
 }
 

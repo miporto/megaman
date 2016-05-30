@@ -5,79 +5,98 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <giomm.h>
 
+#include "client/communication/Client.h"
+#include "common/communication/Packet.h"
+#include "InputHandler.h"
+#include "StageRenderer.h"
 #include "StageSurface.h"
-#include <X11/Xlib.h>
 
-StageSurface::StageSurface() {
-    set_title("Stage");
-    set_size_request(640, 480);
-    set_position(Gtk::WIN_POS_CENTER);
-    set_border_width(0);
-    Gtk::Socket* socket = manage(new Gtk::Socket);
-    add(*socket);
-    show_all();
-    sigc::slot<bool> slot =  sigc::bind<::Window>(sigc::mem_fun(*this,
-    &StageSurface::init), socket->get_id());
-    Glib::signal_timeout().connect(slot, 50);
-}
-
-bool StageSurface::init(::Window window_id) {
+// TODO: relate with the client to communicate with the server
+StageSurface::StageSurface(Client& client) : client(client){
     try {
-        std::stringstream sdlhack;
-        sdlhack << "SDL_WINDOWID=" << window_id << std::ends;
-
-        char* winhack = new char[32];
-        snprintf(winhack, sizeof(*winhack), "%s", sdlhack.str().c_str());
-        putenv(winhack);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
-//        SDL_Window *s_window = SDL_CreateWindowFrom((void *) window_id);
-//        if (!s_window) {
-//            std::cerr << "Couldn't create SDL window: " << SDL_GetError() <<
-//            std::endl;
-//            throw std::exception();
-//        }
-//        SDL2pp::Window window(s_window);
-        SDL2pp::Window window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
-                              SDL_WINDOWPOS_UNDEFINED, 640, 480,
-                              SDL_WINDOW_RESIZABLE);
-        renderer = new SDL2pp::Renderer(window, -1, SDL_RENDERER_SOFTWARE);
+        window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
+                                    SDL_WINDOWPOS_UNDEFINED, 640, 480,
+                                    SDL_WINDOW_RESIZABLE);
+        renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
-        sigc::slot<bool> slot = sigc::mem_fun(*this, &StageSurface::run);
-        Glib::signal_timeout().connect(slot, 16);
-        return false;
+        stageRenderer = new StageRenderer(renderer);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
-        return true;
-    }
-}
-bool StageSurface::run() {
-//    SDL_Event event;
-//    while (true) {
-//        while (SDL_PollEvent(&event)) {
-//            if (event.type == SDL_QUIT) {
-//                return true;
-//            }
-//        }
-//    }
-    try {
-        renderer->Clear();
-        renderer->Copy(*sprites);
-        renderer->Present();
-        std::cout << "Check" << std::endl;
-        SDL_Delay(5000);
-        return true;
-    } catch (std::exception& e) {
-        std::cerr << e.what() << std::endl;
-        return false;
+        throw e;
     }
 }
 
+void StageSurface::run() {
+    try {
+        int run_phase = -1; // run animation phase
+        double position = 0.0;
+        unsigned int prev_ticks = SDL_GetTicks();
+//        bool* prev_input;
+        bool *new_input;
+        while (true) {
+            // Timing
+            unsigned int frame_ticks = SDL_GetTicks();
+            unsigned int frame_delta = frame_ticks - prev_ticks;
+            prev_ticks = frame_ticks;
+
+            // Input
+//            prev_input  = input_handler.get_input();
+            input_handler.read_input();
+            new_input = input_handler.get_input();
+            if (input_handler.is_window_closed()) {
+                // TODO: send sht_dwn signal to server
+                return;
+            }
+            // Update Game state
+//            send_events(prev_input, new_input);
+            if (new_input[RIGHT]) {
+                position += frame_delta * 0.2;
+                run_phase = (frame_ticks / 100) % 8;
+            } else {
+                run_phase = 0;
+            }
+            if (position > renderer->GetOutputWidth()) {
+                position = -50;
+            }
+            int vcenter = renderer->GetOutputHeight() / 2;
+            // Clear screen
+            renderer->Clear();
+            stageRenderer->render();
+            int src_x = 8 + 51 * run_phase, src_y = 67;
+            renderer->Copy(*sprites,
+                           SDL2pp::Rect(src_x, src_y, 50, 50),
+                           SDL2pp::Rect((int) position, vcenter - 50, 50, 50));
+            renderer->Present();
+            SDL_Delay(1);
+        }
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        throw e;
+    }
+}
+
+/*
+ * Tells the client to send all the events that happened to the server. For
+ * this it checks what keys changed it's status, and send those.
+ */
+void StageSurface::send_events(bool *prev_input, bool *new_input) {
+    size_t input_array_l = sizeof(*prev_input) / sizeof(prev_input[0]);
+    for (size_t action_id = 0; action_id < input_array_l; ++action_id) {
+        if (prev_input[action_id] != new_input[action_id]) {
+            // TODO: Call client method to send the event
+            //client.send_action(action_id, new_input[action_id]);
+            continue;
+        }
+    }
+}
 
 StageSurface::~StageSurface() {
     delete sprites;
     delete renderer;
     delete sdl;
+    delete stageRenderer;
 }
 
 

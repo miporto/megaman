@@ -20,6 +20,7 @@ class EnergyTank {
         void decrease_energy(int amount);
         void reset();
         bool is_empty();
+        int get_energy();
         ~EnergyTank();
 };
 
@@ -31,6 +32,7 @@ class MegaMan : public Movable {
     public:
         MegaMan();
         void decrease_energy(int amount);
+        int get_energy();
         void kill();
         bool is_dead();
         Projectile* shoot();

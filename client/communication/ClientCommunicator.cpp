@@ -43,59 +43,16 @@ void ClientCommunicator::send_stage_pick(char& stage_id) {
     this->push_to_sender(new StagePick(stage_id));
 }
 
-StageInfo* ClientCommunicator::receive_stage_info() {
-    std::vector<Position*> met_positions;
-    std::vector<Position*> bumby_positions;
-    std::vector<Position*> sniper_positions;
-    std::vector<Position*> jumping_sniper_positions;
-    std::vector<Position*> block_positions;
-    std::vector<Position*> stairs_positions;
-    std::vector<Position*> spike_positions;
-    std::vector<Position*> cliff_positions;
+const std::string ClientCommunicator::receive_stage_info() {
+    //TODO Completar
+    return NULL;
+}
 
-    //TODO Ver que llegue completo (Hacer unico paquete con todo)
-    while (!this->packets_received.is_empty(STAGE_ELEMENT)) {
-        StageElement* packet = (StageElement*)
-                this->packets_received.pop(STAGE_ELEMENT);
-        switch (packet->get_type()) {
-            case MET:
-                met_positions.push_back(packet->get_position());
-                break;
-            case BUMBY:
-                bumby_positions.push_back(packet->get_position());
-                break;
-            case SNIPER:
-                sniper_positions.push_back(packet->get_position());
-                break;
-            case JUMPING_SNIPER:
-                jumping_sniper_positions.push_back(packet->get_position());
-                break;
-            case BLOCK:
-                block_positions.push_back(packet->get_position());
-                break;
-            case STAIRS:
-                stairs_positions.push_back(packet->get_position());
-                break;
-            case SPIKE:
-                spike_positions.push_back(packet->get_position());
-                break;
-            case CLIFF:
-                cliff_positions.push_back(packet->get_position());
-                break;
-            default:
-                break;
-        }
-        delete packet;
-    }
-
-    return new StageInfo(met_positions,
-                          bumby_positions,
-                          sniper_positions,
-                          jumping_sniper_positions,
-                          block_positions,
-                          stairs_positions,
-                          spike_positions,
-                         cliff_positions);
+void ClientCommunicator::send_action(const std::string& name,
+                                     const char &action_id,
+                                     const bool& pressed) {
+//    this->push_to_sender(new Action(name, action_id, pressed));
+    return;
 }
 
 ClientCommunicator::~ClientCommunicator() {

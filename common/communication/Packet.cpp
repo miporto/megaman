@@ -1,8 +1,12 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
 
 #include "Packet.h"
+
+#define PRESSED_CODE 1
+#define RELEASED_CODE 0
 
 Packet::~Packet() {}
 
@@ -40,29 +44,68 @@ std::string StagePick::get_str() const {
 
 StagePick::~StagePick() {}
 
-StageElement::StageElement(const char type, Position* position) :
-        type(type), position(position) {}
-
-char StageElement::get_id() const { return this->id; }
-
-char StageElement::get_type() const { return this->type; }
-
-Position* StageElement::get_position() const {
-    Position* position_clone = this->position->clone();
-    return position_clone;
+Stage::Stage(const std::string stage_info)
+        : stage_info(stage_info.substr(0, INFO_LENGTH)) {
+    for (size_t i = stage_info.size(); i < INFO_LENGTH; ++i)
+        this->stage_info.push_back('\0');
+    std::cout << "info: " << this->stage_info << std::endl;
 }
 
-std::string StageElement::get_str() const {
+char Stage::get_id() const { return this->id; }
+
+std::string Stage::get_str() const {
     std::string str;
     str.push_back(this->id);
-    str.push_back(this->type);
-    str.append(this->position->str());
+    str.append(this->stage_info);
     return str;
 }
 
-StageElement::~StageElement() {
-    delete this->position;
+Stage::~Stage() {}
+
+Action::Action(const std::string& name,
+               const char action_id, const bool pressed)
+        : name(name.substr(0, NAME_LENGTH)),
+          action_id(action_id),
+          pressed(pressed) {
+    for (size_t i = name.size(); i < NAME_LENGTH; ++i)
+        this->name.push_back('\0');
 }
+
+Action::Action(const std::string& name,
+               const char action_id, const char pressed)
+        : name(name), action_id(action_id), pressed(pressed) {}
+
+char Action::get_id() const { return this->id; }
+
+char Action::get_action() const { return this->action_id; }
+
+bool Action::is_pressed() const { return this->pressed != 0; }
+
+std::string Action::get_str() const {
+    std::string str;
+    str.push_back(this->id);
+    str.append(this->name);
+    str.push_back(this->action_id);
+    if (pressed)
+        str.push_back(PRESSED_CODE);
+    else
+        str.push_back(RELEASED_CODE);
+    return str;
+}
+
+Action::~Action() {}
+
+Right::Right(const std::string& name, const bool pressed)
+        : Action(name, RIGHT, pressed) {}
+
+Left::Left(const std::string& name, const bool pressed)
+        : Action(name, LEFT, pressed) {}
+
+Up::Up(const std::string& name, const bool pressed)
+        : Action(name, UP, pressed) {}
+
+Shoot::Shoot(const std::string& name, const bool pressed)
+        : Action(name, SHOOT, pressed) {}
 
 bool PacketsQueueProtected::is_empty() {
     Lock l(this->m);
@@ -100,7 +143,14 @@ Packet* ReceivedPacketsProtected::pop(const char id) {
 
 void ReceivedPacketsProtected::push(Packet* packet) {
     Lock l(this->m);
-    this->packets[packet->get_id()].push_back(packet);
+    if (packet->get_id() == ACTION)
+        this->actions.push(packet);
+    else
+        this->packets[packet->get_id()].push_back(packet);
+}
+
+PacketsQueueProtected& ReceivedPacketsProtected::get_actions() {
+    return this->actions;
 }
 
 ReceivedPacketsProtected::~ReceivedPacketsProtected() {

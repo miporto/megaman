@@ -12,12 +12,21 @@
 #include "common/Thread.h"
 
 #define NAME_LENGTH 8
+#define INFO_LENGTH 1024
 
 typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,
-    STAGE_ELEMENT
+    STAGE,
+    ACTION
 } packet_id_t;
+
+typedef enum _action_packet_id {
+    RIGHT = 1,
+    LEFT,
+    UP,
+    SHOOT
+} action_packet_id_t;
 
 typedef enum _stage_id {
     BOMBMAN = 1,
@@ -26,17 +35,6 @@ typedef enum _stage_id {
     RINGMAN,
     MAGNETMAN
 } stage_id_t;
-
-typedef enum _stage_element_type_t {
-    MET = 1,
-    BUMBY,
-    SNIPER,
-    JUMPING_SNIPER,
-    BLOCK,
-    STAIRS,
-    SPIKE,
-    CLIFF
-} stage_element_type_t;
 
 class Packet {
     public:
@@ -71,19 +69,55 @@ class StagePick : public Packet {
         ~StagePick();
 };
 
-class StageElement : public Packet {
+class Stage : public Packet {
     private:
-        static const char id = STAGE_ELEMENT;
-        const char type;
-        Position* position;
+        static const char id = STAGE;
+        std::string stage_info;
 
     public:
-        StageElement(const char type, Position* position);
+        explicit Stage(const std::string stage_info);
         char get_id() const;
-        char get_type() const;
-        Position* get_position() const;
         std::string get_str() const;
-        ~StageElement();
+        ~Stage();
+};
+
+class Action : public Packet {
+    private:
+        static const char id = ACTION;
+        std::string name;
+        const char action_id;
+        const bool pressed;
+
+    public:
+        Action(const std::string& name,
+               const char action_id, const bool pressed);
+        Action(const std::string& name,
+               const char action_id, const char pressed);
+        char get_id() const;
+        char get_action() const;
+        bool is_pressed() const;
+        std::string get_str() const;
+        virtual ~Action();
+};
+
+class Right : public Action {
+    public:
+        explicit Right(const std::string& name, const bool pressed);
+};
+
+class Left : public Action {
+    public:
+        explicit Left(const std::string& name, const bool pressed);
+};
+
+class Up : public Action {
+    public:
+        explicit Up(const std::string& name, const bool pressed);
+};
+
+class Shoot : public Action {
+    public:
+        explicit Shoot(const std::string& name, const bool pressed);
 };
 
 class PacketsQueueProtected {
@@ -102,11 +136,13 @@ class ReceivedPacketsProtected {
     private:
         Mutex m;
         std::map<char, std::vector<Packet*>> packets;
+        PacketsQueueProtected actions;
 
     public:
         bool is_empty(const char id);
         Packet* pop(const char id);
         void push(Packet* packet);
+        PacketsQueueProtected& get_actions();
         ~ReceivedPacketsProtected();
 };
 

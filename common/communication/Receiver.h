@@ -12,13 +12,14 @@ class Receiver : public Thread {
     protected:
         Socket& socket;
         ReceivedPacketsProtected& packets;
-        bool quit;
+        bool started, quit;
 
         void receive_packet(const char id);
 
     public:
         Receiver(Socket& socket,
                  ReceivedPacketsProtected& packets);
+        void start();
         void run();
         void shutdown();
         ~Receiver();

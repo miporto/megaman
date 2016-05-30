@@ -12,9 +12,15 @@ set(SOURCES
         view/GladeLoader.h
         view/SignalProtocol.h
         view/StageSurface.cpp
-        view/StageSurface.h)
-        #view/StageRenderer.cpp
-        #view/StageRenderer.h)
+        view/StageSurface.h
+        view/MegamanRenderer.cpp
+        view/MegamanRenderer.h
+        view/InputHandler.cpp
+        view/InputHandler.h
+        view/StageRenderer.cpp
+        view/StageRenderer.h
+        TickInfoParser.cpp
+        TickInfoParser.h)
 
 include(CppLint)
 

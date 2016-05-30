@@ -5,16 +5,19 @@
 #include "Cannon.h"
 #include "Factory.h"
 
-Projectile::Projectile(int damage,
+Projectile::Projectile(const std::string& name,
+                       int damage,
                        int velocity,
                        const std::vector<int>& initial_position) :
-        Movable(initial_position, velocity), damage(damage){}
+        Movable(initial_position, velocity), name(name), damage(damage){}
+
+const std::string& Projectile::get_name() { return this->name; }
 
 Projectile::~Projectile() {}
 
 Plasma::Plasma(int damage, int velocity,
                const std::vector<int>& initial_position)
-        : Projectile(damage, velocity, initial_position) {}
+        : Projectile(PLASMA_NAME, damage, velocity, initial_position) {}
 
 void Plasma::tick() {
     //TODO
@@ -22,7 +25,7 @@ void Plasma::tick() {
 
 Bomb::Bomb(int damage, int velocity,
            const std::vector<int>& initial_position)
-        : Projectile(damage, velocity, initial_position) {}
+        : Projectile(BOMB_NAME, damage, velocity, initial_position) {}
 
 void Bomb::tick() {
     //TODO
@@ -30,7 +33,7 @@ void Bomb::tick() {
 
 Magnet::Magnet(int damage, int velocity,
                const std::vector<int>& initial_position)
-        : Projectile(damage, velocity, initial_position) {}
+        : Projectile(MAGNET_NAME, damage, velocity, initial_position) {}
 
 void Magnet::tick() {
     //TODO
@@ -38,7 +41,7 @@ void Magnet::tick() {
 
 Spark::Spark(int damage, int velocity,
              const std::vector<int>& initial_position)
-        : Projectile(damage, velocity, initial_position) {}
+        : Projectile(SPARK_NAME, damage, velocity, initial_position) {}
 
 void Spark::tick() {
     //TODO
@@ -46,7 +49,7 @@ void Spark::tick() {
 
 Fire::Fire(int damage, int velocity,
            const std::vector<int>& initial_position)
-        : Projectile(damage, velocity, initial_position) {}
+        : Projectile(FIRE_NAME, damage, velocity, initial_position) {}
 
 void Fire::tick() {
     //TODO
@@ -54,7 +57,7 @@ void Fire::tick() {
 
 Ring::Ring(int damage, int velocity,
            const std::vector<int>& initial_position)
-        : Projectile(damage, velocity, initial_position) {}
+        : Projectile(RING_NAME, damage, velocity, initial_position) {}
 
 void Ring::tick() {
     //TODO
