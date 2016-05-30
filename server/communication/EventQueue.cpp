@@ -3,16 +3,18 @@
 
 #include "EventQueue.h"
 
-EventQueue::EventQueue(PacketsQueueProtected& received_actions)
-        : received_actions(received_actions), quit(false) {}
+EventQueue::EventQueue(const std::vector<PacketsQueueProtected*>& action_queues)
+        : action_queues(action_queues), quit(false) {}
 
 void EventQueue::run() {
     while (!this->quit) {
-        Action *packet;
-        if (!this->received_actions.is_empty()) {
-            packet = (Action*) this->received_actions.pop();
-            Lock l(this->m);
-            this->queue.push(packet);
+        for (unsigned int i = 0; i < this->action_queues.size(); ++i) {
+            Action *packet;
+            if (!this->action_queues[i]->is_empty()) {
+                packet = (Action *) this->action_queues[i]->pop();
+                Lock l(this->m);
+                this->queue.push(packet);
+            }
         }
     }
 }

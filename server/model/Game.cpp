@@ -1,15 +1,21 @@
 #include <string>
+#include <vector>
 
 #include "server/communication/Match.h"
 #include "Game.h"
 
 class Match;
 
-Game::Game(Match* match, EventQueue* events)
-        : match(match), events(events) {}
+Game::Game(Match* match)
+        : match(match) {}
 
 void Game::new_player(Player* player) {
     this->map.add_player(player);
+}
+
+void Game::set_event_queue
+        (const std::vector<PacketsQueueProtected*>& action_queues) {
+    this->events = new EventQueue(action_queues);
 }
 
 void Game::set_stage(const std::string& info) {
@@ -43,4 +49,6 @@ void Game::run() {
     this->match->send_tick(this->status());
 }
 
-Game::~Game() {}
+Game::~Game() {
+    delete this->events;
+}

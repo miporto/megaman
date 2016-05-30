@@ -149,8 +149,8 @@ void ReceivedPacketsProtected::push(Packet* packet) {
         this->packets[packet->get_id()].push_back(packet);
 }
 
-PacketsQueueProtected& ReceivedPacketsProtected::get_actions() {
-    return this->actions;
+PacketsQueueProtected* ReceivedPacketsProtected::get_actions() {
+    return &(this->actions);
 }
 
 ReceivedPacketsProtected::~ReceivedPacketsProtected() {

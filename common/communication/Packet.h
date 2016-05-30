@@ -142,7 +142,7 @@ class ReceivedPacketsProtected {
         bool is_empty(const char id);
         Packet* pop(const char id);
         void push(Packet* packet);
-        PacketsQueueProtected& get_actions();
+        PacketsQueueProtected* get_actions();
         ~ReceivedPacketsProtected();
 };
 

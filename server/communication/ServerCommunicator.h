@@ -37,6 +37,7 @@ class ServerCommunicator {
         void send_stage_pick(const char stage_id);
         void receive_name();
         const std::string& name();
+        PacketsQueueProtected* get_actions();
         void send_stage_info(const std::string& info);
         void send_tick_info(const std::string& tick_info);
         virtual void shutdown();

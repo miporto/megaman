@@ -24,8 +24,10 @@ class Game : public Thread {
         const std::string status();
 
     public:
-        Game(Match* match, EventQueue* events);
+        explicit Game(Match* match);
         void new_player(Player* player);
+        void set_event_queue
+                (const std::vector<PacketsQueueProtected*>&action_queues);
         void set_stage(const std::string& info);
         void run();
         ~Game();

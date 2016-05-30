@@ -11,11 +11,12 @@ class EventQueue : public Thread {
     private:
         Mutex m;
         std::queue<Action*> queue;
-        PacketsQueueProtected& received_actions;
+        const std::vector<PacketsQueueProtected*> action_queues;
         bool quit;
 
     public:
-        explicit EventQueue(PacketsQueueProtected& received_actions);
+        explicit EventQueue
+                (const std::vector<PacketsQueueProtected*>& action_queues);
         void run();
         bool is_empty();
         Action* pop();
