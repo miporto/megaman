@@ -41,4 +41,7 @@ void Client::pick_stage(char stage_id) {
     this->communicator.send_stage_pick(stage_id);
 }
 
+void Client::send_action(char action_id, bool pressed) {
+    return;
+}
 Client::~Client() { this->client.shutdown(); }

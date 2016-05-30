@@ -5,6 +5,7 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <giomm.h>
 
+#include "common/communication/Packet.h"
 #include "InputHandler.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"
@@ -32,17 +33,23 @@ bool StageSurface::init(::Window window_id) {
 
 bool StageSurface::run() {
     try {
-        bool is_running = false;
+//        bool is_running = false;
         int run_phase = -1; // run animation phase
         double position = 0.0;
         unsigned int prev_ticks = SDL_GetTicks();
 //        SDL_Event event;
+//        bool* prev_input;
+        bool* new_input;
         while (true) {
             // Timing
             unsigned int frame_ticks = SDL_GetTicks();
             unsigned int frame_delta = frame_ticks - prev_ticks;
             prev_ticks = frame_ticks;
+
+            // Input
+//            prev_input  = input_handler.get_input();
             input_handler.read_input();
+            new_input  = input_handler.get_input();
             if (input_handler.is_window_closed()) {
                 // TODO: send sht_dwn signal to server
                 return 0;
@@ -65,7 +72,7 @@ bool StageSurface::run() {
 //                }
 //            }
             // Update Game state
-            if (is_running) {
+            if (new_input[RIGHT]) {
                 position += frame_delta * 0.2;
                 run_phase = (frame_ticks / 100) % 8;
             } else {

@@ -7,11 +7,13 @@ class InputHandler {
 public:
     InputHandler();
     void read_input();
+    bool* get_input();
     bool is_window_closed();
     ~InputHandler();
 private:
     SDL_Event event;
     bool window_closed;
+    bool keys_held[5] = {false};
 };
 
 

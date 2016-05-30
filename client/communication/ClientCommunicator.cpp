@@ -48,6 +48,10 @@ const std::string ClientCommunicator::receive_stage_info() {
     return NULL;
 }
 
+void ClientCommunicator::send_action(char &action_id, bool pressed) {
+    return;
+}
+
 ClientCommunicator::~ClientCommunicator() {
     this->waiter.join();
 }
