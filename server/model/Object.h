@@ -4,12 +4,10 @@
 #include <vector>
 
 #include "common/Position.h"
+#include "GameObject.h"
 #include "MegaMan.h"
 
-class Object {
-    protected:
-        const Position position;
-
+class Object : public GameObject {
     public:
         explicit Object(const std::vector<int>& position);
         virtual void interact(MegaMan& mm) = 0;

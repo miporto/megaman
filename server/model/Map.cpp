@@ -8,8 +8,22 @@
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
 
-Map::Map() : //gravity(0.0f, -10.0f), world(this->gravity),
+#define PIXELS_PER_METER 32.0f
+
+Map::Map() : gravity(0.0f, -10.0f), world(this->gravity),
              width(MapFactory::width()), height(MapFactory::height()) {}
+
+void Map::add_body(GameObject* object) {
+    std::vector<int> position = object->get_position();
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(
+            position[X_COORD_POS] / PIXELS_PER_METER,
+            position[Y_COORD_POS] / PIXELS_PER_METER);
+    bodyDef.userData = object;
+    bodyDef.fixedRotation = true;
+    object->set_body(this->world.CreateBody(&bodyDef));
+}
 
 void Map::add_player(Player* player) {
     this->players.push_back(player);
