@@ -21,7 +21,7 @@ class Client {
         void connect_to_server();
         void send_name(std::string& name);
         void pick_stage(char stage_id);
-		void send_action(char action_id, bool pressed);
+		void send_action(const char action_id, const bool pressed);
         ~Client();
 };
 
