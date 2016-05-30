@@ -51,8 +51,7 @@ const std::string ClientCommunicator::receive_stage_info() {
 void ClientCommunicator::send_action(const std::string& name,
                                      const char &action_id,
                                      const bool& pressed) {
-//    this->push_to_sender(new Action(name, action_id, pressed));
-    return;
+    this->push_to_sender(new Action(name, action_id, pressed));
 }
 
 ClientCommunicator::~ClientCommunicator() {

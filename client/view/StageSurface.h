@@ -4,6 +4,7 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <gtkmm/window.h>
 #include <gtkmm/socket.h>
+#include <vector>
 
 #include "client/communication/Client.h"
 #include "InputHandler.h"
@@ -17,7 +18,8 @@ public:
     ~StageSurface();
 private:
     Client& client;
-    void send_events(bool* prev_input, bool* new_input);
+    void send_events(std::vector<bool>& prev_input,
+                     std::vector<bool>& new_input);
     SDL2pp::SDL* sdl;
     SDL2pp::Window* window;
     SDL2pp::Renderer* renderer;

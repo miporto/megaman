@@ -4,7 +4,9 @@
 #include "EventQueue.h"
 
 EventQueue::EventQueue(PacketsQueueProtected& received_actions)
-        : received_actions(received_actions), quit(false) {}
+        : received_actions(received_actions), quit(false) {
+    queue.push(new Action("ROK", 1, true));
+}
 
 void EventQueue::run() {
     while (!this->quit) {
@@ -18,8 +20,8 @@ void EventQueue::run() {
 }
 
 bool EventQueue::is_empty() {
-    Lock l(this->m);
-    return this->queue.empty();
+//    Lock l(this->m);
+    return this->queue.size() == 0;
 }
 
 Action* EventQueue::pop() {
