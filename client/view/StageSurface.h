@@ -11,12 +11,12 @@
 
 class StageSurface {
 public:
-    StageSurface();
-//    StageSurface(Client& client);
+//    StageSurface();
+    explicit StageSurface(Client& client);
     void run();
     ~StageSurface();
 private:
-    //Client& client;
+    Client& client;
     void send_events(bool* prev_input, bool* new_input);
     SDL2pp::SDL* sdl;
     SDL2pp::Window* window;

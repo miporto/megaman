@@ -12,7 +12,7 @@
 #include "StageSurface.h"
 
 // TODO: relate with the client to communicate with the server
-StageSurface::StageSurface() {
+StageSurface::StageSurface(Client& client) : client(client){
     try {
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
