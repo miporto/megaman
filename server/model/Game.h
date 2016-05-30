@@ -14,6 +14,7 @@ class Match;
 
 class Game : public Thread {
     private:
+        bool running;
         Match* match;
         Map map;
         EventQueue* events;
@@ -30,6 +31,7 @@ class Game : public Thread {
                 (const std::vector<PacketsQueueProtected*>&action_queues);
         void set_stage(const std::string& info);
         void run();
+        void quit();
         ~Game();
 };
 

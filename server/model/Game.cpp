@@ -7,7 +7,7 @@
 class Match;
 
 Game::Game(Match* match)
-        : match(match) {}
+        : running(true), match(match) {}
 
 void Game::new_player(Player* player) {
     this->map.add_player(player);
@@ -43,12 +43,20 @@ const std::string Game::status() {
 }
 
 void Game::run() {
-    this->execute_events();
-    this->tick();
-    this->get_rid_of_corpses();
-    this->match->send_tick(this->status());
+    while (this->running) {
+        this->execute_events();
+        this->tick();
+        this->get_rid_of_corpses();
+        this->match->send_tick(this->status());
+    }
+}
+
+void Game::quit() {
+    this->running = false;
 }
 
 Game::~Game() {
+    this->quit();
+    this->join();
     delete this->events;
 }
