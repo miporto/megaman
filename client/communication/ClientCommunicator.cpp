@@ -49,6 +49,7 @@ const std::string ClientCommunicator::receive_stage_info() {
 }
 
 void ClientCommunicator::send_action(char &action_id, bool pressed) {
+//    this->push_to_sender(new Action("playername", action_id, pressed));
     return;
 }
 

@@ -9,6 +9,7 @@
 
 class Client {
     private:
+//		std::string player_name;
 		const char* hostname;
 		const char* port;
         Socket client;
