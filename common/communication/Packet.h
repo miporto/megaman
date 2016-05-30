@@ -95,6 +95,7 @@ class Action : public Packet {
                const char action_id, const char pressed);
         char get_id() const;
         char get_action() const;
+        const std::string& get_name() const;
         bool is_pressed() const;
         std::string get_str() const;
         virtual ~Action();

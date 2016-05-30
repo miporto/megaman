@@ -14,6 +14,7 @@ class Player {
     public:
         void set_name(const std::string& name);
         const std::string& get_name();
+        void execute_action(const char action_id, bool start);
         bool is_dead();
         const std::vector<int> get_position();
         int get_energy();

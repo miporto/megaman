@@ -65,8 +65,6 @@ const std::string Map::status() {
 }
 
 Map::~Map() {
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        delete this->players[i];
     for (unsigned int i = 0; i < this->enemies.size(); ++i)
         delete this->enemies[i];
     for (unsigned int i = 0; i < this->objects.size(); ++i)

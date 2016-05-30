@@ -79,6 +79,8 @@ char Action::get_id() const { return this->id; }
 
 char Action::get_action() const { return this->action_id; }
 
+const std::string& Action::get_name() const { return this->name; }
+
 bool Action::is_pressed() const { return this->pressed != 0; }
 
 std::string Action::get_str() const {

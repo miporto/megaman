@@ -18,11 +18,13 @@ class Game : public Thread {
         Match* match;
         Map map;
         EventQueue* events;
+        std::vector<Player*> players;
 
         void execute_events();
         void tick();
         void get_rid_of_corpses();
         const std::string status();
+        Player* player_with_name(const std::string& name);
 
     public:
         explicit Game(Match* match);
