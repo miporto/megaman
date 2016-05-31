@@ -43,10 +43,6 @@ class AmmoFactory {
         ~AmmoFactory();
 };
 
-typedef std::vector<std::vector<int>> StageFactoryPositions;
-typedef std::map<std::string,
-        std::vector<std::vector<int>>> StageFactoryInfo;
-
 class StageFactory {
     public:
         static const std::string initial_stage(const char stage_id);

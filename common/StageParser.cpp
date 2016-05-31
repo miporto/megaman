@@ -10,11 +10,11 @@ using json = nlohmann::json;
 StageParserPositions StageParser::positions_of
         (const std::string& info,
          const std::string& name,
-         const std::string& object_id) {
+         const std::string& object_name) {
     json json_file = json::parse(info);
     std::vector<std::vector<int>> positions;
 
-    json json_positions = json_file[name][object_id];
+    json json_positions = json_file[name][object_name];
 
     for (size_t i = 0; i < json_positions.size(); ++i){
         std::vector<int> position;

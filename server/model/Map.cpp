@@ -4,6 +4,7 @@
 
 #include "Map.h"
 #include "Factory.h"
+#include "ServerStageSetter.h"
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
@@ -27,11 +28,21 @@ void Map::add_body(GameObject* object) {
 
 void Map::add_player(Player* player) {
     this->players.push_back(player);
+    //TODO this->add_body(megaman);
 }
 
 void Map::set(const std::string& info) {
-    //TODO parsear info con Factory y
-    // setear objetos y enemigos en mundo de box2d?
+    ServerStageSetter setter(info, this);
+}
+
+void Map::add_enemy(Enemy* enemy) {
+    this->enemies.push_back(enemy);
+    this->add_body(enemy);
+}
+
+void Map::add_object(Object* object) {
+    this->objects.push_back(object);
+    this->add_body(object);
 }
 
 void Map::tick() {
