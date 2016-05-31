@@ -1,7 +1,14 @@
+#include <string>
+#include <vector>
+
 #include "InputHandler.h"
 #include "common/communication/Packet.h"
 
-InputHandler::InputHandler() : window_closed(false) { }
+InputHandler::InputHandler() : window_closed(false), keys_held(5) {
+    for (size_t i = 0; i < keys_held.size(); ++i) {
+        keys_held[i] = false;
+    }
+}
 
 void InputHandler::read_input() {
     if (SDL_PollEvent(&event)) {
@@ -23,7 +30,7 @@ void InputHandler::read_input() {
     }
 }
 
-bool* InputHandler::get_input() {
+std::vector<bool> InputHandler::get_input() {
     return keys_held;
 }
 bool InputHandler::is_window_closed() {

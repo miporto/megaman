@@ -24,7 +24,7 @@ public:
 protected:
 	Gtk::Layout layout;
 	Gtk::Image bg_image;
-    StageSurface* surface;
+//    StageSurface* surface;
 
     Gtk::Box main_frame;
     Gtk::Box* welcome_screen;

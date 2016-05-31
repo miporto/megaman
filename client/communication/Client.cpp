@@ -5,7 +5,7 @@
 #include "common/communication/AddrInfo.h"
 
 Client::Client(const char* hostname, const char* port)
-        : hostname(hostname), port(port),
+        : player_name("."), hostname(hostname), port(port),
           communicator(this->client, this->teammates) {}
         
 void Client::connect_to_server() {
@@ -34,6 +34,7 @@ void Client::connect_to_server() {
  */
 
 void Client::send_name(std::string& name) {
+    player_name = name;
     this->communicator.send_name(name);
 }
 
@@ -41,9 +42,8 @@ void Client::pick_stage(char stage_id) {
     this->communicator.send_stage_pick(stage_id);
 }
 
-void Client::send_action(char action_id, bool pressed) {
+void Client::send_action(const char action_id, const bool pressed) {
     // TODO: send the players name to the communicator
-    //this->communicator.send_action(action_id, pressed);
-    return;
+    this->communicator.send_action(player_name, action_id, pressed);
 }
 Client::~Client() { this->client.shutdown(); }

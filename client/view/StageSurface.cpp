@@ -1,6 +1,6 @@
 #include <iostream>
 #include <exception>
-
+#include <vector>
 
 #include <SDL2pp/SDL2pp.hh>
 #include <giomm.h>
@@ -12,7 +12,7 @@
 #include "StageSurface.h"
 
 // TODO: relate with the client to communicate with the server
-StageSurface::StageSurface() {
+StageSurface::StageSurface(Client& client) : client(client){
     try {
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
@@ -33,8 +33,8 @@ void StageSurface::run() {
         int run_phase = -1; // run animation phase
         double position = 0.0;
         unsigned int prev_ticks = SDL_GetTicks();
-//        bool* prev_input;
-        bool *new_input;
+        std::vector<bool> prev_input = input_handler.get_input();
+        std::vector<bool> new_input = input_handler.get_input();
         while (true) {
             // Timing
             unsigned int frame_ticks = SDL_GetTicks();
@@ -42,7 +42,6 @@ void StageSurface::run() {
             prev_ticks = frame_ticks;
 
             // Input
-//            prev_input  = input_handler.get_input();
             input_handler.read_input();
             new_input = input_handler.get_input();
             if (input_handler.is_window_closed()) {
@@ -50,7 +49,7 @@ void StageSurface::run() {
                 return;
             }
             // Update Game state
-//            send_events(prev_input, new_input);
+            send_events(prev_input, new_input);
             if (new_input[RIGHT]) {
                 position += frame_delta * 0.2;
                 run_phase = (frame_ticks / 100) % 8;
@@ -69,7 +68,8 @@ void StageSurface::run() {
                            SDL2pp::Rect(src_x, src_y, 50, 50),
                            SDL2pp::Rect((int) position, vcenter - 50, 50, 50));
             renderer->Present();
-            SDL_Delay(1);
+            SDL_Delay(1000);
+            prev_input = new_input;
         }
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
@@ -81,13 +81,15 @@ void StageSurface::run() {
  * Tells the client to send all the events that happened to the server. For
  * this it checks what keys changed it's status, and send those.
  */
-void StageSurface::send_events(bool *prev_input, bool *new_input) {
-    size_t input_array_l = sizeof(*prev_input) / sizeof(prev_input[0]);
-    for (size_t action_id = 0; action_id < input_array_l; ++action_id) {
+void StageSurface::send_events(std::vector<bool>& prev_input,
+                               std::vector<bool>& new_input) {
+//    size_t input_array_l = sizeof(*prev_input) / sizeof(prev_input[0]);
+    for (size_t action_id = 0; action_id < prev_input.size(); ++action_id) {
+        std::cout << prev_input[action_id] << "--" << new_input[action_id] <<
+                std::endl;
         if (prev_input[action_id] != new_input[action_id]) {
-            // TODO: Call client method to send the event
-            //client.send_action(action_id, new_input[action_id]);
-            continue;
+            std::cout << "[*]SENDING EVENT" << std::endl;
+            client.send_action((char)action_id, new_input[action_id]);
         }
     }
 }
