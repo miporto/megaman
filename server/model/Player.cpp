@@ -14,6 +14,10 @@ const std::string& Player::get_name() {
     return this->name;
 }
 
+void Player::execute_action(const char action_id, bool start) {
+    //TODO Completar
+}
+
 bool Player::is_dead() {
     return this->megaman.is_dead();
 }

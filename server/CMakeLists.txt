@@ -27,7 +27,7 @@ set(SOURCES
         model/Map.h
         model/Map.cpp
         model/Game.cpp
-        model/Game.h model/Mortal.h model/Movable.cpp model/Movable.h communication/TickInfoMaker.cpp communication/TickInfoMaker.h communication/EventQueue.cpp communication/EventQueue.h)
+        model/Game.h model/Mortal.h model/Movable.cpp model/Movable.h communication/TickInfoMaker.cpp communication/TickInfoMaker.h communication/EventQueue.cpp communication/EventQueue.h model/GameObject.cpp model/GameObject.h)
 
 include(CppLint)
 
@@ -42,5 +42,6 @@ add_dependencies(${PROJECT_NAME} common)
 add_dependencies(${PROJECT_NAME} extern)
 
 target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${PROJECT_NAME} ${BOX2D_LIBRARY})
 target_link_libraries(${PROJECT_NAME} common)
 target_link_libraries(${PROJECT_NAME} extern)

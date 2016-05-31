@@ -5,8 +5,8 @@
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
 
-Object::Object(const std::vector<int>& position) :
-        position(position) {}
+Object::Object(const std::vector<int>& position)
+        : GameObject(position) {}
 
 Object::~Object() {}
 
@@ -24,7 +24,7 @@ Spike::Spike(const std::vector<int>& position) :
         Object(position) {}
 
 void Spike::interact(MegaMan& mm) {
-    const std::vector<int> obj_pos = this->position.get_position();
+    const std::vector<int> obj_pos = this->get_position();
     const std::vector<int> mm_pos = mm.get_position();
     if (obj_pos[X_COORD_POS] == mm_pos[X_COORD_POS]
         && obj_pos[Y_COORD_POS] == mm_pos[Y_COORD_POS])
@@ -47,7 +47,7 @@ Cliff::Cliff(const std::vector<int>& position) :
         Object(position) {}
 
 void Cliff::interact(MegaMan& mm) {
-    const std::vector<int> obj_pos = this->position.get_position();
+    const std::vector<int> obj_pos = this->get_position();
     const std::vector<int> mm_pos = mm.get_position();
     if (obj_pos[X_COORD_POS] == mm_pos[X_COORD_POS]
         && obj_pos[Y_COORD_POS] == mm_pos[Y_COORD_POS])

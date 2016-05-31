@@ -24,6 +24,7 @@ class Match {
         void send_new_player_to_team(ServerCommunicator* new_comm);
         void send_stage_pick_to_team(const char stage_id);
         void send_stage_info(const std::string& info);
+        void set_game(const std::string& stage_info);
 
     public:
         explicit Match(std::vector<ServerCommunicator*>& communicators);

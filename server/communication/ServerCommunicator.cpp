@@ -45,6 +45,10 @@ const std::string& ServerCommunicator::name() {
     return this->player->get_name();
 }
 
+PacketsQueueProtected* ServerCommunicator::get_actions() {
+    return this->packets_received.get_actions();
+}
+
 void ServerCommunicator::send_stage_info(const std::string& info) {
     this->packets_to_send.push(new Stage(info));
     Sender s(this->peer, this->packets_to_send);

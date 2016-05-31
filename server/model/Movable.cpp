@@ -3,15 +3,11 @@
 #include "Movable.h"
 
 Movable::Movable(const std::vector<int>& position, const int velocity)
-        : position(position), velocity(velocity) {}
+        : GameObject(position), velocity(velocity) {}
 
 Movable::Movable(const int x, const int y,
                  const int direction, const int velocity)
-        : position(x, y, direction), velocity(velocity) {}
-
-std::vector<int> Movable::get_position() {
-    return this->position.get_position();
-}
+        : GameObject(x, y, direction), velocity(velocity) {}
 
 void Movable::reset_position() {
     this->position.reset();

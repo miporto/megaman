@@ -95,6 +95,7 @@ class Action : public Packet {
                const char action_id, const char pressed);
         char get_id() const;
         char get_action() const;
+        const std::string& get_name() const;
         bool is_pressed() const;
         std::string get_str() const;
         virtual ~Action();
@@ -142,7 +143,7 @@ class ReceivedPacketsProtected {
         bool is_empty(const char id);
         Packet* pop(const char id);
         void push(Packet* packet);
-        PacketsQueueProtected& get_actions();
+        PacketsQueueProtected* get_actions();
         ~ReceivedPacketsProtected();
 };
 
