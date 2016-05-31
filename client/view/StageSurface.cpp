@@ -5,6 +5,8 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <giomm.h>
 
+#include "client/communication/Client.h"
+#include "common/communication/Packet.h"
 #include "InputHandler.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"
@@ -26,46 +28,30 @@ StageSurface::StageSurface() {
     }
 }
 
-bool StageSurface::init(::Window window_id) {
-    return true;
-}
-
-bool StageSurface::run() {
+void StageSurface::run() {
     try {
-        bool is_running = false;
         int run_phase = -1; // run animation phase
         double position = 0.0;
         unsigned int prev_ticks = SDL_GetTicks();
-//        SDL_Event event;
+//        bool* prev_input;
+        bool *new_input;
         while (true) {
             // Timing
             unsigned int frame_ticks = SDL_GetTicks();
             unsigned int frame_delta = frame_ticks - prev_ticks;
             prev_ticks = frame_ticks;
+
+            // Input
+//            prev_input  = input_handler.get_input();
             input_handler.read_input();
+            new_input = input_handler.get_input();
             if (input_handler.is_window_closed()) {
                 // TODO: send sht_dwn signal to server
-                return 0;
+                return;
             }
-//            while (SDL_PollEvent(&event)) {
-//                if (event.type == SDL_QUIT) {
-//                    return 0;
-//                } else if (event.type == SDL_KEYDOWN) {
-//                    switch (event.key.keysym.sym) {
-//                        case SDLK_RIGHT:
-//                            is_running = true;
-//                            break;
-//                    }
-//                } else if (event.type == SDL_KEYUP) {
-//                    switch (event.key.keysym.sym) {
-//                        case SDLK_RIGHT:
-//                            is_running = false;
-//                            break;
-//                    }
-//                }
-//            }
             // Update Game state
-            if (is_running) {
+//            send_events(prev_input, new_input);
+            if (new_input[RIGHT]) {
                 position += frame_delta * 0.2;
                 run_phase = (frame_ticks / 100) % 8;
             } else {
@@ -87,7 +73,22 @@ bool StageSurface::run() {
         }
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
-        return false;
+        throw e;
+    }
+}
+
+/*
+ * Tells the client to send all the events that happened to the server. For
+ * this it checks what keys changed it's status, and send those.
+ */
+void StageSurface::send_events(bool *prev_input, bool *new_input) {
+    size_t input_array_l = sizeof(*prev_input) / sizeof(prev_input[0]);
+    for (size_t action_id = 0; action_id < input_array_l; ++action_id) {
+        if (prev_input[action_id] != new_input[action_id]) {
+            // TODO: Call client method to send the event
+            //client.send_action(action_id, new_input[action_id]);
+            continue;
+        }
     }
 }
 
