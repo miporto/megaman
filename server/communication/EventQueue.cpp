@@ -20,7 +20,7 @@ void EventQueue::run() {
 }
 
 bool EventQueue::is_empty() {
-//    Lock l(this->m);
+    Lock l(this->m);
     return this->queue.size() == 0;
 }
 
