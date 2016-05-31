@@ -10,11 +10,15 @@ GameObject::GameObject(const std::vector<int>& position)
 GameObject::GameObject(const int x, const int y, const int direction)
         : position(x, y, direction) {}
 
-void GameObject::create_fixture(b2Shape* shape) {
+void GameObject::create_fixture() {
+    b2PolygonShape shape;
+    //width * scale, height * scale
+    shape.SetAsBox(100, 100);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &shape;
     // note that friction, etc. can be modified later by looping
     // over the body's fixtures and calling fixture->SetFriction()
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = shape;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.7f;
     fixtureDef.restitution = 0.1f;
@@ -23,19 +27,14 @@ void GameObject::create_fixture(b2Shape* shape) {
     this->body->CreateFixture(&fixtureDef);
 }
 
-void GameObject::add_rectangular_fixture_to_body() {
-    b2PolygonShape shape;
-    //width * scale, height * scale
-    shape.SetAsBox(100, 100);
-    this->create_fixture(&shape);
-}
-
 void GameObject::set_body(b2Body* body) {
     this->body = body;
-    //Por ahora son todos iguales
-    this->add_rectangular_fixture_to_body();
+    this->create_fixture();
 }
 
+void GameObject::set_bullet(bool option) {
+    this->body->SetBullet(option);
+}
 
 std::vector<int> GameObject::get_position() {
     return this->position.get_position();

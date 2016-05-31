@@ -10,9 +10,18 @@
 #define Y_COORD_POS 1
 
 #define PIXELS_PER_METER 32.0f
+#define GRAVITY_DENOM 0.7f
 
-Map::Map() : gravity(0.0f, -10.0f), world(this->gravity),
-             width(MapFactory::width()), height(MapFactory::height()) {}
+void Map::create_physical_world() {
+    this->world.SetAllowSleeping(true);
+    this->world.SetContinuousPhysics(true);
+    //this->world.SetContactListener(this);
+}
+
+Map::Map() : world(b2Vec2(0.0f, PIXELS_PER_METER / GRAVITY_DENOM)),
+             width(MapFactory::width()), height(MapFactory::height()) {
+    this->create_physical_world();
+}
 
 void Map::add_body(GameObject* object) {
     std::vector<int> position = object->get_position();

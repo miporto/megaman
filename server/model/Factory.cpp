@@ -10,6 +10,17 @@
 
 #define INFO_FILE "info.json"
 
+json FileReader::read(const std::string& file_name,
+                      const std::string& branch_name) {
+    std::ifstream file(file_name);
+    std::string file_dump, buffer;
+    while (getline(file, buffer))
+        file_dump += buffer;
+    file.close();
+    json json_file = json::parse(file_dump);
+    return json_file[branch_name];
+}
+
 int EnemyFactory::energy(std::string name) {
     //TODO leer .JSON
     return 0;
@@ -30,13 +41,13 @@ int MegaManFactory::velocity() {
 MegaManFactory::~MegaManFactory() {}
 
 int EnergyTankFactory::initial_lives() {
-    //TODO leer .JSON
-    return 0;
+    json j_info = FileReader::read(INFO_FILE, "info");
+    return (int) j_info["energy_tank"]["initial_lives"];
 }
 
 int EnergyTankFactory::maximum_energy() {
-    //TODO leer .JSON
-    return 0;
+    json j_info = FileReader::read(INFO_FILE, "info");
+    return (int) j_info["energy_tank"]["max_energy"];
 }
 
 EnergyTankFactory::~EnergyTankFactory() {}
@@ -58,12 +69,7 @@ Ammo* AmmoFactory::ammo(const std::string& name) {
 AmmoFactory::~AmmoFactory() {}
 
 const std::string StageFactory::initial_stage(const char stage_id) {
-    std::ifstream game_info(INFO_FILE);
-    std::string file_dump, buffer;
-    while (getline(game_info, buffer))
-        file_dump += buffer;
-    game_info.close();
-    json json_file = json::parse(file_dump);
+    json json_file = FileReader::read(INFO_FILE, "stage");
 
     int i = stage_id;
     std::stringstream ss;
@@ -71,19 +77,21 @@ const std::string StageFactory::initial_stage(const char stage_id) {
     ss << i;
     ss >> s_stage_id;
 
-    json j_stage = json_file["stage"][s_stage_id];
+    json j_stage = json_file[s_stage_id];
     return j_stage.dump();
 }
 
 StageFactory::~StageFactory() {}
 
 unsigned int MapFactory::width() {
-    //TODO leer .JSON
+//    json j_info = FileReader::read(INFO_FILE, "info");
+//    return (int) j_info["map"]["width"];
     return 0;
 }
 
 unsigned int MapFactory::height() {
-    //TODO leer .JSON
+//    json j_info = FileReader::read(INFO_FILE, "info");
+//    return (int) j_info["map"]["height"];
     return 0;
 }
 

@@ -10,11 +10,18 @@
 
 using json = nlohmann::json;
 
+class FileReader {
+    public:
+        static json read(const std::string& file_name,
+                         const std::string& branch_name);
+        ~FileReader();
+};
+
 class EnemyFactory {
-public:
-    static int energy(std::string name);
-    static int velocity(std::string name);
-    ~EnemyFactory();
+    public:
+        static int energy(std::string name);
+        static int velocity(std::string name);
+        ~EnemyFactory();
 };
 
 class MegaManFactory {

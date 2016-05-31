@@ -12,7 +12,6 @@
 
 class Map {
     private:
-        b2Vec2 gravity;
         b2World world;
         const unsigned int width, height;
 
@@ -21,6 +20,7 @@ class Map {
         std::vector<Enemy*> enemies;
         std::vector<Projectile*> projectiles;
 
+        void create_physical_world();
         void add_body(GameObject* object);
 
     public:

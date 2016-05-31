@@ -31,6 +31,7 @@ class MegaMan : public Movable {
 
     public:
         MegaMan();
+        void set_body(b2Body* body);
         void decrease_energy(int amount);
         int get_energy();
         void kill();

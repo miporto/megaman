@@ -31,5 +31,9 @@
             "fire": {"max_ammo": 104},
             "ring": {"max_ammo": 105}
         }
-    }
+    },
+    "map": {
+		"width": 640,
+		"height": 480
+		}
 }
