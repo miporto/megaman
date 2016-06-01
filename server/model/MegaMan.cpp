@@ -50,6 +50,15 @@ MegaMan::MegaMan() :
                 INITIAL_DIRECTION,
                 MegaManFactory::velocity()) {}
 
+void MegaMan::set_name(const std::string& name) {
+    std::cout << "MM name: " << name << std::endl;
+    this->name = name;
+}
+
+const std::string& MegaMan::get_name() {
+    return this->name;
+}
+
 void MegaMan::set_body(b2Body* body) {
     Movable::set_body(body);
     this->set_bullet(true);

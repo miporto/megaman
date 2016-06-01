@@ -14,8 +14,6 @@ set(SOURCES
         communication/Stage.cpp
         model/Factory.cpp
         model/Factory.h
-        model/Player.h
-        model/Player.cpp
         model/Object.h
         model/Object.cpp
         model/Enemy.h

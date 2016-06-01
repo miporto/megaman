@@ -56,7 +56,7 @@ void Match::add_player(int fd) {
     if (this->has_host() && this->host_communicator()->check_stage_id() != 0)
         throw MatchError("Mega Man Co-op match has already started");
 
-    Player* new_player = new Player();
+    MegaMan* new_player = new MegaMan();
 
     if (!this->has_host()) {
         HostCommunicator* hc = new HostCommunicator(new_player, fd);

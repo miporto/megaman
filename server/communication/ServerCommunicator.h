@@ -14,25 +14,25 @@
 
 class NameWaiter : public Thread {
     private:
-        Player* player;
+        MegaMan* player;
         ReceivedPacketsProtected& packets_received;
 
     public:
-        NameWaiter(Player* player, ReceivedPacketsProtected& packets_received);
+        NameWaiter(MegaMan* player, ReceivedPacketsProtected& packets_received);
         void run();
         ~NameWaiter();
 };
 
 class ServerCommunicator {
     protected:
-        Player* player;
+        MegaMan* player;
         Socket peer;
         PacketsQueueProtected packets_to_send;
         ReceivedPacketsProtected packets_received;
         Receiver receiver;
 
     public:
-        explicit ServerCommunicator(Player* player, int fd);
+        explicit ServerCommunicator(MegaMan* player, int fd);
         void send_new_player_notification(const std::string& name);
         void send_stage_pick(const char stage_id);
         void receive_name();
@@ -60,7 +60,7 @@ class HostCommunicator : public ServerCommunicator {
     private:
         StageIdWaiter waiter;
     public:
-        HostCommunicator(Player* player, int fd);
+        HostCommunicator(MegaMan* player, int fd);
         char check_stage_id();
         char receive_stage_id();
         ~HostCommunicator();

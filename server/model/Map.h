@@ -7,7 +7,7 @@
 
 #include "Enemy.h"
 #include "Object.h"
-#include "Player.h"
+#include "MegaMan.h"
 #include "GameObject.h"
 
 class Map {
@@ -15,7 +15,7 @@ class Map {
         b2World world;
         const unsigned int width, height;
 
-        std::vector<Player*> players;
+        std::vector<MegaMan*> players;
         std::vector<Object*> objects;
         std::vector<Enemy*> enemies;
         std::vector<Projectile*> projectiles;
@@ -25,7 +25,7 @@ class Map {
 
     public:
         Map();
-        void add_player(Player* player);
+        void add_player(MegaMan* player);
         void set(const std::string& info);
         void add_enemy(Enemy* enemy);
         void add_object(Object* object);

@@ -35,7 +35,7 @@ void Map::add_body(GameObject* object) {
     object->set_body(this->world.CreateBody(&bodyDef));
 }
 
-void Map::add_player(Player* player) {
+void Map::add_player(MegaMan* player) {
     this->players.push_back(player);
     //TODO this->add_body(megaman);
 }

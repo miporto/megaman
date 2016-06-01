@@ -4,7 +4,7 @@
 
 #include "ServerCommunicator.h"
 
-NameWaiter::NameWaiter(Player* player,
+NameWaiter::NameWaiter(MegaMan* player,
                        ReceivedPacketsProtected& packets_received)
         : player(player), packets_received(packets_received) {
     this->start();
@@ -19,7 +19,7 @@ void NameWaiter::run() {
 
 NameWaiter::~NameWaiter() { this->join(); }
 
-ServerCommunicator::ServerCommunicator(Player* player, int fd)
+ServerCommunicator::ServerCommunicator(MegaMan* player, int fd)
     : player(player),
       peer(fd),
       receiver(peer, packets_received) {
@@ -84,7 +84,7 @@ char StageIdWaiter::get_stage_id() {
 
 StageIdWaiter::~StageIdWaiter() {}
 
-HostCommunicator::HostCommunicator(Player* player, int fd) :
+HostCommunicator::HostCommunicator(MegaMan* player, int fd) :
         ServerCommunicator(player, fd),
         waiter(this->packets_received) {
     this->waiter.start();
