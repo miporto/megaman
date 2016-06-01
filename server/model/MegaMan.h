@@ -34,7 +34,6 @@ class MegaMan : public Movable {
         MegaMan();
         void set_name(const std::string& name);
         const std::string& get_name();
-        //void set_body(b2Body* body);
         void decrease_energy(int amount);
         int get_energy();
         void kill();
