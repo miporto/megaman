@@ -25,22 +25,19 @@ TeamWaiter::~TeamWaiter() {}
 ClientCommunicator::ClientCommunicator
         (Socket& socket, std::vector<std::string>& teammates)
         : socket(socket),
+          sender(socket, this->packets_to_send),
           receiver(socket, this->packets_received),
           waiter(teammates, this->packets_received) {}
 
-void ClientCommunicator::push_to_sender(Packet* packet) {
-    this->packets_to_send.push(packet);
-    Sender s(this->socket, this->packets_to_send);
-}
-
 void ClientCommunicator::send_name(std::string& name) {
-    this->push_to_sender(new NewPlayer(name));
+    this->packets_to_send.push(new NewPlayer(name));
     this->receiver.start();
     this->waiter.start();
+    this->sender.start();
 }
 
 void ClientCommunicator::send_stage_pick(char& stage_id) {
-    this->push_to_sender(new StagePick(stage_id));
+    this->packets_to_send.push(new StagePick(stage_id));
 }
 
 const std::string ClientCommunicator::receive_stage_info() {
@@ -51,7 +48,7 @@ const std::string ClientCommunicator::receive_stage_info() {
 void ClientCommunicator::send_action(const std::string& name,
                                      const char &action_id,
                                      const bool& pressed) {
-    this->push_to_sender(new Action(name, action_id, pressed));
+    this->packets_to_send.push(new Action(name, action_id, pressed));
 }
 
 ClientCommunicator::~ClientCommunicator() {

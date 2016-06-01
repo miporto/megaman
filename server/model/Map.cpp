@@ -4,34 +4,27 @@
 
 #include "Map.h"
 #include "Factory.h"
+#include "ServerStageSetter.h"
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
 
-#define PIXELS_PER_METER 32.0f
+Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 
-Map::Map() : gravity(0.0f, -10.0f), world(this->gravity),
-             width(MapFactory::width()), height(MapFactory::height()) {}
-
-void Map::add_body(GameObject* object) {
-    std::vector<int> position = object->get_position();
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(
-            position[X_COORD_POS] / PIXELS_PER_METER,
-            position[Y_COORD_POS] / PIXELS_PER_METER);
-    bodyDef.userData = object;
-    bodyDef.fixedRotation = true;
-    object->set_body(this->world.CreateBody(&bodyDef));
-}
-
-void Map::add_player(Player* player) {
+void Map::add_player(MegaMan* player) {
     this->players.push_back(player);
 }
 
 void Map::set(const std::string& info) {
-    //TODO parsear info con Factory y
-    // setear objetos y enemigos en mundo de box2d?
+    ServerStageSetter setter(info, this);
+}
+
+void Map::add_enemy(Enemy* enemy) {
+    this->enemies.push_back(enemy);
+}
+
+void Map::add_object(Object* object) {
+    this->objects.push_back(object);
 }
 
 void Map::tick() {

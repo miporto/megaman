@@ -1,35 +1,51 @@
-{"stage": {
+{
+	"stage": {
 		"1":{"spawn":{
-				"met": [{"x": 0, "y": 1, "direction": 1}], 
-				"bumby": [{"x": 2, "y": 3, "direction": -1}], 
-				"sniper": [{"x": 4, "y": 5, "direction": 1}], 
-				"jumping sniper": [{"x": 6, "y": 7, "direction": 1}]
+				"Met": [{"x": 0, "y": 1, "direction": 1}], 
+				"Bumby": [{"x": 2, "y": 3, "direction": -1}], 
+				"Sniper": [{"x": 4, "y": 5, "direction": 1}], 
+				"JumpingSniper": [{"x": 6, "y": 7, "direction": 1}]
             },
             "object":{
-                "block": [{"x": 10, "y": 11, "direction": 1}], 
-                "spike": [{"x": 12, "y": 13, "direction": 1}], 
-                "stairs": [{"x": 14, "y": 15, "direction": 1}], 
-                "cliff": [{"x": 16, "y": 17, "direction": -1}]  
+                "Block": [{"x": 10, "y": 11, "direction": 1}], 
+                "Spike": [{"x": 12, "y": 13, "direction": 1}], 
+                "Stairs": [{"x": 14, "y": 15, "direction": 1}], 
+                "Cliff": [{"x": 16, "y": 17, "direction": -1}]  
             }
         }
     },
-    "info":{
-        "energy_tank": {"initial_lives": 30, "max_energy": 31},
-        "projectile": {
-            "plasma": {"damage": 40, "velocity": 41},
-            "bomb": {"damage": 50, "velocity": 51},
-            "magnet": {"damage": 60, "velocity": 61},
-            "spark": {"damage": 70, "velocity": 71},
-            "fire": {"damage": 80, "velocity": 81},
-            "ring": {"damage": 90, "velocity": 91}
-        },
-        "ammo":{
-            "plasma": {"max_ammo": 100},
-            "bomb": {"max_ammo": 101},
-            "magnet": {"max_ammo": 102},
-            "spark": {"max_ammo": 103},
-            "fire": {"max_ammo": 104},
-            "ring": {"max_ammo": 105}
-        }
-    }
+    
+    "mega man": {"velocity": 2},
+    
+    "energy tank": {"initial lives": 30, "max": 31},
+    
+    "enemy": {
+			"Met": {"energy": 40, "velocity": 41},
+			"Bumby": {"energy": 50, "velocity": 51},
+			"Sniper": {"energy": 60, "velocity": 61},
+			"JumpingSniper": {"energy": 70, "velocity": 71}
+    },
+    
+    "projectile": {
+            "Plasma": {"damage": 40, "velocity": 41},
+            "Bomb": {"damage": 50, "velocity": 51},
+            "Magnet": {"damage": 60, "velocity": 61},
+            "Spark": {"damage": 70, "velocity": 71},
+            "Fire": {"damage": 80, "velocity": 81},
+            "Ring": {"damage": 90, "velocity": 91}
+    },
+    
+    "ammo":{
+			"Plasma": {"max": 999999},
+            "Bomb": {"max": 101},
+            "Magnet": {"max": 102},
+            "Spark": {"max": 103},
+            "Fire": {"max": 104},
+            "Ring": {"max": 105}
+    },
+    
+    "map": {
+		"width": 640,
+		"height": 480
+	}
 }

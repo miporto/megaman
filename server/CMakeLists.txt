@@ -14,8 +14,6 @@ set(SOURCES
         communication/Stage.cpp
         model/Factory.cpp
         model/Factory.h
-        model/Player.h
-        model/Player.cpp
         model/Object.h
         model/Object.cpp
         model/Enemy.h
@@ -27,7 +25,7 @@ set(SOURCES
         model/Map.h
         model/Map.cpp
         model/Game.cpp
-        model/Game.h model/Mortal.h model/Movable.cpp model/Movable.h communication/TickInfoMaker.cpp communication/TickInfoMaker.h communication/EventQueue.cpp communication/EventQueue.h model/GameObject.cpp model/GameObject.h)
+        model/Game.h model/Mortal.h model/Movable.cpp model/Movable.h communication/TickInfoMaker.cpp communication/TickInfoMaker.h communication/EventQueue.cpp communication/EventQueue.h model/GameObject.cpp model/GameObject.h model/ServerStageSetter.cpp model/ServerStageSetter.h)
 
 include(CppLint)
 
