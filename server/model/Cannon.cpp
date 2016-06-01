@@ -63,7 +63,7 @@ void Ring::tick() {
     //TODO
 }
 
-Ammo::Ammo(std::string& name, int max) :
+Ammo::Ammo(const std::string& name, int max) :
         name(name), max(max), quantity(max) {}
 
 // Devuelve NULL si el jugador intenta disparar y no hay mas municiones

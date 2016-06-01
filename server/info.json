@@ -1,4 +1,5 @@
-{"stage": {
+{
+	"stage": {
 		"1":{"spawn":{
 				"met": [{"x": 0, "y": 1, "direction": 1}], 
 				"bumby": [{"x": 2, "y": 3, "direction": -1}], 
@@ -13,27 +14,37 @@
             }
         }
     },
-    "info":{
-        "energy_tank": {"initial_lives": 30, "max_energy": 31},
-        "projectile": {
+    
+    "mega man": {"velocity": 2},
+    
+    "energy tank": {"initial lives": 30, "max": 31},
+    
+    "enemy": {
+			"met": {"energy": 40, "velocity": 41},
+			"bumby": {"energy": 50, "velocity": 51},
+			"sniper": {"energy": 60, "velocity": 61},
+			"jumping sniper": {"energy": 70, "velocity": 71}
+    },
+    
+    "projectile": {
             "plasma": {"damage": 40, "velocity": 41},
             "bomb": {"damage": 50, "velocity": 51},
             "magnet": {"damage": 60, "velocity": 61},
             "spark": {"damage": 70, "velocity": 71},
             "fire": {"damage": 80, "velocity": 81},
             "ring": {"damage": 90, "velocity": 91}
-        },
-        "ammo":{
-            "plasma": {"max_ammo": 100},
-            "bomb": {"max_ammo": 101},
-            "magnet": {"max_ammo": 102},
-            "spark": {"max_ammo": 103},
-            "fire": {"max_ammo": 104},
-            "ring": {"max_ammo": 105}
-        }
     },
+    
+    "ammo":{
+            "bomb": {"max": 101},
+            "magnet": {"max": 102},
+            "spark": {"max": 103},
+            "fire": {"max": 104},
+            "ring": {"max": 105}
+    },
+    
     "map": {
 		"width": 640,
 		"height": 480
-		}
+	}
 }

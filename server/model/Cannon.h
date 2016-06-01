@@ -79,7 +79,7 @@ class Ammo {
         int quantity;
 
     public:
-        Ammo(std::string& name, int max);
+        Ammo(const std::string& name, int max);
         Projectile* use(const std::vector<int>& position);
         ~Ammo();
 };
