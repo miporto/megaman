@@ -170,7 +170,7 @@ void MainWindow::resume_stage_pick() {
 }
 
 bool MainWindow::show_stage_pick() {
-    stage_pick->show();
+    stage_pick->show_all();
     return false;
 }
 MainWindow::~MainWindow() {}

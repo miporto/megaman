@@ -4,6 +4,7 @@
 #include "common/Thread.h"
 #include "client/communication/Client.h"
 #include "MainWindow.h"
+#include "StageSurface.h"
 
 class MainWindow;
 
@@ -16,6 +17,7 @@ public:
 private:
     MainWindow& main_window;
     Client& client;
+    StageSurface* stage_surface;
 };
 
 
