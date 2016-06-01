@@ -7,6 +7,11 @@
 #include "GameObject.h"
 #include "MegaMan.h"
 
+#define BLOCK_NAME "Block"
+#define STAIRS_NAME "Stairs"
+#define SPIKE_NAME "Spike"
+#define CLIFF_NAME "Cliff"
+
 class Object : public GameObject {
     public:
         explicit Object(const std::vector<int>& position);

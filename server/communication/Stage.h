@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "common/Thread.h"
-#include "server/model/Player.h"
+#include "server/model/MegaMan.h"
 #include "common/communication/Packet.h"
 #include "server/model/Object.h"
 #include "server/model/Enemy.h"

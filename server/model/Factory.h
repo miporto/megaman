@@ -10,11 +10,18 @@
 
 using json = nlohmann::json;
 
+class FileReader {
+    public:
+        static json read(const std::string& file_name,
+                         const std::string& branch_name);
+        ~FileReader();
+};
+
 class EnemyFactory {
-public:
-    static int energy(std::string name);
-    static int velocity(std::string name);
-    ~EnemyFactory();
+    public:
+        static int energy(std::string name);
+        static int velocity(std::string name);
+        ~EnemyFactory();
 };
 
 class MegaManFactory {
@@ -42,10 +49,6 @@ class AmmoFactory {
         static Ammo* ammo(const std::string& name);
         ~AmmoFactory();
 };
-
-typedef std::vector<std::vector<int>> StageFactoryPositions;
-typedef std::map<std::string,
-        std::vector<std::vector<int>>> StageFactoryInfo;
 
 class StageFactory {
     public:

@@ -16,14 +16,32 @@ void InputHandler::read_input() {
             window_closed = true;
         } else if (event.type == SDL_KEYDOWN) {
             switch (event.key.keysym.sym) {
+                case SDLK_LEFT:
+                    keys_held[LEFT] = true;
+                    break;
+                case SDLK_UP:
+                    keys_held[UP] = true;
+                    break;
                 case SDLK_RIGHT:
                     keys_held[RIGHT] = true;
+                    break;
+                case SDLK_s:
+                    keys_held[SHOOT] = true;
                     break;
             }
         } else if (event.type == SDL_KEYUP) {
             switch (event.key.keysym.sym) {
+                case SDLK_LEFT:
+                    keys_held[LEFT] = false;
+                    break;
+                case SDLK_UP:
+                    keys_held[UP] = false;
+                    break;
                 case SDLK_RIGHT:
                     keys_held[RIGHT] = false;
+                    break;
+                case SDLK_s:
+                    keys_held[SHOOT] = true;
                     break;
             }
         }

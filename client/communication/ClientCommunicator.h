@@ -25,11 +25,10 @@ class ClientCommunicator {
     private:
         Socket& socket;
         PacketsQueueProtected packets_to_send;
+        Sender sender;
         ReceivedPacketsProtected packets_received;
         Receiver receiver;
         TeamWaiter waiter;
-
-        void push_to_sender(Packet* packet);
 
     public:
         ClientCommunicator(Socket& socket, std::vector<std::string>& teammates);

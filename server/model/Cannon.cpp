@@ -63,7 +63,7 @@ void Ring::tick() {
     //TODO
 }
 
-Ammo::Ammo(std::string& name, int max) :
+Ammo::Ammo(const std::string& name, int max) :
         name(name), max(max), quantity(max) {}
 
 // Devuelve NULL si el jugador intenta disparar y no hay mas municiones
@@ -78,7 +78,7 @@ Projectile* Ammo::use(const std::vector<int>& position) {
 Ammo::~Ammo() {}
 
 Cannon::Cannon() {
-    this->ammos.push_back(AmmoFactory::ammo("Plasma"));
+    this->ammos.push_back(AmmoFactory::ammo(PLASMA_NAME));
     this->current_ammo = this->ammos[0];
 }
 

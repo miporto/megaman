@@ -8,10 +8,10 @@
 #include "Cannon.h"
 #include "Mortal.h"
 
-#define MET_NAME "met"
-#define BUMBY_NAME "bumby"
-#define SNIPER_NAME "sniper"
-#define JUMPING_SNIPER_NAME "jumping sniper"
+#define MET_NAME "Met"
+#define BUMBY_NAME "Bumby"
+#define SNIPER_NAME "Sniper"
+#define JUMPING_SNIPER_NAME "JumpingSniper"
 
 class Enemy : public Movable {
     private:

@@ -6,14 +6,13 @@
 #include <map>
 
 typedef std::vector<std::vector<int>> StageParserPositions;
-typedef std::map<std::string,
-        std::vector<std::vector<int>>> StageParserInfo;
+typedef std::map<std::string, std::vector<std::vector<int>>> StageParserInfo;
 
 class StageParser {
     private:
         StageParserPositions positions_of(const std::string& info,
                                           const std::string& name,
-                                          const std::string& object_id);
+                                          const std::string& object_name);
     public:
         StageParserInfo stage_info(const std::string& info);
         ~StageParser();
