@@ -10,16 +10,16 @@ class GameObject {
     private:
         b2Body* body;
 
-        void create_fixture();
+        //void create_fixture();
 
     protected:
         Position position;
-        void set_bullet(bool option);
+        //void set_bullet(bool option);
 
     public:
         explicit GameObject(const std::vector<int>& position);
         GameObject(const int x, const int y, const int direction);
-        virtual void set_body(b2Body* body);
+        //virtual void set_body(b2Body* body);
         std::vector<int> get_position();
         virtual ~GameObject();
 };

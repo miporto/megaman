@@ -5,7 +5,7 @@
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
-#define DIRECTION_POS 3
+#define DIRECTION_POS 2
 
 Position::Position(const int x, const int y, const int direction)
         : x(x), y(y), direction(direction) {}

@@ -11,9 +11,6 @@
 
 class ServerStageSetter {
     private:
-        std::vector<Enemy*> enemies;
-        std::vector<Object*> objects;
-
         void to_classes(StageParserInfo& positions, Map* map);
 
     public:

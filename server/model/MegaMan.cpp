@@ -59,10 +59,12 @@ const std::string& MegaMan::get_name() {
     return this->name;
 }
 
+/*
 void MegaMan::set_body(b2Body* body) {
     Movable::set_body(body);
     this->set_bullet(true);
 }
+*/
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);

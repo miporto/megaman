@@ -8,12 +8,12 @@
 #include "common/Position.h"
 #include "Movable.h"
 
-#define PLASMA_NAME "plasma"
-#define BOMB_NAME "bomb"
-#define MAGNET_NAME "magnet"
-#define SPARK_NAME "spark"
-#define FIRE_NAME "fire"
-#define RING_NAME "ring"
+#define PLASMA_NAME "Plasma"
+#define BOMB_NAME "Bomb"
+#define MAGNET_NAME "Magnet"
+#define SPARK_NAME "Spark"
+#define FIRE_NAME "Fire"
+#define RING_NAME "Ring"
 
 class Projectile : public Movable {
     private:

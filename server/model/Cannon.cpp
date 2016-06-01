@@ -78,7 +78,7 @@ Projectile* Ammo::use(const std::vector<int>& position) {
 Ammo::~Ammo() {}
 
 Cannon::Cannon() {
-    this->ammos.push_back(AmmoFactory::ammo("Plasma"));
+    this->ammos.push_back(AmmoFactory::ammo(PLASMA_NAME));
     this->current_ammo = this->ammos[0];
 }
 

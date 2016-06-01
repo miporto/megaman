@@ -12,17 +12,20 @@
 #define PIXELS_PER_METER 32.0f
 #define GRAVITY_DENOM 0.7f
 
+/*
 void Map::create_physical_world() {
     this->world.SetAllowSleeping(true);
     this->world.SetContinuousPhysics(true);
-    //this->world.SetContactListener(this);
+    this->world.SetContactListener(this);
 }
+*/
 
-Map::Map() : world(b2Vec2(0.0f, PIXELS_PER_METER / GRAVITY_DENOM)),
+Map::Map() : //world(b2Vec2(0.0f, PIXELS_PER_METER / GRAVITY_DENOM)),
              width(MapFactory::width()), height(MapFactory::height()) {
-    this->create_physical_world();
+    //this->create_physical_world();
 }
 
+/*
 void Map::add_body(GameObject* object) {
     std::vector<int> position = object->get_position();
     b2BodyDef bodyDef;
@@ -34,10 +37,10 @@ void Map::add_body(GameObject* object) {
     bodyDef.fixedRotation = true;
     object->set_body(this->world.CreateBody(&bodyDef));
 }
+*/
 
 void Map::add_player(MegaMan* player) {
     this->players.push_back(player);
-    //TODO this->add_body(megaman);
 }
 
 void Map::set(const std::string& info) {
@@ -46,12 +49,12 @@ void Map::set(const std::string& info) {
 
 void Map::add_enemy(Enemy* enemy) {
     this->enemies.push_back(enemy);
-    this->add_body(enemy);
+    //this->add_body(enemy);
 }
 
 void Map::add_object(Object* object) {
     this->objects.push_back(object);
-    this->add_body(object);
+    //this->add_body(object);
 }
 
 void Map::tick() {

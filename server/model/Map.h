@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include <Box2D/Box2D.h>
+//#include <Box2D/Box2D.h>
 
 #include "Enemy.h"
 #include "Object.h"
@@ -12,7 +12,7 @@
 
 class Map {
     private:
-        b2World world;
+        //b2World world;
         const unsigned int width, height;
 
         std::vector<MegaMan*> players;
@@ -20,8 +20,8 @@ class Map {
         std::vector<Enemy*> enemies;
         std::vector<Projectile*> projectiles;
 
-        void create_physical_world();
-        void add_body(GameObject* object);
+        //void create_physical_world();
+        //void add_body(GameObject* object);
 
     public:
         Map();

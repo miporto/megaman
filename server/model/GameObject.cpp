@@ -10,6 +10,7 @@ GameObject::GameObject(const std::vector<int>& position)
 GameObject::GameObject(const int x, const int y, const int direction)
         : position(x, y, direction) {}
 
+/*
 void GameObject::create_fixture() {
     b2PolygonShape shape;
     //width * scale, height * scale
@@ -35,6 +36,7 @@ void GameObject::set_body(b2Body* body) {
 void GameObject::set_bullet(bool option) {
     this->body->SetBullet(option);
 }
+*/
 
 std::vector<int> GameObject::get_position() {
     return this->position.get_position();

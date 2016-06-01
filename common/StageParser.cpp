@@ -31,36 +31,36 @@ StageParserInfo StageParser::stage_info(const std::string& info) {
     std::map<std::string, std::vector<std::vector<int>>> pos;
 
     std::vector<std::vector<int>> met_positions =
-            this->positions_of(info, "spawn", "met");
-    pos["met"] = met_positions;
+            this->positions_of(info, "spawn", "Met");
+    pos["Met"] = met_positions;
 
     std::vector<std::vector<int>> bumby_positions =
-            this->positions_of(info, "spawn", "bumby");
-    pos["bumby"] = bumby_positions;
+            this->positions_of(info, "spawn", "Bumby");
+    pos["Bumby"] = bumby_positions;
 
     std::vector<std::vector<int>> sniper_positions =
-            this->positions_of(info, "spawn", "sniper");
-    pos["sniper"] = sniper_positions;
+            this->positions_of(info, "spawn", "Sniper");
+    pos["Sniper"] = sniper_positions;
 
     std::vector<std::vector<int>> jumping_sniper_positions =
-            this->positions_of(info, "spawn", "jumping sniper");
-    pos["jumping sniper"] = jumping_sniper_positions;
+            this->positions_of(info, "spawn", "JumpingSniper");
+    pos["JumpingSniper"] = jumping_sniper_positions;
 
     std::vector<std::vector<int>> block_positions =
-            this->positions_of(info, "object", "block");
-    pos["block"] = block_positions;
+            this->positions_of(info, "object", "Block");
+    pos["Block"] = block_positions;
 
     std::vector<std::vector<int>> stairs_positions =
-            this->positions_of(info, "object", "stairs");
-    pos["stairs"] = stairs_positions;
+            this->positions_of(info, "object", "Stairs");
+    pos["Stairs"] = stairs_positions;
 
     std::vector<std::vector<int>> spike_positions =
-            this->positions_of(info, "object", "spike");
-    pos["spike"] = spike_positions;
+            this->positions_of(info, "object", "Spike");
+    pos["Spike"] = spike_positions;
 
     std::vector<std::vector<int>> cliff_positions =
-            this->positions_of(info, "object", "cliff");
-    pos["cliff"] = cliff_positions;
+            this->positions_of(info, "object", "Cliff");
+    pos["Cliff"] = cliff_positions;
 
     return pos;
 }
