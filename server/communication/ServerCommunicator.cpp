@@ -22,19 +22,19 @@ NameWaiter::~NameWaiter() { this->join(); }
 ServerCommunicator::ServerCommunicator(MegaMan* player, int fd)
     : player(player),
       peer(fd),
-      receiver(peer, packets_received) {
+      sender(this->peer, this->packets_to_send),
+      receiver(this->peer, this->packets_received) {
+    this->sender.start();
     this->receiver.start();
 }
 
 void ServerCommunicator::send_new_player_notification(const std::string& name) {
     std::cout << "Sending player name: "<< name << std::endl;
     this->packets_to_send.push(new NewPlayer(name));
-    Sender s(this->peer, this->packets_to_send);
 }
 
 void ServerCommunicator::send_stage_pick(const char stage_id) {
     this->packets_to_send.push(new StagePick(stage_id));
-    Sender s(this->peer, this->packets_to_send);
 }
 
 void ServerCommunicator::receive_name() {
@@ -51,12 +51,10 @@ PacketsQueueProtected* ServerCommunicator::get_actions() {
 
 void ServerCommunicator::send_stage_info(const std::string& info) {
     this->packets_to_send.push(new Stage(info));
-    Sender s(this->peer, this->packets_to_send);
 }
 
 void ServerCommunicator::send_tick_info(const std::string& tick_info) {
     this->packets_to_send.push(new Stage(tick_info));
-    Sender s(this->peer, this->packets_to_send);
 }
 
 void ServerCommunicator::shutdown() {

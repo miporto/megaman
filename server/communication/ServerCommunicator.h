@@ -28,6 +28,7 @@ class ServerCommunicator {
         MegaMan* player;
         Socket peer;
         PacketsQueueProtected packets_to_send;
+        Sender sender;
         ReceivedPacketsProtected packets_received;
         Receiver receiver;
 
