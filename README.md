@@ -11,7 +11,8 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 de la FIUBA
 * `apt-get install libgtkmm-3.0-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev`
 
 ## Build
-* mkdir build
-* cd build/
-* cmake ..
-* make
+* `mkdir build && cd build/ && cmake .. && make`
+
+## Run
+* **Client:** `cd client/ && ./../build/client/client hostname port`
+* **Server:** `cd server/ && ./../build/server/server port`
