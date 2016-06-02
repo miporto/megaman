@@ -8,6 +8,7 @@
 
 #include "client/communication/Client.h"
 #include "InputHandler.h"
+#include "MegamanRenderer.h"
 #include "StageRenderer.h"
 
 class StageSurface {
@@ -25,7 +26,8 @@ private:
     SDL2pp::Renderer* renderer;
     SDL2pp::Texture* sprites;
     InputHandler input_handler;
-    StageRenderer* stageRenderer;
+    StageRenderer* stage_renderer;
+    MegamanRenderer* megaman_renderer;
 };
 
 

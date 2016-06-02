@@ -6,7 +6,7 @@
 class MegamanRenderer {
 public:
     explicit MegamanRenderer(SDL2pp::Renderer* renderer);
-    void render();
+    void render(int dest_x, int dest_y);
     ~MegamanRenderer();
 private:
     SDL2pp::Renderer* renderer;
