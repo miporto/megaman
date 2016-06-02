@@ -2,7 +2,7 @@
 #include <gtkmm/application.h>
 #include <string>
 
-#include "client/view/MainWindow.h"
+#include "view/MainWindow.h"
 #include "view/StageSurface.h"
 
 #define HOSTNAME_POS 1

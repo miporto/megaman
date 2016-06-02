@@ -22,6 +22,7 @@ class Client {
         void send_name(std::string& name);
         void pick_stage(char stage_id);
 		void send_action(const char action_id, const bool pressed);
+		std::string receive_stage_info();
         ~Client();
 };
 

@@ -13,12 +13,16 @@
 
 #include "client/communication/Client.h"
 #include "common/communication/Socket.h"
+#include "GameLoopThread.h"
 #include "StageSurface.h"
 #include "StageRenderer.h"
+
+class GameLoopThread;
 
 class MainWindow: public Gtk::Window {
 public:
 	MainWindow(const char* hostname, const char* port);
+	void resume_stage_pick();
 	virtual ~MainWindow();
 
 protected:
@@ -33,6 +37,8 @@ protected:
 	Gtk::Box* stage_pick;
 	Gtk::Box* loading;
 
+	GameLoopThread* game_loop;
+
 	//Signal Handlers
 	void on_new_game_btn_clicked();
 	void on_about_btn_clicked();
@@ -46,6 +52,8 @@ private:
 	void init_welcome_screen();
 	void init_insert_name();
 	void init_stage_pick_screen();
+	void trigger_game_loop();
+	bool show_stage_pick();
 };
 
 #endif  // MAINWINDOW_H

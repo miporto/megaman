@@ -20,7 +20,9 @@ set(SOURCES
         view/StageRenderer.cpp
         view/StageRenderer.h
         TickInfoParser.cpp
-        TickInfoParser.h)
+        TickInfoParser.h
+        view/GameLoopThread.cpp
+        view/GameLoopThread.h)
 
 include(CppLint)
 

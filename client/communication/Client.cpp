@@ -1,3 +1,4 @@
+#include <exception>
 #include <iostream>
 #include <string>
 
@@ -45,5 +46,13 @@ void Client::pick_stage(char stage_id) {
 void Client::send_action(const char action_id, const bool pressed) {
     // TODO: send the players name to the communicator
     this->communicator.send_action(player_name, action_id, pressed);
+}
+
+std::string Client::receive_stage_info() {
+    std::string stage_info = this->communicator.receive_stage_info();
+    if (stage_info.empty()) {
+        throw std::exception();
+    }
+    return stage_info;
 }
 Client::~Client() { this->client.shutdown(); }

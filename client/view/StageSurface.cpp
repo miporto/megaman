@@ -8,6 +8,7 @@
 #include "client/communication/Client.h"
 #include "common/communication/Packet.h"
 #include "InputHandler.h"
+#include "MegamanRenderer.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"
 
@@ -21,7 +22,8 @@ StageSurface::StageSurface(Client& client) : client(client){
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
-        stageRenderer = new StageRenderer(renderer);
+        stage_renderer = new StageRenderer(renderer);
+        megaman_renderer = new MegamanRenderer(renderer);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
         throw e;
@@ -30,7 +32,7 @@ StageSurface::StageSurface(Client& client) : client(client){
 
 void StageSurface::run() {
     try {
-        int run_phase = -1; // run animation phase
+//        int run_phase = -1; // run animation phase
         double position = 0.0;
         unsigned int prev_ticks = SDL_GetTicks();
         std::vector<bool> prev_input = input_handler.get_input();
@@ -52,23 +54,26 @@ void StageSurface::run() {
             send_events(prev_input, new_input);
             if (new_input[RIGHT]) {
                 position += frame_delta * 0.2;
-                run_phase = (frame_ticks / 100) % 8;
-            } else {
-                run_phase = 0;
+//                run_phase = (frame_ticks / 100) % 8;
             }
+//            } else {
+//                run_phase = 0;
+//            }
             if (position > renderer->GetOutputWidth()) {
                 position = -50;
             }
             int vcenter = renderer->GetOutputHeight() / 2;
             // Clear screen
             renderer->Clear();
-            stageRenderer->render();
-            int src_x = 8 + 51 * run_phase, src_y = 67;
-            renderer->Copy(*sprites,
-                           SDL2pp::Rect(src_x, src_y, 50, 50),
-                           SDL2pp::Rect((int) position, vcenter - 50, 50, 50));
+            stage_renderer->render();
+//            int src_x = 8 + 51 * run_phase, src_y = 67;
+            megaman_renderer->render((int) position, vcenter);
+//            renderer->Copy(*sprites,
+//                           SDL2pp::Rect(src_x, src_y, 50, 50),
+//                           SDL2pp::Rect((int) position, vcenter - 50,
+// 50, 50));
             renderer->Present();
-            SDL_Delay(1000);
+            SDL_Delay(1);
             prev_input = new_input;
         }
     } catch (std::exception &e) {
@@ -83,12 +88,10 @@ void StageSurface::run() {
  */
 void StageSurface::send_events(std::vector<bool>& prev_input,
                                std::vector<bool>& new_input) {
-//    size_t input_array_l = sizeof(*prev_input) / sizeof(prev_input[0]);
     for (size_t action_id = 0; action_id < prev_input.size(); ++action_id) {
         std::cout << prev_input[action_id] << "--" << new_input[action_id] <<
                 std::endl;
         if (prev_input[action_id] != new_input[action_id]) {
-            std::cout << "[*]SENDING EVENT" << std::endl;
             client.send_action((char)action_id, new_input[action_id]);
         }
     }
@@ -98,7 +101,8 @@ StageSurface::~StageSurface() {
     delete sprites;
     delete renderer;
     delete sdl;
-    delete stageRenderer;
+    delete stage_renderer;
+    delete megaman_renderer;
 }
 
 

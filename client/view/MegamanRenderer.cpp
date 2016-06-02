@@ -7,3 +7,14 @@ MegamanRenderer::MegamanRenderer(SDL2pp::Renderer* renderer) :
     sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
             ".png");
 }
+
+void MegamanRenderer::render(int dest_x, int dest_y) {
+    // TODO: request more info to be able to draw the proper sprite
+    renderer->Copy(*sprites,
+                   SDL2pp::Rect(8, 11, 50, 50),
+                   SDL2pp::Rect(dest_x, dest_y - 50, 50, 50));
+}
+
+MegamanRenderer::~MegamanRenderer(){
+    delete sprites;
+}

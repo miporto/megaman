@@ -41,8 +41,11 @@ void ClientCommunicator::send_stage_pick(char& stage_id) {
 }
 
 const std::string ClientCommunicator::receive_stage_info() {
-    //TODO Completar
-    return NULL;
+    if (!this->packets_received.is_empty(STAGE)) {
+        return this->packets_received.pop(STAGE)->get_str();
+    }
+    // TODO: what to do if no stage info is received
+    return "";
 }
 
 void ClientCommunicator::send_action(const std::string& name,

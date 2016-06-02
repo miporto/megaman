@@ -1,4 +1,5 @@
 #include <glibmm/fileutils.h>
+#include <glibmm/main.h>
 #include <glibmm/markup.h>
 #include <iostream>
 #include <string>
@@ -6,6 +7,7 @@
 #include <gtkmm/entrybuffer.h>
 
 #include "MainWindow.h"
+#include "GameLoopThread.h"
 #include "GladeLoader.h"
 #include "SignalProtocol.h"
 #include "common/communication/Packet.h"
@@ -20,6 +22,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
 #include <gtkmm/window.h>
+//#include <giomm.h>
 
 
 #define CONTAINER_NAME "container"
@@ -150,11 +153,24 @@ void MainWindow::init_stage_pick_screen() {
 
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
-	client.pick_stage(stage_id);
-//    stage_pick->hide();
-    //stage.show();
-//    surface = new StageSurface();
-//    surface->run();
+	//client.pick_stage(stage_id);
+    stage_pick->hide();
+    trigger_game_loop();
 }
 
+
+void MainWindow::trigger_game_loop() {
+    game_loop = new GameLoopThread(*this, client);
+    game_loop->run();
+}
+
+void MainWindow::resume_stage_pick() {
+    Glib::signal_idle().connect(sigc::mem_fun(*this,
+                                               &MainWindow::show_stage_pick));
+}
+
+bool MainWindow::show_stage_pick() {
+    stage_pick->show_all();
+    return false;
+}
 MainWindow::~MainWindow() {}
