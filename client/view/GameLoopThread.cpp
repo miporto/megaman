@@ -9,7 +9,7 @@ GameLoopThread::GameLoopThread(MainWindow& main_window, Client& client) :
 void GameLoopThread::run() {
     stage_surface = new StageSurface(client);
     stage_surface->run();
-//    main_window.resume_stage_pick();
+    main_window.resume_stage_pick();
 }
 
 void GameLoopThread::join() {
