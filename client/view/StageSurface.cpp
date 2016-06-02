@@ -51,7 +51,7 @@ void StageSurface::run() {
                 return;
             }
             // Update Game state
-//            send_events(prev_input, new_input);
+            send_events(prev_input, new_input);
             if (new_input[RIGHT]) {
                 position += frame_delta * 0.2;
 //                run_phase = (frame_ticks / 100) % 8;
