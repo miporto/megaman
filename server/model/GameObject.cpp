@@ -5,10 +5,10 @@
 #include "GameObject.h"
 
 GameObject::GameObject(const std::vector<int>& position)
-        : position(position) {}
+        : side(BODY_SIDE), position(position) {}
 
 GameObject::GameObject(const int x, const int y, const int direction)
-        : position(x, y, direction) {}
+        : side(BODY_SIDE), position(x, y, direction) {}
 
 std::vector<int> GameObject::get_position() {
     return this->position.get_position();

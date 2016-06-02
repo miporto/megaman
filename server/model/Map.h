@@ -24,7 +24,9 @@ class Map {
         void set(const std::string& info);
         void add_enemy(Enemy* enemy);
         void add_object(Object* object);
+        void add_projectile(Projectile* projectile);
         void tick();
+        void check_collisions();
         void get_rid_of_corpses();
         const std::string status();
         ~Map();

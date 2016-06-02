@@ -19,7 +19,8 @@ class Position : public Clonable {
         Position(const int x, const int y, const int direction);
         explicit Position(const std::vector<int>& position);
         void move(int x_amount, int y_amount);
-        void change_direction();
+        void forward();
+        void backward();
         void reset();
         bool operator==(const Position& other) const;
         std::vector<int> get_position() const;

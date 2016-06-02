@@ -80,6 +80,10 @@ Projectile* MegaMan::shoot() {
     return this->cannon.shoot(this->get_position());
 }
 
+void MegaMan::tick() {
+    this->move();
+}
+
 void MegaMan::change_ammo(unsigned int ammo_id) {
     this->cannon.change_current_ammo(ammo_id);
 }

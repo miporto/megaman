@@ -20,8 +20,12 @@ void Position::move(int x_amount, int y_amount) {
     this->y += (this->direction) * y_amount;
 }
 
-void Position::change_direction() {
-    this->direction *= (-1);
+void Position::forward() {
+    this->direction = 1;
+}
+
+void Position::backward() {
+    this->direction = -1;
 }
 
 void Position::reset() {

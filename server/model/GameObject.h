@@ -2,13 +2,14 @@
 #define GAMEOBJECT_H
 
 #include <vector>
-#include <Box2D/Dynamics/b2Body.h>
 
 #include "common/Position.h"
 
+#define BODY_SIDE 50
+
 class GameObject {
     private:
-        b2Body* body;
+        const int side;
 
     protected:
         Position position;

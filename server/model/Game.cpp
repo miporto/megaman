@@ -33,7 +33,14 @@ MegaMan* Game::player_with_name(const std::string& name) {
 
 void Game::execute_action(MegaMan* player,
                           const char action_id, const bool pressed) {
-    //TODO
+    if (action_id == RIGHT)
+        player->change_x_movement(pressed, true);
+    else if (action_id == LEFT)
+        player->change_x_movement(pressed, false);
+    else if (action_id == UP)
+        player->change_y_movement(pressed, true);
+    else if (action_id == SHOOT)
+        this->map.add_projectile(player->shoot());
 }
 
 void Game::execute_events() {
@@ -50,6 +57,10 @@ void Game::tick() {
     map.tick();
 }
 
+void Game::check_collisions() {
+    map.check_collisions();
+}
+
 void Game::get_rid_of_corpses() {
     map.get_rid_of_corpses();
 }
@@ -62,6 +73,7 @@ void Game::run() {
     while (this->running) {
         this->execute_events();
         this->tick();
+        this->check_collisions();
         this->get_rid_of_corpses();
         this->match->send_tick(this->status());
     }

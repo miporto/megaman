@@ -27,7 +27,13 @@ void Map::add_object(Object* object) {
     this->objects.push_back(object);
 }
 
+void Map::add_projectile(Projectile* projectile) {
+    this->projectiles.push_back(projectile);
+}
+
 void Map::tick() {
+    for (unsigned int i = 0; i < this->players.size(); ++i)
+        this->players[i]->tick();
     for (unsigned int i = 0; i < this->enemies.size(); ++i)
         this->enemies[i]->tick();
     for (unsigned int i = 0; i < this->projectiles.size(); ++i)
@@ -51,6 +57,17 @@ void Map::get_rid_of_corpses() {
     }
 
     //TODO loop para sacar proyectiles out of range?
+}
+
+void Map::check_collisions() {
+    //GameObject* current_object;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        //current_object = this->objects[i];
+        for (unsigned int j = 0; j < this->objects.size(); ++j) {
+            //TODO if (current_object.position == this->objects[j].position)
+                //Guarda que puede ser el mismo
+        }
+    }
 }
 
 const std::string Map::status() {

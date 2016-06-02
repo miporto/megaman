@@ -8,14 +8,20 @@
 
 class Movable : public GameObject {
     private:
+        int direction;
         const int velocity;
+        int current_vel_x;
+        int current_vel_y;
+
     public:
-        Movable(const std::vector<int>& position, const int velocity);
+        Movable(const std::vector<int>& position,
+                const int velocity);
         Movable(const int x, const int y,
                 const int direction, const int velocity);
         void reset_position();
-        void move(int amount_x, int amount_y);
-        void change_direction();
+        void change_x_movement(bool pressed, bool forward);
+        void change_y_movement(bool pressed, bool forward);
+        void move();
         virtual ~Movable();
 };
 

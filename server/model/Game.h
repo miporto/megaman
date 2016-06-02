@@ -24,6 +24,7 @@ class Game : public Thread {
         void execute_action(MegaMan* player,
                             const char action_id, const bool pressed);
         void tick();
+        void check_collisions();
         void get_rid_of_corpses();
         const std::string status();
         MegaMan* player_with_name(const std::string& name);
@@ -32,7 +33,7 @@ class Game : public Thread {
         explicit Game(Match* match);
         void new_player(MegaMan* player);
         void set_event_queue
-                (const std::vector<PacketsQueueProtected*>&action_queues);
+                (const std::vector<PacketsQueueProtected*>& action_queues);
         void set_stage(const std::string& info);
         void run();
         void quit();
