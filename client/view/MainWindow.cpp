@@ -153,15 +153,16 @@ void MainWindow::init_stage_pick_screen() {
 
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
-	//client.pick_stage(stage_id);
-    stage_pick->hide();
+	client.pick_stage(stage_id);
     trigger_game_loop();
+    iconify();
+    stage_pick->hide();
 }
 
 
 void MainWindow::trigger_game_loop() {
     game_loop = new GameLoopThread(*this, client);
-    game_loop->run();
+    game_loop->start();
 }
 
 void MainWindow::resume_stage_pick() {
@@ -170,7 +171,9 @@ void MainWindow::resume_stage_pick() {
 }
 
 bool MainWindow::show_stage_pick() {
-    stage_pick->show_all();
+    deiconify();
+    stage_pick->show();
+    game_loop->join();
     return false;
 }
 MainWindow::~MainWindow() {}
