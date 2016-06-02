@@ -16,7 +16,7 @@ class Position : public Clonable {
         int direction;
 
     public:
-        Position(const int x, const int y, const int direction);
+        Position(const int x, const int y);
         explicit Position(const std::vector<int>& position);
         void move(int x_amount, int y_amount);
         void forward();

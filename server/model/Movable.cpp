@@ -3,13 +3,16 @@
 
 #include "Movable.h"
 
+#define DIRECTION_POS 2
+
 Movable::Movable(const std::vector<int>& position, const int velocity)
-        : GameObject(position), velocity(velocity),
+        : GameObject(position),
+          direction(position[DIRECTION_POS]), velocity(velocity),
           current_vel_x(0), current_vel_y(0) {}
 
 Movable::Movable(const int x, const int y,
                  const int direction, const int velocity)
-        : GameObject(x, y, direction), velocity(velocity) {}
+        : GameObject(x, y), direction(direction), velocity(velocity) {}
 
 void Movable::reset_position() {
     this->position.reset();

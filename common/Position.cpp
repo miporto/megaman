@@ -5,15 +5,13 @@
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
-#define DIRECTION_POS 2
 
-Position::Position(const int x, const int y, const int direction)
-        : x(x), y(y), direction(direction) {}
+Position::Position(const int x, const int y) //, const int direction)
+        : x(x), y(y) {} //, direction(direction) {}
 
 Position::Position(const std::vector<int>& position)
         : x(position[X_COORD_POS]),
-          y(position[Y_COORD_POS]),
-          direction(position[DIRECTION_POS]) {}
+          y(position[Y_COORD_POS]) {}//, direction(position[DIRECTION_POS]) {}
 
 void Position::move(int x_amount, int y_amount) {
     this->x += (this->direction) * x_amount;

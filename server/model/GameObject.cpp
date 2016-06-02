@@ -7,8 +7,8 @@
 GameObject::GameObject(const std::vector<int>& position)
         : side(BODY_SIDE), position(position) {}
 
-GameObject::GameObject(const int x, const int y, const int direction)
-        : side(BODY_SIDE), position(x, y, direction) {}
+GameObject::GameObject(const int x, const int y)
+        : side(BODY_SIDE), position(x, y) {}
 
 std::vector<int> GameObject::get_position() {
     return this->position.get_position();

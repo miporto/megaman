@@ -16,7 +16,7 @@ class GameObject {
 
     public:
         explicit GameObject(const std::vector<int>& position);
-        GameObject(const int x, const int y, const int direction);
+        GameObject(const int x, const int y);
         std::vector<int> get_position();
         virtual ~GameObject();
 };
