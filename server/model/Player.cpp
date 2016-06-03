@@ -2,9 +2,7 @@
 
 #include "Player.h"
 
-Player::Player() {
-    this->megaman = new MegaMan(this->name);
-}
+Player::Player() {}
 
 void Player::set_name(const std::string& name) {
     std::cout << "Players name: " << name << std::endl;

@@ -12,7 +12,6 @@
 class Map {
     private:
         const unsigned int width, height;
-
         std::vector<GameObject*> objects;
 
     public:

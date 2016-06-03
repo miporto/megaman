@@ -25,7 +25,6 @@ void Map::tick() {
 }
 
 void Map::get_rid_of_corpses() {
-    //TODO que no se eliminen jugadores
     GameObject* dead_obj;
     for (unsigned int i = 0; i < this->objects.size(); ++i) {
         if (this->objects[i]->is_dead()) {
@@ -55,7 +54,6 @@ const std::string Map::status() {
 }
 
 Map::~Map() {
-    //TODO que no se eliminen jugadores
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         delete this->objects[i];
 }

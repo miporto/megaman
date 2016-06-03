@@ -21,6 +21,8 @@ void Game::set_event_queue
 
 void Game::set_stage(const std::string& info) {
     this->map.set(info);
+    for (unsigned int i = 0; i < this->players.size(); ++i)
+        this->players[i]->new_megaman();
 }
 
 Player* Game::player_with_name(const std::string& name) {
