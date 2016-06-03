@@ -12,6 +12,18 @@ Enemy::Enemy(const std::string& name,
         name(name),
         energy(energy) {}
 
+void Enemy::collide_with(Enemy* enemy) { this->correct_position(); }
+
+void Enemy::collide_with(Object* object) { this->correct_position(); }
+
+void Enemy::collide_with(Projectile* projectile) {}
+
+void Enemy::collide_with(MegaMan* mm) {}
+
+void Enemy::execute_collision_with(GameObject* other) {
+    other->collide_with(this);
+}
+
 const std::string& Enemy::get_name() { return this->name; }
 
 void Enemy::decrease_energy(int amount) {

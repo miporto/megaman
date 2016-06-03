@@ -91,6 +91,18 @@ std::string MegaMan::info() {
     return info.dump();
 }
 
+void MegaMan::collide_with(Enemy* enemy) { this->correct_position(); }
+
+void MegaMan::collide_with(Object* object) {}
+
+void MegaMan::collide_with(Projectile* projectile) {}
+
+void MegaMan::collide_with(MegaMan* mm) {}
+
+void MegaMan::execute_collision_with(GameObject* other) {
+    other->collide_with(this);
+}
+
 void MegaMan::change_ammo(unsigned int ammo_id) {
     this->cannon.change_current_ammo(ammo_id);
 }

@@ -22,6 +22,7 @@ class Movable : public GameObject {
         void change_y_movement(bool pressed, bool forward);
         void move();
         std::vector<int> get_position();
+        void correct_position();
         virtual ~Movable();
 };
 

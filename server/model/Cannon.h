@@ -15,20 +15,31 @@
 #define FIRE_NAME "Fire"
 #define RING_NAME "Ring"
 
+class Enemy;
+class Object;
+class MegaMan;
+
 class Projectile : public Movable {
     private:
         const std::string name;
         const int damage;
+
+
 
     public:
         Projectile(const std::string& name,
                    int damage,
                    int velocity,
                    const std::vector<int>& initial_position);
+        const std::string& get_name();
         virtual void tick() = 0;
         std::string info();
         bool is_dead();
-        const std::string& get_name();
+        void collide_with(Enemy* enemy);
+        void collide_with(Object* object);
+        void collide_with(Projectile* projectile);
+        void collide_with(MegaMan* mm);
+        void execute_collision_with(GameObject* other);
         virtual ~Projectile();
 };
 

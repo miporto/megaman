@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Cannon.h"
+#include "MegaMan.h"
 #include "Factory.h"
 
 Projectile::Projectile(const std::string& name,
@@ -26,6 +27,20 @@ std::string Projectile::info() {
 }
 
 const std::string& Projectile::get_name() { return this->name; }
+
+void Projectile::collide_with(Enemy* enemy) {}
+
+void Projectile::collide_with(Object* object) {}
+
+void Projectile::collide_with(Projectile* projectile) {}
+
+void Projectile::collide_with(MegaMan* mm) {
+    mm->decrease_energy(this->damage);
+}
+
+void Projectile::execute_collision_with(GameObject* other) {
+    other->collide_with(this);
+}
 
 Projectile::~Projectile() {}
 

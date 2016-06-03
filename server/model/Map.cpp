@@ -36,12 +36,14 @@ void Map::get_rid_of_corpses() {
 }
 
 void Map::check_collisions() {
-    //GameObject* current_object;
+    GameObject* current_object;
     for (unsigned int i = 0; i < this->objects.size(); ++i) {
-        //current_object = this->objects[i];
+        current_object = this->objects[i];
         for (unsigned int j = 0; j < this->objects.size(); ++j) {
-            //TODO if (current_object.position == this->objects[j].position)
-                //Guarda que puede ser el mismo
+            if (i == j) continue;
+            if (current_object->collided_with(this->objects[j])) {
+                current_object->execute_collision_with(this->objects[j]);
+            }
         }
     }
 }

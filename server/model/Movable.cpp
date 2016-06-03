@@ -58,4 +58,8 @@ std::vector<int> Movable::get_position() {
     return position;
 }
 
+void Movable::correct_position() {
+    //TODO Volver a la ultima posicion valida
+}
+
 Movable::~Movable() {}
