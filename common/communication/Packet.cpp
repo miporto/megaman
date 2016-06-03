@@ -60,6 +60,12 @@ std::string Stage::get_str() const {
     return str;
 }
 
+std::string Stage::get_info() const {
+    std::string str;
+    str.append(this->stage_info);
+    str.erase(str.find('\000') - 1);
+    return str;
+}
 Stage::~Stage() {}
 
 Action::Action(const std::string& name,
