@@ -18,8 +18,11 @@ StageSurface::StageSurface(Client& client) : client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
         s_stage_info.erase(s_stage_info.find('\000') - 1);
+        s_stage_info.erase(0, 1);
+        std::string test_stage = "{\"test\": 200}";
+//        std::string test_stage = "{\"Test\": \"Hola\"}";
         StageParser stage_parser;
-        stage_info = stage_parser.stage_info(s_stage_info);
+        stage_info = stage_parser.stage_info(test_stage);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
                                     SDL_WINDOWPOS_UNDEFINED, 640, 480,
