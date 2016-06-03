@@ -10,7 +10,6 @@ void GameLoopThread::run() {
     StageSurface stage_surface(client);
     stage_surface.run();
     main_window.resume_stage_pick();
-
 }
 
 void GameLoopThread::join() {
