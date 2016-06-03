@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <map>
+#include <server/model/Player.h>
 
 #include "Match.h"
 
@@ -56,7 +57,7 @@ void Match::add_player(int fd) {
     if (this->has_host() && this->host_communicator()->check_stage_id() != 0)
         throw MatchError("Mega Man Co-op match has already started");
 
-    MegaMan* new_player = new MegaMan();
+    Player* new_player = new Player();
 
     if (!this->has_host()) {
         HostCommunicator* hc = new HostCommunicator(new_player, fd);

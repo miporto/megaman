@@ -8,7 +8,6 @@
 #include "common/communication/Socket.h"
 #include "ServerCommunicator.h"
 #include "server/model/Game.h"
-#include "server/model/MegaMan.h"
 #include "Stage.h"
 
 class Game;

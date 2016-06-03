@@ -45,16 +45,12 @@ int EnergyTank::get_energy() {
 
 EnergyTank::~EnergyTank() {}
 
-MegaMan::MegaMan() :
+MegaMan::MegaMan(const std::string& name) :
         Movable(INITIAL_X,
                 INITIAL_Y,
                 INITIAL_DIRECTION,
-                MegaManFactory::velocity()) {}
-
-void MegaMan::set_name(const std::string& name) {
-    std::cout << "MM name: " << name << std::endl;
-    this->name = name;
-}
+                MegaManFactory::velocity()),
+        name(name) {}
 
 const std::string& MegaMan::get_name() {
     return this->name;

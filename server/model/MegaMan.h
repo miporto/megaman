@@ -26,13 +26,12 @@ class EnergyTank {
 
 class MegaMan : public Movable {
     private:
-        std::string name;
+        const std::string& name;
         EnergyTank tank;
         Cannon cannon;
 
     public:
-        MegaMan();
-        void set_name(const std::string& name);
+        explicit MegaMan(const std::string& name);
         const std::string& get_name();
         void decrease_energy(int amount);
         int get_energy();

@@ -1,10 +1,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <server/model/Player.h>
 
 #include "ServerCommunicator.h"
 
-NameWaiter::NameWaiter(MegaMan* player,
+NameWaiter::NameWaiter(Player* player,
                        ReceivedPacketsProtected& packets_received)
         : player(player), packets_received(packets_received) {
     this->start();
@@ -19,7 +20,7 @@ void NameWaiter::run() {
 
 NameWaiter::~NameWaiter() { this->join(); }
 
-ServerCommunicator::ServerCommunicator(MegaMan* player, int fd)
+ServerCommunicator::ServerCommunicator(Player* player, int fd)
     : player(player),
       peer(fd),
       sender(this->peer, this->packets_to_send),
@@ -82,7 +83,7 @@ char StageIdWaiter::get_stage_id() {
 
 StageIdWaiter::~StageIdWaiter() {}
 
-HostCommunicator::HostCommunicator(MegaMan* player, int fd) :
+HostCommunicator::HostCommunicator(Player* player, int fd) :
         ServerCommunicator(player, fd),
         waiter(this->packets_received) {
     this->waiter.start();

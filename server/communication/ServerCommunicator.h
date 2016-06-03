@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <string>
+#include <server/model/Player.h>
 
 #include "common/Thread.h"
 #include "common/communication/Socket.h"
@@ -14,18 +15,18 @@
 
 class NameWaiter : public Thread {
     private:
-        MegaMan* player;
+        Player* player;
         ReceivedPacketsProtected& packets_received;
 
     public:
-        NameWaiter(MegaMan* player, ReceivedPacketsProtected& packets_received);
+        NameWaiter(Player* player, ReceivedPacketsProtected& packets_received);
         void run();
         ~NameWaiter();
 };
 
 class ServerCommunicator {
     protected:
-        MegaMan* player;
+        Player* player;
         Socket peer;
         PacketsQueueProtected packets_to_send;
         Sender sender;
@@ -33,7 +34,7 @@ class ServerCommunicator {
         Receiver receiver;
 
     public:
-        explicit ServerCommunicator(MegaMan* player, int fd);
+        explicit ServerCommunicator(Player* player, int fd);
         void send_new_player_notification(const std::string& name);
         void send_stage_pick(const char stage_id);
         void receive_name();
@@ -61,7 +62,7 @@ class HostCommunicator : public ServerCommunicator {
     private:
         StageIdWaiter waiter;
     public:
-        HostCommunicator(MegaMan* player, int fd);
+        HostCommunicator(Player* player, int fd);
         char check_stage_id();
         char receive_stage_id();
         ~HostCommunicator();
