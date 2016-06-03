@@ -25,8 +25,8 @@ TeamWaiter::~TeamWaiter() {}
 ClientCommunicator::ClientCommunicator
         (Socket& socket, std::vector<std::string>& teammates)
         : socket(socket),
-          sender(socket, this->packets_to_send),
-          receiver(socket, this->packets_received),
+          sender(&socket, this->packets_to_send),
+          receiver(&socket, this->packets_received),
           waiter(teammates, this->packets_received) {}
 
 void ClientCommunicator::send_name(std::string& name) {

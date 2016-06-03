@@ -10,14 +10,14 @@
 
 class Receiver : public Thread {
     protected:
-        Socket& socket;
+        Socket* socket;
         ReceivedPacketsProtected& packets;
         bool started, quit;
 
         void receive_packet(const char id);
 
     public:
-        Receiver(Socket& socket,
+        Receiver(Socket* socket,
                  ReceivedPacketsProtected& packets);
         void start();
         void run();

@@ -7,10 +7,10 @@
 				"JumpingSniper": [{"x": 6, "y": 7, "direction": 1}]
             },
             "object":{
-                "Block": [{"x": 10, "y": 11, "direction": 1}], 
-                "Spike": [{"x": 12, "y": 13, "direction": 1}], 
-                "Stairs": [{"x": 14, "y": 15, "direction": 1}], 
-                "Cliff": [{"x": 16, "y": 17, "direction": -1}]  
+                "Block": [{"x": 10, "y": 11}], 
+                "Spike": [{"x": 12, "y": 13}], 
+                "Stairs": [{"x": 14, "y": 15}], 
+                "Cliff": [{"x": 16, "y": 17}]  
             }
         }
     },

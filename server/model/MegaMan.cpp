@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 #include "MegaMan.h"
 #include "Factory.h"
@@ -44,16 +45,12 @@ int EnergyTank::get_energy() {
 
 EnergyTank::~EnergyTank() {}
 
-MegaMan::MegaMan() :
+MegaMan::MegaMan(const std::string& name) :
         Movable(INITIAL_X,
                 INITIAL_Y,
                 INITIAL_DIRECTION,
-                MegaManFactory::velocity()) {}
-
-void MegaMan::set_name(const std::string& name) {
-    std::cout << "MM name: " << name << std::endl;
-    this->name = name;
-}
+                MegaManFactory::velocity()),
+        name(name) {}
 
 const std::string& MegaMan::get_name() {
     return this->name;
@@ -78,6 +75,32 @@ bool MegaMan::is_dead() {
 
 Projectile* MegaMan::shoot() {
     return this->cannon.shoot(this->get_position());
+}
+
+void MegaMan::tick() {
+    this->move();
+}
+
+std::string MegaMan::info() {
+    std::vector<int> pos = this->get_position();
+    json info = { {"x", pos[X_COORD_POS]},
+                  {"y", pos[Y_COORD_POS]},
+                  {"direction x", pos[DIRECTION_X_POS]},
+                  {"direction y", pos[DIRECTION_Y_POS]},
+                  {"energy", this->get_energy()} };
+    return info.dump();
+}
+
+void MegaMan::collide_with(Enemy* enemy) { this->correct_position(); }
+
+void MegaMan::collide_with(Object* object) {}
+
+void MegaMan::collide_with(Projectile* projectile) {}
+
+void MegaMan::collide_with(MegaMan* mm) {}
+
+void MegaMan::execute_collision_with(GameObject* other) {
+    other->collide_with(this);
 }
 
 void MegaMan::change_ammo(unsigned int ammo_id) {

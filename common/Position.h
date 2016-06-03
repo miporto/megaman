@@ -13,16 +13,15 @@ class Clonable {
 class Position : public Clonable {
     private:
         int x, y;
-        int direction;
 
     public:
-        Position(const int x, const int y, const int direction);
+        Position(const int x, const int y);
         explicit Position(const std::vector<int>& position);
         void move(int x_amount, int y_amount);
-        void change_direction();
         void reset();
-        bool operator==(const Position& other) const;
         std::vector<int> get_position() const;
+
+        bool operator==(const Position& other) const;
         std::string str() const;
         Position* clone() const;
         ~Position();

@@ -12,6 +12,18 @@ Enemy::Enemy(const std::string& name,
         name(name),
         energy(energy) {}
 
+void Enemy::collide_with(Enemy* enemy) { this->correct_position(); }
+
+void Enemy::collide_with(Object* object) { this->correct_position(); }
+
+void Enemy::collide_with(Projectile* projectile) {}
+
+void Enemy::collide_with(MegaMan* mm) {}
+
+void Enemy::execute_collision_with(GameObject* other) {
+    other->collide_with(this);
+}
+
 const std::string& Enemy::get_name() { return this->name; }
 
 void Enemy::decrease_energy(int amount) {
@@ -22,6 +34,15 @@ void Enemy::decrease_energy(int amount) {
 }
 
 bool Enemy::is_dead() { return this->energy == 0; }
+
+std::string Enemy::info() {
+    std::vector<int> pos = this->get_position();
+    json info = { {"x", pos[X_COORD_POS]},
+                  {"y", pos[Y_COORD_POS]},
+                  {"direction x", pos[DIRECTION_X_POS]},
+                  {"direction y", pos[DIRECTION_Y_POS]} };
+    return info.dump();
+}
 
 Enemy::~Enemy() {}
 
@@ -35,9 +56,8 @@ Projectile* Met::shoot() {
     return NULL;
 }
 
-Projectile* Met::tick() {
+void Met::tick() {
     //TODO
-    return NULL;
 }
 
 Met::~Met() {}
@@ -52,9 +72,8 @@ Projectile* Bumby::shoot() {
     return NULL;
 }
 
-Projectile* Bumby::tick() {
+void Bumby::tick() {
     //TODO
-    return NULL;
 }
 
 Bumby::~Bumby() {}
@@ -69,9 +88,8 @@ Projectile* Sniper::shoot() {
     return NULL;
 }
 
-Projectile* Sniper::tick() {
+void Sniper::tick() {
     //TODO
-    return NULL;
 }
 
 Sniper::~Sniper() {}
@@ -86,9 +104,8 @@ Projectile* JumpingSniper::shoot() {
     return NULL;
 }
 
-Projectile* JumpingSniper::tick() {
+void JumpingSniper::tick() {
     //TODO
-    return NULL;
 }
 
 JumpingSniper::~JumpingSniper() {}

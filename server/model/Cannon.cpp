@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Cannon.h"
+#include "MegaMan.h"
 #include "Factory.h"
 
 Projectile::Projectile(const std::string& name,
@@ -11,7 +12,35 @@ Projectile::Projectile(const std::string& name,
                        const std::vector<int>& initial_position) :
         Movable(initial_position, velocity), name(name), damage(damage){}
 
+bool Projectile::is_dead() {
+    //Devuelve true si toco a algun jugador o si se fue del mapa?
+    return false;
+}
+
+std::string Projectile::info() {
+    std::vector<int> pos = this->get_position();
+    json info = { {"x", pos[X_COORD_POS]},
+                  {"y", pos[Y_COORD_POS]},
+                  {"direction x", pos[DIRECTION_X_POS]},
+                  {"direction y", pos[DIRECTION_Y_POS]} };
+    return info.dump();
+}
+
 const std::string& Projectile::get_name() { return this->name; }
+
+void Projectile::collide_with(Enemy* enemy) {}
+
+void Projectile::collide_with(Object* object) {}
+
+void Projectile::collide_with(Projectile* projectile) {}
+
+void Projectile::collide_with(MegaMan* mm) {
+    mm->decrease_energy(this->damage);
+}
+
+void Projectile::execute_collision_with(GameObject* other) {
+    other->collide_with(this);
+}
 
 Projectile::~Projectile() {}
 

@@ -20,7 +20,8 @@ StageParserPositions StageParser::positions_of
         std::vector<int> position;
         position.push_back((int)json_positions[i]["x"]);
         position.push_back((int) json_positions[i]["y"]);
-        position.push_back((int) json_positions[i]["direction"]);
+        if (name == "spawn")
+            position.push_back((int) json_positions[i]["direction"]);
         positions.push_back(position);
     }
 

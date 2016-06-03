@@ -5,8 +5,8 @@
 #include <string>
 
 #include "common/Position.h"
+#include "Movable.h"
 #include "Cannon.h"
-#include "Mortal.h"
 
 class EnergyTank {
     private:
@@ -26,19 +26,25 @@ class EnergyTank {
 
 class MegaMan : public Movable {
     private:
-        std::string name;
+        const std::string& name;
         EnergyTank tank;
         Cannon cannon;
 
     public:
-        MegaMan();
-        void set_name(const std::string& name);
+        explicit MegaMan(const std::string& name);
         const std::string& get_name();
         void decrease_energy(int amount);
         int get_energy();
         void kill();
         bool is_dead();
         Projectile* shoot();
+        void tick();
+        std::string info();
+        void collide_with(Enemy* enemy);
+        void collide_with(Object* object);
+        void collide_with(Projectile* projectile);
+        void collide_with(MegaMan* mm);
+        void execute_collision_with(GameObject* other);
         void change_ammo(unsigned int ammo_id);
         void receive_new_ammo(std::string& name);
         ~MegaMan();

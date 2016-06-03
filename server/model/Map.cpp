@@ -11,71 +11,51 @@
 
 Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 
-void Map::add_player(MegaMan* player) {
-    this->players.push_back(player);
-}
-
 void Map::set(const std::string& info) {
     ServerStageSetter setter(info, this);
 }
 
-void Map::add_enemy(Enemy* enemy) {
-    this->enemies.push_back(enemy);
-}
-
-void Map::add_object(Object* object) {
+void Map::add_game_object(GameObject* object) {
     this->objects.push_back(object);
 }
 
 void Map::tick() {
-    for (unsigned int i = 0; i < this->enemies.size(); ++i)
-        this->enemies[i]->tick();
-    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
-        this->projectiles[i]->tick();
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        this->objects[i]->tick();
 }
 
 void Map::get_rid_of_corpses() {
-    for (unsigned int i = 0; i < this->enemies.size(); ++i) {
-        if (this->enemies[i]->is_dead()) {
-            Enemy* dead_enemy = this->enemies[i];
-            this->enemies.erase(this->enemies.begin() + i);
-            delete dead_enemy;
+    GameObject* dead_obj;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        if (this->objects[i]->is_dead()) {
+            dead_obj = this->objects[i];
+            this->objects.erase(this->objects.begin() + i);
+            delete dead_obj;
         }
     }
+}
 
-    for (unsigned int i = 0; i < this->players.size(); ++i) {
-        if (this->players[i]->is_dead()) {
-            //Player* dead_player = this->players[i];
-            //TODO Que se hace con jugadores muertos??
+void Map::check_collisions() {
+    GameObject* current_object;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        current_object = this->objects[i];
+        for (unsigned int j = 0; j < this->objects.size(); ++j) {
+            if (i == j) continue;
+            if (current_object->collided_with(this->objects[j])) {
+                current_object->execute_collision_with(this->objects[j]);
+            }
         }
     }
-
-    //TODO loop para sacar proyectiles out of range?
 }
 
 const std::string Map::status() {
     TickInfoMaker info;
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        info.add_player(this->players[i]->get_name(),
-                        this->players[i]->get_position(),
-                        this->players[i]->get_energy());
-
-    for (unsigned int i = 0; i < this->enemies.size(); ++i)
-        info.add_enemy(this->enemies[i]->get_name(),
-                       this->enemies[i]->get_position());
-
-    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
-        info.add_projectile(this->projectiles[i]->get_name(),
-                            this->projectiles[i]->get_position());
-
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        info.add(this->objects[i]->get_name(), this->objects[i]->info());
     return info.str();
 }
 
 Map::~Map() {
-    for (unsigned int i = 0; i < this->enemies.size(); ++i)
-        delete this->enemies[i];
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         delete this->objects[i];
-    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
-        delete this->projectiles[i];
 }
