@@ -40,7 +40,7 @@ std::vector<int> Position::get_position() const {
     std::vector<int> pos;
     pos.push_back(this->x);
     pos.push_back(this->y);
-    pos.push_back(this->direction);
+    //pos.push_back(this->direction);
     return pos;
 }
 

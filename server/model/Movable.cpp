@@ -44,4 +44,10 @@ void Movable::move() {
     this->position.move(this->current_vel_x, this->current_vel_y);
 }
 
+std::vector<int> Movable::get_position() {
+    std::vector<int> position = GameObject::get_position();
+    position.push_back(this->direction);
+    return position;
+}
+
 Movable::~Movable() {}
