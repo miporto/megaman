@@ -35,6 +35,8 @@ void Enemy::decrease_energy(int amount) {
 
 bool Enemy::is_dead() { return this->energy == 0; }
 
+bool Enemy::is_enemy() { return true; }
+
 std::string Enemy::info() {
     std::vector<int> pos = this->get_position();
     json info = { {"x", pos[X_COORD_POS]},

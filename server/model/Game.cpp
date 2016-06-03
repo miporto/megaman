@@ -57,19 +57,23 @@ void Game::execute_events() {
 }
 
 void Game::tick() {
-    map.tick();
+    this->map.tick();
 }
 
 void Game::check_collisions() {
-    map.check_collisions();
+    this->map.check_collisions();
 }
 
 void Game::get_rid_of_corpses() {
-    map.get_rid_of_corpses();
+    this->map.get_rid_of_corpses();
+}
+
+void Game::create_new_projectiles() {
+    this->map.create_new_projectiles();
 }
 
 const std::string Game::status() {
-    return map.status();
+    return this->map.status();
 }
 
 void Game::run() {
@@ -78,6 +82,7 @@ void Game::run() {
         this->tick();
         this->check_collisions();
         this->get_rid_of_corpses();
+        this->create_new_projectiles();
         this->match->notify_tick(this->status());
     }
 }

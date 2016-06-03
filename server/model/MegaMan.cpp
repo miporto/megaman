@@ -91,6 +91,8 @@ std::string MegaMan::info() {
     return info.dump();
 }
 
+bool MegaMan::is_enemy() { return false; }
+
 void MegaMan::collide_with(Enemy* enemy) { this->correct_position(); }
 
 void MegaMan::collide_with(Object* object) {}

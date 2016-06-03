@@ -24,6 +24,8 @@ void Object::execute_collision_with(GameObject* other) {
 
 void Object::tick() {}
 
+bool Object::is_enemy() { return false; }
+
 std::string Object::info() { return ""; }
 
 bool Object::is_dead() { return false; }

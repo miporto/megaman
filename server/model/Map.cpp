@@ -24,17 +24,6 @@ void Map::tick() {
         this->objects[i]->tick();
 }
 
-void Map::get_rid_of_corpses() {
-    GameObject* dead_obj;
-    for (unsigned int i = 0; i < this->objects.size(); ++i) {
-        if (this->objects[i]->is_dead()) {
-            dead_obj = this->objects[i];
-            this->objects.erase(this->objects.begin() + i);
-            delete dead_obj;
-        }
-    }
-}
-
 void Map::check_collisions() {
     GameObject* current_object;
     for (unsigned int i = 0; i < this->objects.size(); ++i) {
@@ -46,6 +35,23 @@ void Map::check_collisions() {
             }
         }
     }
+}
+
+void Map::get_rid_of_corpses() {
+    GameObject* dead_obj;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        if (this->objects[i]->is_dead()) {
+            dead_obj = this->objects[i];
+            this->objects.erase(this->objects.begin() + i);
+            delete dead_obj;
+        }
+    }
+}
+
+void Map::create_new_projectiles() {
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        if (this->objects[i]->is_enemy())
+            this->add_game_object(((Enemy*)this->objects[i])->shoot());
 }
 
 const std::string Map::status() {

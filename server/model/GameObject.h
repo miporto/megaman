@@ -31,6 +31,8 @@ class GameObject {
     public:
         explicit GameObject(const std::vector<int>& position);
         GameObject(const int x, const int y);
+        virtual const std::string& get_name() = 0;
+        virtual std::vector<int> get_position();
         bool collided_with(GameObject* other);
         virtual void collide_with(Enemy* enemy) = 0;
         virtual void collide_with(Object* object) = 0;
@@ -39,9 +41,8 @@ class GameObject {
         virtual void execute_collision_with(GameObject* other) = 0;
         virtual void tick() = 0;
         virtual bool is_dead() = 0;
-        virtual const std::string& get_name() = 0;
+        virtual bool is_enemy() = 0;
         virtual std::string info() = 0;
-        virtual std::vector<int> get_position();
         virtual ~GameObject();
 };
 

@@ -34,6 +34,7 @@ class Enemy : public Movable {
         void execute_collision_with(GameObject* other);
         virtual Projectile* shoot() = 0;
         virtual void tick() = 0;
+        bool is_enemy();
         std::string info();
         virtual ~Enemy();
 };

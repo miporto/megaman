@@ -23,14 +23,15 @@ class Object : public GameObject {
     public:
         Object(const std::string& name, const std::vector<int>& position);
         const std::string& get_name();
-        void tick();
-        std::string info();
-        bool is_dead();
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);
         virtual void collide_with(MegaMan* mm) = 0;
         void execute_collision_with(GameObject* other);
+        void tick();
+        bool is_dead();
+        bool is_enemy();
+        std::string info();
         virtual ~Object();
 };
 
