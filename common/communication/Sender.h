@@ -7,12 +7,12 @@
 
 class Sender : public Thread {
     private:
-        Socket& socket;
+        Socket* socket;
         PacketsQueueProtected& packets;
         bool quit;
 
     public:
-        Sender(Socket& socket,
+        Sender(Socket* socket,
                PacketsQueueProtected& packets);
         void run();
         void shutdown();

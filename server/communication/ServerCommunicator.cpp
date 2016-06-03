@@ -20,9 +20,9 @@ void NameWaiter::run() {
 
 NameWaiter::~NameWaiter() { this->join(); }
 
-ServerCommunicator::ServerCommunicator(Player* player, int fd)
+ServerCommunicator::ServerCommunicator(Player* player, Socket* peer)
     : player(player),
-      peer(fd),
+      peer(peer),
       sender(this->peer, this->packets_to_send),
       receiver(this->peer, this->packets_received) {
     this->sender.start();
@@ -59,11 +59,12 @@ void ServerCommunicator::send_tick_info(const std::string& tick_info) {
 }
 
 void ServerCommunicator::shutdown() {
-    this->peer.shutdown();
+    this->peer->shutdown();
 }
 
 ServerCommunicator::~ServerCommunicator() {
-    this->peer.shutdown();
+    this->peer->shutdown();
+    delete this->peer;
 }
 
 StageIdWaiter::StageIdWaiter(ReceivedPacketsProtected& packets_received)
@@ -83,8 +84,8 @@ char StageIdWaiter::get_stage_id() {
 
 StageIdWaiter::~StageIdWaiter() {}
 
-HostCommunicator::HostCommunicator(Player* player, int fd) :
-        ServerCommunicator(player, fd),
+HostCommunicator::HostCommunicator(Player* player, Socket* peer) :
+        ServerCommunicator(player, peer),
         waiter(this->packets_received) {
     this->waiter.start();
 }

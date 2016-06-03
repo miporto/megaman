@@ -57,11 +57,11 @@ void Socket::connect(struct addrinfo* info) {
 		throw SocketError();
 }
 
-int Socket::accept() {
+Socket* Socket::accept() {
 	int new_fd = ::accept(this->fd, NULL, NULL);
 	if (new_fd == ERROR_CODE)
 		throw SocketError();
-	return new_fd;
+	return new Socket(new_fd);
 }
 
 void Socket::send(const char* buffer, size_t size) {

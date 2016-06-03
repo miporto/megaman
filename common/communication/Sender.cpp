@@ -3,7 +3,7 @@
 
 #include "Sender.h"
 
-Sender::Sender(Socket& socket,
+Sender::Sender(Socket* socket,
                PacketsQueueProtected& packets)
         : socket(socket), packets(packets), quit(false) {}
 
@@ -16,7 +16,7 @@ void Sender::run() {
             str = packet->get_str();
             try {
                 std::cout << "Sending" << std::endl;
-                this->socket.send(str.c_str(), sizeof(char) * str.size());
+                this->socket->send(str.c_str(), sizeof(char) * str.size());
             }
             catch (const SocketError &e) {
                 std::cout << e.what() << std::endl;

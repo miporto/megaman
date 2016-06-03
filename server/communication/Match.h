@@ -29,7 +29,7 @@ class Match {
         explicit Match(std::vector<ServerCommunicator*>& communicators);
         bool has_started();
         bool is_full();
-        void add_player(int fd);
+        void add_player(Socket* peer);
         void start_stage();
         void notify_tick(const std::string& tick_info);
         ~Match();

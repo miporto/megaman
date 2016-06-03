@@ -49,7 +49,7 @@ void Match::notify_stage_info(const std::string& info) {
         this->communicators[i]->send_stage_info(info);
 }
 
-void Match::add_player(int fd) {
+void Match::add_player(Socket* peer) {
     Lock l(this->m);
 
     if (this->communicators.size() >= PLAYERS_MAX)
@@ -60,13 +60,13 @@ void Match::add_player(int fd) {
     Player* new_player = new Player();
 
     if (!this->has_host()) {
-        HostCommunicator* hc = new HostCommunicator(new_player, fd);
+        HostCommunicator* hc = new HostCommunicator(new_player, peer);
         this->communicators.push_back(hc);
         this->game.new_player(new_player);
         hc->receive_name();
 
     } else {
-        ServerCommunicator* c = new ServerCommunicator(new_player, fd);
+        ServerCommunicator* c = new ServerCommunicator(new_player, peer);
         this->communicators.push_back(c);
         this->game.new_player(new_player);
         c->receive_name();

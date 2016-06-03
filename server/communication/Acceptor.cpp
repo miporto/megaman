@@ -7,23 +7,22 @@ Acceptor::Acceptor(Socket& server, Match& match, QuitProtected& quit)
     : server(server), match(match), quit(quit) {}
 
 void Acceptor::run() {
-    int peers_fd;
+    Socket* peer;
     while (!this->quit()) {
         try {
-            peers_fd = this->server.accept();
-            std::cout << "Accepted with fd: " << peers_fd << std::endl;
+            peer = this->server.accept();
+            std::cout << "Accepted"  << std::endl;
         }
         catch (const SocketError& e) {
             continue;
         }
         try {
-            this->match.add_player(peers_fd);
+            this->match.add_player(peer);
         }
         catch (const MatchError& e) {
-            Socket skt(peers_fd);
             const char* error_msg = e.what();
-            skt.send(error_msg, sizeof(char) * strlen(error_msg));
-            skt.shutdown();
+            peer->send(error_msg, sizeof(char) * strlen(error_msg));
+            peer->shutdown();
             break;
         }
     }

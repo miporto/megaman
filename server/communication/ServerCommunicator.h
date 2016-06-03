@@ -27,14 +27,14 @@ class NameWaiter : public Thread {
 class ServerCommunicator {
     protected:
         Player* player;
-        Socket peer;
+        Socket* peer;
         PacketsQueueProtected packets_to_send;
         Sender sender;
         ReceivedPacketsProtected packets_received;
         Receiver receiver;
 
     public:
-        explicit ServerCommunicator(Player* player, int fd);
+        explicit ServerCommunicator(Player* player, Socket* peer);
         void send_new_player_notification(const std::string& name);
         void send_stage_pick(const char stage_id);
         void receive_name();
@@ -62,7 +62,7 @@ class HostCommunicator : public ServerCommunicator {
     private:
         StageIdWaiter waiter;
     public:
-        HostCommunicator(Player* player, int fd);
+        HostCommunicator(Player* player, Socket* peer);
         char check_stage_id();
         char receive_stage_id();
         ~HostCommunicator();

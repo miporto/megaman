@@ -30,7 +30,7 @@ class Socket {
 		~Socket();
 		void bind_and_listen(struct addrinfo* info);
 		void connect(struct addrinfo* info);
-		int accept();
+		Socket* accept();
 		void send(const char* buffer, size_t size);
 		void receive(char* buffer, size_t size);
 		void shutdown();
