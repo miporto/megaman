@@ -11,7 +11,6 @@ Game::Game(Match* match)
 
 void Game::new_player(Player* player) {
     this->players.push_back(player);
-    this->map.add_game_object(player->get_megaman());
 }
 
 void Game::set_event_queue
@@ -21,8 +20,10 @@ void Game::set_event_queue
 
 void Game::set_stage(const std::string& info) {
     this->map.set(info);
-    for (unsigned int i = 0; i < this->players.size(); ++i)
+    for (unsigned int i = 0; i < this->players.size(); ++i) {
         this->players[i]->new_megaman();
+        this->map.add_game_object(this->players[i]->get_megaman());
+    }
 }
 
 Player* Game::player_with_name(const std::string& name) {
