@@ -17,7 +17,6 @@ public:
 private:
     MainWindow& main_window;
     Client& client;
-    StageSurface* stage_surface;
 };
 
 
