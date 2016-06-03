@@ -1,6 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <string>
 #include <vector>
 
 #include "common/Position.h"
@@ -13,9 +14,15 @@
 #define CLIFF_NAME "Cliff"
 
 class Object : public GameObject {
+    private:
+        const std::string name;
     public:
-        explicit Object(const std::vector<int>& position);
+        Object(const std::string& name, const std::vector<int>& position);
+        const std::string& get_name();
         virtual void interact(MegaMan& mm) = 0;
+        void tick();
+        std::string info();
+        bool is_dead();
         virtual ~Object();
 };
 

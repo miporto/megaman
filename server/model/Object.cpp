@@ -1,3 +1,4 @@
+#include <string>
 #include <vector>
 
 #include "Object.h"
@@ -5,13 +6,21 @@
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
 
-Object::Object(const std::vector<int>& position)
-        : GameObject(position) {}
+Object::Object(const std::string& name, const std::vector<int>& position)
+        : GameObject(position), name(name) {}
+
+const std::string& Object::get_name() { return this->name; }
+
+void Object::tick() {}
+
+std::string Object::info() { return ""; }
+
+bool Object::is_dead() { return false; }
 
 Object::~Object() {}
 
 Stairs::Stairs(const std::vector<int>& position) :
-        Object(position) {}
+        Object(STAIRS_NAME, position) {}
 
 void Stairs::interact(MegaMan& mm) {
     //TODO Cuando mm esta encima, se puede
@@ -21,7 +30,7 @@ void Stairs::interact(MegaMan& mm) {
 Stairs::~Stairs() {}
 
 Spike::Spike(const std::vector<int>& position) :
-        Object(position) {}
+        Object(SPIKE_NAME, position) {}
 
 void Spike::interact(MegaMan& mm) {
     const std::vector<int> obj_pos = this->get_position();
@@ -34,7 +43,7 @@ void Spike::interact(MegaMan& mm) {
 Spike::~Spike() {}
 
 Block::Block(const std::vector<int>& position) :
-        Object(position) {}
+        Object(BLOCK_NAME, position) {}
 
 void Block::interact(MegaMan& mm) {
     //TODO Cuando mm esta en una celda adyacente,
@@ -44,7 +53,7 @@ void Block::interact(MegaMan& mm) {
 Block::~Block() {}
 
 Cliff::Cliff(const std::vector<int>& position) :
-        Object(position) {}
+        Object(CLIFF_NAME, position) {}
 
 void Cliff::interact(MegaMan& mm) {
     const std::vector<int> obj_pos = this->get_position();

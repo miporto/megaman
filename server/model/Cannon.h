@@ -26,6 +26,8 @@ class Projectile : public Movable {
                    int velocity,
                    const std::vector<int>& initial_position);
         virtual void tick() = 0;
+        std::string info();
+        bool is_dead();
         const std::string& get_name();
         virtual ~Projectile();
 };

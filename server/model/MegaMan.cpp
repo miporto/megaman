@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 #include "MegaMan.h"
 #include "Factory.h"
@@ -82,6 +83,16 @@ Projectile* MegaMan::shoot() {
 
 void MegaMan::tick() {
     this->move();
+}
+
+std::string MegaMan::info() {
+    std::vector<int> pos = this->get_position();
+    json info = { {"x", pos[X_COORD_POS]},
+                  {"y", pos[Y_COORD_POS]},
+                  {"direction x", pos[DIRECTION_X_POS]},
+                  {"direction y", pos[DIRECTION_Y_POS]},
+                  {"energy", this->get_energy()} };
+    return info.dump();
 }
 
 void MegaMan::change_ammo(unsigned int ammo_id) {

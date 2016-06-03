@@ -11,7 +11,7 @@ Game::Game(Match* match)
 
 void Game::new_player(MegaMan* player) {
     this->players.push_back(player);
-    this->map.add_player(player);
+    this->map.add_game_object(player); //TODO arreglar
 }
 
 void Game::set_event_queue
@@ -40,7 +40,7 @@ void Game::execute_action(MegaMan* player,
     else if (action_id == UP)
         player->change_y_movement(pressed, true);
     else if (action_id == SHOOT)
-        this->map.add_projectile(player->shoot());
+        this->map.add_game_object(player->shoot());
 }
 
 void Game::execute_events() {

@@ -11,52 +11,29 @@
 
 Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 
-void Map::add_player(MegaMan* player) {
-    this->players.push_back(player);
-}
-
 void Map::set(const std::string& info) {
     ServerStageSetter setter(info, this);
 }
 
-void Map::add_enemy(Enemy* enemy) {
-    this->enemies.push_back(enemy);
-}
-
-void Map::add_object(Object* object) {
+void Map::add_game_object(GameObject* object) {
     this->objects.push_back(object);
 }
 
-void Map::add_projectile(Projectile* projectile) {
-    this->projectiles.push_back(projectile);
-}
-
 void Map::tick() {
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        this->players[i]->tick();
-    for (unsigned int i = 0; i < this->enemies.size(); ++i)
-        this->enemies[i]->tick();
-    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
-        this->projectiles[i]->tick();
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        this->objects[i]->tick();
 }
 
 void Map::get_rid_of_corpses() {
-    for (unsigned int i = 0; i < this->enemies.size(); ++i) {
-        if (this->enemies[i]->is_dead()) {
-            Enemy* dead_enemy = this->enemies[i];
-            this->enemies.erase(this->enemies.begin() + i);
-            delete dead_enemy;
+    //TODO que no se eliminen jugadores
+    GameObject* dead_obj;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        if (this->objects[i]->is_dead()) {
+            dead_obj = this->objects[i];
+            this->objects.erase(this->objects.begin() + i);
+            delete dead_obj;
         }
     }
-
-    for (unsigned int i = 0; i < this->players.size(); ++i) {
-        if (this->players[i]->is_dead()) {
-            //Player* dead_player = this->players[i];
-            //TODO Que se hace con jugadores muertos??
-        }
-    }
-
-    //TODO loop para sacar proyectiles out of range?
 }
 
 void Map::check_collisions() {
@@ -72,27 +49,13 @@ void Map::check_collisions() {
 
 const std::string Map::status() {
     TickInfoMaker info;
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        info.add_player(this->players[i]->get_name(),
-                        this->players[i]->get_position(),
-                        this->players[i]->get_energy());
-
-    for (unsigned int i = 0; i < this->enemies.size(); ++i)
-        info.add_enemy(this->enemies[i]->get_name(),
-                       this->enemies[i]->get_position());
-
-    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
-        info.add_projectile(this->projectiles[i]->get_name(),
-                            this->projectiles[i]->get_position());
-
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        info.add(this->objects[i]->get_name(), this->objects[i]->info());
     return info.str();
 }
 
 Map::~Map() {
-    for (unsigned int i = 0; i < this->enemies.size(); ++i)
-        delete this->enemies[i];
+    //TODO que no se eliminen jugadores
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         delete this->objects[i];
-    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
-        delete this->projectiles[i];
 }

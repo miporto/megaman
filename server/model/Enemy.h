@@ -24,7 +24,8 @@ class Enemy : public Movable {
         void decrease_energy(int amount);
         bool is_dead();
         virtual Projectile* shoot() = 0;
-        virtual Projectile* tick() = 0;
+        virtual void tick() = 0;
+        std::string info();
         virtual ~Enemy();
 };
 
@@ -32,7 +33,7 @@ class Met : public Enemy {
     public:
         explicit Met(const std::vector<int>& position);
         Projectile* shoot();
-        Projectile* tick();
+        void tick();
         ~Met();
 };
 
@@ -40,7 +41,7 @@ class Bumby : public Enemy {
     public:
         explicit Bumby(const std::vector<int>& position);
         Projectile* shoot();
-        Projectile* tick();
+        void tick();
         ~Bumby();
 };
 
@@ -48,7 +49,7 @@ class Sniper : public Enemy {
     public:
         explicit Sniper(const std::vector<int>& position);
         Projectile* shoot();
-        Projectile* tick();
+        void tick();
         ~Sniper();
 };
 
@@ -56,7 +57,7 @@ class JumpingSniper : public Enemy {
     public:
         explicit JumpingSniper(const std::vector<int>& position);
         Projectile* shoot();
-        Projectile* tick();
+        void tick();
         ~JumpingSniper();
 };
 

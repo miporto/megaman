@@ -8,11 +8,9 @@
 
 class Movable : public GameObject {
     private:
-        int direction_x;
-        int direction_y;
+        int direction_x, direction_y;
         const int velocity;
-        int current_vel_x;
-        int current_vel_y;
+        int current_vel_x, current_vel_y;
 
     public:
         Movable(const std::vector<int>& position,

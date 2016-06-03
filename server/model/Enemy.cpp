@@ -23,6 +23,15 @@ void Enemy::decrease_energy(int amount) {
 
 bool Enemy::is_dead() { return this->energy == 0; }
 
+std::string Enemy::info() {
+    std::vector<int> pos = this->get_position();
+    json info = { {"x", pos[X_COORD_POS]},
+                  {"y", pos[Y_COORD_POS]},
+                  {"direction x", pos[DIRECTION_X_POS]},
+                  {"direction y", pos[DIRECTION_Y_POS]} };
+    return info.dump();
+}
+
 Enemy::~Enemy() {}
 
 Met::Met(const std::vector<int>& position) :
@@ -35,9 +44,8 @@ Projectile* Met::shoot() {
     return NULL;
 }
 
-Projectile* Met::tick() {
+void Met::tick() {
     //TODO
-    return NULL;
 }
 
 Met::~Met() {}
@@ -52,9 +60,8 @@ Projectile* Bumby::shoot() {
     return NULL;
 }
 
-Projectile* Bumby::tick() {
+void Bumby::tick() {
     //TODO
-    return NULL;
 }
 
 Bumby::~Bumby() {}
@@ -69,9 +76,8 @@ Projectile* Sniper::shoot() {
     return NULL;
 }
 
-Projectile* Sniper::tick() {
+void Sniper::tick() {
     //TODO
-    return NULL;
 }
 
 Sniper::~Sniper() {}
@@ -86,9 +92,8 @@ Projectile* JumpingSniper::shoot() {
     return NULL;
 }
 
-Projectile* JumpingSniper::tick() {
+void JumpingSniper::tick() {
     //TODO
-    return NULL;
 }
 
 JumpingSniper::~JumpingSniper() {}

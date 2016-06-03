@@ -40,6 +40,7 @@ class MegaMan : public Movable {
         bool is_dead();
         Projectile* shoot();
         void tick();
+        std::string info();
         void change_ammo(unsigned int ammo_id);
         void receive_new_ammo(std::string& name);
         ~MegaMan();
