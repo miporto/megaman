@@ -8,7 +8,8 @@
 
 class Movable : public GameObject {
     private:
-        int direction;
+        int direction_x;
+        int direction_y;
         const int velocity;
         int current_vel_x;
         int current_vel_y;
@@ -17,7 +18,7 @@ class Movable : public GameObject {
         Movable(const std::vector<int>& position,
                 const int velocity);
         Movable(const int x, const int y,
-                const int direction, const int velocity);
+                const int direction_x, const int velocity);
         void reset_position();
         void change_x_movement(bool pressed, bool forward);
         void change_y_movement(bool pressed, bool forward);
