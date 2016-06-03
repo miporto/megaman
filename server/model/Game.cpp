@@ -36,14 +36,16 @@ Player* Game::player_with_name(const std::string& name) {
 
 void Game::execute_action(Player* player,
                           const char action_id, const bool pressed) {
-    if (action_id == RIGHT)
+    if (action_id == RIGHT) {
         player->get_megaman()->change_x_movement(pressed, true);
-    else if (action_id == LEFT)
+    } else if (action_id == LEFT) {
         player->get_megaman()->change_x_movement(pressed, false);
-    else if (action_id == UP)
+    } else if (action_id == UP) {
         player->get_megaman()->change_y_movement(pressed, true);
-    else if (action_id == SHOOT)
-        this->map.add_game_object(player->get_megaman()->shoot());
+    } else if (action_id == SHOOT) {
+        Projectile* projectile = player->get_megaman()->shoot();
+        if (projectile) this->map.add_game_object(projectile);
+    }
 }
 
 void Game::execute_events() {

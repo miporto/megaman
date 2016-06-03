@@ -13,7 +13,7 @@ Projectile::Projectile(const std::string& name,
         Movable(initial_position, velocity), name(name), damage(damage){}
 
 bool Projectile::is_dead() {
-    //Devuelve true si toco a algun jugador o si se fue del mapa?
+    //TODO Devuelve true si toco a algun jugador o si se fue del mapa?
     return false;
 }
 
@@ -97,7 +97,6 @@ void Ring::tick() {
 Ammo::Ammo(const std::string& name, int max) :
         name(name), max(max), quantity(max) {}
 
-// Devuelve NULL si el jugador intenta disparar y no hay mas municiones
 Projectile* Ammo::use(const std::vector<int>& position) {
     if (this->quantity) {
         this->quantity--;
