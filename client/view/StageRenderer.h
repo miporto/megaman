@@ -4,7 +4,9 @@
 #include <SDL2pp/SDL2pp.hh>
 
 #include "common/StageParser.h"
+#include "BlockRenderer.h"
 
+class BlockRenderer;
 class StageRenderer {
 public:
     explicit StageRenderer(SDL2pp::Renderer* renderer);
@@ -16,6 +18,7 @@ private:
     SDL2pp::Renderer* renderer;
 //    StageParserInfo& stage_info;
     SDL2pp::Texture* background;
+    BlockRenderer block;
 };
 
 
