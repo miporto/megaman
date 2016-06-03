@@ -29,22 +29,22 @@ HostCommunicator* Match::host_communicator() {
     return (HostCommunicator*)this->communicators[0];
 }
 
-void Match::send_team_to_new_player(ServerCommunicator* new_comm) {
+void Match::notify_team_to_new_player(ServerCommunicator* new_comm) {
     for (unsigned int i = 0; i < this->communicators.size() - 1; ++i)
         new_comm->send_new_player_notification(this->communicators[i]->name());
 }
 
-void Match::send_new_player_to_team(ServerCommunicator* new_comm) {
+void Match::notify_new_player_to_team(ServerCommunicator* new_comm) {
     for (unsigned int i = 0; i < this->communicators.size() - 1; ++i)
         this->communicators[i]->send_new_player_notification(new_comm->name());
 }
 
-void Match::send_stage_pick_to_team(const char stage_id) {
+void Match::notify_stage_pick_to_team(const char stage_id) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
         this->communicators[i]->send_stage_pick(stage_id);
 }
 
-void Match::send_stage_info(const std::string& info) {
+void Match::notify_stage_info(const std::string& info) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
         this->communicators[i]->send_stage_info(info);
 }
@@ -71,8 +71,8 @@ void Match::add_player(int fd) {
         this->game.new_player(new_player);
         c->receive_name();
 
-        this->send_team_to_new_player(c);
-        this->send_new_player_to_team(c);
+        this->notify_team_to_new_player(c);
+        this->notify_new_player_to_team(c);
     }
 }
 
@@ -88,17 +88,17 @@ void Match::set_game(const std::string& stage_info) {
 void Match::start_stage() {
     std::cout << "Stage started" << std::endl;
     const char stage_id = this->host_communicator()->receive_stage_id();
-    this->send_stage_pick_to_team(stage_id);
+    this->notify_stage_pick_to_team(stage_id);
 
     const std::string info = StageFactory::initial_stage(stage_id);
-    this->send_stage_info(info);
+    this->notify_stage_info(info);
 
     this->set_game(info);
 
     this->game.start();
 }
 
-void Match::send_tick(const std::string& tick_info) {
+void Match::notify_tick(const std::string& tick_info) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i) {
         this->communicators[i]->send_tick_info(tick_info);
     }

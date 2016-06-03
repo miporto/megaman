@@ -78,7 +78,7 @@ void Game::run() {
         this->tick();
         this->check_collisions();
         this->get_rid_of_corpses();
-        this->match->send_tick(this->status());
+        this->match->notify_tick(this->status());
     }
 }
 

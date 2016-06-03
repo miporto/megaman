@@ -19,10 +19,10 @@ class Match {
 
         bool has_host();
         HostCommunicator* host_communicator();
-        void send_team_to_new_player(ServerCommunicator* new_comm);
-        void send_new_player_to_team(ServerCommunicator* new_comm);
-        void send_stage_pick_to_team(const char stage_id);
-        void send_stage_info(const std::string& info);
+        void notify_team_to_new_player(ServerCommunicator* new_comm);
+        void notify_new_player_to_team(ServerCommunicator* new_comm);
+        void notify_stage_pick_to_team(const char stage_id);
+        void notify_stage_info(const std::string& info);
         void set_game(const std::string& stage_info);
 
     public:
@@ -31,7 +31,7 @@ class Match {
         bool is_full();
         void add_player(int fd);
         void start_stage();
-        void send_tick(const std::string& tick_info);
+        void notify_tick(const std::string& tick_info);
         ~Match();
 };
 
