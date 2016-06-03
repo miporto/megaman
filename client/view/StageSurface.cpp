@@ -70,7 +70,7 @@ void StageSurface::run() {
             if (position > renderer->GetOutputWidth()) {
                 position = -50;
             }
-            int vcenter = renderer->GetOutputHeight() / 2;
+            int vcenter = renderer->GetOutputHeight() - 50;
             // Clear screen
             renderer->Clear();
             stage_renderer->render();
