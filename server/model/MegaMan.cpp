@@ -4,10 +4,6 @@
 #include "MegaMan.h"
 #include "Factory.h"
 
-#define INITIAL_X 0
-#define INITIAL_Y 0
-#define INITIAL_DIRECTION 1
-
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
         max_energy(EnergyTankFactory::maximum_energy()),
@@ -46,11 +42,7 @@ int EnergyTank::get_energy() {
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan(const std::string& name) :
-        Movable(INITIAL_X,
-                INITIAL_Y,
-                INITIAL_DIRECTION,
-                MegaManFactory::velocity()),
-        name(name) {}
+        UserMovable(MegaManFactory::velocity()), name(name) {}
 
 const std::string& MegaMan::get_name() {
     return this->name;

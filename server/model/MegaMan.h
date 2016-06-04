@@ -24,7 +24,7 @@ class EnergyTank {
         ~EnergyTank();
 };
 
-class MegaMan : public Movable {
+class MegaMan : public UserMovable {
     private:
         const std::string& name;
         EnergyTank tank;
