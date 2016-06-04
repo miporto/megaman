@@ -9,7 +9,6 @@ BlockRenderer::BlockRenderer(SDL2pp::Renderer* renderer) :
 }
 
 void BlockRenderer::render(int dest_x, int dest_y) {
-    // TODO: put correct coordinates to the block sprite
     renderer->Copy(*sprites,
                    SDL2pp::Rect(52, 119, 16, 16),
                    SDL2pp::Rect(dest_x, dest_y - 16, 50, 50));

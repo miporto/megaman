@@ -25,7 +25,7 @@ set(SOURCES
         view/TileRenderer.cpp
         view/TileRenderer.h
         view/BlockRenderer.cpp
-        view/BlockRenderer.h)
+        view/BlockRenderer.h view/MetRenderer.cpp view/MetRenderer.h)
 
 include(CppLint)
 
