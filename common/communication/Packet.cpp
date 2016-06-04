@@ -57,10 +57,8 @@ std::string Stage::get_str() const {
     return str;
 }
 
-std::string Stage::get_info() const {
-    std::string info;
-    info.append(this->stage_info);
-    return info;
+const std::string& Stage::get_info() const {
+    return this->stage_info;
 }
 
 Stage::~Stage() {}

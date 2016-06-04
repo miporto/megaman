@@ -78,7 +78,7 @@ class Stage : public Packet {
         explicit Stage(const std::string& stage_info);
         char get_id() const;
         std::string get_str() const;
-        std::string get_info() const;
+        const std::string& get_info() const;
         ~Stage();
 };
 
