@@ -22,10 +22,10 @@ set(SOURCES
         TickInfoParser.h
         view/GameLoopThread.cpp
         view/GameLoopThread.h
-        view/TileRenderer.cpp
-        view/TileRenderer.h
         view/BlockRenderer.cpp
-        view/BlockRenderer.h view/MetRenderer.cpp view/MetRenderer.h)
+        view/BlockRenderer.h
+        view/MetRenderer.cpp
+        view/MetRenderer.h)
 
 include(CppLint)
 
