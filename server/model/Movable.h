@@ -8,17 +8,14 @@
 
 class Movable : public GameObject {
     protected:
-        int direction_x, direction_y;
         const int velocity_x, velocity_y;
 
     public:
         Movable(const std::vector<int>& position,
                 const int velocity_x, const int velocity_y);
         Movable(const int x, const int y,
-                const int direction_x,
                 const int velocity_x, const int velocity_y);
         virtual void move();
-        std::vector<int> get_position();
         virtual void correct_position(const std::vector<int>& obstacle_pos,
                                       int obstacle_side);
         virtual ~Movable();
@@ -27,6 +24,7 @@ class Movable : public GameObject {
 class UserMovable : public Movable {
     private:
         const int gravity;
+        int direction_x, direction_y;
         int current_vel_x, current_vel_y;
         bool on_stairs;
 
@@ -40,6 +38,7 @@ class UserMovable : public Movable {
         void reset_position();
         void correct_position(const std::vector<int>& obstacle_pos,
                               int obstacle_side);
+        std::vector<int> get_position();
         ~UserMovable();
 };
 

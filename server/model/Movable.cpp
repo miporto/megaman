@@ -4,8 +4,6 @@
 
 #include "Movable.h"
 
-#define DIRECTION_X_POS 2
-#define DIRECTION_Y_POS 3
 #define PX_PER_CELL_RATIO 50
 #define FORWARD 1
 #define BACKWARD -1
@@ -14,30 +12,17 @@
 Movable::Movable(const std::vector<int>& position,
                  const int velocity_x, const int velocity_y)
         : GameObject(position),
-          direction_x(position[DIRECTION_X_POS]),
-          direction_y(position[DIRECTION_Y_POS]),
           velocity_x(velocity_x / PX_PER_CELL_RATIO),
           velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
 
 Movable::Movable(const int x, const int y,
-                 const int direction_x,
                  const int velocity_x, const int velocity_y)
         : GameObject(x, y),
-          direction_x(direction_x),
-          direction_y(FORWARD),
           velocity_x(velocity_x / PX_PER_CELL_RATIO),
           velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
 
 void Movable::move() {
-    this->position.move(this->direction_x * this->velocity_x,
-                        this->direction_y * this->velocity_y);
-}
-
-std::vector<int> Movable::get_position() {
-    std::vector<int> position = GameObject::get_position();
-    position.push_back(this->direction_x);
-    position.push_back(this->direction_y);
-    return position;
+    this->position.move(this->velocity_x, this->velocity_y);
 }
 
 void Movable::correct_position(const std::vector<int>& obstacle_pos,
@@ -70,7 +55,7 @@ void Movable::correct_position(const std::vector<int>& obstacle_pos,
 Movable::~Movable() {}
 
 UserMovable::UserMovable(const int velocity_x, const int velocity_y)
-        : Movable(0, 0, FORWARD, velocity_x, velocity_y), gravity(GRAVITY),
+        : Movable(0, 0, velocity_x, velocity_y), gravity(GRAVITY),
           current_vel_x(0), current_vel_y(0), on_stairs(false) {}
 
 void UserMovable::change_x_movement(bool start, bool forward) {
@@ -159,6 +144,13 @@ void UserMovable::correct_position(const std::vector<int>& obstacle_pos,
     }
 
     this->position.move(delta_x, delta_y);
+}
+
+std::vector<int> UserMovable::get_position() {
+    std::vector<int> position = GameObject::get_position();
+    position.push_back(this->direction_x);
+    position.push_back(this->direction_y);
+    return position;
 }
 
 UserMovable::~UserMovable() {}

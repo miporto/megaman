@@ -1,10 +1,10 @@
 {
 	"stage": {
 		"1":{"spawn":{
-				"Met": [{"x": 0, "y": 1, "direction": 1}], 
-				"Bumby": [{"x": 2, "y": 3, "direction": -1}], 
-				"Sniper": [{"x": 4, "y": 5, "direction": 1}], 
-				"JumpingSniper": [{"x": 6, "y": 7, "direction": 1}]
+				"Met": [{"x": 0, "y": 1}], 
+				"Bumby": [{"x": 2, "y": 3}], 
+				"Sniper": [{"x": 4, "y": 5}], 
+				"JumpingSniper": [{"x": 6, "y": 7}]
             },
             "object":{
                 "Block": [{"x": 10, "y": 11}], 
