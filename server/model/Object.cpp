@@ -51,7 +51,9 @@ Spike::~Spike() {}
 Block::Block(const std::vector<int>& position) :
         Object(BLOCK_NAME, position) {}
 
-void Block::collide_with(MegaMan* mm) { mm->correct_position(); }
+void Block::collide_with(MegaMan* mm) {
+    mm->correct_position(this->get_position(), this->get_side());
+}
 
 Block::~Block() {}
 

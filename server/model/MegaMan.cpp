@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "MegaMan.h"
+#include "Enemy.h"
 #include "Factory.h"
 
 EnergyTank::EnergyTank() :
@@ -85,7 +86,9 @@ std::string MegaMan::info() {
 
 bool MegaMan::is_enemy() { return false; }
 
-void MegaMan::collide_with(Enemy* enemy) { this->correct_position(); }
+void MegaMan::collide_with(Enemy* enemy) {
+    this->correct_position(enemy->get_position(), enemy->get_side());
+}
 
 void MegaMan::collide_with(Object* object) {}
 

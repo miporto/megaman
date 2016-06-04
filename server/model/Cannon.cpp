@@ -4,6 +4,7 @@
 
 #include "Cannon.h"
 #include "MegaMan.h"
+#include "Enemy.h"
 #include "Factory.h"
 
 Projectile::Projectile(const std::string& name,
@@ -28,7 +29,9 @@ std::string Projectile::info() {
 
 const std::string& Projectile::get_name() { return this->name; }
 
-void Projectile::collide_with(Enemy* enemy) {}
+void Projectile::collide_with(Enemy* enemy) {
+    enemy->decrease_energy(this->damage);
+}
 
 void Projectile::collide_with(Object* object) {}
 

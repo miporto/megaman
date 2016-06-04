@@ -24,7 +24,6 @@ class MegaMan;
 class GameObject {
     private:
         const int side;
-
     protected:
         Position position;
 
@@ -32,6 +31,7 @@ class GameObject {
         explicit GameObject(const std::vector<int>& position);
         GameObject(const int x, const int y);
         virtual const std::string& get_name() = 0;
+        int get_side();
         virtual std::vector<int> get_position();
         bool collided_with(GameObject* other);
         virtual void collide_with(Enemy* enemy) = 0;

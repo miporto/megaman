@@ -8,6 +8,10 @@ GameObject::GameObject(const std::vector<int>& position)
 GameObject::GameObject(const int x, const int y)
         : side(BODY_SIDE), position(x, y) {}
 
+int GameObject::get_side() {
+    return this->side;
+}
+
 bool GameObject::collided_with(GameObject* other) {
     std::vector<int> vertex = this->get_position();
     int x = vertex[X_COORD_POS];

@@ -2,6 +2,7 @@
 #include <string>
 
 #include "Enemy.h"
+#include "Object.h"
 #include "Factory.h"
 
 Enemy::Enemy(const std::string& name,
@@ -12,9 +13,13 @@ Enemy::Enemy(const std::string& name,
         name(name),
         energy(energy) {}
 
-void Enemy::collide_with(Enemy* enemy) { this->correct_position(); }
+void Enemy::collide_with(Enemy* enemy) {
+    this->correct_position(enemy->get_position(), enemy->get_side());
+}
 
-void Enemy::collide_with(Object* object) { this->correct_position(); }
+void Enemy::collide_with(Object* object) {
+    this->correct_position(object->get_position(), object->get_side());
+}
 
 void Enemy::collide_with(Projectile* projectile) {}
 
