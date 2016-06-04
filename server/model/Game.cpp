@@ -7,7 +7,7 @@
 class Match;
 
 Game::Game(Match* match)
-        : running(true), match(match) {}
+        : running(true), match(match), events(NULL) {}
 
 void Game::new_player(Player* player) {
     this->players.push_back(player);

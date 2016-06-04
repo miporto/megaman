@@ -8,13 +8,14 @@
 
 class Acceptor : public Thread {
     private:
-        Socket& server;
+        bool quit_acceptor;
+        Socket& socket;
         Match& match;
-        QuitProtected& quit;
 
    public:
-        Acceptor(Socket& server, Match& match, QuitProtected& quit);
+        Acceptor(Socket& socket, Match& match);
         void run();
+        void shutdown();
         ~Acceptor();
 };
 
