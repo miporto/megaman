@@ -28,26 +28,26 @@ int EnemyFactory::energy(const std::string& name) {
     return (int) j_info[name]["energy"];
 }
 
-int EnemyFactory::velocity_x(const std::string& name) {
+float EnemyFactory::velocity_x(const std::string& name) {
     json j_info = FileReader::read(INFO_FILE, "enemy");
-    return (int) j_info[name]["velocity x"];
+    return (float) j_info[name]["velocity x"];
 }
 
-int EnemyFactory::velocity_y(const std::string& name) {
+float EnemyFactory::velocity_y(const std::string& name) {
     json j_info = FileReader::read(INFO_FILE, "enemy");
-    return (int) j_info[name]["velocity y"];
+    return (float) j_info[name]["velocity y"];
 }
 
 EnemyFactory::~EnemyFactory() {}
 
-int MegaManFactory::velocity_x() {
+float MegaManFactory::velocity_x() {
     json j_info = FileReader::read(INFO_FILE, "mega man");
-    return (int) j_info["velocity x"];
+    return (float) j_info["velocity x"];
 }
 
-int MegaManFactory::velocity_y() {
+float MegaManFactory::velocity_y() {
     json j_info = FileReader::read(INFO_FILE, "mega man");
-    return (int) j_info["velocity y"];
+    return (float) j_info["velocity y"];
 }
 
 MegaManFactory::~MegaManFactory() {}
@@ -65,11 +65,11 @@ int EnergyTankFactory::maximum_energy() {
 EnergyTankFactory::~EnergyTankFactory() {}
 
 Projectile* ProjectileFactory::projectile(const std::string& name,
-                                          const std::vector<int>& position) {
+                                          const std::vector<float>& position) {
     json j_info = FileReader::read(INFO_FILE, "projectile");
     int damage = (int) j_info[name]["damage"];
-    int velocity_x = (int) j_info[name]["velocity x"];
-    int velocity_y = (int) j_info[name]["velocity y"];
+    float velocity_x = (float) j_info[name]["velocity x"];
+    float velocity_y = (float) j_info[name]["velocity y"];
     if (name == PLASMA_NAME) return new Plasma(damage, velocity_x,
                                                velocity_y, position);
     else if (name == BOMB_NAME) return new Bomb(damage, velocity_x,

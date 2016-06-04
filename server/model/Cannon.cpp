@@ -9,8 +9,8 @@
 
 Projectile::Projectile(const std::string& name,
                        int damage,
-                       int velocity_x, int velocity_y,
-                       const std::vector<int>& initial_position) :
+                       float velocity_x, float velocity_y,
+                       const std::vector<float>& initial_position) :
         Movable(initial_position, velocity_x, velocity_y),
         name(name), damage(damage){}
 
@@ -20,7 +20,7 @@ bool Projectile::is_dead() {
 }
 
 std::string Projectile::info() {
-    std::vector<int> pos = this->get_position();
+    std::vector<float> pos = this->get_position();
     json info = { {"x", pos[X_COORD_POS]},
                   {"y", pos[Y_COORD_POS]} };
     return info.dump();
@@ -48,8 +48,8 @@ bool Projectile::is_enemy() { return false; }
 
 Projectile::~Projectile() {}
 
-Plasma::Plasma(int damage, int velocity_x, int velocity_y,
-               const std::vector<int>& initial_position)
+Plasma::Plasma(int damage, float velocity_x, float velocity_y,
+               const std::vector<float>& initial_position)
         : Projectile(PLASMA_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
@@ -57,8 +57,8 @@ void Plasma::tick() {
     //TODO
 }
 
-Bomb::Bomb(int damage, int velocity_x, int velocity_y,
-           const std::vector<int>& initial_position)
+Bomb::Bomb(int damage, float velocity_x, float velocity_y,
+           const std::vector<float>& initial_position)
         : Projectile(BOMB_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
@@ -66,8 +66,8 @@ void Bomb::tick() {
     //TODO
 }
 
-Magnet::Magnet(int damage, int velocity_x, int velocity_y,
-               const std::vector<int>& initial_position)
+Magnet::Magnet(int damage, float velocity_x, float velocity_y,
+               const std::vector<float>& initial_position)
         : Projectile(MAGNET_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
@@ -75,8 +75,8 @@ void Magnet::tick() {
     //TODO
 }
 
-Spark::Spark(int damage, int velocity_x, int velocity_y,
-             const std::vector<int>& initial_position)
+Spark::Spark(int damage, float velocity_x, float velocity_y,
+             const std::vector<float>& initial_position)
         : Projectile(SPARK_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
@@ -84,8 +84,8 @@ void Spark::tick() {
     //TODO
 }
 
-Fire::Fire(int damage, int velocity_x, int velocity_y,
-           const std::vector<int>& initial_position)
+Fire::Fire(int damage, float velocity_x, float velocity_y,
+           const std::vector<float>& initial_position)
         : Projectile(FIRE_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
@@ -93,8 +93,8 @@ void Fire::tick() {
     //TODO
 }
 
-Ring::Ring(int damage, int velocity_x, int velocity_y,
-           const std::vector<int>& initial_position)
+Ring::Ring(int damage, float velocity_x, float velocity_y,
+           const std::vector<float>& initial_position)
         : Projectile(RING_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
@@ -105,7 +105,7 @@ void Ring::tick() {
 Ammo::Ammo(const std::string& name, int max) :
         name(name), max(max), quantity(max) {}
 
-Projectile* Ammo::use(const std::vector<int>& position) {
+Projectile* Ammo::use(const std::vector<float>& position) {
     if (this->quantity) {
         this->quantity--;
         return ProjectileFactory::projectile(this->name, position);
@@ -129,7 +129,7 @@ void Cannon::change_current_ammo(unsigned int ammo_id) {
         this->current_ammo = this->ammos[ammo_id];
 }
 
-Projectile* Cannon::shoot(const std::vector<int>& position) {
+Projectile* Cannon::shoot(const std::vector<float>& position) {
     return this->current_ammo->use(position);
 }
 

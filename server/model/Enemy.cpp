@@ -6,8 +6,8 @@
 #include "Factory.h"
 
 Enemy::Enemy(const std::string& name,
-             const std::vector<int>& position,
-             const int velocity_x, const int velocity_y,
+             const std::vector<float>& position,
+             const float velocity_x, const float velocity_y,
              int energy) :
         Movable(position, velocity_x, velocity_y),
         name(name),
@@ -43,7 +43,7 @@ bool Enemy::is_dead() { return this->energy == 0; }
 bool Enemy::is_enemy() { return true; }
 
 std::string Enemy::info() {
-    std::vector<int> pos = this->get_position();
+    std::vector<float> pos = this->get_position();
     json info = { {"x", pos[X_COORD_POS]},
                   {"y", pos[Y_COORD_POS]} };
     return info.dump();
@@ -51,7 +51,7 @@ std::string Enemy::info() {
 
 Enemy::~Enemy() {}
 
-Met::Met(const std::vector<int>& position) :
+Met::Met(const std::vector<float>& position) :
         Enemy(MET_NAME, position,
               EnemyFactory::velocity_x(MET_NAME),
               EnemyFactory::velocity_y(MET_NAME),
@@ -68,7 +68,7 @@ void Met::tick() {
 
 Met::~Met() {}
 
-Bumby::Bumby(const std::vector<int>& position) :
+Bumby::Bumby(const std::vector<float>& position) :
         Enemy(BUMBY_NAME, position,
               EnemyFactory::velocity_x(BUMBY_NAME),
               EnemyFactory::velocity_y(BUMBY_NAME),
@@ -85,7 +85,7 @@ void Bumby::tick() {
 
 Bumby::~Bumby() {}
 
-Sniper::Sniper(const std::vector<int>& position) :
+Sniper::Sniper(const std::vector<float>& position) :
         Enemy(SNIPER_NAME, position,
               EnemyFactory::velocity_x(SNIPER_NAME),
               EnemyFactory::velocity_y(SNIPER_NAME),
@@ -102,7 +102,7 @@ void Sniper::tick() {
 
 Sniper::~Sniper() {}
 
-JumpingSniper::JumpingSniper(const std::vector<int>& position) :
+JumpingSniper::JumpingSniper(const std::vector<float>& position) :
         Enemy(JUMPING_SNIPER_NAME, position,
               EnemyFactory::velocity_x(JUMPING_SNIPER_NAME),
               EnemyFactory::velocity_y(JUMPING_SNIPER_NAME),

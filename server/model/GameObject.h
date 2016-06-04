@@ -28,11 +28,11 @@ class GameObject {
         Position position;
 
     public:
-        explicit GameObject(const std::vector<int>& position);
-        GameObject(const int x, const int y);
+        explicit GameObject(const std::vector<float>& position);
+        GameObject(const float x, const float y);
         virtual const std::string& get_name() = 0;
         int get_side();
-        virtual std::vector<int> get_position();
+        virtual std::vector<float> get_position();
         bool collided_with(GameObject* other);
         virtual void collide_with(Enemy* enemy) = 0;
         virtual void collide_with(Object* object) = 0;

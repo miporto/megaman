@@ -5,8 +5,8 @@
 #include <vector>
 #include <map>
 
-typedef std::vector<std::vector<int>> StageParserPositions;
-typedef std::map<std::string, std::vector<std::vector<int>>> StageParserInfo;
+typedef std::vector<std::vector<float>> StageParserPositions;
+typedef std::map<std::string, std::vector<std::vector<float>>> StageParserInfo;
 
 class StageParser {
     private:

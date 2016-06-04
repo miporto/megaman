@@ -9,14 +9,14 @@
 #define BACKWARD -1
 #define GRAVITY -1
 
-Movable::Movable(const std::vector<int>& position,
-                 const int velocity_x, const int velocity_y)
+Movable::Movable(const std::vector<float>& position,
+                 const float velocity_x, const float velocity_y)
         : GameObject(position),
           velocity_x(velocity_x / PX_PER_CELL_RATIO),
           velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
 
-Movable::Movable(const int x, const int y,
-                 const int velocity_x, const int velocity_y)
+Movable::Movable(const float x, const float y,
+                 const float velocity_x, const float velocity_y)
         : GameObject(x, y),
           velocity_x(velocity_x / PX_PER_CELL_RATIO),
           velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
@@ -25,11 +25,11 @@ void Movable::move() {
     this->position.move(this->velocity_x, this->velocity_y);
 }
 
-void Movable::correct_position(const std::vector<int>& obstacle_pos,
+void Movable::correct_position(const std::vector<float>& obstacle_pos,
                                int obstacle_side) {
-    std::vector<int> pos = this->get_position();
+    std::vector<float> pos = this->get_position();
     int side = this->get_side();
-    int delta_x, delta_y;
+    float delta_x, delta_y;
     delta_x = delta_y = 0;
 
     if (std::abs(this->velocity_x) > std::abs(this->velocity_y)) {
@@ -54,7 +54,7 @@ void Movable::correct_position(const std::vector<int>& obstacle_pos,
 
 Movable::~Movable() {}
 
-UserMovable::UserMovable(const int velocity_x, const int velocity_y)
+UserMovable::UserMovable(const float velocity_x, const float velocity_y)
         : Movable(0, 0, velocity_x, velocity_y), gravity(GRAVITY),
           current_vel_x(0), current_vel_y(0), on_stairs(false) {}
 
@@ -86,7 +86,7 @@ void UserMovable::change_y_movement(bool start, bool forward) {
 void UserMovable::standing_on_stairs() { this->on_stairs = true; }
 
 void UserMovable::move() {
-    int x_amount, y_amount;
+    float x_amount, y_amount;
 
     //MRU en eje x
     x_amount = this->current_vel_x;
@@ -118,11 +118,11 @@ void UserMovable::reset_position() {
     this->reset_movement();
 }
 
-void UserMovable::correct_position(const std::vector<int>& obstacle_pos,
+void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
                                    int obstacle_side) {
-    std::vector<int> pos = this->get_position();
+    std::vector<float> pos = this->get_position();
     int side = this->get_side();
-    int delta_x, delta_y;
+    float delta_x, delta_y;
     delta_x = delta_y = 0;
 
     if (std::abs(this->current_vel_x) > std::abs(this->current_vel_y)) {
@@ -146,8 +146,8 @@ void UserMovable::correct_position(const std::vector<int>& obstacle_pos,
     this->position.move(delta_x, delta_y);
 }
 
-std::vector<int> UserMovable::get_position() {
-    std::vector<int> position = GameObject::get_position();
+std::vector<float> UserMovable::get_position() {
+    std::vector<float> position = GameObject::get_position();
     position.push_back(this->direction_x);
     position.push_back(this->direction_y);
     return position;

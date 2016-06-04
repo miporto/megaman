@@ -22,8 +22,8 @@ class Enemy : public Movable {
         int energy;
 
     public:
-        Enemy(const std::string& name, const std::vector<int>& position,
-              const int velocity_x, const int velocity_y, int energy);
+        Enemy(const std::string& name, const std::vector<float>& position,
+              const float velocity_x, const float velocity_y, int energy);
         const std::string& get_name();
         void decrease_energy(int amount);
         bool is_dead();
@@ -41,7 +41,7 @@ class Enemy : public Movable {
 
 class Met : public Enemy {
     public:
-        explicit Met(const std::vector<int>& position);
+        explicit Met(const std::vector<float>& position);
         Projectile* shoot();
         void tick();
         ~Met();
@@ -49,7 +49,7 @@ class Met : public Enemy {
 
 class Bumby : public Enemy {
     public:
-        explicit Bumby(const std::vector<int>& position);
+        explicit Bumby(const std::vector<float>& position);
         Projectile* shoot();
         void tick();
         ~Bumby();
@@ -57,7 +57,7 @@ class Bumby : public Enemy {
 
 class Sniper : public Enemy {
     public:
-        explicit Sniper(const std::vector<int>& position);
+        explicit Sniper(const std::vector<float>& position);
         Projectile* shoot();
         void tick();
         ~Sniper();
@@ -65,7 +65,7 @@ class Sniper : public Enemy {
 
 class JumpingSniper : public Enemy {
     public:
-        explicit JumpingSniper(const std::vector<int>& position);
+        explicit JumpingSniper(const std::vector<float>& position);
         Projectile* shoot();
         void tick();
         ~JumpingSniper();
