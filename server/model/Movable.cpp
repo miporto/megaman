@@ -5,17 +5,16 @@
 
 #define DIRECTION_X_POS 2
 #define DIRECTION_Y_POS 3
-
+#define PX_PER_CELL_RATIO 50
 #define FORWARD 1
 #define BACKWARD -1
-
 #define GRAVITY -1
 
 Movable::Movable(const std::vector<int>& position, const int velocity)
         : GameObject(position),
           direction_x(position[DIRECTION_X_POS]),
           direction_y(position[DIRECTION_Y_POS]),
-          velocity(velocity) {}
+          velocity(velocity / PX_PER_CELL_RATIO) {}
 
 Movable::Movable(const int x, const int y,
                  const int direction_x, const int velocity)
