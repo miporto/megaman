@@ -27,6 +27,7 @@ StageSurface::StageSurface(Client& client) : client(client){
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
+        // TODO: stage renderer should receive the stage info in its creation
         stage_renderer = new StageRenderer(renderer);
         megaman_renderer = new MegamanRenderer(renderer);
     } catch (std::exception &e) {
