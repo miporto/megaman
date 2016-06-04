@@ -51,7 +51,7 @@ void Map::get_rid_of_corpses() {
 void Map::create_new_projectiles() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (this->objects[i]->is_enemy())
-            this->add_game_object(((Enemy*)this->objects[i])->shoot());
+            ((Enemy*)this->objects[i])->shoot(this);
 }
 
 const std::string Map::status() {

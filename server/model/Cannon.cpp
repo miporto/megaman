@@ -7,6 +7,8 @@
 #include "Enemy.h"
 #include "Factory.h"
 
+#define PELLET_DAMAGE 1
+
 Projectile::Projectile(const std::string& name,
                        int damage,
                        float velocity_x, float velocity_y,
@@ -100,6 +102,15 @@ Ring::Ring(int damage, float velocity_x, float velocity_y,
 
 void Ring::tick() {
     //TODO
+}
+
+Pellet::Pellet(float velocity_x, float velocity_y,
+           const std::vector<float>& initial_position)
+        : Projectile(PELLET_NAME, PELLET_DAMAGE, velocity_x,
+                     velocity_y, initial_position) {}
+
+void Pellet::tick() {
+    this->move();
 }
 
 Ammo::Ammo(const std::string& name, int max) :

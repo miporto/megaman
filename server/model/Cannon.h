@@ -14,6 +14,7 @@
 #define SPARK_NAME "Spark"
 #define FIRE_NAME "Fire"
 #define RING_NAME "Ring"
+#define PELLET_NAME "Pellet"
 
 class Enemy;
 class Object;
@@ -80,6 +81,13 @@ class Fire : public Projectile {
 class Ring : public Projectile {
     public:
         Ring(int damage, float velocity_x, float velocity_y,
+             const std::vector<float>& initial_position);
+        void tick();
+};
+
+class Pellet : public Projectile {
+    public:
+        Pellet(float velocity_x, float velocity_y,
              const std::vector<float>& initial_position);
         void tick();
 };

@@ -4,9 +4,6 @@
 #include <vector>
 #include <string>
 
-#include "Enemy.h"
-#include "Object.h"
-#include "MegaMan.h"
 #include "GameObject.h"
 
 class Map {

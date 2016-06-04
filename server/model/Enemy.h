@@ -12,6 +12,7 @@
 #define SNIPER_NAME "Sniper"
 #define JUMPING_SNIPER_NAME "JumpingSniper"
 
+class Map;
 class Object;
 class Projectile;
 class MegaMan;
@@ -32,7 +33,7 @@ class Enemy : public Movable {
         void collide_with(Projectile* projectile);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
-        virtual Projectile* shoot() = 0;
+        virtual void shoot(Map* map) = 0;
         virtual void tick() = 0;
         bool is_enemy();
         std::string info();
@@ -42,7 +43,7 @@ class Enemy : public Movable {
 class Met : public Enemy {
     public:
         explicit Met(const std::vector<float>& position);
-        Projectile* shoot();
+        void shoot(Map* map);
         void tick();
         ~Met();
 };
@@ -50,7 +51,7 @@ class Met : public Enemy {
 class Bumby : public Enemy {
     public:
         explicit Bumby(const std::vector<float>& position);
-        Projectile* shoot();
+        void shoot(Map* map);
         void tick();
         ~Bumby();
 };
@@ -58,7 +59,7 @@ class Bumby : public Enemy {
 class Sniper : public Enemy {
     public:
         explicit Sniper(const std::vector<float>& position);
-        Projectile* shoot();
+        void shoot(Map* map);
         void tick();
         ~Sniper();
 };
@@ -66,7 +67,7 @@ class Sniper : public Enemy {
 class JumpingSniper : public Enemy {
     public:
         explicit JumpingSniper(const std::vector<float>& position);
-        Projectile* shoot();
+        void shoot(Map* map);
         void tick();
         ~JumpingSniper();
 };

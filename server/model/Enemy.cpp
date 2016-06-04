@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Object.h"
 #include "Factory.h"
+#include "Map.h"
 
 Enemy::Enemy(const std::string& name,
              const std::vector<float>& position,
@@ -57,9 +58,10 @@ Met::Met(const std::vector<float>& position) :
               EnemyFactory::velocity_y(MET_NAME),
               EnemyFactory::energy(MET_NAME)) {}
 
-Projectile* Met::shoot() {
-    //TODO
-    return NULL;
+void Met::shoot(Map* map) {
+    map->add_game_object(new Pellet(-1, 0, this->get_position()));
+    map->add_game_object(new Pellet(-1, 0.33, this->get_position()));
+    map->add_game_object(new Pellet(-1, 0.66, this->get_position()));
 }
 
 void Met::tick() {
@@ -74,9 +76,8 @@ Bumby::Bumby(const std::vector<float>& position) :
               EnemyFactory::velocity_y(BUMBY_NAME),
               EnemyFactory::energy(BUMBY_NAME)) {}
 
-Projectile* Bumby::shoot() {
-    //TODO
-    return NULL;
+void Bumby::shoot(Map* map) {
+    map->add_game_object(new Pellet(0, -1, this->get_position()));
 }
 
 void Bumby::tick() {
@@ -91,9 +92,8 @@ Sniper::Sniper(const std::vector<float>& position) :
               EnemyFactory::velocity_y(SNIPER_NAME),
               EnemyFactory::energy(SNIPER_NAME)) {}
 
-Projectile* Sniper::shoot() {
-    //TODO
-    return NULL;
+void Sniper::shoot(Map* map) {
+    map->add_game_object(new Pellet(-1, 0, this->get_position()));
 }
 
 void Sniper::tick() {
@@ -108,9 +108,9 @@ JumpingSniper::JumpingSniper(const std::vector<float>& position) :
               EnemyFactory::velocity_y(JUMPING_SNIPER_NAME),
               EnemyFactory::energy(JUMPING_SNIPER_NAME)) {}
 
-Projectile* JumpingSniper::shoot() {
-    //TODO
-    return NULL;
+void JumpingSniper::shoot(Map* map) {
+    map->add_game_object(new Pellet(-1, 0, this->get_position()));
+    map->add_game_object(new Pellet(1, 0, this->get_position()));
 }
 
 void JumpingSniper::tick() {
