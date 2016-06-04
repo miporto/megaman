@@ -5,16 +5,17 @@
 #include <map>
 #include <string>
 
-class BlockRenderer;
-typedef void (BlockRenderer::*trenderer_method_t)(int,int);
+class TileRenderer;
+typedef void (TileRenderer::*trenderer_method_t)(int,int);
 typedef std::map<std::string, trenderer_method_t> tile_renderers_t;
 
-class BlockRenderer {
+class TileRenderer {
 public:
-    explicit BlockRenderer(SDL2pp::Renderer* renderer);
+    explicit TileRenderer(SDL2pp::Renderer* renderer);
     tile_renderers_t get_renderers();
-    void render(int dest_x, int dest_y);
-    virtual ~BlockRenderer();
+    void renderBlock(int dest_x, int dest_y);
+    void renderStairs(int dest_x, int dest_y);
+    virtual ~TileRenderer();
 private:
     tile_renderers_t renderers;
     SDL2pp::Renderer* renderer;
