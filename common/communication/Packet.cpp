@@ -52,7 +52,7 @@ char Stage::get_id() const { return this->id; }
 std::string Stage::get_str() const {
     std::string str;
     str.push_back(this->id);
-    str.append((char*)this->length);
+    str.append((char*)&this->length);
     str.append(this->stage_info);
     return str;
 }
