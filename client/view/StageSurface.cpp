@@ -17,10 +17,7 @@
 StageSurface::StageSurface(Client& client) : client(client){
     try {
 //        std::string s_stage_info = client.receive_stage_info();
-//        s_stage_info.erase(s_stage_info.find('\000') - 1);
-//        s_stage_info.erase(0, 1);
-//        std::string test_stage = "{\"test\": 200}";
-//        std::string test_stage = "{\"Test\": \"Hola\"}";
+//        std::cout << s_stage_info << std::endl;
 //        StageParser stage_parser;
 //        stage_info = stage_parser.stage_info(s_stage_info);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
@@ -67,6 +64,10 @@ void StageSurface::run() {
 //            } else {
 //                run_phase = 0;
 //            }
+            // Receive tick info
+//            std::string s_stage_info = client.receive_stage_info();
+//            std::cout << s_stage_info << std::endl;
+
             if (position > renderer->GetOutputWidth()) {
                 position = -50;
             }
@@ -76,10 +77,6 @@ void StageSurface::run() {
             stage_renderer->render();
 //            int src_x = 8 + 51 * run_phase, src_y = 67;
             megaman_renderer->render((int) position, vcenter);
-//            renderer->Copy(*sprites,
-//                           SDL2pp::Rect(src_x, src_y, 50, 50),
-//                           SDL2pp::Rect((int) position, vcenter - 50,
-// 50, 50));
             renderer->Present();
             SDL_Delay(1);
             prev_input = new_input;
@@ -97,8 +94,6 @@ void StageSurface::run() {
 void StageSurface::send_events(std::vector<bool>& prev_input,
                                std::vector<bool>& new_input) {
     for (size_t action_id = 0; action_id < prev_input.size(); ++action_id) {
-        std::cout << prev_input[action_id] << "--" << new_input[action_id] <<
-                std::endl;
         if (prev_input[action_id] != new_input[action_id]) {
             client.send_action((char)action_id, new_input[action_id]);
         }
