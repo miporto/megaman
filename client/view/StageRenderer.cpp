@@ -1,20 +1,25 @@
 #include <SDL2pp/SDL2pp.hh>
 
-#include "BlockRenderer.h"
+#include "TileRenderer.h"
 #include "common/StageParser.h"
 #include "StageRenderer.h"
 
 StageRenderer::StageRenderer(SDL2pp::Renderer *renderer) : renderer(renderer)
-        , block(renderer), met(renderer) {
+        , tiles(renderer), met(renderer) {
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
 }
 
 void StageRenderer::render() {
     renderer->Copy(*background);
-    block.render(0, renderer->GetOutputHeight() - 50);
-    block.render(50, renderer->GetOutputHeight() - 50);
-    block.render(100, renderer->GetOutputHeight() - 50);
-    met.render(100, renderer->GetOutputHeight() - 50, 0);
+    tile_renderers_t tile_renderers = tiles.get_renderers();
+    (tiles.*(tile_renderers["block"]))(0, renderer->GetOutputHeight() - 40);
+    (tiles.*(tile_renderers["block"]))(50, renderer->GetOutputHeight() - 40);
+    (tiles.*(tile_renderers["block"]))(100, renderer->GetOutputHeight() - 40);
+    (tiles.*(tile_renderers["stairs"]))(0, renderer->GetOutputHeight() - 90);
+//    tiles.render(0, renderer->GetOutputHeight() - 50);
+//    tiles.render(50, renderer->GetOutputHeight() - 50);
+//    tiles.render(100, renderer->GetOutputHeight() - 50);
+    met.render(100, renderer->GetOutputHeight() - 100, 0);
 }
 
 StageRenderer::~StageRenderer() {

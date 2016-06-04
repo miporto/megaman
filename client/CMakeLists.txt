@@ -22,8 +22,8 @@ set(SOURCES
         TickInfoParser.h
         view/GameLoopThread.cpp
         view/GameLoopThread.h
-        view/BlockRenderer.cpp
-        view/BlockRenderer.h
+        view/TileRenderer.cpp
+        view/TileRenderer.h
         view/MetRenderer.cpp
         view/MetRenderer.h)
 
