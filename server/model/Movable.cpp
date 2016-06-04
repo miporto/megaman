@@ -83,12 +83,20 @@ void UserMovable::move() {
 
     this->position.move(x, y);
     this->on_stairs = false;
+
+    if (this->position.out_of_range()) this->reset_position();
 }
 
 void UserMovable::reset_position() {
     this->position.reset();
     this->direction_x = FORWARD;
     this->direction_y = FORWARD;
+    this->current_vel_x = 0;
+    this->current_vel_y = 0;
+}
+
+void UserMovable::correct_position() {
+    //TODO Volver a la ultima posicion valida
 }
 
 UserMovable::~UserMovable() {}

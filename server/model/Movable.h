@@ -18,7 +18,7 @@ class Movable : public GameObject {
                 const int direction_x, const int velocity);
         virtual void move();
         std::vector<int> get_position();
-        void correct_position();
+        virtual void correct_position();
         virtual ~Movable();
 };
 
@@ -35,6 +35,7 @@ class UserMovable : public Movable {
         void standing_on_stairs();
         void move();
         void reset_position();
+        void correct_position();
         ~UserMovable();
 };
 

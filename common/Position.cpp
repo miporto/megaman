@@ -16,6 +16,10 @@ void Position::move(int x_amount, int y_amount) {
     this->y += y_amount;
 }
 
+bool Position::out_of_range() {
+    return (this->x < 0 || this->y < 0);
+}
+
 void Position::reset() {
     this->x = 0;
     this->y = 0;
