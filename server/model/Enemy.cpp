@@ -45,9 +45,7 @@ bool Enemy::is_enemy() { return true; }
 std::string Enemy::info() {
     std::vector<int> pos = this->get_position();
     json info = { {"x", pos[X_COORD_POS]},
-                  {"y", pos[Y_COORD_POS]},
-                  {"direction x", pos[DIRECTION_X_POS]},
-                  {"direction y", pos[DIRECTION_Y_POS]} };
+                  {"y", pos[Y_COORD_POS]} };
     return info.dump();
 }
 
