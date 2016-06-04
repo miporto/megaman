@@ -11,10 +11,14 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer) : renderer(renderer)
 
 void StageRenderer::render() {
     renderer->Copy(*background);
-    block.render(0, renderer->GetOutputHeight() - 50);
-    block.render(50, renderer->GetOutputHeight() - 50);
-    block.render(100, renderer->GetOutputHeight() - 50);
-    met.render(100, renderer->GetOutputHeight() - 50, 0);
+    tile_renderers_t tile_renderers = block.get_renderers();
+    (block.*(tile_renderers["block"]))(0, renderer->GetOutputHeight() - 40);
+    (block.*(tile_renderers["block"]))(50, renderer->GetOutputHeight() - 40);
+    (block.*(tile_renderers["block"]))(100, renderer->GetOutputHeight() - 40);
+//    block.render(0, renderer->GetOutputHeight() - 50);
+//    block.render(50, renderer->GetOutputHeight() - 50);
+//    block.render(100, renderer->GetOutputHeight() - 50);
+    met.render(100, renderer->GetOutputHeight() - 100, 0);
 }
 
 StageRenderer::~StageRenderer() {
