@@ -36,8 +36,7 @@ Stairs::Stairs(const std::vector<int>& position) :
         Object(STAIRS_NAME, position) {}
 
 void Stairs::collide_with(MegaMan* mm) {
-    //TODO Cuando mm esta encima, se puede
-    // mover verticalmente sin limitaciones
+    mm->standing_on_stairs();
 }
 
 Stairs::~Stairs() {}
