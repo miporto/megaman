@@ -71,7 +71,6 @@ class StagePick : public Packet {
 class Stage : public Packet {
     private:
         static const char id = STAGE;
-        const size_t length;
         std::string stage_info;
 
     public:

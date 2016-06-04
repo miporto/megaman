@@ -24,8 +24,8 @@ void Receiver::receive_packet(const char id) {
             this->packets.push(new StagePick(stage_id));
             break;
         } case STAGE: {
-            size_t length;
-            this->socket->receive((char*)&length, sizeof(size_t));
+            int length;
+            this->socket->receive((char*)&length, sizeof(int));
             char* info = new char[length];
             this->socket->receive(info, sizeof(char) * length);
             this->packets.push(new Stage(info));
