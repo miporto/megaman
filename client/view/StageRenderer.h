@@ -5,6 +5,7 @@
 
 #include "common/StageParser.h"
 #include "BlockRenderer.h"
+#include "MetRenderer.h"
 
 class BlockRenderer;
 class StageRenderer {
@@ -19,6 +20,7 @@ private:
 //    StageParserInfo& stage_info;
     SDL2pp::Texture* background;
     BlockRenderer block;
+    MetRenderer met;
 };
 
 
