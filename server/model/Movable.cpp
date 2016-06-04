@@ -11,20 +11,26 @@
 #define BACKWARD -1
 #define GRAVITY -1
 
-Movable::Movable(const std::vector<int>& position, const int velocity)
+Movable::Movable(const std::vector<int>& position,
+                 const int velocity_x, const int velocity_y)
         : GameObject(position),
           direction_x(position[DIRECTION_X_POS]),
           direction_y(position[DIRECTION_Y_POS]),
-          velocity(velocity / PX_PER_CELL_RATIO) {}
+          velocity_x(velocity_x / PX_PER_CELL_RATIO),
+          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
 
 Movable::Movable(const int x, const int y,
-                 const int direction_x, const int velocity)
-        : GameObject(x, y), direction_x(direction_x), direction_y(FORWARD),
-          velocity(velocity) {}
+                 const int direction_x,
+                 const int velocity_x, const int velocity_y)
+        : GameObject(x, y),
+          direction_x(direction_x),
+          direction_y(FORWARD),
+          velocity_x(velocity_x / PX_PER_CELL_RATIO),
+          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
 
 void Movable::move() {
-    this->position.move(this->direction_x * this->velocity,
-                        this->direction_y * this->velocity);
+    this->position.move(this->direction_x * this->velocity_x,
+                        this->direction_y * this->velocity_y);
 }
 
 std::vector<int> Movable::get_position() {
@@ -41,27 +47,30 @@ void Movable::correct_position(const std::vector<int>& obstacle_pos,
     int delta_x, delta_y;
     delta_x = delta_y = 0;
 
-    if (this->direction_x * this->velocity > 0)
+    if (std::abs(this->velocity_x) > std::abs(this->velocity_y)) {
+        if (this->velocity_x > 0)
             delta_x = (-1) * (pos[X_COORD_POS] + side
                               - obstacle_pos[X_COORD_POS]);
-    else if (this->direction_x * this->velocity < 0)
+        if (this->velocity_x < 0)
             delta_x = obstacle_pos[X_COORD_POS] + obstacle_side
                       - pos[X_COORD_POS];
-
-    if (this->direction_y * this->velocity > 0)
+    } else {
+        if (this->velocity_y > 0)
             delta_y = (-1) * (pos[Y_COORD_POS] + side
                               - obstacle_pos[Y_COORD_POS]);
-    else if (this->direction_y * this->velocity < 0)
+        if (this->velocity_y < 0) {
             delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side
                       - pos[Y_COORD_POS];
+        }
+    }
 
     this->position.move(delta_x, delta_y);
 }
 
 Movable::~Movable() {}
 
-UserMovable::UserMovable(const int velocity)
-        : Movable(0, 0, FORWARD, velocity), gravity(GRAVITY),
+UserMovable::UserMovable(const int velocity_x, const int velocity_y)
+        : Movable(0, 0, FORWARD, velocity_x, velocity_y), gravity(GRAVITY),
           current_vel_x(0), current_vel_y(0), on_stairs(false) {}
 
 void UserMovable::change_x_movement(bool start, bool forward) {
@@ -70,7 +79,7 @@ void UserMovable::change_x_movement(bool start, bool forward) {
     else
         this->direction_x = BACKWARD;
     if (start)
-        this->current_vel_x = this->velocity * this->direction_x;
+        this->current_vel_x = this->velocity_x * this->direction_x;
     else
         this->current_vel_x = 0;
 }
@@ -84,7 +93,7 @@ void UserMovable::change_y_movement(bool start, bool forward) {
         this->direction_y = BACKWARD;
 
     if (start)
-        this->current_vel_y = this->velocity * this->direction_y;
+        this->current_vel_y = this->velocity_y * this->direction_y;
     else
         this->current_vel_y = 0;
 }
@@ -130,6 +139,7 @@ void UserMovable::correct_position(const std::vector<int>& obstacle_pos,
     int side = this->get_side();
     int delta_x, delta_y;
     delta_x = delta_y = 0;
+
     if (std::abs(this->current_vel_x) > std::abs(this->current_vel_y)) {
         if (this->current_vel_x > 0)
             delta_x = (-1) * (pos[X_COORD_POS] + side
@@ -147,6 +157,7 @@ void UserMovable::correct_position(const std::vector<int>& obstacle_pos,
             this->reset_movement();
         }
     }
+
     this->position.move(delta_x, delta_y);
 }
 

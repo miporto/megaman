@@ -7,9 +7,9 @@
 
 Enemy::Enemy(const std::string& name,
              const std::vector<int>& position,
-             const int velocity,
+             const int velocity_x, const int velocity_y,
              int energy) :
-        Movable(position, velocity),
+        Movable(position, velocity_x, velocity_y),
         name(name),
         energy(energy) {}
 
@@ -55,7 +55,8 @@ Enemy::~Enemy() {}
 
 Met::Met(const std::vector<int>& position) :
         Enemy(MET_NAME, position,
-              EnemyFactory::velocity(MET_NAME),
+              EnemyFactory::velocity_x(MET_NAME),
+              EnemyFactory::velocity_y(MET_NAME),
               EnemyFactory::energy(MET_NAME)) {}
 
 Projectile* Met::shoot() {
@@ -71,7 +72,8 @@ Met::~Met() {}
 
 Bumby::Bumby(const std::vector<int>& position) :
         Enemy(BUMBY_NAME, position,
-              EnemyFactory::velocity(BUMBY_NAME),
+              EnemyFactory::velocity_x(BUMBY_NAME),
+              EnemyFactory::velocity_y(BUMBY_NAME),
               EnemyFactory::energy(BUMBY_NAME)) {}
 
 Projectile* Bumby::shoot() {
@@ -87,7 +89,8 @@ Bumby::~Bumby() {}
 
 Sniper::Sniper(const std::vector<int>& position) :
         Enemy(SNIPER_NAME, position,
-              EnemyFactory::velocity(SNIPER_NAME),
+              EnemyFactory::velocity_x(SNIPER_NAME),
+              EnemyFactory::velocity_y(SNIPER_NAME),
               EnemyFactory::energy(SNIPER_NAME)) {}
 
 Projectile* Sniper::shoot() {
@@ -103,7 +106,8 @@ Sniper::~Sniper() {}
 
 JumpingSniper::JumpingSniper(const std::vector<int>& position) :
         Enemy(JUMPING_SNIPER_NAME, position,
-              EnemyFactory::velocity(JUMPING_SNIPER_NAME),
+              EnemyFactory::velocity_x(JUMPING_SNIPER_NAME),
+              EnemyFactory::velocity_y(JUMPING_SNIPER_NAME),
               EnemyFactory::energy(JUMPING_SNIPER_NAME)) {}
 
 Projectile* JumpingSniper::shoot() {

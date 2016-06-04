@@ -9,9 +9,10 @@
 
 Projectile::Projectile(const std::string& name,
                        int damage,
-                       int velocity,
+                       int velocity_x, int velocity_y,
                        const std::vector<int>& initial_position) :
-        Movable(initial_position, velocity), name(name), damage(damage){}
+        Movable(initial_position, velocity_x, velocity_y),
+        name(name), damage(damage){}
 
 bool Projectile::is_dead() {
     //TODO Devuelve true si toco a algun jugador o si se fue del mapa?
@@ -49,49 +50,55 @@ bool Projectile::is_enemy() { return false; }
 
 Projectile::~Projectile() {}
 
-Plasma::Plasma(int damage, int velocity,
+Plasma::Plasma(int damage, int velocity_x, int velocity_y,
                const std::vector<int>& initial_position)
-        : Projectile(PLASMA_NAME, damage, velocity, initial_position) {}
+        : Projectile(PLASMA_NAME, damage, velocity_x,
+                     velocity_y, initial_position) {}
 
 void Plasma::tick() {
     //TODO
 }
 
-Bomb::Bomb(int damage, int velocity,
+Bomb::Bomb(int damage, int velocity_x, int velocity_y,
            const std::vector<int>& initial_position)
-        : Projectile(BOMB_NAME, damage, velocity, initial_position) {}
+        : Projectile(BOMB_NAME, damage, velocity_x,
+                     velocity_y, initial_position) {}
 
 void Bomb::tick() {
     //TODO
 }
 
-Magnet::Magnet(int damage, int velocity,
+Magnet::Magnet(int damage, int velocity_x, int velocity_y,
                const std::vector<int>& initial_position)
-        : Projectile(MAGNET_NAME, damage, velocity, initial_position) {}
+        : Projectile(MAGNET_NAME, damage, velocity_x,
+                     velocity_y, initial_position) {}
 
 void Magnet::tick() {
     //TODO
 }
 
-Spark::Spark(int damage, int velocity,
+Spark::Spark(int damage, int velocity_x, int velocity_y,
              const std::vector<int>& initial_position)
-        : Projectile(SPARK_NAME, damage, velocity, initial_position) {}
+        : Projectile(SPARK_NAME, damage, velocity_x,
+                     velocity_y, initial_position) {}
 
 void Spark::tick() {
     //TODO
 }
 
-Fire::Fire(int damage, int velocity,
+Fire::Fire(int damage, int velocity_x, int velocity_y,
            const std::vector<int>& initial_position)
-        : Projectile(FIRE_NAME, damage, velocity, initial_position) {}
+        : Projectile(FIRE_NAME, damage, velocity_x,
+                     velocity_y, initial_position) {}
 
 void Fire::tick() {
     //TODO
 }
 
-Ring::Ring(int damage, int velocity,
+Ring::Ring(int damage, int velocity_x, int velocity_y,
            const std::vector<int>& initial_position)
-        : Projectile(RING_NAME, damage, velocity, initial_position) {}
+        : Projectile(RING_NAME, damage, velocity_x,
+                     velocity_y, initial_position) {}
 
 void Ring::tick() {
     //TODO

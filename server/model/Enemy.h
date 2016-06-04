@@ -23,7 +23,7 @@ class Enemy : public Movable {
 
     public:
         Enemy(const std::string& name, const std::vector<int>& position,
-              const int velocity, int energy);
+              const int velocity_x, const int velocity_y, int energy);
         const std::string& get_name();
         void decrease_energy(int amount);
         bool is_dead();

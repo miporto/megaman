@@ -19,14 +19,16 @@ class FileReader {
 
 class EnemyFactory {
     public:
-        static int energy(std::string name);
-        static int velocity(std::string name);
+        static int energy(const std::string& name);
+        static int velocity_x(const std::string& name);
+        static int velocity_y(const std::string& name);
         ~EnemyFactory();
 };
 
 class MegaManFactory {
     public:
-        static int velocity();
+        static int velocity_x();
+        static int velocity_y();
         ~MegaManFactory();
 };
 

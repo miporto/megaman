@@ -43,7 +43,8 @@ int EnergyTank::get_energy() {
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan(const std::string& name) :
-        UserMovable(MegaManFactory::velocity()), name(name) {}
+        UserMovable(MegaManFactory::velocity_x(), MegaManFactory::velocity_y()),
+        name(name) {}
 
 const std::string& MegaMan::get_name() {
     return this->name;

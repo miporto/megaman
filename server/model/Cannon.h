@@ -27,7 +27,7 @@ class Projectile : public Movable {
     public:
         Projectile(const std::string& name,
                    int damage,
-                   int velocity,
+                   int velocity_x, int velocity_y,
                    const std::vector<int>& initial_position);
         const std::string& get_name();
         void collide_with(Enemy* enemy);
@@ -44,42 +44,42 @@ class Projectile : public Movable {
 
 class Plasma : public Projectile {
     public:
-        Plasma(int damage, int velocity,
+        Plasma(int damage, int velocity_x, int velocity_y,
                const std::vector<int>& initial_position);
         void tick();
 };
 
 class Bomb : public Projectile {
     public:
-        Bomb(int damage, int velocity,
+        Bomb(int damage, int velocity_x, int velocity_y,
              const std::vector<int>& initial_position);
         void tick();
 };
 
 class Magnet : public Projectile {
     public:
-        Magnet(int damage, int velocity,
+        Magnet(int damage, int velocity_x, int velocity_y,
                const std::vector<int>& initial_position);
         void tick();
 };
 
 class Spark : public Projectile {
     public:
-        Spark(int damage, int velocity,
+        Spark(int damage, int velocity_x, int velocity_y,
               const std::vector<int>& initial_position);
         void tick();
 };
 
 class Fire : public Projectile {
     public:
-        Fire(int damage, int velocity,
+        Fire(int damage, int velocity_x, int velocity_y,
              const std::vector<int>& initial_position);
         void tick();
 };
 
 class Ring : public Projectile {
     public:
-        Ring(int damage, int velocity,
+        Ring(int damage, int velocity_x, int velocity_y,
              const std::vector<int>& initial_position);
         void tick();
 };
