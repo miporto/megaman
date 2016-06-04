@@ -3,8 +3,6 @@
 
 #include <SDL2pp/SDL2pp.hh>
 
-#include "TileRenderer.h"
-
 class BlockRenderer {
 public:
     explicit BlockRenderer(SDL2pp::Renderer* renderer);
