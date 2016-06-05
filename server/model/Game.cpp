@@ -31,7 +31,7 @@ Player* Game::player_with_name(const std::string& name) {
         if ((this->players[i]->get_name()).compare(name) == 0)
             return this->players[i];
     }
-    return NULL; //No existe player con ese nombre
+    throw new GameError("There is no player with that name");
 }
 
 void Game::execute_action(Player* player,
@@ -45,6 +45,8 @@ void Game::execute_action(Player* player,
     } else if (action_id == SHOOT) {
         Projectile* projectile = player->get_megaman()->shoot();
         if (projectile) this->map.add_game_object(projectile);
+    } else {
+        throw new GameError("There is no action with that id");
     }
 }
 
@@ -100,3 +102,6 @@ Game::~Game() {
         delete this->players[i];
     delete this->events;
 }
+
+GameError::GameError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}

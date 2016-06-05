@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 
+#include "common/SystemError.h"
 #include "common/communication/Socket.h"
 #include "ServerCommunicator.h"
 #include "server/model/Game.h"
@@ -35,14 +36,9 @@ class Match {
         ~Match();
 };
 
-class MatchError : public std::exception {
-    private:
-        const std::string error_msg;
-
+class MatchError : public SystemError {
     public:
         explicit MatchError(const std::string error_msg) throw();
-        const char* what() const throw();
-        ~MatchError() throw();
 };
 
 #endif  // MATCH_H
