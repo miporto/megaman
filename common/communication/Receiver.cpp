@@ -63,8 +63,7 @@ void Receiver::run() {
             this->socket->receive(&packet_id, sizeof(char));
         }
         catch (const SocketError& e) {
-            std::cout << e.what() << std::endl;
-            continue;
+            break;
         }
         this->receive_packet(packet_id);
     }
