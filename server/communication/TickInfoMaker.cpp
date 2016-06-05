@@ -10,7 +10,7 @@
 
 void TickInfoMaker::add(const std::string& name, const std::string& obj_info) {
     if (obj_info == "") return;
-    this->info[name] = obj_info;
+    this->info[name] += obj_info;
 }
 
 const std::string TickInfoMaker::str() { return this->info.dump(); }

@@ -7,7 +7,7 @@
 #define PX_PER_CELL_RATIO 50
 #define FORWARD 1
 #define BACKWARD -1
-#define GRAVITY -1
+#define GRAVITY -0.01
 
 Movable::Movable(const std::vector<float>& position,
                  const float velocity_x, const float velocity_y)
@@ -59,10 +59,14 @@ UserMovable::UserMovable(const float velocity_x, const float velocity_y)
           current_vel_x(0), current_vel_y(0), on_stairs(false) {}
 
 void UserMovable::change_x_movement(bool start, bool forward) {
-    if (forward)
+    std::cout << "X movement" << std::endl;
+    if (forward) {
+        std::cout << "forward" << std::endl;
         this->direction_x = FORWARD;
-    else
+    } else {
+        std::cout << "backward" << std::endl;
         this->direction_x = BACKWARD;
+    }
     if (start)
         this->current_vel_x = this->velocity_x * this->direction_x;
     else
@@ -71,12 +75,14 @@ void UserMovable::change_x_movement(bool start, bool forward) {
 
 void UserMovable::change_y_movement(bool start, bool forward) {
     if (current_vel_y) return; //Si ya esta moviendose en y, ignoro la accion
-
-    if (forward)
+    std::cout << "Y movement" << std::endl;
+    if (forward) {
+        std::cout << "forward" << std::endl;
         this->direction_y = FORWARD;
-    else
+    } else {
+        std::cout << "backward" << std::endl;
         this->direction_y = BACKWARD;
-
+    }
     if (start)
         this->current_vel_y = this->velocity_y * this->direction_y;
     else

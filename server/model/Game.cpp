@@ -28,7 +28,9 @@ void Game::set_stage(const std::string& info) {
 
 Player* Game::player_with_name(const std::string& name) {
     for (unsigned int i = 0; i < this->players.size(); ++i) {
-        if (this->players[i]->get_name() == name)
+        std::cout << name << std::endl;
+        std::cout << this->players[i]->get_name() << std::endl;
+        if ((this->players[i]->get_name()).compare(name) == 0)
             return this->players[i];
     }
     return NULL; //No existe player con ese nombre

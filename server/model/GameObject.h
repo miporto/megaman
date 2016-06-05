@@ -12,7 +12,7 @@
 #define DIRECTION_X_POS 2
 #define DIRECTION_Y_POS 3
 
-#define BODY_SIDE 1 //Equivale a 50px
+#define BODY_SIDE 1
 
 using json = nlohmann::json;
 

@@ -72,6 +72,7 @@ Projectile* MegaMan::shoot() {
 }
 
 void MegaMan::tick() {
+    std::cout << "Moving MM" << std::endl;
     this->move();
 }
 
