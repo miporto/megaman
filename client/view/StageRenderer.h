@@ -10,14 +10,15 @@
 class TileRenderer;
 class StageRenderer {
 public:
-    explicit StageRenderer(SDL2pp::Renderer* renderer);
-//    StageRenderer(SDL2pp::Renderer* renderer, StageParserInfo& stage_info);
+//    explicit StageRenderer(SDL2pp::Renderer* renderer);
+    StageRenderer(SDL2pp::Renderer* renderer,
+                  const StageParserInfo& stage_info);
     void render();
     ~StageRenderer();
 private:
     // TODO: stageRenderer should receive the background image in memory
     SDL2pp::Renderer* renderer;
-//    StageParserInfo& stage_info;
+    const StageParserInfo& stage_info;
     SDL2pp::Texture* background;
     TileRenderer tiles;
     MetRenderer met;
