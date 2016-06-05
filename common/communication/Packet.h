@@ -11,8 +11,6 @@
 #include "common/Position.h"
 #include "common/Thread.h"
 
-#define NAME_LENGTH 8
-
 typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,

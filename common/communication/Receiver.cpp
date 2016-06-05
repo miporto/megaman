@@ -13,10 +13,12 @@ void Receiver::start() {
 void Receiver::receive_packet(const char id) {
     switch (id) {
         case NEW_PLAYER: {
-            char name[NAME_LENGTH + 1];
-            name[NAME_LENGTH] = '\0';
-            this->socket->receive(name, sizeof(char) * NAME_LENGTH);
+            int length;
+            this->socket->receive((char*)&length, sizeof(int));
+            char* name = new char[length];
+            this->socket->receive(name, sizeof(char) * length);
             this->packets.push(new NewPlayer(name));
+            delete name;
             break;
         } case STAGE_PICK: {
             char stage_id;
@@ -33,13 +35,15 @@ void Receiver::receive_packet(const char id) {
             // que no desaparezca despues de esto c:
             break;
         } case ACTION: {
-            char name[NAME_LENGTH + 1];
-            name[NAME_LENGTH] = '\0';
+            int length;
+            this->socket->receive((char*)&length, sizeof(int));
+            char* name = new char[length];
+            this->socket->receive(name, sizeof(char) * length);
             char action_id, pressed;
-            this->socket->receive(name, sizeof(char) * NAME_LENGTH);
             this->socket->receive(&action_id, sizeof(char));
             this->socket->receive(&pressed, sizeof(char));
             this->packets.push(new Action(name, action_id, pressed));
+            delete name;
             break;
         } default:
             // Si el ID es desconocido, es posible que el resto del
