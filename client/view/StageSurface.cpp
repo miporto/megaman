@@ -14,10 +14,21 @@
 #include "StageRenderer.h"
 #include "StageSurface.h"
 
+void StageSurface::replace_substr(std::string& input,
+                                  const std::string& old_str,
+                                  const std::string &new_str) {
+    size_t index = 0;
+    while ( (index = input.find(old_str, index))!= std::string::npos ) {
+        input.replace(index, old_str.size(), new_str);
+        index += new_str.size();
+    }
+}
+
 StageSurface::StageSurface(Client& client) : client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
-        s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
+        replace_substr(s_stage_info, ",", " ,");
+//        s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
         StageParser stage_parser;
         stage_info = stage_parser.stage_info(s_stage_info);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
