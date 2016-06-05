@@ -1,5 +1,6 @@
 #include <iostream>
 #include <exception>
+#include <string>
 #include <vector>
 
 #include <SDL2pp/SDL2pp.hh>
@@ -7,14 +8,18 @@
 
 #include "client/communication/Client.h"
 #include "common/communication/Packet.h"
+#include "common/StageParser.h"
 #include "InputHandler.h"
 #include "MegamanRenderer.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"
 
-// TODO: relate with the client to communicate with the server
 StageSurface::StageSurface(Client& client) : client(client){
     try {
+        std::string s_stage_info = client.receive_stage_info();
+        s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
+        StageParser stage_parser;
+        stage_info = stage_parser.stage_info(s_stage_info);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
                                     SDL_WINDOWPOS_UNDEFINED, 640, 480,
@@ -22,6 +27,7 @@ StageSurface::StageSurface(Client& client) : client(client){
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
+        // TODO: stage renderer should receive the stage info in its creation
         stage_renderer = new StageRenderer(renderer);
         megaman_renderer = new MegamanRenderer(renderer);
     } catch (std::exception &e) {
@@ -59,19 +65,19 @@ void StageSurface::run() {
 //            } else {
 //                run_phase = 0;
 //            }
+            // Receive tick info
+//            std::string s_stage_info = client.receive_stage_info();
+//            std::cout << s_stage_info << std::endl;
+
             if (position > renderer->GetOutputWidth()) {
                 position = -50;
             }
-            int vcenter = renderer->GetOutputHeight() / 2;
+            int vcenter = renderer->GetOutputHeight() - 50;
             // Clear screen
             renderer->Clear();
             stage_renderer->render();
 //            int src_x = 8 + 51 * run_phase, src_y = 67;
             megaman_renderer->render((int) position, vcenter);
-//            renderer->Copy(*sprites,
-//                           SDL2pp::Rect(src_x, src_y, 50, 50),
-//                           SDL2pp::Rect((int) position, vcenter - 50,
-// 50, 50));
             renderer->Present();
             SDL_Delay(1);
             prev_input = new_input;

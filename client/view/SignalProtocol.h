@@ -1,6 +1,0 @@
-#ifndef SIGNALPROTOCOL_H_
-#define SIGNALPROTOCOL_H_
-
-#define ABOUT_BACK 1
-
-#endif /* SIGNALPROTOCOL_H_ */

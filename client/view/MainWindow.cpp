@@ -9,7 +9,6 @@
 #include "MainWindow.h"
 #include "GameLoopThread.h"
 #include "GladeLoader.h"
-#include "SignalProtocol.h"
 #include "common/communication/Packet.h"
 #include "StageRenderer.h"
 

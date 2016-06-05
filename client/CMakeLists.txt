@@ -10,7 +10,6 @@ set(SOURCES
         communication/ClientCommunicator.cpp
         view/GladeLoader.cpp
         view/GladeLoader.h
-        view/SignalProtocol.h
         view/StageSurface.cpp
         view/StageSurface.h
         view/MegamanRenderer.cpp
@@ -22,7 +21,11 @@ set(SOURCES
         TickInfoParser.cpp
         TickInfoParser.h
         view/GameLoopThread.cpp
-        view/GameLoopThread.h)
+        view/GameLoopThread.h
+        view/TileRenderer.cpp
+        view/TileRenderer.h
+        view/MetRenderer.cpp
+        view/MetRenderer.h)
 
 include(CppLint)
 
