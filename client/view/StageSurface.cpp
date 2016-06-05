@@ -27,6 +27,7 @@ StageSurface::StageSurface(Client& client) : client(client){
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
+        // TODO: stage renderer should receive the stage info in its creation
         stage_renderer = new StageRenderer(renderer);
         megaman_renderer = new MegamanRenderer(renderer);
     } catch (std::exception &e) {
@@ -64,6 +65,10 @@ void StageSurface::run() {
 //            } else {
 //                run_phase = 0;
 //            }
+            // Receive tick info
+//            std::string s_stage_info = client.receive_stage_info();
+//            std::cout << s_stage_info << std::endl;
+
             if (position > renderer->GetOutputWidth()) {
                 position = -50;
             }
@@ -73,10 +78,6 @@ void StageSurface::run() {
             stage_renderer->render();
 //            int src_x = 8 + 51 * run_phase, src_y = 67;
             megaman_renderer->render((int) position, vcenter);
-//            renderer->Copy(*sprites,
-//                           SDL2pp::Rect(src_x, src_y, 50, 50),
-//                           SDL2pp::Rect((int) position, vcenter - 50,
-// 50, 50));
             renderer->Present();
             SDL_Delay(1);
             prev_input = new_input;
