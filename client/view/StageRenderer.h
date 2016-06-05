@@ -2,6 +2,7 @@
 #define MEGAMAN_STAGERENDERER_H
 
 #include <SDL2pp/SDL2pp.hh>
+#include <string>
 
 #include "common/StageParser.h"
 #include "TileRenderer.h"
@@ -13,17 +14,17 @@ public:
 //    explicit StageRenderer(SDL2pp::Renderer* renderer);
     StageRenderer(SDL2pp::Renderer* renderer,
                   const StageParserInfo& stage_info);
-    void render();
+    void render(const std::string& s_tick_info);
     ~StageRenderer();
 private:
     void render_stage();
-    void render_actors();
+    void render_actors(const std::string& s_tick_info);
     // TODO: stageRenderer should receive the background image in memory
     SDL2pp::Renderer* renderer;
     const StageParserInfo& stage_info;
     SDL2pp::Texture* background;
     TileRenderer tiles;
-    ActorRenderer met;
+    ActorRenderer actors;
 };
 
 
