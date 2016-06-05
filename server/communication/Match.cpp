@@ -86,7 +86,6 @@ void Match::set_game(const std::string& stage_info) {
 }
 
 void Match::start_stage() {
-    std::cout << "Stage started" << std::endl;
     const char stage_id = this->host_communicator()->receive_stage_id();
     this->notify_stage_pick_to_team(stage_id);
 
@@ -107,8 +106,4 @@ void Match::notify_tick(const std::string& tick_info) {
 Match::~Match() {}
 
 MatchError::MatchError(const std::string error_msg) throw()
-        : error_msg(error_msg) {}
-
-const char* MatchError::what() const throw() { return error_msg.c_str(); }
-
-MatchError::~MatchError() throw() {}
+        : SystemError(error_msg) {}

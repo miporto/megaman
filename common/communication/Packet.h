@@ -43,7 +43,7 @@ class Packet {
 class NewPlayer : public Packet {
     private:
         static const char id = NEW_PLAYER;
-        std::string name;
+        const std::string name;
 
     public:
         explicit NewPlayer(const std::string name);
@@ -82,7 +82,7 @@ class Stage : public Packet {
 class Action : public Packet {
     private:
         static const char id = ACTION;
-        std::string name;
+        const std::string name;
         const char action_id;
         const bool pressed;
 

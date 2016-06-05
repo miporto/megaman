@@ -42,4 +42,9 @@ class Game : public Thread {
         ~Game();
 };
 
+class GameError : public SystemError {
+    public:
+        explicit GameError(const std::string error_msg) throw();
+};
+
 #endif //GAME_H

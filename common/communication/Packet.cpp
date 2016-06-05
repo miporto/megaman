@@ -80,11 +80,15 @@ Stage::~Stage() {}
 
 Action::Action(const std::string& name,
                const char action_id, const bool pressed)
-        : name(name), action_id(action_id), pressed(pressed) {}
+        : name(name), action_id(action_id), pressed(pressed) {
+    std::cout << "Action name: " << name << std::endl;
+}
 
 Action::Action(const std::string& name,
                const char action_id, const char pressed)
-        : name(name), action_id(action_id), pressed(pressed) {}
+        : name(name), action_id(action_id), pressed(pressed) {
+    std::cout << "Action name: " << name << std::endl;
+}
 
 char Action::get_id() const { return this->id; }
 
