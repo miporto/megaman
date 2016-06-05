@@ -1,9 +1,12 @@
+#include <unistd.h>
 #include <vector>
 #include <string>
 #include <iostream>
-#include <server/model/Player.h>
 
+#include "server/model/Player.h"
 #include "ServerCommunicator.h"
+
+#define WAIT_TIME_MICROSECONDS 10000
 
 NameWaiter::NameWaiter(Player* player,
                        ReceivedPacketsProtected& packets_received)
@@ -12,7 +15,8 @@ NameWaiter::NameWaiter(Player* player,
 }
 
 void NameWaiter::run() {
-    while (this->packets_received.is_empty(NEW_PLAYER)) {}
+    while (this->packets_received.is_empty(NEW_PLAYER))
+        usleep(WAIT_TIME_MICROSECONDS);
     NewPlayer* packet = (NewPlayer*)this->packets_received.pop(NEW_PLAYER);
     this->player->set_name(packet->get_name());
     delete packet;
@@ -71,7 +75,8 @@ StageIdWaiter::StageIdWaiter(ReceivedPacketsProtected& packets_received)
         : packets_received(packets_received) {}
 
 void StageIdWaiter::run() {
-    while (this->packets_received.is_empty(STAGE_PICK)) {}
+    while (this->packets_received.is_empty(STAGE_PICK))
+        usleep(WAIT_TIME_MICROSECONDS);
     StagePick* packet = (StagePick*)this->packets_received.pop(STAGE_PICK);
     this->stage_id.set_id(packet->get_stage_id());
     std::cout << "Stage id received: " << packet->get_stage_id() << std::endl;
