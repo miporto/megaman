@@ -4,7 +4,9 @@
 #include "EventQueue.h"
 
 EventQueue::EventQueue(const std::vector<PacketsQueueProtected*>& action_queues)
-        : action_queues(action_queues), quit(false) {}
+        : action_queues(action_queues), quit(false) {
+    this->start();
+}
 
 void EventQueue::run() {
     while (!this->quit) {

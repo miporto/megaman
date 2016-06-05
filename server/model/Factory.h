@@ -19,14 +19,16 @@ class FileReader {
 
 class EnemyFactory {
     public:
-        static int energy(std::string name);
-        static int velocity(std::string name);
+        static int energy(const std::string& name);
+        static float velocity_x(const std::string& name);
+        static float velocity_y(const std::string& name);
         ~EnemyFactory();
 };
 
 class MegaManFactory {
     public:
-        static int velocity();
+        static float velocity_x();
+        static float velocity_y();
         ~MegaManFactory();
 };
 
@@ -40,7 +42,7 @@ class EnergyTankFactory {
 class ProjectileFactory {
     public:
         static Projectile* projectile
-                (const std::string& name, const std::vector<int>& position);
+                (const std::string& name, const std::vector<float>& position);
         ~ProjectileFactory();
 };
 

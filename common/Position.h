@@ -12,14 +12,15 @@ class Clonable {
 
 class Position : public Clonable {
     private:
-        int x, y;
+        float x, y;
 
     public:
-        Position(const int x, const int y);
-        explicit Position(const std::vector<int>& position);
-        void move(int x_amount, int y_amount);
+        Position(const float x, const float y);
+        explicit Position(const std::vector<float>& position);
+        void move(float x_amount, float y_amount);
+        bool out_of_range();
         void reset();
-        std::vector<int> get_position() const;
+        std::vector<float> get_position() const;
 
         bool operator==(const Position& other) const;
         std::string str() const;

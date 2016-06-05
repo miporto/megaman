@@ -12,6 +12,7 @@
 #define SNIPER_NAME "Sniper"
 #define JUMPING_SNIPER_NAME "JumpingSniper"
 
+class Map;
 class Object;
 class Projectile;
 class MegaMan;
@@ -22,8 +23,8 @@ class Enemy : public Movable {
         int energy;
 
     public:
-        Enemy(const std::string& name, const std::vector<int>& position,
-              const int velocity, int energy);
+        Enemy(const std::string& name, const std::vector<float>& position,
+              const float velocity_x, const float velocity_y, int energy);
         const std::string& get_name();
         void decrease_energy(int amount);
         bool is_dead();
@@ -32,40 +33,41 @@ class Enemy : public Movable {
         void collide_with(Projectile* projectile);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
-        virtual Projectile* shoot() = 0;
+        virtual void shoot(Map* map) = 0;
         virtual void tick() = 0;
+        bool is_enemy();
         std::string info();
         virtual ~Enemy();
 };
 
 class Met : public Enemy {
     public:
-        explicit Met(const std::vector<int>& position);
-        Projectile* shoot();
+        explicit Met(const std::vector<float>& position);
+        void shoot(Map* map);
         void tick();
         ~Met();
 };
 
 class Bumby : public Enemy {
     public:
-        explicit Bumby(const std::vector<int>& position);
-        Projectile* shoot();
+        explicit Bumby(const std::vector<float>& position);
+        void shoot(Map* map);
         void tick();
         ~Bumby();
 };
 
 class Sniper : public Enemy {
     public:
-        explicit Sniper(const std::vector<int>& position);
-        Projectile* shoot();
+        explicit Sniper(const std::vector<float>& position);
+        void shoot(Map* map);
         void tick();
         ~Sniper();
 };
 
 class JumpingSniper : public Enemy {
     public:
-        explicit JumpingSniper(const std::vector<int>& position);
-        Projectile* shoot();
+        explicit JumpingSniper(const std::vector<float>& position);
+        void shoot(Map* map);
         void tick();
         ~JumpingSniper();
 };

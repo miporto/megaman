@@ -7,7 +7,7 @@
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
 
-Object::Object(const std::string& name, const std::vector<int>& position)
+Object::Object(const std::string& name, const std::vector<float>& position)
         : GameObject(position), name(name) {}
 
 const std::string& Object::get_name() { return this->name; }
@@ -24,37 +24,40 @@ void Object::execute_collision_with(GameObject* other) {
 
 void Object::tick() {}
 
+bool Object::is_enemy() { return false; }
+
 std::string Object::info() { return ""; }
 
 bool Object::is_dead() { return false; }
 
 Object::~Object() {}
 
-Stairs::Stairs(const std::vector<int>& position) :
+Stairs::Stairs(const std::vector<float>& position) :
         Object(STAIRS_NAME, position) {}
 
 void Stairs::collide_with(MegaMan* mm) {
-    //TODO Cuando mm esta encima, se puede
-    // mover verticalmente sin limitaciones
+    mm->standing_on_stairs();
 }
 
 Stairs::~Stairs() {}
 
-Spike::Spike(const std::vector<int>& position) :
+Spike::Spike(const std::vector<float>& position) :
         Object(SPIKE_NAME, position) {}
 
 void Spike::collide_with(MegaMan* mm) { mm->kill(); }
 
 Spike::~Spike() {}
 
-Block::Block(const std::vector<int>& position) :
+Block::Block(const std::vector<float>& position) :
         Object(BLOCK_NAME, position) {}
 
-void Block::collide_with(MegaMan* mm) { mm->correct_position(); }
+void Block::collide_with(MegaMan* mm) {
+    mm->correct_position(this->get_position(), this->get_side());
+}
 
 Block::~Block() {}
 
-Cliff::Cliff(const std::vector<int>& position) :
+Cliff::Cliff(const std::vector<float>& position) :
         Object(CLIFF_NAME, position) {}
 
 void Cliff::collide_with(MegaMan* mm) { mm->kill(); }

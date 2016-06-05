@@ -28,7 +28,7 @@ StageSurface::StageSurface(Client& client) : client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
         replace_substr(s_stage_info, ",", " ,");
-//        std::cout << s_stage_info << std::endl;
+//        s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
         StageParser stage_parser;
         stage_info = stage_parser.stage_info(s_stage_info);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);

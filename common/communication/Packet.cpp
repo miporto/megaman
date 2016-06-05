@@ -10,11 +10,7 @@
 
 Packet::~Packet() {}
 
-NewPlayer::NewPlayer(const std::string name) :
-        name(name.substr(0, NAME_LENGTH)) {
-    for (size_t i = name.size(); i < NAME_LENGTH; ++i)
-        this->name.push_back('\0');
-}
+NewPlayer::NewPlayer(const std::string name) : name(name) {}
 
 const std::string NewPlayer::get_name() const { return this->name; }
 
@@ -22,8 +18,18 @@ char NewPlayer::get_id() const { return this->id; }
 
 std::string NewPlayer::get_str() const {
     std::string str;
+
     str.push_back(this->id);
+
+    int len = this->name.length();
+    char* len_arr = (char*)&len;
+    str.push_back(len_arr[0]);
+    str.push_back(len_arr[1]);
+    str.push_back(len_arr[2]);
+    str.push_back(len_arr[3]);
+
     str.append(this->name);
+
     return str;
 }
 
@@ -44,38 +50,37 @@ std::string StagePick::get_str() const {
 
 StagePick::~StagePick() {}
 
-Stage::Stage(const std::string stage_info)
-        : stage_info(stage_info.substr(0, INFO_LENGTH)) {
-    for (size_t i = stage_info.size(); i < INFO_LENGTH; ++i)
-        this->stage_info.push_back('\0');
-    std::cout << "info: " << this->stage_info << std::endl;
-}
+Stage::Stage(const std::string& stage_info)
+        : stage_info(stage_info) {}
 
 char Stage::get_id() const { return this->id; }
 
 std::string Stage::get_str() const {
     std::string str;
+
     str.push_back(this->id);
+
+    int len = this->stage_info.length();
+    char* len_arr = (char*)&len;
+    str.push_back(len_arr[0]);
+    str.push_back(len_arr[1]);
+    str.push_back(len_arr[2]);
+    str.push_back(len_arr[3]);
+
     str.append(this->stage_info);
+
     return str;
 }
 
-std::string Stage::get_info() const {
-    std::string str;
-    str.append(this->stage_info);
-    str.erase(str.find('\000') - 1);
-    return str;
+const std::string& Stage::get_info() const {
+    return this->stage_info;
 }
+
 Stage::~Stage() {}
 
 Action::Action(const std::string& name,
                const char action_id, const bool pressed)
-        : name(name.substr(0, NAME_LENGTH)),
-          action_id(action_id),
-          pressed(pressed) {
-    for (size_t i = name.size(); i < NAME_LENGTH; ++i)
-        this->name.push_back('\0');
-}
+        : name(name), action_id(action_id), pressed(pressed) {}
 
 Action::Action(const std::string& name,
                const char action_id, const char pressed)
@@ -92,6 +97,14 @@ bool Action::is_pressed() const { return this->pressed != 0; }
 std::string Action::get_str() const {
     std::string str;
     str.push_back(this->id);
+
+    int len = this->name.length();
+    char* len_arr = (char*)&len;
+    str.push_back(len_arr[0]);
+    str.push_back(len_arr[1]);
+    str.push_back(len_arr[2]);
+    str.push_back(len_arr[3]);
+
     str.append(this->name);
     str.push_back(this->action_id);
     if (pressed)

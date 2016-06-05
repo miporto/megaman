@@ -11,9 +11,6 @@
 #include "common/Position.h"
 #include "common/Thread.h"
 
-#define NAME_LENGTH 8
-#define INFO_LENGTH 1024
-
 typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,
@@ -75,10 +72,10 @@ class Stage : public Packet {
         std::string stage_info;
 
     public:
-        explicit Stage(const std::string stage_info);
+        explicit Stage(const std::string& stage_info);
         char get_id() const;
         std::string get_str() const;
-        std::string get_info() const;
+        const std::string& get_info() const;
         ~Stage();
 };
 

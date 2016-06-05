@@ -23,21 +23,31 @@ json FileReader::read(const std::string& file_name,
 
 FileReader::~FileReader() {}
 
-int EnemyFactory::energy(std::string name) {
+int EnemyFactory::energy(const std::string& name) {
     json j_info = FileReader::read(INFO_FILE, "enemy");
     return (int) j_info[name]["energy"];
 }
 
-int EnemyFactory::velocity(std::string name) {
+float EnemyFactory::velocity_x(const std::string& name) {
     json j_info = FileReader::read(INFO_FILE, "enemy");
-    return (int) j_info[name]["velocity"];
+    return (float) j_info[name]["velocity x"];
+}
+
+float EnemyFactory::velocity_y(const std::string& name) {
+    json j_info = FileReader::read(INFO_FILE, "enemy");
+    return (float) j_info[name]["velocity y"];
 }
 
 EnemyFactory::~EnemyFactory() {}
 
-int MegaManFactory::velocity() {
+float MegaManFactory::velocity_x() {
     json j_info = FileReader::read(INFO_FILE, "mega man");
-    return (int) j_info["velocity"];
+    return (float) j_info["velocity x"];
+}
+
+float MegaManFactory::velocity_y() {
+    json j_info = FileReader::read(INFO_FILE, "mega man");
+    return (float) j_info["velocity y"];
 }
 
 MegaManFactory::~MegaManFactory() {}
@@ -55,16 +65,23 @@ int EnergyTankFactory::maximum_energy() {
 EnergyTankFactory::~EnergyTankFactory() {}
 
 Projectile* ProjectileFactory::projectile(const std::string& name,
-                                          const std::vector<int>& position) {
+                                          const std::vector<float>& position) {
     json j_info = FileReader::read(INFO_FILE, "projectile");
     int damage = (int) j_info[name]["damage"];
-    int velocity = (int) j_info[name]["velocity"];
-    if (name == PLASMA_NAME) return new Plasma(damage, velocity, position);
-    else if (name == BOMB_NAME) return new Bomb(damage, velocity, position);
-    else if (name == MAGNET_NAME) return new Magnet(damage, velocity, position);
-    else if (name == SPARK_NAME) return new Spark(damage, velocity, position);
-    else if (name == FIRE_NAME) return new Fire(damage, velocity, position);
-    else if (name == RING_NAME) return new Ring(damage, velocity, position);
+    float velocity_x = (float) j_info[name]["velocity x"];
+    float velocity_y = (float) j_info[name]["velocity y"];
+    if (name == PLASMA_NAME) return new Plasma(damage, velocity_x,
+                                               velocity_y, position);
+    else if (name == BOMB_NAME) return new Bomb(damage, velocity_x,
+                                                velocity_y, position);
+    else if (name == MAGNET_NAME) return new Magnet(damage, velocity_x,
+                                                    velocity_y, position);
+    else if (name == SPARK_NAME) return new Spark(damage, velocity_x,
+                                                  velocity_y, position);
+    else if (name == FIRE_NAME) return new Fire(damage, velocity_x,
+                                                velocity_y, position);
+    else if (name == RING_NAME) return new Ring(damage, velocity_x,
+                                                velocity_y, position);
     return NULL;
 }
 

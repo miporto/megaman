@@ -10,19 +10,17 @@
 int main(int argc, const char* argv[]) {
     if (argc != ARGS_LEN)
         return EXIT_FAILURE;
-    QuitProtected quit;
 
-    Socket skt;
-    Server server(skt, argv[PORT_POS], quit);
-    server.start();
+    bool quit_main = false;
 
-    while (!quit())
-        if (getchar() == 'q')
-            quit.switch_to_true();
+    Server server(argv[PORT_POS]);
 
-    skt.shutdown();
-    server.shutdown();
-    server.join();
+    while (!quit_main)
+        if (getchar() == 'q') {
+            quit_main = true;
+            server.shutdown();
+            server.join();
+        }
 
     return EXIT_SUCCESS;
 }
