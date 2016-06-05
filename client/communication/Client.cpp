@@ -50,8 +50,8 @@ void Client::send_action(const char action_id, const bool pressed) {
 
 std::string Client::receive_stage_info() {
     std::string stage_info = this->communicator.receive_stage_info();
-    if (stage_info.empty()) {
-        throw std::exception();
+    while (stage_info.empty()) {
+        stage_info = this->communicator.receive_stage_info();
     }
     return stage_info;
 }
