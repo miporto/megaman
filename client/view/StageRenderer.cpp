@@ -17,6 +17,8 @@ void StageRenderer::render() {
     StageParserInfo info;
     for (auto const &iterator: info) {
         std::string tile_type = iterator.first;
+        // TODO: add a meaningfull exception if the tile doesnt exists
+        if (tile_renderers.count(tile_type) == 0) continue;
         StageParserPositions positions = iterator.second;
         for (size_t i = 0; i < positions.size(); ++i){
             (tiles.*(tile_renderers[tile_type]))(positions[i][0],
