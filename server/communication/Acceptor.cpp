@@ -3,14 +3,16 @@
 
 #include "Acceptor.h"
 
-Acceptor::Acceptor(Socket& server, Match& match, QuitProtected& quit)
-    : server(server), match(match), quit(quit) {}
+Acceptor::Acceptor(Socket& socket, Match& match)
+    : quit_acceptor(false), socket(socket), match(match) {
+    this->start();
+}
 
 void Acceptor::run() {
     Socket* peer;
-    while (!this->quit()) {
+    while (!this->quit_acceptor) {
         try {
-            peer = this->server.accept();
+            peer = this->socket.accept();
             std::cout << "Accepted"  << std::endl;
         }
         catch (const SocketError& e) {
@@ -23,9 +25,17 @@ void Acceptor::run() {
             const char* error_msg = e.what();
             peer->send(error_msg, sizeof(char) * strlen(error_msg));
             peer->shutdown();
+            delete peer;
             break;
         }
     }
 }
 
-Acceptor::~Acceptor() {}
+void Acceptor::shutdown() {
+    this->quit_acceptor = true;
+    this->socket.shutdown();
+}
+
+Acceptor::~Acceptor() {
+    this->join();
+}

@@ -14,6 +14,7 @@
 #define SPARK_NAME "Spark"
 #define FIRE_NAME "Fire"
 #define RING_NAME "Ring"
+#define PELLET_NAME "Pellet"
 
 class Enemy;
 class Object;
@@ -24,64 +25,70 @@ class Projectile : public Movable {
         const std::string name;
         const int damage;
 
-
-
     public:
         Projectile(const std::string& name,
                    int damage,
-                   int velocity,
-                   const std::vector<int>& initial_position);
+                   float velocity_x, float velocity_y,
+                   const std::vector<float>& initial_position);
         const std::string& get_name();
-        virtual void tick() = 0;
-        std::string info();
-        bool is_dead();
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
+        virtual void tick() = 0;
+        bool is_dead();
+        bool is_enemy();
+        std::string info();
         virtual ~Projectile();
 };
 
 class Plasma : public Projectile {
     public:
-        Plasma(int damage, int velocity,
-               const std::vector<int>& initial_position);
+        Plasma(int damage, float velocity_x, float velocity_y,
+               const std::vector<float>& initial_position);
         void tick();
 };
 
 class Bomb : public Projectile {
     public:
-        Bomb(int damage, int velocity,
-             const std::vector<int>& initial_position);
+        Bomb(int damage, float velocity_x, float velocity_y,
+             const std::vector<float>& initial_position);
         void tick();
 };
 
 class Magnet : public Projectile {
     public:
-        Magnet(int damage, int velocity,
-               const std::vector<int>& initial_position);
+        Magnet(int damage, float velocity_x, float velocity_y,
+               const std::vector<float>& initial_position);
         void tick();
 };
 
 class Spark : public Projectile {
     public:
-        Spark(int damage, int velocity,
-              const std::vector<int>& initial_position);
+        Spark(int damage, float velocity_x, float velocity_y,
+              const std::vector<float>& initial_position);
         void tick();
 };
 
 class Fire : public Projectile {
     public:
-        Fire(int damage, int velocity,
-             const std::vector<int>& initial_position);
+        Fire(int damage, float velocity_x, float velocity_y,
+             const std::vector<float>& initial_position);
         void tick();
 };
 
 class Ring : public Projectile {
     public:
-        Ring(int damage, int velocity,
-             const std::vector<int>& initial_position);
+        Ring(int damage, float velocity_x, float velocity_y,
+             const std::vector<float>& initial_position);
+        void tick();
+};
+
+class Pellet : public Projectile {
+    public:
+        Pellet(float velocity_x, float velocity_y,
+             const std::vector<float>& initial_position);
         void tick();
 };
 
@@ -93,7 +100,7 @@ class Ammo {
 
     public:
         Ammo(const std::string& name, int max);
-        Projectile* use(const std::vector<int>& position);
+        Projectile* use(const std::vector<float>& position);
         ~Ammo();
 };
 
@@ -106,7 +113,7 @@ class Cannon {
         Cannon();
         void receive_new_ammo(std::string& name);
         void change_current_ammo(unsigned int ammo_id);
-        Projectile* shoot(const std::vector<int>& position);
+        Projectile* shoot(const std::vector<float>& position);
         ~Cannon();
 };
 

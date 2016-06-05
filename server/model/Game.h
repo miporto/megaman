@@ -27,6 +27,7 @@ class Game : public Thread {
         void tick();
         void check_collisions();
         void get_rid_of_corpses();
+        void create_new_projectiles();
         const std::string status();
         Player* player_with_name(const std::string& name);
 

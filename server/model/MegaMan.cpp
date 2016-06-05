@@ -2,11 +2,8 @@
 #include <vector>
 
 #include "MegaMan.h"
+#include "Enemy.h"
 #include "Factory.h"
-
-#define INITIAL_X 0
-#define INITIAL_Y 0
-#define INITIAL_DIRECTION 1
 
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
@@ -46,10 +43,7 @@ int EnergyTank::get_energy() {
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan(const std::string& name) :
-        Movable(INITIAL_X,
-                INITIAL_Y,
-                INITIAL_DIRECTION,
-                MegaManFactory::velocity()),
+        UserMovable(MegaManFactory::velocity_x(), MegaManFactory::velocity_y()),
         name(name) {}
 
 const std::string& MegaMan::get_name() {
@@ -77,12 +71,10 @@ Projectile* MegaMan::shoot() {
     return this->cannon.shoot(this->get_position());
 }
 
-void MegaMan::tick() {
-    this->move();
-}
+void MegaMan::tick() { this->move(); }
 
 std::string MegaMan::info() {
-    std::vector<int> pos = this->get_position();
+    std::vector<float> pos = this->get_position();
     json info = { {"x", pos[X_COORD_POS]},
                   {"y", pos[Y_COORD_POS]},
                   {"direction x", pos[DIRECTION_X_POS]},
@@ -91,7 +83,11 @@ std::string MegaMan::info() {
     return info.dump();
 }
 
-void MegaMan::collide_with(Enemy* enemy) { this->correct_position(); }
+bool MegaMan::is_enemy() { return false; }
+
+void MegaMan::collide_with(Enemy* enemy) {
+    this->correct_position(enemy->get_position(), enemy->get_side());
+}
 
 void MegaMan::collide_with(Object* object) {}
 

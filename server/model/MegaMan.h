@@ -24,7 +24,7 @@ class EnergyTank {
         ~EnergyTank();
 };
 
-class MegaMan : public Movable {
+class MegaMan : public UserMovable {
     private:
         const std::string& name;
         EnergyTank tank;
@@ -36,10 +36,7 @@ class MegaMan : public Movable {
         void decrease_energy(int amount);
         int get_energy();
         void kill();
-        bool is_dead();
         Projectile* shoot();
-        void tick();
-        std::string info();
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);
@@ -47,6 +44,10 @@ class MegaMan : public Movable {
         void execute_collision_with(GameObject* other);
         void change_ammo(unsigned int ammo_id);
         void receive_new_ammo(std::string& name);
+        void tick();
+        bool is_dead();
+        bool is_enemy();
+        std::string info();
         ~MegaMan();
 };
 

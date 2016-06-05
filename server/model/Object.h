@@ -21,43 +21,44 @@ class Object : public GameObject {
         const std::string name;
 
     public:
-        Object(const std::string& name, const std::vector<int>& position);
+        Object(const std::string& name, const std::vector<float>& position);
         const std::string& get_name();
-        void tick();
-        std::string info();
-        bool is_dead();
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);
         virtual void collide_with(MegaMan* mm) = 0;
         void execute_collision_with(GameObject* other);
+        void tick();
+        bool is_dead();
+        bool is_enemy();
+        std::string info();
         virtual ~Object();
 };
 
 class Stairs : public Object {
     public:
-        explicit Stairs(const std::vector<int>& position);
+        explicit Stairs(const std::vector<float>& position);
         void collide_with(MegaMan* mm);
         ~Stairs();
 };
 
 class Spike : public Object {
     public:
-        explicit Spike(const std::vector<int>& position);
+        explicit Spike(const std::vector<float>& position);
         void collide_with(MegaMan* mm);
         ~Spike();
 };
 
 class Block : public Object {
     public:
-        explicit Block(const std::vector<int>& position);
+        explicit Block(const std::vector<float>& position);
         void collide_with(MegaMan* mm);
         ~Block();
 };
 
 class Cliff : public Object {
     public:
-        explicit Cliff(const std::vector<int>& position);
+        explicit Cliff(const std::vector<float>& position);
         void collide_with(MegaMan* mm);
         ~Cliff();
 };

@@ -6,14 +6,18 @@
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
 
-Position::Position(const int x, const int y) : x(x), y(y) {}
+Position::Position(const float x, const float y) : x(x), y(y) {}
 
-Position::Position(const std::vector<int>& position)
+Position::Position(const std::vector<float>& position)
         : x(position[X_COORD_POS]), y(position[Y_COORD_POS]) {}
 
-void Position::move(int x_amount, int y_amount) {
+void Position::move(float x_amount, float y_amount) {
     this->x += x_amount;
     this->y += y_amount;
+}
+
+bool Position::out_of_range() {
+    return (this->x < 0 || this->y < 0);
 }
 
 void Position::reset() {
@@ -25,8 +29,8 @@ bool Position::operator==(const Position& other) const {
     return (this->x == other.x && this->y == other.y);
 }
 
-std::vector<int> Position::get_position() const {
-    std::vector<int> pos;
+std::vector<float> Position::get_position() const {
+    std::vector<float> pos;
     pos.push_back(this->x);
     pos.push_back(this->y);
     return pos;

@@ -10,9 +10,8 @@
 
 class Server : public Thread {
    private:
-    QuitProtected& quit;
-    Socket& server;
-    // Log log;
+    bool quit_server;
+    Socket socket;
     std::vector<ServerCommunicator*> communicators;
     Match match;
 
@@ -21,7 +20,7 @@ class Server : public Thread {
     void start_game();
 
    public:
-    Server(Socket& server, const char* port, QuitProtected& quit);
+    explicit Server(const char* port);
     void run();
     void shutdown();
     ~Server();
