@@ -44,28 +44,32 @@ std::string StagePick::get_str() const {
 
 StagePick::~StagePick() {}
 
-Stage::Stage(const std::string stage_info)
-        : stage_info(stage_info.substr(0, INFO_LENGTH)) {
-    for (size_t i = stage_info.size(); i < INFO_LENGTH; ++i)
-        this->stage_info.push_back('\0');
-    std::cout << "info: " << this->stage_info << std::endl;
-}
+Stage::Stage(const std::string& stage_info)
+        : stage_info(stage_info) {}
 
 char Stage::get_id() const { return this->id; }
 
 std::string Stage::get_str() const {
     std::string str;
+
     str.push_back(this->id);
+
+    int len = this->stage_info.length();
+    char* len_arr = (char*)&len;
+    str.push_back(len_arr[0]);
+    str.push_back(len_arr[1]);
+    str.push_back(len_arr[2]);
+    str.push_back(len_arr[3]);
+
     str.append(this->stage_info);
+
     return str;
 }
 
-std::string Stage::get_info() const {
-    std::string str;
-    str.append(this->stage_info);
-    str.erase(str.find('\000') - 1);
-    return str;
+const std::string& Stage::get_info() const {
+    return this->stage_info;
 }
+
 Stage::~Stage() {}
 
 Action::Action(const std::string& name,
