@@ -77,16 +77,15 @@ void StageSurface::run() {
 //                run_phase = 0;
 //            }
             // Receive tick info
-//            std::string s_tick_info = client.receive_stage_info();
-//            std::cout << s_stage_info << std::endl;
-
+            std::string s_tick_info = client.receive_stage_info();
+            replace_substr(s_tick_info, ",", " ,");
             if (position > renderer->GetOutputWidth()) {
                 position = -50;
             }
             int vcenter = renderer->GetOutputHeight() - 50;
             // Clear screen
             renderer->Clear();
-            stage_renderer->render();
+            stage_renderer->render(s_tick_info);
 //            int src_x = 8 + 51 * run_phase, src_y = 67;
             megaman_renderer->render((int) position, vcenter);
             renderer->Present();
