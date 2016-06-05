@@ -77,7 +77,7 @@ void StageSurface::run() {
 //                run_phase = 0;
 //            }
             // Receive tick info
-//            std::string s_stage_info = client.receive_stage_info();
+//            std::string s_tick_info = client.receive_stage_info();
 //            std::cout << s_stage_info << std::endl;
 
             if (position > renderer->GetOutputWidth()) {

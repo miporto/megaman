@@ -3,11 +3,11 @@
 
 #include <SDL2pp/SDL2pp.hh>
 
-class MetRenderer {
+class ActorRenderer {
 public:
-    explicit MetRenderer(SDL2pp::Renderer* renderer);
-    void render(int dest_x, int dest_y, int run_phase);
-    virtual ~MetRenderer();
+    explicit ActorRenderer(SDL2pp::Renderer* renderer);
+    void renderMet(int dest_x, int dest_y, int run_phase);
+    virtual ~ActorRenderer();
 private:
     SDL2pp::Renderer* renderer;
     SDL2pp::Texture* sprites;

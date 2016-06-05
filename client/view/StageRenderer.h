@@ -5,7 +5,7 @@
 
 #include "common/StageParser.h"
 #include "TileRenderer.h"
-#include "MetRenderer.h"
+#include "ActorRenderer.h"
 
 class TileRenderer;
 class StageRenderer {
@@ -16,12 +16,14 @@ public:
     void render();
     ~StageRenderer();
 private:
+    void render_stage();
+    void render_actors();
     // TODO: stageRenderer should receive the background image in memory
     SDL2pp::Renderer* renderer;
     const StageParserInfo& stage_info;
     SDL2pp::Texture* background;
     TileRenderer tiles;
-    MetRenderer met;
+    ActorRenderer met;
 };
 
 

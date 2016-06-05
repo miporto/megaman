@@ -12,11 +12,8 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
 }
 
-void StageRenderer::render() {
-    renderer->Copy(*background);
+void StageRenderer::render_stage() {
     tile_renderers_t tile_renderers = tiles.get_renderers();
-
-    // Render stage
     for (auto const &iterator: stage_info) {
         std::string tile_type = iterator.first;
         // TODO: add a meaningfull exception if the tile doesnt exists
@@ -34,9 +31,16 @@ void StageRenderer::render() {
 //    tiles.render(0, renderer->GetOutputHeight() - 50);
 //    tiles.render(50, renderer->GetOutputHeight() - 50);
 //    tiles.render(100, renderer->GetOutputHeight() - 50);
+}
 
-    // Render actors (players, enemies, proyectiles)
-    met.render(100, renderer->GetOutputHeight() - 100, 0);
+void StageRenderer::render_actors() {
+    met.renderMet(100, renderer->GetOutputHeight() - 100, 0);
+}
+
+void StageRenderer::render() {
+    renderer->Copy(*background);
+    render_stage();
+    render_actors();
 }
 
 StageRenderer::~StageRenderer() {
