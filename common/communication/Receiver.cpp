@@ -15,7 +15,8 @@ void Receiver::receive_packet(const char id) {
         case NEW_PLAYER: {
             int length;
             this->socket->receive((char*)&length, sizeof(int));
-            char* name = new char[length];
+            char* name = new char[length + 1];
+            name[length] = '\0';
             this->socket->receive(name, sizeof(char) * length);
             this->packets.push(new NewPlayer(name));
             delete name;
@@ -28,7 +29,8 @@ void Receiver::receive_packet(const char id) {
         } case STAGE: {
             int length;
             this->socket->receive((char*)&length, sizeof(int));
-            char* info = new char[length];
+            char* info = new char[length + 1];
+            info[length] = '\0';
             this->socket->receive(info, sizeof(char) * length);
             this->packets.push(new Stage(info));
             delete info; // Stage supuestamente lo copia, pero hay que probar
@@ -37,7 +39,8 @@ void Receiver::receive_packet(const char id) {
         } case ACTION: {
             int length;
             this->socket->receive((char*)&length, sizeof(int));
-            char* name = new char[length];
+            char* name = new char[length + 1];
+            name[length] = '\0';
             this->socket->receive(name, sizeof(char) * length);
             char action_id, pressed;
             this->socket->receive(&action_id, sizeof(char));
