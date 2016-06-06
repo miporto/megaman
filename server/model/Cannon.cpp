@@ -23,8 +23,8 @@ bool Projectile::is_dead() {
 
 std::string Projectile::info() {
     std::vector<float> pos = this->get_position();
-    json info = { {"x", pos[X_COORD_POS]},
-                  {"y", pos[Y_COORD_POS]} };
+    json info = { {"x", (int)pos[X_COORD_POS]},
+                  {"y", (int)pos[Y_COORD_POS]} };
     return info.dump();
 }
 
