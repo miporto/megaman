@@ -5,8 +5,8 @@
 TileRenderer::TileRenderer(SDL2pp::Renderer* renderer) :
         renderer(renderer) {
     // TODO: be coherent with identifiers of json file
-    renderers["block"] = &TileRenderer::renderBlock;
-    renderers["stairs"] = &TileRenderer::renderStairs;
+    renderers["Block"] = &TileRenderer::renderBlock;
+    renderers["Stairs"] = &TileRenderer::renderStairs;
     sprites = new SDL2pp::Texture(*renderer, "resources/mm3_8boss_shadowman."
             "png");
 }
