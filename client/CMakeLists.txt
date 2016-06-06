@@ -24,8 +24,8 @@ set(SOURCES
         view/GameLoopThread.h
         view/TileRenderer.cpp
         view/TileRenderer.h
-        view/MetRenderer.cpp
-        view/MetRenderer.h)
+        view/ActorRenderer.cpp
+        view/ActorRenderer.h)
 
 include(CppLint)
 
