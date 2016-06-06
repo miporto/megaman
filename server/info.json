@@ -20,19 +20,19 @@
     "energy tank": {"initial lives": 30, "max": 31},
     
     "enemy": {
-			"Met": {"energy": 40, "velocity x": 0, "velocity y": 0},
+			"Met": {"energy": 1, "velocity x": 0, "velocity y": 0},
 			"Bumby": {"energy": 50, "velocity x": 10, "velocity y": 0},
 			"Sniper": {"energy": 60, "velocity x": 0, "velocity y": 0},
 			"JumpingSniper": {"energy": 70, "velocity x": 0, "velocity y": 42}
     },
     
     "projectile": {
-            "Plasma": {"damage": 40, "velocity x": 41, "velocity y": 0},
-            "Bomb": {"damage": 50, "velocity x": 51, "velocity y": 15},
-            "Magnet": {"damage": 60, "velocity x": 61, "velocity y": 20},
-            "Spark": {"damage": 70, "velocity x": 71, "velocity y": 40},
-            "Fire": {"damage": 80, "velocity x": 81, "velocity y": 10},
-            "Ring": {"damage": 90, "velocity x": 91, "velocity y": 60}
+            "Plasma": {"damage": 1, "velocity x": 41, "velocity y": 0},
+            "Bomb": {"damage": 2, "velocity x": 51, "velocity y": 15},
+            "Magnet": {"damage": 3, "velocity x": 61, "velocity y": 20},
+            "Spark": {"damage": 4, "velocity x": 71, "velocity y": 40},
+            "Fire": {"damage": 5, "velocity x": 81, "velocity y": 10},
+            "Ring": {"damage": 6, "velocity x": 91, "velocity y": 60}
     },
     
     "ammo":{

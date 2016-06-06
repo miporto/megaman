@@ -24,6 +24,7 @@ class Projectile : public Movable {
     private:
         const std::string name;
         const int damage;
+        bool dead;
 
     public:
         Projectile(const std::string& name,
@@ -31,6 +32,7 @@ class Projectile : public Movable {
                    float velocity_x, float velocity_y,
                    const std::vector<float>& initial_position);
         const std::string& get_name();
+        int hit();
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);

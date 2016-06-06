@@ -22,8 +22,6 @@ void Enemy::collide_with(Object* object) {
     this->correct_position(object->get_position(), object->get_side());
 }
 
-void Enemy::collide_with(Projectile* projectile) {}
-
 void Enemy::collide_with(MegaMan* mm) {}
 
 void Enemy::execute_collision_with(GameObject* other) {
@@ -52,20 +50,39 @@ std::string Enemy::info() {
 
 Enemy::~Enemy() {}
 
+void Met::collide_with(Projectile* projectile) {
+    if (!projectile->get_name().compare(PELLET_NAME)) return;
+
+    if (!projectile->get_name().compare(BOMB_NAME) ||
+            !projectile->get_name().compare(SPARK_NAME))
+        this->decrease_energy(projectile->hit());
+
+    else if (!this->helmet_on)
+        this->decrease_energy(projectile->hit());
+}
+
 Met::Met(const std::vector<float>& position) :
         Enemy(MET_NAME, position,
               EnemyFactory::velocity_x(MET_NAME),
               EnemyFactory::velocity_y(MET_NAME),
-              EnemyFactory::energy(MET_NAME)) {}
+              EnemyFactory::energy(MET_NAME)),
+        ticks(0),
+        helmet_on(true) {}
 
 void Met::shoot(Map* map) {
-    map->add_game_object(new Pellet(-1, 0, this->get_position()));
-    map->add_game_object(new Pellet(-1, 0.33, this->get_position()));
-    map->add_game_object(new Pellet(-1, 0.66, this->get_position()));
+    if (!helmet_on) {
+        map->add_game_object(new Pellet(-1, 0, this->get_position()));
+        map->add_game_object(new Pellet(-1, 0.33, this->get_position()));
+        map->add_game_object(new Pellet(-1, 0.66, this->get_position()));
+    }
 }
 
 void Met::tick() {
-    //TODO
+    if (this->ticks % 10 == 0)
+        this->helmet_on = false;
+    else
+        this->helmet_on = true;
+    this->ticks++;
 }
 
 Met::~Met() {}
@@ -75,6 +92,12 @@ Bumby::Bumby(const std::vector<float>& position) :
               EnemyFactory::velocity_x(BUMBY_NAME),
               EnemyFactory::velocity_y(BUMBY_NAME),
               EnemyFactory::energy(BUMBY_NAME)) {}
+
+void Bumby::collide_with(Projectile* projectile) {
+    if (!projectile->get_name().compare(PELLET_NAME)) return;
+    
+    //TODO
+}
 
 void Bumby::shoot(Map* map) {
     map->add_game_object(new Pellet(0, -1, this->get_position()));
@@ -92,6 +115,12 @@ Sniper::Sniper(const std::vector<float>& position) :
               EnemyFactory::velocity_y(SNIPER_NAME),
               EnemyFactory::energy(SNIPER_NAME)) {}
 
+void Sniper::collide_with(Projectile* projectile) {
+    if (!projectile->get_name().compare(PELLET_NAME)) return;
+
+    //TODO
+}
+
 void Sniper::shoot(Map* map) {
     map->add_game_object(new Pellet(-1, 0, this->get_position()));
 }
@@ -107,6 +136,12 @@ JumpingSniper::JumpingSniper(const std::vector<float>& position) :
               EnemyFactory::velocity_x(JUMPING_SNIPER_NAME),
               EnemyFactory::velocity_y(JUMPING_SNIPER_NAME),
               EnemyFactory::energy(JUMPING_SNIPER_NAME)) {}
+
+void JumpingSniper::collide_with(Projectile* projectile) {
+    if (!projectile->get_name().compare(PELLET_NAME)) return;
+
+    //TODO
+}
 
 void JumpingSniper::shoot(Map* map) {
     map->add_game_object(new Pellet(-1, 0, this->get_position()));
