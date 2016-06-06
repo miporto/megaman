@@ -21,8 +21,8 @@
     
     "enemy": {
 			"Met": {"energy": 1, "velocity x": 0, "velocity y": 0},
-			"Bumby": {"energy": 50, "velocity x": 10, "velocity y": 0},
-			"Sniper": {"energy": 60, "velocity x": 0, "velocity y": 0},
+			"Bumby": {"energy": 1, "velocity x": 10, "velocity y": 0},
+			"Sniper": {"energy": 2, "velocity x": 0, "velocity y": 0},
 			"JumpingSniper": {"energy": 70, "velocity x": 0, "velocity y": 42}
     },
     

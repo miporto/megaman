@@ -42,7 +42,7 @@ void Projectile::collide_with(Object* object) {}
 void Projectile::collide_with(Projectile* projectile) {}
 
 void Projectile::collide_with(MegaMan* mm) {
-    mm->decrease_energy(this->damage);
+    mm->decrease_energy(this->hit());
 }
 
 void Projectile::execute_collision_with(GameObject* other) {

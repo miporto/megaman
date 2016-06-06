@@ -95,8 +95,8 @@ Bumby::Bumby(const std::vector<float>& position) :
 
 void Bumby::collide_with(Projectile* projectile) {
     if (!projectile->get_name().compare(PELLET_NAME)) return;
-    
-    //TODO
+
+    this->decrease_energy(projectile->hit());
 }
 
 void Bumby::shoot(Map* map) {
@@ -118,15 +118,25 @@ Sniper::Sniper(const std::vector<float>& position) :
 void Sniper::collide_with(Projectile* projectile) {
     if (!projectile->get_name().compare(PELLET_NAME)) return;
 
-    //TODO
+    if (this->shield_on && (!projectile->get_name().compare(FIRE_NAME) ||
+            !projectile->get_name().compare(RING_NAME)))
+        this->decrease_energy(projectile->hit());
+    else if (!this->shield_on)
+        this->decrease_energy(projectile->hit());
 }
 
 void Sniper::shoot(Map* map) {
-    map->add_game_object(new Pellet(-1, 0, this->get_position()));
+    if (!this->shield_on)
+        map->add_game_object(new Pellet(-1, 0, this->get_position()));
 }
 
 void Sniper::tick() {
-    //TODO
+    //TODO Movimiento?
+    if (this->ticks % 5 == 0)
+        this->shield_on = false;
+    else
+        this->shield_on = true;
+    this->ticks++;
 }
 
 Sniper::~Sniper() {}

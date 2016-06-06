@@ -30,7 +30,7 @@ class Enemy : public Movable {
         bool is_dead();
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
-        void collide_with(Projectile* projectile) = 0;
+        virtual void collide_with(Projectile* projectile) = 0;
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
         virtual void shoot(Map* map) = 0;
@@ -62,6 +62,9 @@ class Bumby : public Enemy {
 };
 
 class Sniper : public Enemy {
+    private:
+        int ticks;
+        bool shield_on;
     public:
         explicit Sniper(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
@@ -71,6 +74,9 @@ class Sniper : public Enemy {
 };
 
 class JumpingSniper : public Enemy {
+    private:
+        int ticks;
+        bool shield_on;
     public:
         explicit JumpingSniper(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
