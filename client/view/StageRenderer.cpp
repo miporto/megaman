@@ -35,9 +35,9 @@ void StageRenderer::render_stage() {
 }
 
 void StageRenderer::render_actors(const std::string& s_tick_info) {
-//    TickInfoParser tick_parser(s_tick_info);
-//    TickParserInfo parsed_tick_info = tick_parser.get_parsed_tick_info();
-    TickParserInfo parsed_tick_info;
+    TickInfoParser tick_parser(s_tick_info);
+    TickParserInfo parsed_tick_info = tick_parser.get_parsed_tick_info();
+//    TickParserInfo parsed_tick_info;
     ActorRenderers actor_renderers = actors.get_renderers();
     for (auto const &iterator: parsed_tick_info) {
         std::string actor_type = iterator.first;
