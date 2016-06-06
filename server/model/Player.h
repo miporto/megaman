@@ -14,8 +14,9 @@ class Player {
         Player();
         void set_name(const std::string& name);
         std::string& get_name();
-        MegaMan* get_megaman();
         void new_megaman();
+        MegaMan* get_megaman();
+        bool alive();
         ~Player();
 };
 

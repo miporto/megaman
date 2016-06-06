@@ -8,7 +8,7 @@
 
 #define WAIT_TIME_MICROSECONDS 10000
 
-NameWaiter::NameWaiter(Player* player,
+NameWaiter::NameWaiter(Player& player,
                        ReceivedPacketsProtected& packets_received)
         : player(player), packets_received(packets_received) {
     this->start();
@@ -18,15 +18,14 @@ void NameWaiter::run() {
     while (this->packets_received.is_empty(NEW_PLAYER))
         usleep(WAIT_TIME_MICROSECONDS);
     NewPlayer* packet = (NewPlayer*)this->packets_received.pop(NEW_PLAYER);
-    this->player->set_name(packet->get_name());
+    this->player.set_name(packet->get_name());
     delete packet;
 }
 
 NameWaiter::~NameWaiter() { this->join(); }
 
-ServerCommunicator::ServerCommunicator(Player* player, Socket* peer)
-    : player(player),
-      peer(peer),
+ServerCommunicator::ServerCommunicator(Socket* peer)
+    : peer(peer),
       sender(this->peer, this->packets_to_send),
       receiver(this->peer, this->packets_received) {
     this->sender.start();
@@ -47,7 +46,11 @@ void ServerCommunicator::receive_name() {
 }
 
 const std::string& ServerCommunicator::name() {
-    return this->player->get_name();
+    return this->player.get_name();
+}
+
+Player* ServerCommunicator::get_player() {
+    return &this->player;
 }
 
 PacketsQueueProtected* ServerCommunicator::get_actions() {
@@ -55,11 +58,11 @@ PacketsQueueProtected* ServerCommunicator::get_actions() {
 }
 
 void ServerCommunicator::send_stage_info(const std::string& info) {
-    this->packets_to_send.push(new Stage(info));
+    this->packets_to_send.push(new StageInfo(info));
 }
 
 void ServerCommunicator::send_tick_info(const std::string& tick_info) {
-    this->packets_to_send.push(new Stage(tick_info));
+    this->packets_to_send.push(new StageInfo(tick_info));
 }
 
 void ServerCommunicator::shutdown() {
@@ -70,6 +73,20 @@ ServerCommunicator::~ServerCommunicator() {
     this->peer->shutdown();
     delete this->peer;
 }
+
+StageIDProtected::StageIDProtected() : stage_id(0) {}
+
+void StageIDProtected::set_id(char stage_id) {
+    Lock l(this->m);
+    this->stage_id = stage_id;
+}
+
+char StageIDProtected::operator()() {
+    Lock l(this->m);
+    return this->stage_id;
+}
+
+StageIDProtected::~StageIDProtected() {}
 
 StageIdWaiter::StageIdWaiter(ReceivedPacketsProtected& packets_received)
         : packets_received(packets_received) {}
@@ -89,8 +106,8 @@ char StageIdWaiter::get_stage_id() {
 
 StageIdWaiter::~StageIdWaiter() {}
 
-HostCommunicator::HostCommunicator(Player* player, Socket* peer) :
-        ServerCommunicator(player, peer),
+HostCommunicator::HostCommunicator(Socket* peer) :
+        ServerCommunicator(peer),
         waiter(this->packets_received) {
     this->waiter.start();
 }

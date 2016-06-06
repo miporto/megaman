@@ -28,11 +28,11 @@ void Server::wait_for_players() {
     acceptor.shutdown();
 }
 
-void Server::start_game() { this->match.start_stage(); }
-
 void Server::run() {
-    this->wait_for_players();
-    if (!this->quit_server) this->start_game();
+    while (!this->quit_server && !this->match.ended()) {
+        this->wait_for_players();
+        if (!this->quit_server) this->match.play_stage();
+    }
 }
 
 void Server::shutdown() {

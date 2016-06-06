@@ -11,39 +11,53 @@
 #include "common/communication/Receiver.h"
 #include "common/communication/Packet.h"
 #include "common/communication/QuitProtected.h"
-#include "Stage.h"
+#include "server/model/Stage.h"
 
 class NameWaiter : public Thread {
     private:
-        Player* player;
+        Player& player;
         ReceivedPacketsProtected& packets_received;
 
     public:
-        NameWaiter(Player* player, ReceivedPacketsProtected& packets_received);
+        NameWaiter(Player& player, ReceivedPacketsProtected& packets_received);
         void run();
         ~NameWaiter();
 };
 
 class ServerCommunicator {
-    protected:
-        Player* player;
+    private:
+        Player player;
         Socket* peer;
-        PacketsQueueProtected packets_to_send;
         Sender sender;
-        ReceivedPacketsProtected packets_received;
+        PacketsQueueProtected packets_to_send;
         Receiver receiver;
+    protected:
+        ReceivedPacketsProtected packets_received;
 
     public:
-        explicit ServerCommunicator(Player* player, Socket* peer);
+        explicit ServerCommunicator(Socket* peer);
         void send_new_player_notification(const std::string& name);
         void send_stage_pick(const char stage_id);
         void receive_name();
         const std::string& name();
+        Player* get_player();
         PacketsQueueProtected* get_actions();
         void send_stage_info(const std::string& info);
         void send_tick_info(const std::string& tick_info);
         virtual void shutdown();
         virtual ~ServerCommunicator();
+};
+
+class StageIDProtected {
+private:
+    Mutex m;
+    char stage_id;
+
+public:
+    StageIDProtected();
+    void set_id(char stage_id);
+    char operator()();
+    ~StageIDProtected();
 };
 
 class StageIdWaiter : public Thread {
@@ -62,7 +76,7 @@ class HostCommunicator : public ServerCommunicator {
     private:
         StageIdWaiter waiter;
     public:
-        HostCommunicator(Player* player, Socket* peer);
+        explicit HostCommunicator(Socket* peer);
         char check_stage_id();
         char receive_stage_id();
         ~HostCommunicator();
