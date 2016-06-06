@@ -2,14 +2,24 @@
 #include <vector>
 #include <iostream>
 #include <map>
-#include <server/model/Player.h>
+
+#include "server/model/Player.h"
+#include "server/model/BossChamber.h"
+#include "server/model/Factory.h"
 
 #include "Match.h"
 
 #define PLAYERS_MAX 4
 
 Match::Match(std::vector<ServerCommunicator*>& communicators)
-    : communicators(communicators), game(this) {}
+    : communicators(communicators) {
+    //TODO Refactor de armado de este map
+    this->stages[1] = StageFactory::initial_stage(1);
+    //this->stages[2] = StageFactory::initial_stage(2);
+    //this->stages[3] = StageFactory::initial_stage(3);
+    //this->stages[4] = StageFactory::initial_stage(4);
+    //this->stages[5] = StageFactory::initial_stage(5);
+}
 
 bool Match::has_started() {
     Lock l(this->m);
@@ -21,6 +31,10 @@ bool Match::has_started() {
 bool Match::is_full() {
     Lock l(this->m);
     return this->communicators.size() >= PLAYERS_MAX;
+}
+
+bool Match::ended() {
+    return this->stages.size() == 0;
 }
 
 bool Match::has_host() { return this->communicators.size() > 0; }
@@ -57,18 +71,14 @@ void Match::add_player(Socket* peer) {
     if (this->has_host() && this->host_communicator()->check_stage_id() != 0)
         throw MatchError("Mega Man Co-op match has already started");
 
-    Player* new_player = new Player();
-
     if (!this->has_host()) {
-        HostCommunicator* hc = new HostCommunicator(new_player, peer);
+        HostCommunicator* hc = new HostCommunicator(peer);
         this->communicators.push_back(hc);
-        this->game.new_player(new_player);
         hc->receive_name();
 
     } else {
-        ServerCommunicator* c = new ServerCommunicator(new_player, peer);
+        ServerCommunicator* c = new ServerCommunicator(peer);
         this->communicators.push_back(c);
-        this->game.new_player(new_player);
         c->receive_name();
 
         this->notify_team_to_new_player(c);
@@ -76,25 +86,23 @@ void Match::add_player(Socket* peer) {
     }
 }
 
-void Match::set_game(const std::string& stage_info) {
-    std::vector<PacketsQueueProtected*> action_queues;
-    for (unsigned int i = 0; i < this->communicators.size(); ++i) {
-        action_queues.push_back(this->communicators[i]->get_actions());
-    }
-    this->game.set_event_queue(action_queues);
-    this->game.set_stage(stage_info);
-}
-
-void Match::start_stage() {
+void Match::play_stage() {
     const char stage_id = this->host_communicator()->receive_stage_id();
+    const std::string& stage_info = this->stages[stage_id];
+
+    if (stage_info.empty()) throw MatchError("Stage is unavaiable");
+
     this->notify_stage_pick_to_team(stage_id);
+    this->notify_stage_info(stage_info);
 
-    const std::string info = StageFactory::initial_stage(stage_id);
-    this->notify_stage_info(info);
-
-    this->set_game(info);
-
-    this->game.start();
+    Stage stage(this, this->communicators, stage_info);
+    stage.run();
+    if (stage.beated()) {
+        BossChamber chamber(stage_id);
+        chamber.run();
+        if (chamber.beated())
+            this->stages.erase(stage_id);
+    }
 }
 
 void Match::notify_tick(const std::string& tick_info) {

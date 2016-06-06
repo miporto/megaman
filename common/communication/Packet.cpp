@@ -50,12 +50,12 @@ std::string StagePick::get_str() const {
 
 StagePick::~StagePick() {}
 
-Stage::Stage(const std::string& stage_info)
+StageInfo::StageInfo(const std::string& stage_info)
         : stage_info(stage_info) {}
 
-char Stage::get_id() const { return this->id; }
+char StageInfo::get_id() const { return this->id; }
 
-std::string Stage::get_str() const {
+std::string StageInfo::get_str() const {
     std::string str;
 
     str.push_back(this->id);
@@ -72,11 +72,11 @@ std::string Stage::get_str() const {
     return str;
 }
 
-const std::string& Stage::get_info() const {
+const std::string& StageInfo::get_info() const {
     return this->stage_info;
 }
 
-Stage::~Stage() {}
+StageInfo::~StageInfo() {}
 
 Action::Action(const std::string& name,
                const char action_id, const bool pressed)

@@ -17,7 +17,6 @@ class Server : public Thread {
 
     void configure_server_socket(const char* port);
     void wait_for_players();
-    void start_game();
 
    public:
     explicit Server(const char* port);

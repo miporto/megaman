@@ -32,7 +32,7 @@ void Receiver::receive_packet(const char id) {
             char* info = new char[length + 1];
             info[length] = '\0';
             this->socket->receive(info, sizeof(char) * length);
-            this->packets.push(new Stage(info));
+            this->packets.push(new StageInfo(info));
             delete info; // Stage supuestamente lo copia, pero hay que probar
             // que no desaparezca despues de esto c:
             break;
@@ -63,8 +63,7 @@ void Receiver::run() {
             this->socket->receive(&packet_id, sizeof(char));
         }
         catch (const SocketError& e) {
-            std::cout << e.what() << std::endl;
-            continue;
+            break;
         }
         this->receive_packet(packet_id);
     }

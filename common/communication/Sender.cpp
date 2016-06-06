@@ -19,8 +19,8 @@ void Sender::run() {
                 this->socket->send(str.c_str(), sizeof(char) * str.size());
             }
             catch (const SocketError &e) {
-                std::cout << e.what() << std::endl;
-                continue;
+                delete packet;
+                break;
             }
             delete packet;
         }

@@ -22,7 +22,8 @@ typedef enum _action_packet_id {
     RIGHT = 1,
     LEFT,
     UP,
-    SHOOT
+    SHOOT,
+    END
 } action_packet_id_t;
 
 typedef enum _stage_id {
@@ -66,17 +67,17 @@ class StagePick : public Packet {
         ~StagePick();
 };
 
-class Stage : public Packet {
+class StageInfo : public Packet {
     private:
         static const char id = STAGE;
         std::string stage_info;
 
     public:
-        explicit Stage(const std::string& stage_info);
+        explicit StageInfo(const std::string& stage_info);
         char get_id() const;
         std::string get_str() const;
         const std::string& get_info() const;
-        ~Stage();
+        ~StageInfo();
 };
 
 class Action : public Packet {
