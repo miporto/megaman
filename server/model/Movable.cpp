@@ -12,14 +12,14 @@
 Movable::Movable(const std::vector<float>& position,
                  const float velocity_x, const float velocity_y)
         : GameObject(position),
-          velocity_x(velocity_x / PX_PER_CELL_RATIO),
-          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
+          velocity_x(velocity_x),
+          velocity_y(velocity_y) {}
 
 Movable::Movable(const float x, const float y,
                  const float velocity_x, const float velocity_y)
         : GameObject(x, y),
-          velocity_x(velocity_x / PX_PER_CELL_RATIO),
-          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
+          velocity_x(velocity_x),
+          velocity_y(velocity_y) {}
 
 void Movable::move() {
     this->position.move(this->velocity_x, this->velocity_y);
@@ -55,7 +55,8 @@ void Movable::correct_position(const std::vector<float>& obstacle_pos,
 Movable::~Movable() {}
 
 UserMovable::UserMovable(const float velocity_x, const float velocity_y)
-        : Movable(0, 0, velocity_x, velocity_y), gravity(GRAVITY),
+        : Movable(0, 1, velocity_x, velocity_y), gravity(GRAVITY),
+          direction_x(FORWARD), direction_y(FORWARD),
           current_vel_x(0), current_vel_y(0), on_stairs(false) {}
 
 void UserMovable::change_x_movement(bool start, bool forward) {
@@ -92,6 +93,8 @@ void UserMovable::change_y_movement(bool start, bool forward) {
 void UserMovable::standing_on_stairs() { this->on_stairs = true; }
 
 void UserMovable::move() {
+    if (!this->current_vel_x && !this->current_vel_y) return;
+
     float x_amount, y_amount;
 
     //MRU en eje x
@@ -106,6 +109,7 @@ void UserMovable::move() {
         this->current_vel_y = this->current_vel_y + this->gravity;
         y_amount = this->current_vel_y;
     }
+
     this->position.move(x_amount, y_amount);
     this->on_stairs = false;
 
