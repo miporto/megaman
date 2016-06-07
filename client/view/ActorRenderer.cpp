@@ -3,6 +3,7 @@
 ActorRenderer::ActorRenderer(SDL2pp::Renderer *renderer) : renderer(renderer) {
     renderers["Met"] = &ActorRenderer::renderMet;
     renderers["MegaMan"] = &ActorRenderer::render_megaman;
+    renderers["Pellet"] = &ActorRenderer::render_pellet;
     sprites = new SDL2pp::Texture(*renderer, "resources/mm3_enemysheet.png");
     megaman_sprites = new SDL2pp::Texture(*renderer, "resources/8bitmegaman"
             ".png");
@@ -28,6 +29,13 @@ void ActorRenderer::renderMet(int dest_x, int dest_y, int dir_x, int dir_y) {
                            50, 50, 50));
 }
 
+void ActorRenderer::render_pellet(int dest_x, int dest_y, int dir_x,
+                                  int dir_y) {
+    SDL_Rect fillRect = {dest_x, renderer->GetOutputHeight() - dest_y - 50, 5,
+                         5};
+    SDL_SetRenderDrawColor(renderer->Get(), 0xFF, 0x00, 0x00, 0xFF);
+    SDL_RenderFillRect(renderer->Get(), &fillRect);
+}
 ActorRenderer::~ActorRenderer() {
     delete sprites;
 }

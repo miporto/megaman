@@ -12,6 +12,8 @@ TickInfoParser::TickInfoParser(const std::string &tick_info) :
     tick_parser_info["Met"] = met;
     Coordinates megaman = coordinates_of("MegaMan");
     tick_parser_info["MegaMan"] = megaman;
+    Coordinates prellet = coordinates_of("Pellet");
+    tick_parser_info["Pellet"] = prellet;
 }
 TickParserInfo TickInfoParser::get_parsed_tick_info() {
     return tick_parser_info;
