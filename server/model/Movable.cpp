@@ -7,19 +7,19 @@
 #define PX_PER_CELL_RATIO 50
 #define FORWARD 1
 #define BACKWARD -1
-#define GRAVITY -0.01
+#define GRAVITY -0.1
 
 Movable::Movable(const std::vector<float>& position,
                  const float velocity_x, const float velocity_y)
         : GameObject(position),
-          velocity_x(velocity_x),
-          velocity_y(velocity_y) {}
+          velocity_x(velocity_x / PX_PER_CELL_RATIO),
+          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
 
 Movable::Movable(const float x, const float y,
                  const float velocity_x, const float velocity_y)
         : GameObject(x, y),
-          velocity_x(velocity_x),
-          velocity_y(velocity_y) {}
+          velocity_x(velocity_x / PX_PER_CELL_RATIO),
+          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
 
 void Movable::move() {
     this->position.move(this->velocity_x, this->velocity_y);

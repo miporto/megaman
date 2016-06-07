@@ -20,7 +20,7 @@ TickParserInfo TickInfoParser::get_parsed_tick_info() {
 }
 Coordinates TickInfoParser::coordinates_of(const std::string &actor) {
     json json_file = json::parse(tick_info);
-    std::cout << json_file.dump() << std::endl;
+    std::cout << "Parsing: " << json_file.dump() << std::endl;
     Coordinates coordinates;
     json json_positions = json_file[actor];
     for (size_t i = 0; i < json_positions.size(); ++i) {
