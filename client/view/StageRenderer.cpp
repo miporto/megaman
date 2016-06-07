@@ -30,7 +30,6 @@ void StageRenderer::render_stage() {
 void StageRenderer::render_actors(const std::string& s_tick_info) {
     TickInfoParser tick_parser(s_tick_info);
     TickParserInfo parsed_tick_info = tick_parser.get_parsed_tick_info();
-//    TickParserInfo parsed_tick_info;
     ActorRenderers actor_renderers = actors.get_renderers();
     for (auto const &iterator: parsed_tick_info) {
         std::string actor_type = iterator.first;
@@ -41,7 +40,6 @@ void StageRenderer::render_actors(const std::string& s_tick_info) {
                                                  coordinates[i][1], 0, 0);
         }
     }
-//    actors.renderMet(100, renderer->GetOutputHeight() - 100, 0, 0);
 }
 
 void StageRenderer::render(const std::string& s_tick_info) {
