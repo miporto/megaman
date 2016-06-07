@@ -41,7 +41,7 @@ class Projectile : public Movable {
         virtual void tick() = 0;
         bool is_dead();
         bool is_enemy();
-        std::string info();
+        std::pair<std::string, std::string> info();
         virtual ~Projectile();
 };
 

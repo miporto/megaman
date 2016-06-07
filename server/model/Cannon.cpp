@@ -1,3 +1,4 @@
+#include <utility>
 #include <string>
 #include <algorithm>
 #include <vector>
@@ -21,11 +22,11 @@ bool Projectile::is_dead() {
     return this->dead;
 }
 
-std::string Projectile::info() {
+std::pair<std::string, std::string> Projectile::info() {
     std::vector<float> pos = this->get_position();
     json info = { {"x", (int)pos[X_COORD_POS]},
                   {"y", (int)pos[Y_COORD_POS]} };
-    return info.dump();
+    return std::make_pair(this->get_name(), info.dump());
 }
 
 const std::string& Projectile::get_name() { return this->name; }
