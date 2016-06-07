@@ -53,6 +53,8 @@ class Met : public Enemy {
 };
 
 class Bumby : public Enemy {
+    private:
+        int ticks;
     public:
         explicit Bumby(const std::vector<float>& position);
         void collide_with(Projectile* projectile);

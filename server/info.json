@@ -23,7 +23,7 @@
 			"Met": {"energy": 1, "velocity x": 0, "velocity y": 0},
 			"Bumby": {"energy": 1, "velocity x": 10, "velocity y": 0},
 			"Sniper": {"energy": 2, "velocity x": 0, "velocity y": 0},
-			"JumpingSniper": {"energy": 70, "velocity x": 0, "velocity y": 42}
+			"JumpingSniper": {"energy": 6, "velocity x": 0, "velocity y": 42}
     },
     
     "projectile": {
