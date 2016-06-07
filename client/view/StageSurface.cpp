@@ -48,6 +48,10 @@ StageSurface::StageSurface(Client& client) : client(client){
 }
 
 void StageSurface::run() {
+    renderer->Clear();
+    stage_renderer->render("{}");
+    renderer->Present();
+    SDL_Delay(1500);
     try {
 //        int run_phase = -1; // run animation phase
 //        double position = 0.0;
@@ -87,7 +91,7 @@ void StageSurface::run() {
             stage_renderer->render(s_tick_info);
 //            megaman_renderer->render((int) position, vcenter);
             renderer->Present();
-            SDL_Delay(3000);
+            SDL_Delay(500);
             prev_input = new_input;
         }
     } catch (std::exception &e) {
