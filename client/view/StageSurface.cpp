@@ -27,8 +27,8 @@ void StageSurface::replace_substr(std::string& input,
 StageSurface::StageSurface(Client& client) : client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
-        //replace_substr(s_stage_info, ",", " ,");
-//        s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
+        replace_substr(s_stage_info, ",", " ,");
+        //s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
         StageParser stage_parser;
         stage_info = stage_parser.stage_info(s_stage_info);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
@@ -80,7 +80,7 @@ void StageSurface::run() {
 
             // Receive tick info
             std::string s_tick_info = client.receive_stage_info();
-            //replace_substr(s_tick_info, ",", " ,");
+            replace_substr(s_tick_info, ",", " ,");
 //            if (position > renderer->GetOutputWidth()) {
 //                position = -50;
 //            }
