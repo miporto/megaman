@@ -14,11 +14,11 @@ Projectile::Projectile(const std::string& name,
                        float velocity_x, float velocity_y,
                        const std::vector<float>& initial_position) :
         Movable(initial_position, velocity_x, velocity_y),
-        name(name), damage(damage){}
+        name(name), damage(damage), dead(false) {}
 
 bool Projectile::is_dead() {
-    //TODO Devuelve true si toco a algun jugador o si se fue del mapa?
-    return false;
+    //TODO Devuelve tambien true si se fue del mapa?
+    return this->dead;
 }
 
 std::string Projectile::info() {
@@ -30,16 +30,19 @@ std::string Projectile::info() {
 
 const std::string& Projectile::get_name() { return this->name; }
 
-void Projectile::collide_with(Enemy* enemy) {
-    enemy->decrease_energy(this->damage);
+int Projectile::hit() {
+    this->dead = true;
+    return this->damage;
 }
+
+void Projectile::collide_with(Enemy* enemy) {}
 
 void Projectile::collide_with(Object* object) {}
 
 void Projectile::collide_with(Projectile* projectile) {}
 
 void Projectile::collide_with(MegaMan* mm) {
-    mm->decrease_energy(this->damage);
+    mm->decrease_energy(this->hit());
 }
 
 void Projectile::execute_collision_with(GameObject* other) {

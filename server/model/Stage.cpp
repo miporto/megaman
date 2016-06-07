@@ -1,9 +1,12 @@
+#include <unistd.h>
 #include <string>
 #include <vector>
 
 #include "Stage.h"
 #include "server/communication/Match.h"
 #include "server/communication/ServerCommunicator.h"
+
+#define SLEEP_TIME_MICROSECONDS 10
 
 Stage::Stage(Match* match,
              std::vector<ServerCommunicator*>& communicators,
@@ -97,6 +100,7 @@ void Stage::run() {
         this->get_rid_of_corpses();
         this->create_new_projectiles();
         this->match->notify_tick(this->status());
+        usleep(SLEEP_TIME_MICROSECONDS);
     }
 }
 
