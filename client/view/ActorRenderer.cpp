@@ -16,7 +16,8 @@ ActorRenderers ActorRenderer::get_renderers() {
 void ActorRenderer::render_megaman(int dest_x, int dest_y, int dir_x,
                                    int dir_y) {
     renderer->Copy(*megaman_sprites, SDL2pp::Rect(103, 10, 32, 28),
-               SDL2pp::Rect(dest_x, renderer->GetOutputHeight() - dest_y*50 -
+               SDL2pp::Rect(dest_x + dest_x*50, renderer->GetOutputHeight() -
+                       dest_y*50 -
                        50, 50, 50));
 //    renderer->Copy(*megaman_sprites, SDL2pp::Rect(103, 10, 32, 28),
 //               SDL2pp::Rect(300, 300 - 50, 50, 50));
@@ -25,14 +26,15 @@ void ActorRenderer::renderMet(int dest_x, int dest_y, int dir_x, int dir_y) {
     // TODO: put correct coordinates to the met sprite
     renderer->Copy(*sprites,
                    SDL2pp::Rect(57, 17, 18, 19),
-                   SDL2pp::Rect(dest_x, renderer->GetOutputHeight() -
+                   SDL2pp::Rect(dest_x + dest_x*50, renderer->GetOutputHeight
+                           () -
                            dest_y*50 - 50, 50, 50));
 }
 
 void ActorRenderer::render_pellet(int dest_x, int dest_y, int dir_x,
                                   int dir_y) {
-    SDL_Rect fillRect = {dest_x, renderer->GetOutputHeight() - dest_y - 50, 5,
-                         5};
+    SDL_Rect fillRect = {dest_x + dest_x*50, renderer->GetOutputHeight() -
+            dest_y - 50, 5, 5};
     SDL_SetRenderDrawColor(renderer->Get(), 0xFF, 0x00, 0x00, 0xFF);
     SDL_RenderFillRect(renderer->Get(), &fillRect);
 }
