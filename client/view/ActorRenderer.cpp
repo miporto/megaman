@@ -2,7 +2,7 @@
 
 ActorRenderer::ActorRenderer(SDL2pp::Renderer *renderer) : renderer(renderer) {
     renderers["Met"] = &ActorRenderer::renderMet;
-    renderers["Megaman"] = &ActorRenderer::render_megaman;
+    renderers["MegaMan"] = &ActorRenderer::render_megaman;
     sprites = new SDL2pp::Texture(*renderer, "resources/mm3_enemysheet.png");
     megaman_sprites = new SDL2pp::Texture(*renderer, "resources/8bitmegaman"
             ".png");

@@ -10,8 +10,8 @@ TickInfoParser::TickInfoParser(const std::string &tick_info) :
         tick_info(tick_info){
     Coordinates met = coordinates_of("Met");
     tick_parser_info["Met"] = met;
-    Coordinates megaman = coordinates_of("AAA");
-    tick_parser_info["Megaman"] = megaman;
+    Coordinates megaman = coordinates_of("MegaMan");
+    tick_parser_info["MegaMan"] = megaman;
 }
 TickParserInfo TickInfoParser::get_parsed_tick_info() {
     return tick_parser_info;
