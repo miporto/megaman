@@ -1,3 +1,4 @@
+#include <utility>
 #include <vector>
 #include <string>
 #include <server/communication/TickInfoMaker.h>
@@ -56,8 +57,11 @@ void Map::create_new_projectiles() {
 
 const std::string Map::status() {
     TickInfoMaker info;
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        info.add(this->objects[i]->get_name(), this->objects[i]->info());
+    std::pair<std::string, std::string> status;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        status = this->objects[i]->info();
+        info.add(status.first, status.second);
+    }
     return info.str();
 }
 

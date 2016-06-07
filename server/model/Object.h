@@ -1,6 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <utility>
 #include <string>
 #include <vector>
 
@@ -31,7 +32,7 @@ class Object : public GameObject {
         void tick();
         bool is_dead();
         bool is_enemy();
-        std::string info();
+        std::pair<std::string, std::string> info();
         virtual ~Object();
 };
 

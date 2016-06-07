@@ -1,6 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include <utility>
 #include <vector>
 #include <string>
 
@@ -36,7 +37,7 @@ class Enemy : public Movable {
         virtual void shoot(Map* map) = 0;
         virtual void tick() = 0;
         bool is_enemy();
-        std::string info();
+        std::pair<std::string, std::string> info();
         virtual ~Enemy();
 };
 

@@ -1,6 +1,7 @@
 #ifndef MEGAMAN_H
 #define MEGAMAN_H
 
+#include <utility>
 #include <vector>
 #include <string>
 
@@ -47,7 +48,7 @@ class MegaMan : public UserMovable {
         void tick();
         bool is_dead();
         bool is_enemy();
-        std::string info();
+        std::pair<std::string, std::string> info();
         ~MegaMan();
 };
 

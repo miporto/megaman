@@ -1,3 +1,4 @@
+#include <utility>
 #include <string>
 #include <vector>
 
@@ -26,7 +27,9 @@ void Object::tick() {}
 
 bool Object::is_enemy() { return false; }
 
-std::string Object::info() { return ""; }
+std::pair<std::string, std::string> Object::info() {
+    return std::make_pair("", "");
+}
 
 bool Object::is_dead() { return false; }
 
