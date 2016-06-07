@@ -27,7 +27,7 @@ void StageSurface::replace_substr(std::string& input,
 StageSurface::StageSurface(Client& client) : client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
-        replace_substr(s_stage_info, ",", " ,");
+        //replace_substr(s_stage_info, ",", " ,");
 //        s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
         StageParser stage_parser;
         stage_info = stage_parser.stage_info(s_stage_info);
@@ -80,7 +80,7 @@ void StageSurface::run() {
 
             // Receive tick info
             std::string s_tick_info = client.receive_stage_info();
-            replace_substr(s_tick_info, ",", " ,");
+            //replace_substr(s_tick_info, ",", " ,");
 //            if (position > renderer->GetOutputWidth()) {
 //                position = -50;
 //            }
@@ -108,6 +108,8 @@ void StageSurface::send_events(std::vector<bool>& prev_input,
                                std::vector<bool>& new_input) {
     for (size_t action_id = 0; action_id < prev_input.size(); ++action_id) {
         if (prev_input[action_id] != new_input[action_id]) {
+            std::cout << "Action: " << action_id << new_input[action_id] <<
+                    std::endl;
             client.send_action((char)action_id, new_input[action_id]);
         }
     }

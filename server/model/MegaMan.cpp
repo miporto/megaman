@@ -77,10 +77,10 @@ void MegaMan::tick() { this->move(); }
 std::pair<std::string, std::string> MegaMan::info() {
     std::vector<float> pos = this->get_position();
     json info = { {"name", this->get_name()},
-                  {"x", (int)pos[X_COORD_POS]},
-                  {"y", (int)pos[Y_COORD_POS]},
-                  {"direction x", (int)pos[DIRECTION_X_POS]},
-                  {"direction y", (int)pos[DIRECTION_Y_POS]},
+                  {"x", pos[X_COORD_POS]},
+                  {"y", pos[Y_COORD_POS]},
+                  {"direction x", pos[DIRECTION_X_POS]},
+                  {"direction y", pos[DIRECTION_Y_POS]},
                   {"energy", this->get_energy()} };
 
     return std::make_pair("MegaMan", info.dump());
