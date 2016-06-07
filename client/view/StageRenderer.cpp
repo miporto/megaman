@@ -14,7 +14,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
 }
 
 void StageRenderer::render_stage() {
-    tile_renderers_t tile_renderers = tiles.get_renderers();
+    TileRenderers tile_renderers = tiles.get_renderers();
     for (auto const &iterator: stage_info) {
         std::string tile_type = iterator.first;
         // TODO: add a meaningfull exception if the tile doesnt exists

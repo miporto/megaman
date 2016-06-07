@@ -11,7 +11,7 @@ TileRenderer::TileRenderer(SDL2pp::Renderer* renderer) :
             "png");
 }
 
-tile_renderers_t TileRenderer::get_renderers() {
+TileRenderers TileRenderer::get_renderers() {
     return renderers;
 }
 void TileRenderer::renderBlock(int dest_x, int dest_y) {
