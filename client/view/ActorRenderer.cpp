@@ -31,7 +31,8 @@ void ActorRenderer::renderMet(int dest_x, int dest_y, int dir_x, int dir_y) {
 
 void ActorRenderer::render_pellet(int dest_x, int dest_y, int dir_x,
                                   int dir_y) {
-    SDL_Rect fillRect = {dest_x, dest_y, 5, 5};
+    SDL_Rect fillRect = {dest_x, renderer->GetOutputHeight() - dest_y - 50, 5,
+                         5};
     SDL_SetRenderDrawColor(renderer->Get(), 0xFF, 0x00, 0x00, 0xFF);
     SDL_RenderFillRect(renderer->Get(), &fillRect);
 }
