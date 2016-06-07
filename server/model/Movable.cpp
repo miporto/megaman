@@ -4,7 +4,7 @@
 
 #include "Movable.h"
 
-#define PX_PER_CELL_RATIO 50
+#define PX_PER_CELL_RATIO 10
 #define FORWARD 1
 #define BACKWARD -1
 #define GRAVITY -0.1

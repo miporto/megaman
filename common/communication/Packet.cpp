@@ -51,9 +51,7 @@ std::string StagePick::get_str() const {
 StagePick::~StagePick() {}
 
 StageInfo::StageInfo(const std::string& stage_info)
-        : stage_info(stage_info) {
-    std::cout << "Packet: " << stage_info << std::endl;
-}
+        : stage_info(stage_info) {}
 
 char StageInfo::get_id() const { return this->id; }
 
