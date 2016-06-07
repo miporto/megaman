@@ -12,14 +12,14 @@
 Movable::Movable(const std::vector<float>& position,
                  const float velocity_x, const float velocity_y)
         : GameObject(position),
-          velocity_x(velocity_x / PX_PER_CELL_RATIO),
-          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
+          velocity_x(velocity_x),
+          velocity_y(velocity_y) {}
 
 Movable::Movable(const float x, const float y,
                  const float velocity_x, const float velocity_y)
         : GameObject(x, y),
-          velocity_x(velocity_x / PX_PER_CELL_RATIO),
-          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
+          velocity_x(velocity_x),
+          velocity_y(velocity_y) {}
 
 void Movable::move() {
     this->position.move(this->velocity_x, this->velocity_y);

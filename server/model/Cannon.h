@@ -24,6 +24,7 @@ class Projectile : public Movable {
     private:
         const std::string name;
         const int damage;
+        int ticks;
         bool dead;
 
     public:
@@ -38,7 +39,7 @@ class Projectile : public Movable {
         void collide_with(Projectile* projectile);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
-        virtual void tick() = 0;
+        virtual void tick();
         bool is_dead();
         bool is_enemy();
         std::pair<std::string, std::string> info();

@@ -9,16 +9,22 @@
 #include "Factory.h"
 
 #define PELLET_DAMAGE 1
+#define PROJECTILE_TIMEOUT 50
 
 Projectile::Projectile(const std::string& name,
                        int damage,
                        float velocity_x, float velocity_y,
                        const std::vector<float>& initial_position) :
         Movable(initial_position, velocity_x, velocity_y),
-        name(name), damage(damage), dead(false) {}
+        name(name), damage(damage), ticks(0), dead(false) {}
+
+void Projectile::tick() {
+    if (this->ticks > PROJECTILE_TIMEOUT)
+        this->dead = true;
+    this->ticks++;
+}
 
 bool Projectile::is_dead() {
-    //TODO Devuelve tambien true si se fue del mapa?
     return this->dead;
 }
 
@@ -60,6 +66,7 @@ Plasma::Plasma(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Plasma::tick() {
+    Projectile::tick();
     //TODO
 }
 
@@ -69,6 +76,7 @@ Bomb::Bomb(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Bomb::tick() {
+    Projectile::tick();
     //TODO
 }
 
@@ -78,6 +86,7 @@ Magnet::Magnet(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Magnet::tick() {
+    Projectile::tick();
     //TODO
 }
 
@@ -87,6 +96,7 @@ Spark::Spark(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Spark::tick() {
+    Projectile::tick();
     //TODO
 }
 
@@ -96,6 +106,7 @@ Fire::Fire(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Fire::tick() {
+    Projectile::tick();
     //TODO
 }
 
@@ -105,6 +116,7 @@ Ring::Ring(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Ring::tick() {
+    Projectile::tick();
     //TODO
 }
 
@@ -114,6 +126,7 @@ Pellet::Pellet(float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Pellet::tick() {
+    Projectile::tick();
     this->move();
 }
 
