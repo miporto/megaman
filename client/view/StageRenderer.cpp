@@ -38,12 +38,10 @@ void StageRenderer::render_actors(const std::string& s_tick_info) {
         Coordinates coordinates = iterator.second;
         for (size_t i = 0; i < coordinates.size(); ++i) {
             (actors.*(actor_renderers[actor_type]))(coordinates[i][0],
-                                                 coordinates[i][1],
-                                                 0,
-                                                 0);
+                                                 coordinates[i][1], 0, 0);
         }
     }
-    actors.renderMet(100, renderer->GetOutputHeight() - 100, 0, 0);
+//    actors.renderMet(100, renderer->GetOutputHeight() - 100, 0, 0);
 }
 
 void StageRenderer::render(const std::string& s_tick_info) {
