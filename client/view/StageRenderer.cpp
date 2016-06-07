@@ -25,13 +25,6 @@ void StageRenderer::render_stage() {
                                                  positions[i][1]);
         }
     }
-//    (tiles.*(tile_renderers["block"]))(0, renderer->GetOutputHeight() - 40);
-//    (tiles.*(tile_renderers["block"]))(50, renderer->GetOutputHeight() - 40);
-//    (tiles.*(tile_renderers["block"]))(100, renderer->GetOutputHeight() - 40);
-//    (tiles.*(tile_renderers["stairs"]))(0, renderer->GetOutputHeight() - 90);
-//    tiles.render(0, renderer->GetOutputHeight() - 50);
-//    tiles.render(50, renderer->GetOutputHeight() - 50);
-//    tiles.render(100, renderer->GetOutputHeight() - 50);
 }
 
 void StageRenderer::render_actors(const std::string& s_tick_info) {
