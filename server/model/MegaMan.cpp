@@ -79,8 +79,8 @@ std::pair<std::string, std::string> MegaMan::info() {
     json info = { {"name", this->get_name()},
                   {"x", (int)pos[X_COORD_POS]},
                   {"y", (int)pos[Y_COORD_POS]},
-                  {"direction x", pos[DIRECTION_X_POS]},
-                  {"direction y", pos[DIRECTION_Y_POS]},
+                  {"direction x", (int)pos[DIRECTION_X_POS]},
+                  {"direction y", (int)pos[DIRECTION_Y_POS]},
                   {"energy", this->get_energy()} };
 
     return std::make_pair("MegaMan", info.dump());
