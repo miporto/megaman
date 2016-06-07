@@ -87,7 +87,7 @@ void StageSurface::run() {
             stage_renderer->render(s_tick_info);
 //            megaman_renderer->render((int) position, vcenter);
             renderer->Present();
-//            SDL_Delay(1);
+            SDL_Delay(3000);
             prev_input = new_input;
         }
     } catch (std::exception &e) {
