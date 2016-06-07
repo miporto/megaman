@@ -77,8 +77,8 @@ std::string MegaMan::info() {
     std::vector<float> pos = this->get_position();
     json info = { {"x", (int)pos[X_COORD_POS]},
                   {"y", (int)pos[Y_COORD_POS]},
-                  {"direction x", pos[DIRECTION_X_POS]},
-                  {"direction y", pos[DIRECTION_Y_POS]},
+                  {"direction x", (int)pos[DIRECTION_X_POS]},
+                  {"direction y", (int)pos[DIRECTION_Y_POS]},
                   {"energy", this->get_energy()} };
     return info.dump();
 }
