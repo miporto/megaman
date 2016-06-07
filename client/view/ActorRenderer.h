@@ -16,6 +16,7 @@ public:
     ActorRenderers get_renderers();
     void render_megaman(int dest_x, int dest_y, int dir_x, int dir_y);
     void renderMet(int dest_x, int dest_y, int dir_x, int dir_y);
+    void render_pellet(int dest_x, int dest_y, int dir_x, int dir_y);
     virtual ~ActorRenderer();
 private:
     ActorRenderers renderers;
