@@ -67,30 +67,27 @@ void StageSurface::run() {
                 // TODO: send sht_dwn signal to server
                 return;
             }
+
             // Update Game state
             send_events(prev_input, new_input);
             if (new_input[RIGHT]) {
                 position += frame_delta * 0.2;
-//                run_phase = (frame_ticks / 100) % 8;
             }
-//            } else {
-//                run_phase = 0;
-//            }
-            // Receive tick info
-//            std::string s_stage_info = client.receive_stage_info();
-//            std::cout << s_stage_info << std::endl;
 
+            // Receive tick info
+            std::string s_tick_info = client.receive_stage_info();
+            replace_substr(s_tick_info, ",", " ,");
             if (position > renderer->GetOutputWidth()) {
                 position = -50;
             }
             int vcenter = renderer->GetOutputHeight() - 50;
-            // Clear screen
+
+            // Update screen
             renderer->Clear();
-            stage_renderer->render();
-//            int src_x = 8 + 51 * run_phase, src_y = 67;
+            stage_renderer->render(s_tick_info);
             megaman_renderer->render((int) position, vcenter);
             renderer->Present();
-            SDL_Delay(1);
+//            SDL_Delay(1);
             prev_input = new_input;
         }
     } catch (std::exception &e) {

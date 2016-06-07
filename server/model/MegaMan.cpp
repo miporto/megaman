@@ -75,8 +75,8 @@ void MegaMan::tick() { this->move(); }
 
 std::string MegaMan::info() {
     std::vector<float> pos = this->get_position();
-    json info = { {"x", pos[X_COORD_POS]},
-                  {"y", pos[Y_COORD_POS]},
+    json info = { {"x", (int)pos[X_COORD_POS]},
+                  {"y", (int)pos[Y_COORD_POS]},
                   {"direction x", pos[DIRECTION_X_POS]},
                   {"direction y", pos[DIRECTION_Y_POS]},
                   {"energy", this->get_energy()} };

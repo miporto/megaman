@@ -17,13 +17,15 @@ tile_renderers_t TileRenderer::get_renderers() {
 void TileRenderer::renderBlock(int dest_x, int dest_y) {
     renderer->Copy(*sprites,
                    SDL2pp::Rect(52, 119, 16, 16),
-                   SDL2pp::Rect(dest_x, dest_y - 16, 50, 50));
+                   SDL2pp::Rect(dest_x + dest_x*50, renderer->GetOutputHeight()
+                                                    - dest_y*50 - 50, 50, 50));
 }
 
 void TileRenderer::renderStairs(int dest_x, int dest_y) {
     renderer->Copy(*sprites,
                    SDL2pp::Rect(35, 85, 16, 16),
-                   SDL2pp::Rect(dest_x, dest_y - 16, 50, 50));
+                   SDL2pp::Rect(dest_x + dest_x*50, renderer->GetOutputHeight()
+                                                    - dest_y*50 - 50, 50, 50));
 }
 TileRenderer::~TileRenderer() {
     delete sprites;

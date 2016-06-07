@@ -19,11 +19,15 @@ Coordinates TickInfoParser::coordinates_of(const std::string &actor) {
     Coordinates coordinates;
     json json_positions = json_file[actor];
     for (size_t i = 0; i < json_positions.size(); ++i) {
+        std::cout << json_positions.dump() << std::endl;
+        std::cout << json_positions[i] << std::endl;
+        std::string s_json_position = json_positions[i];
         std::vector<int> coordinate;
-        coordinate.push_back((int)json_positions[i]["x"]);
-        coordinate.push_back((int)json_positions[i]["y"]);
-        coordinate.push_back((int)json_positions[i]["direction x"]);
-        coordinate.push_back((int)json_positions[i]["direction y"]);
+        json json_position = json::parse(s_json_position);
+        coordinate.push_back((int)json_position["x"]);
+        coordinate.push_back((int)json_position["y"]);
+//        coordinate.push_back((int)json_position["direction x"]);
+//        coordinate.push_back((int)json_position["direction y"]);
         coordinates.push_back(coordinate);
     }
     return coordinates;
