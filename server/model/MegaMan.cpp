@@ -41,6 +41,10 @@ int EnergyTank::get_energy() {
     return this->current_energy;
 }
 
+float EnergyTank::get_energy_percentage() {
+    return this->current_energy / this->max_energy;
+}
+
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan(const std::string& name) :
@@ -53,10 +57,6 @@ const std::string& MegaMan::get_name() {
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);
-}
-
-int MegaMan::get_energy() {
-    return this->tank.get_energy();
 }
 
 void MegaMan::kill() {
@@ -73,7 +73,7 @@ Projectile* MegaMan::shoot() {
 }
 
 void MegaMan::tick() {
-    std::cout << "MM Energy: " << this->get_energy() << std::endl;
+    std::cout << "MM Energy: " << this->tank.get_energy() << std::endl;
     this->move(); }
 
 std::pair<std::string, std::string> MegaMan::info(const int id) {
@@ -82,13 +82,15 @@ std::pair<std::string, std::string> MegaMan::info(const int id) {
     sx << pos[X_COORD_POS];
     std::stringstream sy;
     sy << pos[Y_COORD_POS];
+    std::stringstream senergy;
+    senergy << this->tank.get_energy_percentage();
 
     json info = { {"name", this->get_name()},
                   {"x", sx.str()},
                   {"y", sy.str()},
                   {"direction x", (int)pos[DIRECTION_X_POS]},
                   {"direction y", (int)pos[DIRECTION_Y_POS]},
-                  {"energy", this->get_energy()},
+                  {"energy", senergy.str()},
                   {"id", id} };
 
     return std::make_pair("MegaMan", info.dump());

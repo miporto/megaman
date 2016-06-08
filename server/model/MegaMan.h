@@ -22,6 +22,7 @@ class EnergyTank {
         void reset();
         bool is_empty();
         int get_energy();
+        float get_energy_percentage();
         ~EnergyTank();
 };
 
@@ -35,7 +36,6 @@ class MegaMan : public UserMovable {
         explicit MegaMan(const std::string& name);
         const std::string& get_name();
         void decrease_energy(int amount);
-        int get_energy();
         void kill();
         Projectile* shoot();
         void collide_with(Enemy* enemy);

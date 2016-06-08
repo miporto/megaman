@@ -16,7 +16,7 @@ set(SOURCES
         communication/Packet.h
         communication/Packet.cpp
     Position.h
-    Position.cpp StageParser.cpp StageParser.h SystemError.cpp SystemError.h)
+    Position.cpp SystemError.cpp SystemError.hs StageParser.cpp StageParser.h)
 
 include(CppLint)
 
