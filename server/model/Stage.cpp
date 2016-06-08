@@ -70,7 +70,9 @@ void Stage::execute_events() {
 }
 
 void Stage::tick() {
-    this->map.tick();
+    std::vector<std::string> moved_objects = this->map.tick();
+    for (unsigned int i = 0; i < moved_objects.size(); ++i)
+        this->match->notify_tick(moved_objects[i]);
 }
 
 void Stage::check_collisions() {
@@ -85,6 +87,9 @@ void Stage::get_rid_of_corpses() {
 
 void Stage::create_new_projectiles() {
     this->map.create_new_projectiles();
+    //TODO send info de proyectiles nuevos
+    // ahora o directamente en el proximo tick?
+    //map me tiene que dar un vector de info de ellos
 }
 
 const std::string Stage::status() {
@@ -104,8 +109,7 @@ void Stage::run() {
         this->check_collisions();
         this->get_rid_of_corpses();
         this->create_new_projectiles();
-        //TODO Notificar los movidos
-        //this->match->notify_tick(this->status());
+
         usleep(SLEEP_TIME_MICROSECONDS);
     }
 }

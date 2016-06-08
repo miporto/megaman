@@ -23,7 +23,7 @@ void Object::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }
 
-void Object::tick() {}
+bool Object::tick() { return false; }
 
 bool Object::is_enemy() { return false; }
 

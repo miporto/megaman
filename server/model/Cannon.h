@@ -39,7 +39,8 @@ class Projectile : public Movable {
         void collide_with(Projectile* projectile);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
-        virtual void tick();
+        void acknowledge_tick();
+        virtual bool tick() = 0;
         bool is_dead();
         bool is_enemy();
         std::pair<std::string, std::string> info(const int id);
@@ -50,49 +51,49 @@ class Plasma : public Projectile {
     public:
         Plasma(int damage, float velocity_x, float velocity_y,
                const std::vector<float>& initial_position);
-        void tick();
+        bool tick();
 };
 
 class Bomb : public Projectile {
     public:
         Bomb(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position);
-        void tick();
+        bool tick();
 };
 
 class Magnet : public Projectile {
     public:
         Magnet(int damage, float velocity_x, float velocity_y,
                const std::vector<float>& initial_position);
-        void tick();
+        bool tick();
 };
 
 class Spark : public Projectile {
     public:
         Spark(int damage, float velocity_x, float velocity_y,
               const std::vector<float>& initial_position);
-        void tick();
+        bool tick();
 };
 
 class Fire : public Projectile {
     public:
         Fire(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position);
-        void tick();
+        bool tick();
 };
 
 class Ring : public Projectile {
     public:
         Ring(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position);
-        void tick();
+        bool tick();
 };
 
 class Pellet : public Projectile {
     public:
         Pellet(float velocity_x, float velocity_y,
              const std::vector<float>& initial_position);
-        void tick();
+        bool tick();
 };
 
 class Ammo {

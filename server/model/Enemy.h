@@ -35,7 +35,7 @@ class Enemy : public Movable {
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
         virtual void shoot(Map* map) = 0;
-        virtual void tick() = 0;
+        virtual bool tick() = 0;
         bool is_enemy();
         std::pair<std::string, std::string> info(const int id);
         virtual ~Enemy();
@@ -49,7 +49,7 @@ class Met : public Enemy {
         explicit Met(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
         void shoot(Map* map);
-        void tick();
+        bool tick();
         ~Met();
 };
 
@@ -60,7 +60,7 @@ class Bumby : public Enemy {
         explicit Bumby(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
         void shoot(Map* map);
-        void tick();
+        bool tick();
         ~Bumby();
 };
 
@@ -72,7 +72,7 @@ class Sniper : public Enemy {
         explicit Sniper(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
         void shoot(Map* map);
-        void tick();
+        bool tick();
         ~Sniper();
 };
 
@@ -84,7 +84,7 @@ class JumpingSniper : public Enemy {
         explicit JumpingSniper(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
         void shoot(Map* map);
-        void tick();
+        bool tick();
         ~JumpingSniper();
 };
 

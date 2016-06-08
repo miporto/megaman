@@ -40,7 +40,7 @@ class GameObject {
         virtual void collide_with(Projectile* projectile) = 0;
         virtual void collide_with(MegaMan* mm) = 0;
         virtual void execute_collision_with(GameObject* other) = 0;
-        virtual void tick() = 0;
+        virtual bool tick() = 0;
         virtual bool is_dead() = 0;
         virtual bool is_enemy() = 0;
         virtual std::pair<std::string, std::string> info(const int id) = 0;

@@ -45,7 +45,7 @@ class MegaMan : public UserMovable {
         void execute_collision_with(GameObject* other);
         void change_ammo(unsigned int ammo_id);
         void receive_new_ammo(std::string& name);
-        void tick();
+        bool tick();
         bool is_dead();
         bool is_enemy();
         std::pair<std::string, std::string> info(const int id);

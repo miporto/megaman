@@ -18,7 +18,7 @@ Projectile::Projectile(const std::string& name,
         Movable(initial_position, velocity_x, velocity_y),
         name(name), damage(damage), ticks(0), dead(false) {}
 
-void Projectile::tick() {
+void Projectile::acknowledge_tick() {
     if (this->ticks > PROJECTILE_TIMEOUT)
         this->dead = true;
     this->ticks++;
@@ -71,9 +71,10 @@ Plasma::Plasma(int damage, float velocity_x, float velocity_y,
         : Projectile(PLASMA_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-void Plasma::tick() {
-    Projectile::tick();
+bool Plasma::tick() {
+    this->acknowledge_tick();
     //TODO
+    return this->it_moved();
 }
 
 Bomb::Bomb(int damage, float velocity_x, float velocity_y,
@@ -81,9 +82,10 @@ Bomb::Bomb(int damage, float velocity_x, float velocity_y,
         : Projectile(BOMB_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-void Bomb::tick() {
-    Projectile::tick();
+bool Bomb::tick() {
+    this->acknowledge_tick();
     //TODO
+    return this->it_moved();
 }
 
 Magnet::Magnet(int damage, float velocity_x, float velocity_y,
@@ -91,9 +93,10 @@ Magnet::Magnet(int damage, float velocity_x, float velocity_y,
         : Projectile(MAGNET_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-void Magnet::tick() {
-    Projectile::tick();
+bool Magnet::tick() {
+    this->acknowledge_tick();
     //TODO
+    return this->it_moved();
 }
 
 Spark::Spark(int damage, float velocity_x, float velocity_y,
@@ -101,9 +104,10 @@ Spark::Spark(int damage, float velocity_x, float velocity_y,
         : Projectile(SPARK_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-void Spark::tick() {
-    Projectile::tick();
+bool Spark::tick() {
+    this->acknowledge_tick();
     //TODO
+    return this->it_moved();
 }
 
 Fire::Fire(int damage, float velocity_x, float velocity_y,
@@ -111,9 +115,10 @@ Fire::Fire(int damage, float velocity_x, float velocity_y,
         : Projectile(FIRE_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-void Fire::tick() {
-    Projectile::tick();
+bool Fire::tick() {
+    this->acknowledge_tick();
     //TODO
+    return this->it_moved();
 }
 
 Ring::Ring(int damage, float velocity_x, float velocity_y,
@@ -121,9 +126,10 @@ Ring::Ring(int damage, float velocity_x, float velocity_y,
         : Projectile(RING_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-void Ring::tick() {
-    Projectile::tick();
+bool Ring::tick() {
+    this->acknowledge_tick();
     //TODO
+    return this->it_moved();
 }
 
 Pellet::Pellet(float velocity_x, float velocity_y,
@@ -131,9 +137,10 @@ Pellet::Pellet(float velocity_x, float velocity_y,
         : Projectile(PELLET_NAME, PELLET_DAMAGE, velocity_x,
                      velocity_y, initial_position) {}
 
-void Pellet::tick() {
-    Projectile::tick();
+bool Pellet::tick() {
+    this->acknowledge_tick();
     this->move();
+    return this->it_moved();
 }
 
 Ammo::Ammo(const std::string& name, int max) :

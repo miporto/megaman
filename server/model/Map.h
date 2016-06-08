@@ -17,7 +17,7 @@ class Map {
         Map();
         void set(const std::string& info);
         void add_game_object(GameObject* object);
-        void tick();
+        std::vector<std::string> tick();
         void check_collisions();
         std::vector<int> get_rid_of_corpses();
         void create_new_projectiles();
