@@ -6,7 +6,7 @@
 #include "server/communication/TickInfoMaker.h"
 #include "Map.h"
 #include "Factory.h"
-#include "ServerStageSetter.h"
+#include "StageSetter.h"
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
@@ -14,7 +14,7 @@
 Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 
 void Map::set(const std::string& info) {
-    ServerStageSetter setter(info, this);
+    StageSetter setter(info, this);
 }
 
 void Map::add_game_object(GameObject* object) {
