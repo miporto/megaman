@@ -36,8 +36,8 @@ void Receiver::receive_packet(const char id) {
             delete info;
             break;
         } case DECEASED: {
-            char object_id;
-            this->socket->receive(&object_id, sizeof(char));
+            int object_id;
+            this->socket->receive((char *) &object_id, sizeof(int));
             this->packets.push(new Deceased(object_id));
             break;
         } case ACTION: {

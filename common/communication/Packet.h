@@ -84,13 +84,13 @@ class StageInfo : public Packet {
 class Deceased : public Packet {
     private:
         static const char id = DECEASED;
-        const char object_id;
+        const int object_id;
 
     public:
-        explicit Deceased(const char object_id);
+        explicit Deceased(const int object_id);
         char get_id() const;
         std::string get_str() const;
-        char get_object_id() const;
+        int get_object_id() const;
         ~Deceased();
 };
 
