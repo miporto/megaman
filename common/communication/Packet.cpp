@@ -78,6 +78,21 @@ const std::string& StageInfo::get_info() const {
 
 StageInfo::~StageInfo() {}
 
+Deceased::Deceased(const char object_id) : object_id(object_id) {}
+
+char Deceased::get_id() const { return this->id; }
+
+std::string Deceased::get_str() const {
+    std::string str;
+    str.push_back(this->id);
+    str.push_back(this->object_id);
+    return str;
+}
+
+char Deceased::get_object_id() const { return this->object_id; }
+
+Deceased::~Deceased() { }
+
 Action::Action(const std::string& name,
                const char action_id, const bool pressed)
         : name(name), action_id(action_id), pressed(pressed) {
