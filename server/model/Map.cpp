@@ -1,8 +1,9 @@
 #include <utility>
+#include <map>
 #include <vector>
 #include <string>
-#include <server/communication/TickInfoMaker.h>
 
+#include "server/communication/TickInfoMaker.h"
 #include "Map.h"
 #include "Factory.h"
 #include "ServerStageSetter.h"
@@ -18,6 +19,7 @@ void Map::set(const std::string& info) {
 
 void Map::add_game_object(GameObject* object) {
     this->objects.push_back(object);
+    this->object_id[object] = this->objects.size();
 }
 
 void Map::tick() {
