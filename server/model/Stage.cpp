@@ -104,7 +104,8 @@ void Stage::run() {
         this->check_collisions();
         this->get_rid_of_corpses();
         this->create_new_projectiles();
-        this->match->notify_tick(this->status());
+        //TODO Notificar los movidos
+        //this->match->notify_tick(this->status());
         usleep(SLEEP_TIME_MICROSECONDS);
     }
 }
