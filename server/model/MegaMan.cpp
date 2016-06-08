@@ -72,7 +72,9 @@ Projectile* MegaMan::shoot() {
     return this->cannon.shoot(this->get_position());
 }
 
-void MegaMan::tick() { this->move(); }
+void MegaMan::tick() {
+    std::cout << "MM Energy: " << this->get_energy() << std::endl;
+    this->move(); }
 
 std::pair<std::string, std::string> MegaMan::info() {
     std::vector<float> pos = this->get_position();

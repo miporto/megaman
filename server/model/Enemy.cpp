@@ -72,9 +72,9 @@ void Met::collide_with(Projectile* projectile) {
 
 void Met::shoot(Map* map) {
     if (!helmet_on) {
-        map->add_game_object(new Pellet(-2, 0, this->get_position()));
-        map->add_game_object(new Pellet(-2, 1, this->get_position()));
-        map->add_game_object(new Pellet(-2, 1.5, this->get_position()));
+        map->add_game_object(new Pellet(-1, 0, this->get_position()));
+        map->add_game_object(new Pellet(-1, 0.88, this->get_position()));
+        map->add_game_object(new Pellet(-1, 1, this->get_position()));
     }
 }
 

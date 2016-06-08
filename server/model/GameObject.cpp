@@ -19,8 +19,8 @@ bool GameObject::collided_with(GameObject* other) {
     std::vector<float> others_vertex = other->get_position();
     float others_x = others_vertex[X_COORD_POS];
     float others_y = others_vertex[Y_COORD_POS];
-    if (x < others_x && others_x < (x + this->side)
-        && y < others_y && others_y < (y + this->side))
+    if (x < (others_x + other->get_side()) && others_x < (x + this->side)
+        && y < (others_y + other->get_side()) && others_y < (y + this->side))
         return true;
     return false;
 }

@@ -16,7 +16,7 @@ ActorRenderers ActorRenderer::get_renderers() {
 void ActorRenderer::render_megaman(int dest_x, int dest_y, int dir_x,
                                    int dir_y) {
     renderer->Copy(*megaman_sprites, SDL2pp::Rect(103, 10, 32, 28),
-               SDL2pp::Rect(dest_x + dest_x*50, renderer->GetOutputHeight() -
+               SDL2pp::Rect(dest_x + dest_x * 50, renderer->GetOutputHeight() -
                        dest_y*50 -
                        50, 50, 50));
 //    renderer->Copy(*megaman_sprites, SDL2pp::Rect(103, 10, 32, 28),
