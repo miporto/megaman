@@ -93,7 +93,6 @@ void Match::play_stage() {
     if (stage_info.empty()) throw MatchError("Stage is unavaiable");
 
     this->notify_stage_pick_to_team(stage_id);
-    this->notify_stage_info(stage_info);
 
     Stage stage(this, this->communicators, stage_info);
     stage.run();
@@ -102,6 +101,12 @@ void Match::play_stage() {
         chamber.run();
         if (chamber.beated())
             this->stages.erase(stage_id);
+    }
+}
+
+void Match::notify_deceased(const int object_id) {
+    for (unsigned int i = 0; i < this->communicators.size(); ++i) {
+        this->communicators[i]->send_deceased_info(object_id);
     }
 }
 

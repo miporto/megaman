@@ -28,6 +28,11 @@ Stage::Stage(Match* match,
     for (unsigned int i = 0; i < communicators.size(); ++i)
         action_queues.push_back(communicators[i]->get_actions());
     this->events = new EventQueue(action_queues);
+
+    // Making of StageInfo json for client
+    std::string info;
+    //TODO
+    this->match->notify_stage_info(info);
 }
 
 Player* Stage::player_with_name(const std::string& name) {
@@ -75,7 +80,9 @@ void Stage::check_collisions() {
 }
 
 void Stage::get_rid_of_corpses() {
-    this->map.get_rid_of_corpses();
+    std::vector<int> deceased_ids = this->map.get_rid_of_corpses();
+    for (unsigned int i = 0; i < deceased_ids.size(); ++i)
+        this->match->notify_deceased(deceased_ids[i]);
 }
 
 void Stage::create_new_projectiles() {

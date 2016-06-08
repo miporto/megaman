@@ -61,6 +61,10 @@ void ServerCommunicator::send_stage_info(const std::string& info) {
     this->packets_to_send.push(new StageInfo(info));
 }
 
+void ServerCommunicator::send_deceased_info(const int object_id) {
+    this->packets_to_send.push(new Deceased(object_id));
+}
+
 void ServerCommunicator::send_tick_info(const std::string& tick_info) {
     this->packets_to_send.push(new StageInfo(tick_info));
 }
