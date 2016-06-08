@@ -27,8 +27,17 @@ void Object::tick() {}
 
 bool Object::is_enemy() { return false; }
 
-std::pair<std::string, std::string> Object::info() {
-    return std::make_pair("", "");
+std::pair<std::string, std::string> Object::info(const int id) {
+    std::vector<float> pos = this->get_position();
+    std::stringstream sx;
+    sx << pos[X_COORD_POS];
+    std::stringstream sy;
+    sy << pos[Y_COORD_POS];
+
+    json info = { {"x", sx.str()},
+                  {"y", sy.str()},
+                  {"id", id} };
+    return std::make_pair(this->get_name(), info.dump());
 }
 
 bool Object::is_dead() { return false; }

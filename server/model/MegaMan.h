@@ -48,7 +48,7 @@ class MegaMan : public UserMovable {
         void tick();
         bool is_dead();
         bool is_enemy();
-        std::pair<std::string, std::string> info();
+        std::pair<std::string, std::string> info(const int id);
         ~MegaMan();
 };
 

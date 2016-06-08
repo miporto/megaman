@@ -43,7 +43,7 @@ class GameObject {
         virtual void tick() = 0;
         virtual bool is_dead() = 0;
         virtual bool is_enemy() = 0;
-        virtual std::pair<std::string, std::string> info() = 0;
+        virtual std::pair<std::string, std::string> info(const int id) = 0;
         virtual ~GameObject();
 };
 

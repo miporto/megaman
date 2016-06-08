@@ -30,9 +30,7 @@ Stage::Stage(Match* match,
     this->events = new EventQueue(action_queues);
 
     // Making of StageInfo json for client
-    std::string info;
-    //TODO
-    this->match->notify_stage_info(info);
+    this->match->notify_stage_info(this->map.status());
 }
 
 Player* Stage::player_with_name(const std::string& name) {

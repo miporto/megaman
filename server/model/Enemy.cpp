@@ -42,10 +42,11 @@ bool Enemy::is_dead() { return this->energy == 0; }
 
 bool Enemy::is_enemy() { return true; }
 
-std::pair<std::string, std::string> Enemy::info() {
+std::pair<std::string, std::string> Enemy::info(const int id) {
     std::vector<float> pos = this->get_position();
     json info = { {"x", (int)pos[X_COORD_POS]},
-                  {"y", (int)pos[Y_COORD_POS]} };
+                  {"y", (int)pos[Y_COORD_POS]},
+                  {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
 }
 

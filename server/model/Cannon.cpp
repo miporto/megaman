@@ -28,10 +28,11 @@ bool Projectile::is_dead() {
     return this->dead;
 }
 
-std::pair<std::string, std::string> Projectile::info() {
+std::pair<std::string, std::string> Projectile::info(const int id) {
     std::vector<float> pos = this->get_position();
     json info = { {"x", (int)pos[X_COORD_POS]},
-                  {"y", (int)pos[Y_COORD_POS]} };
+                  {"y", (int)pos[Y_COORD_POS]},
+                  {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
 }
 
