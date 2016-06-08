@@ -26,15 +26,19 @@ void Receiver::receive_packet(const char id) {
             this->socket->receive(&stage_id, sizeof(char));
             this->packets.push(new StagePick(stage_id));
             break;
-        } case STAGE: {
+        } case STAGE_INFO: {
             int length;
-            this->socket->receive((char*)&length, sizeof(int));
-            char* info = new char[length + 1];
+            this->socket->receive((char *) &length, sizeof(int));
+            char *info = new char[length + 1];
             info[length] = '\0';
             this->socket->receive(info, sizeof(char) * length);
             this->packets.push(new StageInfo(info));
-            delete info; // Stage supuestamente lo copia, pero hay que probar
-            // que no desaparezca despues de esto c:
+            delete info;
+            break;
+        } case DECEASED: {
+            char object_id;
+            this->socket->receive(&object_id, sizeof(char));
+            this->packets.push(new Deceased(object_id));
             break;
         } case ACTION: {
             int length;
