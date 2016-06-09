@@ -11,6 +11,7 @@ typedef std::map<int, TileRendererr *> TileRenderers2;
 enum TileRendererType {
     BLOCK_R,
     STAIRS_R,
+    PELLET_R
 };
 
 class TileRendererr {
@@ -43,6 +44,11 @@ public:
     void render();
 };
 
+class PelletRenderer : public TileRendererr {
+public:
+    using TileRendererr::TileRendererr;
+    void render();
+};
 class TileRendererFactory {
 public:
     explicit TileRendererFactory(SDL2pp::Renderer * renderer);

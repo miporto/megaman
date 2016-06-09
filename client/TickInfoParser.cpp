@@ -15,6 +15,8 @@ TickInfoParser::TickInfoParser(const std::string &tick_info) :
     new_tick_parser_info["Block"] = block;
     StatusInfo stairs = status_info_of("Stairs");
     new_tick_parser_info["Stairs"] = stairs;
+//    StatusInfo pellet = status_info_of("Pellet");
+//    new_tick_parser_info["Pellet"] = pellet;
 //    StatusInfo spikes = status_info_of("Spikes");
 //    new_tick_parser_info["Spikes"] = spikes;
 

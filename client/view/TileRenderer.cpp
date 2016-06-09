@@ -25,12 +25,20 @@ void StairsRenderer::render() {
                    SDL2pp::Rect(pos_x, pos_y, 50, 50));
 }
 
+void PelletRenderer::render() {
+    SDL_Rect fillRect = {pos_x, renderer->GetOutputHeight() -
+                                               pos_y, 5, 5};
+    SDL_SetRenderDrawColor(renderer->Get(), 0xFF, 0x00, 0x00, 0xFF);
+    SDL_RenderFillRect(renderer->Get(), &fillRect);
+}
+
 TileRendererFactory::TileRendererFactory(SDL2pp::Renderer * renderer) :
         renderer(renderer) {
     sprites = new SDL2pp::Texture(*renderer, "resources/mm3_8boss_shadowman."
             "png");
     tile_renderers["Block"] = BLOCK_R;
     tile_renderers["Stairs"] = STAIRS_R;
+    tile_renderers["Pellet"] = PELLET_R;
 }
 TileRendererr* TileRendererFactory::build_tile_renderer(std::string tile_type,
                                                         int pos_x, int
@@ -43,6 +51,9 @@ TileRendererr* TileRendererFactory::build_tile_renderer(std::string tile_type,
             break;
         case STAIRS_R:
             tile_renderer = new StairsRenderer(renderer, sprites, pos_x, pos_y);
+            break;
+        case PELLET_R:
+            tile_renderer = new PelletRenderer(renderer, sprites, pos_x, pos_y);
             break;
         default:
             throw "ERROR: Non-existint tile renderer!";
