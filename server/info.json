@@ -1,6 +1,15 @@
 {
 	"stage": {
-      "1": {
+	  "1" : {
+        "spawn": {
+        }, "object": {
+          "Block": [
+            {"x": 0, "y": 0},
+            {"x": 1, "y": 0},
+            {"x": 1, "y": 1},
+            {"x": 1, "y": 2}]}
+        },
+      "2": {
         "spawn": {
           "Met": [{"x": 7, "y": 1}]
         }, "object": {
@@ -20,7 +29,7 @@
             {"x": 8, "y": 1},
             {"x": 8, "y": 2}]}
         },
-		"2":{"spawn":{
+		"3":{"spawn":{
 				"Met": [{"x": 10, "y": 0}], 
 				"Bumby": [{"x": 100, "y": 30}], 
 				"Sniper": [{"x": 200, "y": 20}], 
@@ -35,7 +44,7 @@
         }
     },
     
-    "mega man": {"velocity x": 2, "velocity y": 1},
+    "mega man": {"velocity x": 0.5, "velocity y": 1},
     
     "energy tank": {"initial lives": 30, "max": 31},
     

@@ -18,8 +18,8 @@ Movable::Movable(const std::vector<float>& position,
 Movable::Movable(const float x, const float y,
                  const float velocity_x, const float velocity_y)
         : GameObject(x, y),
-          velocity_x(velocity_x),
-          velocity_y(velocity_y) {}
+          velocity_x(velocity_x / PX_PER_CELL_RATIO),
+          velocity_y(velocity_y / PX_PER_CELL_RATIO) {}
 
 void Movable::move() {
     this->position.move(this->velocity_x, this->velocity_y);
@@ -135,22 +135,42 @@ void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
     float delta_x, delta_y;
     delta_x = delta_y = 0;
 
-    if (std::abs(this->current_vel_x) > std::abs(this->current_vel_y)) {
-        if (this->current_vel_x > 0)
+//    if (std::abs(this->current_vel_x) > std::abs(this->current_vel_y)) {
+//        if (this->current_vel_x > 0)
+//            delta_x = (-1) * (pos[X_COORD_POS] + side
+//                              - obstacle_pos[X_COORD_POS]);
+//        if (this->current_vel_x < 0)
+//            delta_x = obstacle_pos[X_COORD_POS] + obstacle_side
+//                      - pos[X_COORD_POS];
+//    } else {
+//        if (this->current_vel_y > 0)
+//            delta_y = (-1) * (pos[Y_COORD_POS] + side
+//                              - obstacle_pos[Y_COORD_POS]);
+//        if (this->current_vel_y < 0) {
+//            delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side
+//                      - pos[Y_COORD_POS];
+//            this->reset_movement();
+//        }
+//    }
+
+
+    float mass_center_y = pos[Y_COORD_POS] + (side / 2.0);
+    float obs_mass_center_y = obstacle_pos[Y_COORD_POS] + (obstacle_side / 2.0);
+
+    float mass_center_x = pos[X_COORD_POS] + (side / 2.0);
+    float obs_mass_center_x = obstacle_pos[X_COORD_POS] + (obstacle_side / 2.0);
+
+    if (mass_center_y > obs_mass_center_y) {
+        delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side - pos[Y_COORD_POS];
+        this->reset_movement();
+    } else {
+        if (mass_center_x < obs_mass_center_x)
             delta_x = (-1) * (pos[X_COORD_POS] + side
                               - obstacle_pos[X_COORD_POS]);
-        if (this->current_vel_x < 0)
+        else
             delta_x = obstacle_pos[X_COORD_POS] + obstacle_side
                       - pos[X_COORD_POS];
-    } else {
-        if (this->current_vel_y > 0)
-            delta_y = (-1) * (pos[Y_COORD_POS] + side
-                              - obstacle_pos[Y_COORD_POS]);
-        if (this->current_vel_y < 0) {
-            delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side
-                      - pos[Y_COORD_POS];
-            this->reset_movement();
-        }
+        this->current_vel_x = 0;
     }
 
     this->position.move(delta_x, delta_y);
