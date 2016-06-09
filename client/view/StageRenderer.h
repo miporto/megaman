@@ -4,12 +4,14 @@
 #include <map>
 #include <SDL2pp/SDL2pp.hh>
 #include <string>
+#include <utility>
 
 #include "common/StageParser.h"
 #include "TileRenderer.h"
 #include "ActorRenderer.h"
 
 class TileRenderer;
+typedef std::pair<int, int> AdjustedPos;
 
 class StageRenderer {
 public:
@@ -26,6 +28,7 @@ public:
     ~StageRenderer();
 
 private:
+    AdjustedPos adjust_position(float x, float y);
 //    void render_stage();
 //
 //    void render_spawn_actors();

@@ -25,19 +25,29 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
             std::map<std::string, std::string> element_info = it2.second;
             float x = stof(element_info["x"]);
             float y = stof(element_info["y"]);
+            AdjustedPos adjusted_pos = adjust_position(x, y);
 //            if (element_info.count("dir_x") != 0 && element_info.count
 //                    ("dir_y") != 0)
             if (std::find(actors.begin(), actors.end(), type) != actors.end()){
                 actor_renderers[it2.first] = actor_factory
-                        .build_actor_renderer(type, x, y);
+                        .build_actor_renderer(type, adjusted_pos.first,
+                                              adjusted_pos.second);
             } else {
                 tile_renderers[it2.first] = tile_factory.build_tile_renderer(
-                        type, x, y);
+                        type, adjusted_pos.first, adjusted_pos.second);
             }
         }
     }
 }
 
+AdjustedPos StageRenderer::adjust_position(float x, float y) {
+    AdjustedPos adjusted_pos;
+    int adj_x = (int) x*50;
+    int adj_y = renderer->GetOutputHeight() - (int) (y + 1)*50;
+    adjusted_pos.first = adj_x;
+    adjusted_pos.second = adj_y;
+    return adjusted_pos;
+}
 void StageRenderer::render() {
     renderer->Copy(*background);
     TileRendererr *tile_renderer;
