@@ -19,6 +19,8 @@ public:
     explicit TickInfoParser(const std::string& tick_info);
     TickParserInfo get_parsed_tick_info();
     NewTickParserInfo get_new_parsed_tick_info();
+    static std::map<std::string, std::string> parse_update(
+            const std::string &info);
     ~TickInfoParser();
 private:
     Coordinates coordinates_of(const std::string& actor);

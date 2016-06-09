@@ -34,6 +34,26 @@ TickInfoParser::TickInfoParser(const std::string &tick_info) :
 NewTickParserInfo TickInfoParser::get_new_parsed_tick_info() {
     return new_tick_parser_info;
 }
+
+std::map<std::string, std::string> TickInfoParser::parse_update(
+        const std::string &info) {
+    std::map<std::string, std::string> parsed_update;
+    json json_update = json::parse(info);
+    for (json::iterator it = json_update.begin(); it != json_update.end(); ++it)
+    {
+        std::string key = it.key();
+        std::string value;
+        if (it.value().is_number()) {
+            int id = it.value();
+            value = std::to_string(id);
+        } else {
+            value = it.value();
+        }
+        parsed_update[key] = value;
+    }
+    return parsed_update;
+}
+
 TickParserInfo TickInfoParser::get_parsed_tick_info() {
     return tick_parser_info;
 }
