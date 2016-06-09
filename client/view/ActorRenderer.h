@@ -10,6 +10,23 @@ class ActorRenderer;
 typedef void (ActorRenderer::*arenderer_method_t)(int,int,int,int);
 typedef std::map<std::string, arenderer_method_t> ActorRenderers;
 
+class ActorRendererr {
+public:
+    ActorRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites);
+
+    virtual void update(int pos_x, int pos_y, int dir_x, int dir_y) = 0;
+
+    virtual void render() = 0;
+
+    virtual ~ActorRendererr();
+
+private:
+    SDL2pp::Renderer *renderer;
+    SDL2pp::Texture *sprites;
+    int pos_x;
+    int pos_y;
+};
+
 class ActorRenderer {
 public:
     explicit ActorRenderer(SDL2pp::Renderer* renderer);
