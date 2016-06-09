@@ -37,6 +37,8 @@ class ClientCommunicator {
         const std::string receive_stage_info();
         void send_action(const std::string& name, const char& action_id,
                          const bool& pressed);
+        bool new_update_packets();
+        bool new_deceased();
         virtual ~ClientCommunicator();
 };
 

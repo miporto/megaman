@@ -55,4 +55,11 @@ std::string Client::receive_stage_info() {
     }
     return stage_info;
 }
+bool Client::new_update_packets() {
+    return communicator.new_update_packets();
+}
+
+bool Client::new_deceased() {
+    return communicator.new_deceased();
+}
 Client::~Client() { this->client.shutdown(); }

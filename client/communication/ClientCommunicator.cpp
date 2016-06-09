@@ -57,6 +57,13 @@ void ClientCommunicator::send_action(const std::string& name,
     this->packets_to_send.push(new Action(name, action_id, pressed));
 }
 
+bool ClientCommunicator::new_update_packets() {
+    return !packets_received.is_empty(STAGE_INFO);
+}
+
+bool ClientCommunicator::new_deceased() {
+    return !packets_received.is_empty(DECEASED);
+}
 ClientCommunicator::~ClientCommunicator() {
     this->waiter.join();
 }

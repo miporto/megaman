@@ -23,6 +23,8 @@ class Client {
         void pick_stage(char stage_id);
 		void send_action(const char action_id, const bool pressed);
 		std::string receive_stage_info();
+	    bool new_update_packets();
+	    bool new_deceased();
         ~Client();
 };
 
