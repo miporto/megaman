@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <utility>
+
 
 #include "common/communication/Receiver.h"
 #include "common/communication/Packet.h"
@@ -21,6 +23,7 @@ class TeamWaiter : public Thread {
         ~TeamWaiter();
 };
 
+typedef std::pair<std::string, std::string> UpdatePacket;
 class ClientCommunicator {
     private:
         Socket& socket;
@@ -35,8 +38,8 @@ class ClientCommunicator {
         void send_name(std::string& name);
         void send_stage_pick(char& stage_id);
         const std::string receive_stage_info();
-        const std::string receive_update();
-        const std::string receive_deceased();
+        UpdatePacket receive_update();
+        int receive_deceased();
         void send_action(const std::string& name, const char& action_id,
                          const bool& pressed);
         bool new_update_packets();

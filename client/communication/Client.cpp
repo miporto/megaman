@@ -56,20 +56,12 @@ std::string Client::receive_stage_info() {
     return stage_info;
 }
 
-const std::string Client::receive_update() {
-    const std::string info = communicator.receive_update();
-    if (info.empty()) {
-        throw "ERROR: Empty update!";
-    }
-    return info;
+UpdatePacket Client::receive_update() {
+    return communicator.receive_update();
 }
 
-const std::string Client::receive_deceased() {
-    const std::string info = communicator.receive_deceased();
-    if (info.empty()) {
-        throw "ERROR: Empty update!";
-    }
-    return info;
+int Client::receive_deceased() {
+    return communicator.receive_deceased();
 }
 
 bool Client::new_update_packets() {

@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <utility>
 
 #include "ClientCommunicator.h"
 
@@ -51,24 +52,25 @@ const std::string ClientCommunicator::receive_stage_info() {
     return "";
 }
 
-const std::string ClientCommunicator::receive_update() {
+UpdatePacket ClientCommunicator::receive_update() {
     if (new_update_packets()) {
         Update* update = (Update*) packets_received.pop(UPDATE);
-        std::string info = update->get_str();
+        std::string name = update->get_name();
+        std::string update_info = update->get_update_info();
         delete update;
-        return info;
+        return (UpdatePacket (name, update_info));
     }
-    return "";
+    throw "ERROR: No update on queue!";
 }
 
-const std::string ClientCommunicator::receive_deceased() {
+int ClientCommunicator::receive_deceased() {
     if (new_deceased()) {
         Deceased* update = (Deceased*) packets_received.pop(DECEASED);
-        std::string info = update->get_str();
+        int id = update->get_id();
         delete update;
-        return info;
+        return id;
     }
-    return "";
+    throw "ERROR: No id on queue!";
 }
 
 void ClientCommunicator::send_action(const std::string& name,
