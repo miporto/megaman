@@ -11,7 +11,6 @@
 class TileRenderer;
 class StageRenderer {
 public:
-//    explicit StageRenderer(SDL2pp::Renderer* renderer);
     StageRenderer(SDL2pp::Renderer* renderer, StageParserInfo& stage_info);
     void render(const std::string& s_tick_info);
     ~StageRenderer();
@@ -23,6 +22,7 @@ private:
     SDL2pp::Renderer* renderer;
     StageParserInfo& stage_info;
     SDL2pp::Texture* background;
+//    TileRenderers2 tiles_;
     TileRenderer tiles;
     ActorRenderer actors;
 };

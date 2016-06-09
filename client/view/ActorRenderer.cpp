@@ -1,5 +1,24 @@
 #include "ActorRenderer.h"
 
+ActorRendererr::ActorRendererr(SDL2pp::Renderer *renderer,
+                               SDL2pp::Texture *sprites, int pos_x, int pos_y) :
+        renderer(renderer), sprites(sprites), pos_x(pos_x), pos_y(pos_y),
+        dir_x(0), dir_y(0) { }
+
+void ActorRendererr::update(int pos_x, int pos_y, int dir_x, int dir_y) {
+    this->pos_x = pos_x;
+    this->pos_y = pos_y;
+    this->dir_x = dir_x;
+    this->dir_y = dir_y;
+}
+
+void MetRenderer::render() {
+    renderer->Copy(*sprites,
+                   SDL2pp::Rect(57, 17, 18, 19),
+                   SDL2pp::Rect(pos_x * 50, renderer->GetOutputHeight() -
+                                            pos_y * 50 - 50, 50, 50));
+}
+
 ActorRenderer::ActorRenderer(SDL2pp::Renderer *renderer) : renderer(renderer) {
     renderers["Met"] = &ActorRenderer::renderMet;
     renderers["MegaMan"] = &ActorRenderer::render_megaman;
