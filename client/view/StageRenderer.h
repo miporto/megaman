@@ -18,7 +18,7 @@ public:
     StageRenderer(SDL2pp::Renderer *renderer, const std::string &stage_info);
     void render();
     void render(const std::string &s_tick_info);
-    void update(const std::string &info);
+    void update(const std::string &name, const std::string &update_info);
     void delete_renderer(int id);
     ~StageRenderer();
 

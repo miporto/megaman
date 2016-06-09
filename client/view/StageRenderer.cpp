@@ -63,7 +63,8 @@ void StageRenderer::render() {
     }
 }
 
-void StageRenderer::update(const std::string &info) {
+void StageRenderer::update(const std::string &name,
+                           const std::string &update_info) {
     return;
 }
 void StageRenderer::delete_renderer(int id) {

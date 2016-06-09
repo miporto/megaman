@@ -63,9 +63,10 @@ void StageSurface::run() {
 
             // Receive tick info
             while (client.new_update_packets()) {
-                std::string s_tick_info = client.receive_stage_info();
-                replace_substr(s_tick_info, ",", " ,");
-                stage_renderer->update(s_tick_info);
+                UpdatePacket update_packet = client.receive_update();
+                replace_substr(update_packet.second, ",", " ,");
+                stage_renderer->update(update_packet.first,
+                                       update_packet.second);
             }
 
             // Update screen
