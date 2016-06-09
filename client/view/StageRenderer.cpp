@@ -62,6 +62,16 @@ void StageRenderer::render() {
         actor_renderer->render();
     }
 }
+
+void StageRenderer::delete_renderer(int id) {
+    if (tile_renderers.count(id) != 0) {
+        tile_renderers.erase(id);
+    } else if (actor_renderers.count(id != 0)) {
+        actor_renderers.erase(id);
+    } else {
+        throw "ERROR: Non-existing id sent";
+    }
+}
 //StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
 //                             StageParserInfo& stage_info) :
 //        renderer(renderer), stage_info(stage_info), tiles(renderer),
