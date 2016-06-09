@@ -5,6 +5,7 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "common/StageParser.h"
 #include "TileRenderer.h"
@@ -36,6 +37,8 @@ private:
     SDL2pp::Texture *background;
     std::map<int, TileRendererr*> tile_renderers;
     std::map<int, ActorRendererr*> actor_renderers;
+    std::vector<std::string> objects;
+    TileRendererFactory tile_factory;
 //    TileRenderers2 tiles_rendererss;
 //    TileRenderer tiles;
 //    ActorRenderer actors;

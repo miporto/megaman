@@ -9,14 +9,14 @@
 
 StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
                              const std::string &stage_info) :
-        renderer(renderer) {
+        renderer(renderer), tile_factory(renderer) {
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
     TickInfoParser parser(stage_info);
-    TileRendererFactory tile_factory(renderer);
     ActorRendererFactory actor_factory(renderer);
 
 
     std::vector<std::string> actors = {"MegaMan", "Met"};
+    objects = {"Block", "Stairs"};
     NewTickParserInfo parsed_info = parser.get_new_parsed_tick_info();
     for (auto const &it: parsed_info) {
         std::string type = it.first;
@@ -65,7 +65,24 @@ void StageRenderer::render() {
 
 void StageRenderer::update(const std::string &name,
                            const std::string &update_info) {
-    return;
+    std::map<std::string, std::string> parsed_update =
+            TickInfoParser::parse_update(update_info);
+    int id = stoi(parsed_update["id"]);
+    float x = stof(parsed_update["x"]);
+    float y = stof(parsed_update["y"]);
+    AdjustedPos adjusted_pos = adjust_position(x, y);
+    if (tile_renderers.count(id) != 0) {
+        TileRendererr *t_renderer = tile_renderers[id];
+        t_renderer->update(adjusted_pos.first,  adjusted_pos.second);
+    } else if (actor_renderers.count(id) != 0) {
+        ActorRendererr *a_renderer = actor_renderers[id];
+        a_renderer->update(x, y, 0, 0);
+    } else {
+        if (std::find(objects.begin(), objects.end(), name) != objects.end()) {
+            tile_renderers[id] = tile_factory.build_tile_renderer(
+                    name, adjusted_pos.first, adjusted_pos.second);
+        }
+    }
 }
 void StageRenderer::delete_renderer(int id) {
     if (tile_renderers.count(id) != 0) {
