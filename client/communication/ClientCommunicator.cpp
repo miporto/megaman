@@ -51,6 +51,26 @@ const std::string ClientCommunicator::receive_stage_info() {
     return "";
 }
 
+const std::string ClientCommunicator::receive_update() {
+    if (new_update_packets()) {
+        Update* update = (Update*) packets_received.pop(UPDATE);
+        std::string info = update->get_str();
+        delete update;
+        return info;
+    }
+    return "";
+}
+
+const std::string ClientCommunicator::receive_deceased() {
+    if (new_deceased()) {
+        Deceased* update = (Deceased*) packets_received.pop(DECEASED);
+        std::string info = update->get_str();
+        delete update;
+        return info;
+    }
+    return "";
+}
+
 void ClientCommunicator::send_action(const std::string& name,
                                      const char &action_id,
                                      const bool& pressed) {
@@ -58,7 +78,7 @@ void ClientCommunicator::send_action(const std::string& name,
 }
 
 bool ClientCommunicator::new_update_packets() {
-    return !packets_received.is_empty(STAGE_INFO);
+    return !packets_received.is_empty(UPDATE);
 }
 
 bool ClientCommunicator::new_deceased() {
