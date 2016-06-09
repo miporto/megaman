@@ -50,6 +50,7 @@ public:
     virtual ~ActorRendererFactory() {}
 private:
     SDL2pp::Renderer *renderer;
+    SDL2pp::Texture *meg_sprites;
     SDL2pp::Texture *sprites;
     std::map<std::string, ActorRendererType> actor_renderers;
 };

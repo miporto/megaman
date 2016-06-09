@@ -16,6 +16,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     ActorRendererFactory actor_factory(renderer);
 
 
+    std::vector<std::string> actors = {"MegaMan", "Met"};
     NewTickParserInfo parsed_info = parser.get_new_parsed_tick_info();
     for (auto const &it: parsed_info) {
         std::string type = it.first;
@@ -24,8 +25,9 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
             std::map<std::string, std::string> element_info = it2.second;
             float x = stof(element_info["x"]);
             float y = stof(element_info["y"]);
-            if (element_info.count("dir_x") != 0 && element_info.count
-                    ("dir_y") != 0) {
+//            if (element_info.count("dir_x") != 0 && element_info.count
+//                    ("dir_y") != 0)
+            if (std::find(actors.begin(), actors.end(), type) != actors.end()){
                 actor_renderers[it2.first] = actor_factory
                         .build_actor_renderer(type, x, y);
             } else {

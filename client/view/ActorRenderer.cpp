@@ -33,8 +33,9 @@ void MegaManRenderer::render() {
 
 ActorRendererFactory::ActorRendererFactory(SDL2pp::Renderer *renderer) :
         renderer(renderer){
-    sprites = new SDL2pp::Texture(*renderer, "resources/8bitmegaman."
-            "png");
+    sprites = new SDL2pp::Texture(*renderer, "resources/mm3_enemysheet.png");
+    meg_sprites = new SDL2pp::Texture(*renderer, "resources/8bitmegaman"
+            ".png");
     actor_renderers["Met"] = MET_R;
     actor_renderers["MegaMan"] = MEGAMAN_R;
 }
@@ -47,10 +48,11 @@ ActorRendererr *ActorRendererFactory::build_actor_renderer(std::string
     ActorRendererType tile_renderer_id = actor_renderers[tile_type];
     switch (tile_renderer_id) {
         case MET_R:
-            actor_renderer = new MetRenderer(renderer, sprites, pos_x, pos_y);
+            actor_renderer = new MetRenderer(renderer, sprites, pos_x,
+                                             pos_y);
             break;
         case MEGAMAN_R:
-            actor_renderer = new MegaManRenderer(renderer, sprites, pos_x,
+            actor_renderer = new MegaManRenderer(renderer, meg_sprites, pos_x,
                                                 pos_y);
             break;
         default:
