@@ -28,9 +28,6 @@ StageSurface::StageSurface(Client& client) : client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
         replace_substr(s_stage_info, ",", " ,");
-        //s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
-        StageParser stage_parser;
-        stage_info = stage_parser.stage_info(s_stage_info);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
                                     SDL_WINDOWPOS_UNDEFINED, 640, 480,
@@ -39,7 +36,7 @@ StageSurface::StageSurface(Client& client) : client(client){
         sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
                 ".png");
         // TODO: stage renderer should receive the stage info in its creation
-//        stage_renderer = new StageRenderer(renderer, stage_info);
+        stage_renderer = new StageRenderer(renderer, s_stage_info);
 //        stage_renderer->update(s_stage_info);
 //        megaman_renderer = new MegamanRenderer(renderer);
     } catch (std::exception &e) {
@@ -49,9 +46,9 @@ StageSurface::StageSurface(Client& client) : client(client){
 }
 
 void StageSurface::run() {
-    renderer->Clear();
-    stage_renderer->render("{}");
-    renderer->Present();
+//    renderer->Clear();
+//    stage_renderer->render("{}");
+//    renderer->Present();
     try {
         std::vector<bool> prev_input = input_handler.get_input();
         std::vector<bool> new_input = input_handler.get_input();
@@ -65,15 +62,15 @@ void StageSurface::run() {
             }
 
             // Update Game state
-            send_events(prev_input, new_input);
+//            send_events(prev_input, new_input);
 
             // Receive tick info
-            std::string s_tick_info = client.receive_stage_info();
-            replace_substr(s_tick_info, ",", " ,");
+//            std::string s_tick_info = client.receive_stage_info();
+//            replace_substr(s_tick_info, ",", " ,");
 
             // Update screen
             renderer->Clear();
-            stage_renderer->render(s_tick_info);
+            stage_renderer->render();
             renderer->Present();
             prev_input = new_input;
         }
