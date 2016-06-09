@@ -1,6 +1,7 @@
 #ifndef MEGAMAN_STAGERENDERER_H
 #define MEGAMAN_STAGERENDERER_H
 
+#include <map>
 #include <SDL2pp/SDL2pp.hh>
 #include <string>
 
@@ -12,6 +13,7 @@ class TileRenderer;
 
 class StageRenderer {
 public:
+    StageRenderer(SDL2pp::Renderer *renderer, const std::string &stage_info);
     StageRenderer(SDL2pp::Renderer *renderer, StageParserInfo &stage_info);
 
     void render(const std::string &s_tick_info);
@@ -23,19 +25,20 @@ public:
     ~StageRenderer();
 
 private:
-    void render_stage();
-
-    void render_spawn_actors();
-
-    void render_actors(const std::string &s_tick_info);
+//    void render_stage();
+//
+//    void render_spawn_actors();
+//
+//    void render_actors(const std::string &s_tick_info);
 
     // TODO: stageRenderer should receive the background image in memory
     SDL2pp::Renderer *renderer;
-    StageParserInfo &stage_info;
+//    StageParserInfo &stage_info;
     SDL2pp::Texture *background;
-    TileRenderers2 tiles_rendererss;
-    TileRenderer tiles;
-    ActorRenderer actors;
+    std::map<int, TileRendererr*> tile_renderers;
+//    TileRenderers2 tiles_rendererss;
+//    TileRenderer tiles;
+//    ActorRenderer actors;
 };
 
 

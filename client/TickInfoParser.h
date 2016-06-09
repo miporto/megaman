@@ -9,7 +9,7 @@
 
 using json = nlohmann::json;
 
-typedef std::map<std::string, std::string> StatusInfo;
+typedef std::map<int, std::map<std::string, std::string>> StatusInfo;
 typedef std::map<std::string, StatusInfo> NewTickParserInfo;
 typedef std::vector<std::vector<int>> Coordinates;
 typedef std::map<std::string, Coordinates> TickParserInfo;
@@ -18,6 +18,7 @@ class TickInfoParser {
 public:
     explicit TickInfoParser(const std::string& tick_info);
     TickParserInfo get_parsed_tick_info();
+    NewTickParserInfo get_new_parsed_tick_info();
     ~TickInfoParser();
 private:
     Coordinates coordinates_of(const std::string& actor);

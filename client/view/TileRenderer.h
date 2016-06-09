@@ -8,6 +8,10 @@
 class TileRendererr;
 
 typedef std::map<int, TileRendererr *> TileRenderers2;
+enum TileRendererType {
+    BLOCK_R,
+    STAIRS_R,
+};
 
 class TileRendererr {
 public:
@@ -29,12 +33,28 @@ protected:
 
 class BlockRenderer : public TileRendererr {
 public:
-    BlockRenderer(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
-                  int pos_x, int pos_y);
+    BlockRenderer(SDL2pp::Renderer *renderer1,
+                      SDL2pp::Texture *sprites1, int pos_x1,
+                      int pos_y1, SDL2pp::Renderer *renderer,
+                      SDL2pp::Texture *sprites, int pos_x,
+                      int pos_y);
 
     void render();
 };
 
+class TileRendererFactory {
+public:
+    explicit TileRendererFactory(SDL2pp::Renderer * renderer);
+    TileRendererr* build_tile_renderer(std::string tile_type, int pos_x,
+                                       int pos_y);
+    virtual ~TileRendererFactory() {}
+private:
+    SDL2pp::Renderer *renderer;
+    SDL2pp::Texture *sprites;
+    std::map<std::string, TileRendererType> tile_renderers;
+};
+
+// Old stuff, deprecated --siempre quise usar esta palabra (?
 class TileRenderer;
 
 typedef void (TileRenderer::*trenderer_method_t)(int, int);
