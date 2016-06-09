@@ -18,6 +18,10 @@ TickInfoParser::TickInfoParser(const std::string &tick_info) :
 //    StatusInfo spikes = status_info_of("Spikes");
 //    new_tick_parser_info["Spikes"] = spikes;
 
+    StatusInfo mets = status_info_of("Met");
+    new_tick_parser_info["Met"] = mets;
+    StatusInfo megs = status_info_of("MegaMan");
+    new_tick_parser_info["MegaMan"] = megs;
     // Old stuff
 //    Coordinates met = coordinates_of("Met");
 //    tick_parser_info["Met"] = met;
@@ -43,6 +47,13 @@ StatusInfo TickInfoParser::status_info_of(const std::string &element) {
         // TODO: id is an int
         p_element_info["x"] = element_info["x"];
         p_element_info["y"] = element_info["y"];
+        if (element_info.count("direction x") != 0 && element_info.count
+                ("direction y") != 0) {
+            int x = element_info["direction ""x"];
+            p_element_info["dir_x"] = std::to_string(x);
+            int y = element_info["direction ""y"];
+            p_element_info["dir_y"] = std::to_string(y);
+        }
         status_info[element_info["id"]] = p_element_info;
         // TODO: add special info for actors
     }
