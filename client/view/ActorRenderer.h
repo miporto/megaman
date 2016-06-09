@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+
 class ActorRenderer;
 
 typedef void (ActorRenderer::*arenderer_method_t)(int, int, int, int);

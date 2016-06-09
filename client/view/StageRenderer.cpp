@@ -20,8 +20,8 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
         StatusInfo elements_info = it.second;
         for (auto const &it2: elements_info) {
             std::map<std::string, std::string> element_info = it2.second;
-            int x = stoi(element_info["x"]);
-            int y = stoi(element_info["y"]);
+            float x = stof(element_info["x"]);
+            float y = stof(element_info["y"]);
             tile_renderers[it2.first] = tile_factory.build_tile_renderer(type,
                                                                          x, y);
         }

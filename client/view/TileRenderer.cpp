@@ -4,34 +4,29 @@
 #include "TileRenderer.h"
 
 TileRendererr::TileRendererr(SDL2pp::Renderer *renderer,
-                             SDL2pp::Texture *sprites, int pos_x, int pos_y) :
+                             SDL2pp::Texture *sprites, float pos_x,
+                             float pos_y) :
         renderer(renderer), sprites(sprites), pos_x(pos_x), pos_y(pos_y) { }
 
-void TileRendererr::update(int pos_x, int pos_y) {
+void TileRendererr::update(float pos_x, float pos_y) {
     this->pos_x = pos_x;
     this->pos_y = pos_y;
 }
 
-//BlockRenderer::BlockRenderer(SDL2pp::Renderer *renderer1,
-//                             SDL2pp::Texture *sprites1, int pos_x1,
-//                             int pos_y1, SDL2pp::Renderer *renderer,
-//                             SDL2pp::Texture *sprites, int pos_x,
-//                             int pos_y) :
-//        TileRendererr(renderer1,sprites1,pos_x1,pos_y1), renderer(renderer),
-//        sprites(sprites), pos_x(pos_x), pos_y(pos_y) {}
-
 void BlockRenderer::render() {
+    float y = pos_y * 50 + 50;
     renderer->Copy(*sprites,
                    SDL2pp::Rect(52, 119, 16, 16),
-                   SDL2pp::Rect(pos_x * 50, renderer->GetOutputHeight()
-                                            - pos_y * 50 - 50, 50, 50));
+                   SDL2pp::Rect((int) pos_x * 50, renderer->GetOutputHeight()
+                                                  - (int) y, 50, 50));
 }
 
 void StairsRenderer::render() {
+    float y = pos_y * 50 + 50;
     renderer->Copy(*sprites,
                    SDL2pp::Rect(35, 85, 16, 16),
-                   SDL2pp::Rect(pos_x * 50, renderer->GetOutputHeight()
-                                             - pos_y * 50 - 50, 50, 50));
+                   SDL2pp::Rect((int) pos_x * 50, renderer->GetOutputHeight()
+                                             - (int) y, 50, 50));
 }
 
 TileRendererFactory::TileRendererFactory(SDL2pp::Renderer * renderer) :
@@ -42,7 +37,8 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer * renderer) :
     tile_renderers["Stairs"] = STAIRS_R;
 }
 TileRendererr* TileRendererFactory::build_tile_renderer(std::string tile_type,
-                                                        int pos_x, int pos_y) {
+                                                        float pos_x, float
+                                                        pos_y) {
     TileRendererr *tile_renderer = NULL;
     TileRendererType tile_renderer_id = tile_renderers[tile_type];
     switch (tile_renderer_id){
