@@ -65,8 +65,9 @@ void ServerCommunicator::send_deceased_info(const int object_id) {
     this->packets_to_send.push(new Deceased(object_id));
 }
 
-void ServerCommunicator::send_tick_info(const std::string& tick_info) {
-    this->packets_to_send.push(new StageInfo(tick_info));
+void ServerCommunicator::send_tick_info(const std::string& name,
+                                        const std::string& tick_info) {
+    this->packets_to_send.push(new Update(name, tick_info));
 }
 
 void ServerCommunicator::shutdown() {

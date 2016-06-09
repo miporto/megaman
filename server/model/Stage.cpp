@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
+#include <utility>
 
 #include "Stage.h"
 #include "server/communication/Match.h"
@@ -70,9 +71,11 @@ void Stage::execute_events() {
 }
 
 void Stage::tick() {
-    std::vector<std::string> moved_objects = this->map.tick();
+    std::vector<std::pair<std::string, std::string>> moved_objects =
+            this->map.tick();
     for (unsigned int i = 0; i < moved_objects.size(); ++i)
-        this->match->notify_tick(moved_objects[i]);
+        this->match->notify_tick(moved_objects[i].first, moved_objects[i]
+                .second);
 }
 
 void Stage::check_collisions() {

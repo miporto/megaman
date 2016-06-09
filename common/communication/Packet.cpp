@@ -78,6 +78,45 @@ const std::string& StageInfo::get_info() const {
 
 StageInfo::~StageInfo() {}
 
+Update::Update(const std::string& name, const std::string& update_info)
+        : name(name), update_info(update_info) {}
+
+char Update::get_id() const { return this->id; }
+
+const std::string& Update::get_name() const { return this->name; }
+
+std::string Update::get_str() const {
+    std::string str;
+
+    str.push_back(this->id);
+
+    int name_len = this->name.length();
+    char* len_arr = (char*)&name_len;
+    str.push_back(len_arr[0]);
+    str.push_back(len_arr[1]);
+    str.push_back(len_arr[2]);
+    str.push_back(len_arr[3]);
+
+    str.append(this->name);
+
+    int len_update = this->update_info.length();
+    len_arr = (char*)&len_update;
+    str.push_back(len_arr[0]);
+    str.push_back(len_arr[1]);
+    str.push_back(len_arr[2]);
+    str.push_back(len_arr[3]);
+
+    str.append(this->update_info);
+
+    return str;
+}
+
+const std::string& Update::get_update_info() const {
+    return this->update_info;
+}
+
+Update::~Update() {}
+
 Deceased::Deceased(const int object_id) : object_id(object_id) {}
 
 char Deceased::get_id() const { return this->id; }

@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <utility>
 
 #include "GameObject.h"
 
@@ -17,7 +18,7 @@ class Map {
         Map();
         void set(const std::string& info);
         void add_game_object(GameObject* object);
-        std::vector<std::string> tick();
+        std::vector<std::pair<std::string, std::string>> tick();
         void check_collisions();
         std::vector<int> get_rid_of_corpses();
         void create_new_projectiles();

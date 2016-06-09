@@ -35,6 +35,20 @@ void Receiver::receive_packet(const char id) {
             this->packets.push(new StageInfo(info));
             delete info;
             break;
+        } case UPDATE: {
+            int name_length;
+            this->socket->receive((char *) &name_length, sizeof(int));
+            char *name = new char[name_length + 1];
+            name[name_length] = '\0';
+            this->socket->receive(name, sizeof(char) * name_length);
+            int length;
+            this->socket->receive((char *) &length, sizeof(int));
+            char *info = new char[length + 1];
+            info[length] = '\0';
+            this->socket->receive(info, sizeof(char) * length);
+            this->packets.push(new Update(name, info));
+            delete info;
+            break;
         } case DECEASED: {
             int object_id;
             this->socket->receive((char *) &object_id, sizeof(int));

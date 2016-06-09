@@ -22,12 +22,12 @@ void Map::add_game_object(GameObject* object) {
     this->object_id[object] = this->objects.size();
 }
 
-std::vector<std::string> Map::tick() {
-    std::vector<std::string> moved_objects_info;
+std::vector<std::pair<std::string, std::string>> Map::tick() {
+    std::vector<std::pair<std::string, std::string>> moved_objects_info;
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (this->objects[i]->tick())
             moved_objects_info.push_back(this->objects[i]->info
-            (this->object_id[this->objects[i]]).second);
+            (this->object_id[this->objects[i]]));
     return moved_objects_info;
 }
 
