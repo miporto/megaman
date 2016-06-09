@@ -43,9 +43,6 @@ void ClientCommunicator::send_stage_pick(char& stage_id) {
 const std::string ClientCommunicator::receive_stage_info() {
     if (!this->packets_received.is_empty(STAGE_INFO)) {
         StageInfo* stage = (StageInfo*)this->packets_received.pop(STAGE_INFO);
-        while (!packets_received.is_empty(STAGE_INFO)) {
-            stage = (StageInfo*) packets_received.pop(STAGE_INFO);
-        }
         std::string info = stage->get_info();
         delete stage;
         return info;
