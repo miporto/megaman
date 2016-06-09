@@ -9,20 +9,31 @@
 #include "ActorRenderer.h"
 
 class TileRenderer;
+
 class StageRenderer {
 public:
-    StageRenderer(SDL2pp::Renderer* renderer, StageParserInfo& stage_info);
-    void render(const std::string& s_tick_info);
+    StageRenderer(SDL2pp::Renderer *renderer, StageParserInfo &stage_info);
+
+    void render(const std::string &s_tick_info);
+
+    void update(const std::string &info);
+
+    void delete_renderer(int id);
+
     ~StageRenderer();
+
 private:
     void render_stage();
+
     void render_spawn_actors();
-    void render_actors(const std::string& s_tick_info);
+
+    void render_actors(const std::string &s_tick_info);
+
     // TODO: stageRenderer should receive the background image in memory
-    SDL2pp::Renderer* renderer;
-    StageParserInfo& stage_info;
-    SDL2pp::Texture* background;
-//    TileRenderers2 tiles_;
+    SDL2pp::Renderer *renderer;
+    StageParserInfo &stage_info;
+    SDL2pp::Texture *background;
+    TileRenderers2 tiles_rendererss;
     TileRenderer tiles;
     ActorRenderer actors;
 };

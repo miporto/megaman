@@ -1,10 +1,15 @@
+#include <map>
 #include <string>
 #include <SDL2pp/SDL2pp.hh>
+#include <vector>
 
 #include "client/TickInfoParser.h"
+#include "extern/libjson/json.hpp"
 #include "TileRenderer.h"
 #include "common/StageParser.h"
 #include "StageRenderer.h"
+
+using json = nlohmann::json;
 
 StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
                              StageParserInfo& stage_info) :
@@ -13,6 +18,14 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
 }
 
+void StageRenderer::update(const std::string &info) {
+    json json_info = json::parse(info);
+    for (json::iterator it = json_info.begin(); it != json_info.end(); ++it) {
+        std::string element = it.key();
+//        std::vector<std::map<std::string, std::string>> elements = it.value();
+        std::cout << element << std::endl;
+    }
+}
 void StageRenderer::render_stage() {
     TileRenderers tile_renderers = tiles.get_renderers();
     for (auto const &iterator: stage_info) {

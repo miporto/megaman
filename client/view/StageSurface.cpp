@@ -40,6 +40,7 @@ StageSurface::StageSurface(Client& client) : client(client){
                 ".png");
         // TODO: stage renderer should receive the stage info in its creation
         stage_renderer = new StageRenderer(renderer, stage_info);
+//        stage_renderer->update(s_stage_info);
         megaman_renderer = new MegamanRenderer(renderer);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
@@ -51,19 +52,10 @@ void StageSurface::run() {
     renderer->Clear();
     stage_renderer->render("{}");
     renderer->Present();
-    //SDL_Delay(1500);
     try {
-//        int run_phase = -1; // run animation phase
-//        double position = 0.0;
-//        unsigned int prev_ticks = SDL_GetTicks();
         std::vector<bool> prev_input = input_handler.get_input();
         std::vector<bool> new_input = input_handler.get_input();
         while (true) {
-            // Timing
-//            unsigned int frame_ticks = SDL_GetTicks();
-//            unsigned int frame_delta = frame_ticks - prev_ticks;
-//            prev_ticks = frame_ticks;
-
             // Input
             input_handler.read_input();
             new_input = input_handler.get_input();
@@ -74,24 +66,15 @@ void StageSurface::run() {
 
             // Update Game state
             send_events(prev_input, new_input);
-//            if (new_input[RIGHT]) {
-//                position += frame_delta * 0.2;
-//            }
 
             // Receive tick info
             std::string s_tick_info = client.receive_stage_info();
             replace_substr(s_tick_info, ",", " ,");
-//            if (position > renderer->GetOutputWidth()) {
-//                position = -50;
-//            }
-//            int vcenter = renderer->GetOutputHeight() - 50;
 
             // Update screen
             renderer->Clear();
             stage_renderer->render(s_tick_info);
-//            megaman_renderer->render((int) position, vcenter);
             renderer->Present();
-            //SDL_Delay(500);
             prev_input = new_input;
         }
     } catch (std::exception &e) {
