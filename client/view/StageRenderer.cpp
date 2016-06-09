@@ -13,6 +13,8 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
     TickInfoParser parser(stage_info);
     TileRendererFactory tile_factory(renderer);
+    ActorRendererFactory actor_factory(renderer);
+
 
     NewTickParserInfo parsed_info = parser.get_new_parsed_tick_info();
     for (auto const &it: parsed_info) {
@@ -22,8 +24,14 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
             std::map<std::string, std::string> element_info = it2.second;
             float x = stof(element_info["x"]);
             float y = stof(element_info["y"]);
-            tile_renderers[it2.first] = tile_factory.build_tile_renderer(type,
-                                                                         x, y);
+            if (element_info.count("dir_x") != 0 && element_info.count
+                    ("dir_y") != 0) {
+                actor_renderers[it2.first] = actor_factory
+                        .build_actor_renderer(type, x, y);
+            } else {
+                tile_renderers[it2.first] = tile_factory.build_tile_renderer(
+                        type, x, y);
+            }
         }
     }
 }
@@ -34,6 +42,12 @@ void StageRenderer::render() {
     for (auto const &it: tile_renderers) {
         tile_renderer = it.second;
         tile_renderer->render();
+    }
+
+    ActorRendererr *actor_renderer;
+    for (auto const &it: actor_renderers) {
+        actor_renderer = it.second;
+        actor_renderer->render();
     }
 }
 //StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,

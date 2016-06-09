@@ -37,6 +37,7 @@ private:
 //    StageParserInfo &stage_info;
     SDL2pp::Texture *background;
     std::map<int, TileRendererr*> tile_renderers;
+    std::map<int, ActorRendererr*> actor_renderers;
 //    TileRenderers2 tiles_rendererss;
 //    TileRenderer tiles;
 //    ActorRenderer actors;

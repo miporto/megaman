@@ -42,6 +42,7 @@ public:
     using TileRendererr::TileRendererr;
     void render();
 };
+
 class TileRendererFactory {
 public:
     explicit TileRendererFactory(SDL2pp::Renderer * renderer);
