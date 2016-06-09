@@ -89,7 +89,8 @@ void StageRenderer::delete_renderer(int id) {
     } else if (actor_renderers.count(id != 0)) {
         actor_renderers.erase(id);
     } else {
-        throw "ERROR: Non-existing id sent";
+        return;
+        //throw "ERROR: Non-existing id sent";
     }
 }
 //StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,

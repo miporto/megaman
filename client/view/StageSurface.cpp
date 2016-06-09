@@ -61,14 +61,19 @@ void StageSurface::run() {
             // Update Game state
 //            send_events(prev_input, new_input);
 
-            // Receive tick info
-            while (client.new_update_packets()) {
+            // Receive updates
+            int count = 0;
+            while (client.new_update_packets() && count < 10) {
                 UpdatePacket update_packet = client.receive_update();
                 replace_substr(update_packet.second, ",", " ,");
                 stage_renderer->update(update_packet.first,
                                        update_packet.second);
+                ++count;
             }
 
+            while (client.new_deceased()) {
+                stage_renderer->delete_renderer(client.receive_deceased());
+            }
             // Update screen
             renderer->Clear();
             stage_renderer->render();
