@@ -4,12 +4,8 @@
 #include <vector>
 
 #include "client/TickInfoParser.h"
-#include "extern/libjson/json.hpp"
 #include "TileRenderer.h"
-#include "common/StageParser.h"
 #include "StageRenderer.h"
-
-using json = nlohmann::json;
 
 StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
                              const std::string &stage_info) :
@@ -32,6 +28,14 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     }
 }
 
+void StageRenderer::render() {
+    renderer->Copy(*background);
+    TileRendererr *tile_renderer;
+    for (auto const &it: tile_renderers) {
+        tile_renderer = it.second;
+        tile_renderer->render();
+    }
+}
 //StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
 //                             StageParserInfo& stage_info) :
 //        renderer(renderer), stage_info(stage_info), tiles(renderer),

@@ -16,6 +16,7 @@ public:
     StageRenderer(SDL2pp::Renderer *renderer, const std::string &stage_info);
     StageRenderer(SDL2pp::Renderer *renderer, StageParserInfo &stage_info);
 
+    void render();
     void render(const std::string &s_tick_info);
 
     void update(const std::string &info);
