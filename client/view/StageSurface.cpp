@@ -46,9 +46,6 @@ StageSurface::StageSurface(Client& client) : client(client){
 }
 
 void StageSurface::run() {
-//    renderer->Clear();
-//    stage_renderer->render("{}");
-//    renderer->Present();
     try {
         std::vector<bool> prev_input = input_handler.get_input();
         std::vector<bool> new_input = input_handler.get_input();
@@ -65,8 +62,12 @@ void StageSurface::run() {
 //            send_events(prev_input, new_input);
 
             // Receive tick info
-//            std::string s_tick_info = client.receive_stage_info();
-//            replace_substr(s_tick_info, ",", " ,");
+            while (client.new_update_packets()) {
+                std::string s_tick_info = client.receive_stage_info();
+                replace_substr(s_tick_info, ",", " ,");
+                stage_renderer->update(s_tick_info);
+
+            }
 
             // Update screen
             renderer->Clear();
