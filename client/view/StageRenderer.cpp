@@ -63,6 +63,9 @@ void StageRenderer::render() {
     }
 }
 
+void StageRenderer::update(const std::string &info) {
+    return;
+}
 void StageRenderer::delete_renderer(int id) {
     if (tile_renderers.count(id) != 0) {
         tile_renderers.erase(id);

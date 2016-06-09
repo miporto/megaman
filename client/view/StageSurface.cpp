@@ -66,7 +66,6 @@ void StageSurface::run() {
                 std::string s_tick_info = client.receive_stage_info();
                 replace_substr(s_tick_info, ",", " ,");
                 stage_renderer->update(s_tick_info);
-
             }
 
             // Update screen
