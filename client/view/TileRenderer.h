@@ -33,15 +33,15 @@ protected:
 
 class BlockRenderer : public TileRendererr {
 public:
-    BlockRenderer(SDL2pp::Renderer *renderer1,
-                      SDL2pp::Texture *sprites1, int pos_x1,
-                      int pos_y1, SDL2pp::Renderer *renderer,
-                      SDL2pp::Texture *sprites, int pos_x,
-                      int pos_y);
-
+    using TileRendererr::TileRendererr;
     void render();
 };
 
+class StairsRenderer : public TileRendererr {
+public:
+    using TileRendererr::TileRendererr;
+    void render();
+};
 class TileRendererFactory {
 public:
     explicit TileRendererFactory(SDL2pp::Renderer * renderer);
