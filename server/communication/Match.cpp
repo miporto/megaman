@@ -110,9 +110,9 @@ void Match::notify_deceased(const int object_id) {
     }
 }
 
-void Match::notify_tick(const std::string& tick_info) {
+void Match::notify_tick(const std::string& name, const std::string& tick_info) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i) {
-        this->communicators[i]->send_tick_info(tick_info);
+        this->communicators[i]->send_tick_info(name, tick_info);
     }
 }
 
