@@ -16,9 +16,9 @@ enum TileRendererType {
 class TileRendererr {
 public:
     TileRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
-                  float pos_x, float pos_y);
+                  int pos_x, int pos_y);
 
-    void update(float pos_x, float pos_y);
+    void update(int pos_x, int pos_y);
 
     virtual void render() = 0;
 
@@ -27,8 +27,8 @@ public:
 protected:
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
-    float pos_x;
-    float pos_y;
+    int pos_x;
+    int pos_y;
 };
 
 class BlockRenderer : public TileRendererr {
@@ -46,8 +46,8 @@ public:
 class TileRendererFactory {
 public:
     explicit TileRendererFactory(SDL2pp::Renderer * renderer);
-    TileRendererr* build_tile_renderer(std::string tile_type, float pos_x,
-                                       float pos_y);
+    TileRendererr* build_tile_renderer(std::string tile_type, int pos_x,
+                                       int pos_y);
     virtual ~TileRendererFactory() {}
 private:
     SDL2pp::Renderer *renderer;
