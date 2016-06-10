@@ -53,8 +53,8 @@ void StageRenderer::update(const std::string &name,
     std::map<std::string, std::string> parsed_update =
             TickInfoParser::parse_update(update_info);
     int id = stoi(parsed_update["id"]);
-    float x = stof(parsed_update["x"]);
-    float y = stof(parsed_update["y"]);
+    float x = std::stof(parsed_update["x"]);
+    float y = std::stof(parsed_update["y"]);
     if (tile_renderers.count(id) != 0) {
         TileRendererr *t_renderer = tile_renderers[id];
         t_renderer->update(x,  y);
