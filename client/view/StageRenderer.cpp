@@ -85,4 +85,14 @@ void StageRenderer::delete_renderer(int id) {
 
 StageRenderer::~StageRenderer() {
     delete background;
+    for (auto const &it : tile_renderers) {
+        TileRendererr *t_renderer = it.second;
+        delete t_renderer;
+    }
+    tile_renderers.clear();
+    for (auto const &it : actor_renderers) {
+        ActorRendererr *a_renderer = it.second;
+        delete a_renderer;
+    }
+    actor_renderers.clear();
 }
