@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <utility>
+#include "Camera.h"
 
 class TileRendererr;
 typedef std::map<int, TileRendererr *> TileRenderers2;
@@ -18,15 +19,15 @@ enum TileRendererType {
 class TileRendererr {
 public:
     TileRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
-                  float pos_x, float pos_y);
+                      Camera &camera, float pos_x, float pos_y);
     void update(float pos_x, float pos_y);
     virtual void render() = 0;
     virtual ~TileRendererr() { }
 
 protected:
-    AdjustedPos adjust_position(float x, float y);
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
+    Camera &camera;
     float pos_x;
     float pos_y;
 };
@@ -48,15 +49,17 @@ public:
     using TileRendererr::TileRendererr;
     void render();
 };
+
 class TileRendererFactory {
 public:
-    explicit TileRendererFactory(SDL2pp::Renderer * renderer);
+    TileRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
     TileRendererr* build_tile_renderer(std::string tile_type, float pos_x,
                                        float pos_y);
     virtual ~TileRendererFactory() {}
 private:
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
+    Camera &camera;
     std::map<std::string, TileRendererType> tile_renderers;
 };
 

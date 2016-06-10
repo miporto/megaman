@@ -9,11 +9,14 @@
 
 StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
                              const std::string &stage_info) :
-        renderer(renderer), tile_factory(renderer), actor_factory(renderer) {
+        renderer(renderer), camera(renderer),
+        tile_factory(renderer, camera),
+        actor_factory(renderer, camera) {
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
-    TickInfoParser parser(stage_info);
     actors = {"MegaMan", "Met"};
     objects = {"Block", "Stairs", "Pellet"};
+
+    TickInfoParser parser(stage_info);
     NewTickParserInfo parsed_info = parser.get_new_parsed_tick_info();
     for (auto const &it: parsed_info) {
         std::string type = it.first;
@@ -23,8 +26,13 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
             float x = stof(element_info["x"]);
             float y = stof(element_info["y"]);
             if (std::find(actors.begin(), actors.end(), type) != actors.end()){
-                actor_renderers[it2.first] = actor_factory
+                int id = it2.first;
+                actor_renderers[id] = actor_factory
                         .build_actor_renderer(type, x, y);
+                if (type.compare("MegaMan") == 0) {
+                    camera.add_megaman(id, (MegaManRenderer*)
+                            actor_renderers[id]);
+                }
             } else {
                 tile_renderers[it2.first] = tile_factory.build_tile_renderer(
                         type, x, y);
@@ -73,6 +81,7 @@ void StageRenderer::update(const std::string &name,
     }
 }
 void StageRenderer::delete_renderer(int id) {
+    // TODO: check with camera, cause  if its a meg it has to delete it too
     if (tile_renderers.count(id) != 0) {
         tile_renderers.erase(id);
     } else if (actor_renderers.count(id != 0)) {

@@ -9,6 +9,7 @@
 #include "common/StageParser.h"
 #include "TileRenderer.h"
 #include "ActorRenderer.h"
+#include "Camera.h"
 
 class TileRenderer;
 
@@ -24,6 +25,7 @@ private:
     // TODO: stageRenderer should receive the background image in memory
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *background;
+    Camera camera;
     std::map<int, TileRendererr*> tile_renderers;
     std::map<int, ActorRendererr*> actor_renderers;
     std::vector<std::string> actors;

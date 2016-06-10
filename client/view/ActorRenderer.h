@@ -6,16 +6,19 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include "Camera.h"
 
+class Camera;
 typedef std::pair<int, int> AdjustedPos;
 enum ActorRendererType {
     MET_R,
     MEGAMAN_R
 };
+
 class ActorRendererr {
 public:
     ActorRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
-                   float pos_x, float pos_y);
+                       Camera &camera, float pos_x, float pos_y);
     void update(float pos_x, float pos_y, int dir_x, int dir_y);
     float get_x();
     float get_y();
@@ -23,9 +26,9 @@ public:
     virtual ~ActorRendererr() { }
 
 protected:
-    AdjustedPos adjust_position(float x, float y);
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
+    Camera &camera;
     float pos_x;
     float pos_y;
     int dir_x;
@@ -46,12 +49,13 @@ public:
 
 class ActorRendererFactory {
 public:
-    explicit ActorRendererFactory(SDL2pp::Renderer * renderer);
+    ActorRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
     ActorRendererr* build_actor_renderer(std::string tile_type, float pos_x,
                                          float pos_y);
     virtual ~ActorRendererFactory() {}
 private:
     SDL2pp::Renderer *renderer;
+    Camera &camera;
     SDL2pp::Texture *meg_sprites;
     SDL2pp::Texture *sprites;
     std::map<std::string, ActorRendererType> actor_renderers;

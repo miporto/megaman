@@ -9,8 +9,8 @@ AdjustedPos Camera::adjust_position(float x, float y) {
     return AdjustedPos(adj_x, adj_y);
 }
 
-void Camera::add_megaman(MegaManRenderer *megaman) {
-    megs.push_back(megaman);
+void Camera::add_megaman(int id, MegaManRenderer *megaman) {
+    megs[id] = megaman;
 }
 
 void Camera::calculate_baricenter() {
