@@ -71,7 +71,7 @@ void StageRenderer::update(const std::string &name,
         t_renderer->update(adjusted_pos.first,  adjusted_pos.second);
     } else if (actor_renderers.count(id) != 0) {
         ActorRendererr *a_renderer = actor_renderers[id];
-        a_renderer->update(x, y, 0, 0);
+        a_renderer->update(adjusted_pos.first, adjusted_pos.second, 0, 0);
     } else {
         if (std::find(objects.begin(), objects.end(), name) != objects.end()) {
             tile_renderers[id] = tile_factory.build_tile_renderer(
