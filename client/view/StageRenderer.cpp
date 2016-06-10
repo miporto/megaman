@@ -17,7 +17,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     objects = {"Block", "Stairs", "Pellet"};
 
     TickInfoParser parser(stage_info);
-    NewTickParserInfo parsed_info = parser.get_new_parsed_tick_info();
+    TickParserInfo parsed_info = parser.get_parsed_tick_info();
     for (auto const &it: parsed_info) {
         std::string type = it.first;
         StatusInfo elements_info = it.second;
