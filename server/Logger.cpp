@@ -1,5 +1,7 @@
 #include "Logger.h"
 
+Logger* Logger::l_instance = 0;
+
 Logger::Logger() : appender(NULL), layout(NULL),
                    out(CATEGORY::getInstance(APPENDER)) {
     this->init_log4cpp();
