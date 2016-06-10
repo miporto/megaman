@@ -40,6 +40,6 @@ add_dependencies(${PROJECT_NAME} common)
 add_dependencies(${PROJECT_NAME} extern)
 
 target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${PROJECT_NAME} ${BOX2D_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${LOG4CPP_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} common)
 target_link_libraries(${PROJECT_NAME} extern)
