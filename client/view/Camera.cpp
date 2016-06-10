@@ -1,5 +1,6 @@
-//
-// Created by mporto on 10/06/16.
-//
-
 #include "Camera.h"
+
+Camera::Camera(SDL2pp::Renderer *renderer) : renderer(renderer), offset_x(0),
+                                             offset_y(0) { }
+
+Camera::~Camera() {}

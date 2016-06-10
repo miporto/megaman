@@ -25,7 +25,7 @@ set(SOURCES
         view/TileRenderer.cpp
         view/TileRenderer.h
         view/ActorRenderer.cpp
-        view/ActorRenderer.h)
+        view/ActorRenderer.h view/Camera.cpp view/Camera.h)
 
 include(CppLint)
 

@@ -1,13 +1,17 @@
-//
-// Created by mporto on 10/06/16.
-//
-
 #ifndef MEGAMAN_CAMERA_H
 #define MEGAMAN_CAMERA_H
 
 
-class Camera {
+#include <extern/libSDL2pp/SDL2pp/Renderer.hh>
 
+class Camera {
+public:
+    explicit Camera(SDL2pp::Renderer *renderer);
+    ~Camera();
+private:
+    SDL2pp::Renderer *renderer;
+    int offset_x;
+    int offset_y;
 };
 
 
