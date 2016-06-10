@@ -8,4 +8,12 @@ AdjustedPos Camera::adjust_position(float x, float y) {
     int adj_y = renderer->GetOutputHeight() - (int) (y + 1)*50 + offset_y;
     return AdjustedPos(adj_x, adj_y);
 }
+
+void Camera::add_megaman(const MegamanRenderer *megaman) {
+    megs.push_back(megaman);
+}
+
+void Camera::calculate_baricenter() {
+    // TODO
+}
 Camera::~Camera() {}
