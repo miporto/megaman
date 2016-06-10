@@ -2,7 +2,7 @@
 #include "ActorRenderer.h"
 #include "Camera.h"
 
-ActorRendererr::ActorRendererr(SDL2pp::Renderer *renderer,
+ActorRenderer::ActorRenderer(SDL2pp::Renderer *renderer,
                                SDL2pp::Texture *sprites, Camera &camera,
                                float pos_x, float pos_y) : renderer(renderer),
                                                            sprites(sprites),
@@ -11,7 +11,7 @@ ActorRendererr::ActorRendererr(SDL2pp::Renderer *renderer,
                                                            pos_y(pos_y),
                                                            dir_x(0), dir_y(0) {}
 
-void ActorRendererr::update(float pos_x, float pos_y, int dir_x, int
+void ActorRenderer::update(float pos_x, float pos_y, int dir_x, int
 dir_y) {
     this->pos_x = pos_x;
     this->pos_y = pos_y;
@@ -19,11 +19,11 @@ dir_y) {
     this->dir_y = dir_y;
 }
 
-float ActorRendererr::get_x() {
+float ActorRenderer::get_x() {
     return pos_x;
 }
 
-float ActorRendererr::get_y(){
+float ActorRenderer::get_y(){
     return pos_y;
 }
 
@@ -50,11 +50,11 @@ ActorRendererFactory::ActorRendererFactory(SDL2pp::Renderer *renderer,
     actor_renderers["MegaMan"] = MEGAMAN_R;
 }
 
-ActorRendererr *ActorRendererFactory::build_actor_renderer(std::string
+ActorRenderer *ActorRendererFactory::build_actor_renderer(std::string
                                                            tile_type,
                                                            float pos_x,
                                                            float pos_y) {
-    ActorRendererr *actor_renderer = NULL;
+    ActorRenderer *actor_renderer = NULL;
     ActorRendererType tile_renderer_id = actor_renderers[tile_type];
     switch (tile_renderer_id) {
         case MET_R:

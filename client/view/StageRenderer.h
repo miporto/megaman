@@ -26,8 +26,8 @@ private:
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *background;
     Camera camera;
-    std::map<int, TileRendererr*> tile_renderers;
-    std::map<int, ActorRendererr*> actor_renderers;
+    std::map<int, TileRenderer*> tile_renderers;
+    std::map<int, ActorRenderer*> actor_renderers;
     std::vector<std::string> actors;
     std::vector<std::string> objects;
     TileRendererFactory tile_factory;

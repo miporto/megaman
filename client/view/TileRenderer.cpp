@@ -4,7 +4,7 @@
 #include "TileRenderer.h"
 #include "Camera.h"
 
-TileRendererr::TileRendererr(SDL2pp::Renderer *renderer,
+TileRenderer::TileRenderer(SDL2pp::Renderer *renderer,
                              SDL2pp::Texture *sprites, Camera &camera,
                              float pos_x, float pos_y) : renderer(renderer),
                                                          sprites(sprites),
@@ -12,7 +12,7 @@ TileRendererr::TileRendererr(SDL2pp::Renderer *renderer,
                                                          pos_x(pos_x),
                                                          pos_y(pos_y) {}
 
-void TileRendererr::update(float pos_x, float pos_y) {
+void TileRenderer::update(float pos_x, float pos_y) {
     this->pos_x = pos_x;
     this->pos_y = pos_y;
 }
@@ -47,10 +47,10 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
     tile_renderers["Stairs"] = STAIRS_R;
     tile_renderers["Pellet"] = PELLET_R;
 }
-TileRendererr* TileRendererFactory::build_tile_renderer(std::string tile_type,
+TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
                                                         float pos_x, float
                                                         pos_y) {
-    TileRendererr *tile_renderer = NULL;
+    TileRenderer *tile_renderer = NULL;
     TileRendererType tile_renderer_id = tile_renderers[tile_type];
     switch (tile_renderer_id){
         case BLOCK_R:

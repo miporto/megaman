@@ -43,13 +43,13 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
 
 void StageRenderer::render() {
     renderer->Copy(*background);
-    TileRendererr *tile_renderer;
+    TileRenderer *tile_renderer;
     for (auto const &it: tile_renderers) {
         tile_renderer = it.second;
         tile_renderer->render();
     }
 
-    ActorRendererr *actor_renderer;
+    ActorRenderer *actor_renderer;
     for (auto const &it: actor_renderers) {
         actor_renderer = it.second;
         actor_renderer->render();
@@ -64,10 +64,10 @@ void StageRenderer::update(const std::string &name,
     float x = std::stof(parsed_update["x"]);
     float y = std::stof(parsed_update["y"]);
     if (tile_renderers.count(id) != 0) {
-        TileRendererr *t_renderer = tile_renderers[id];
+        TileRenderer *t_renderer = tile_renderers[id];
         t_renderer->update(x,  y);
     } else if (actor_renderers.count(id) != 0) {
-        ActorRendererr *a_renderer = actor_renderers[id];
+        ActorRenderer *a_renderer = actor_renderers[id];
         a_renderer->update(x, y, 0, 0);
     } else {
         if (std::find(objects.begin(), objects.end(), name) != objects.end()) {
@@ -95,12 +95,12 @@ void StageRenderer::delete_renderer(int id) {
 StageRenderer::~StageRenderer() {
     delete background;
     for (auto const &it : tile_renderers) {
-        TileRendererr *t_renderer = it.second;
+        TileRenderer *t_renderer = it.second;
         delete t_renderer;
     }
     tile_renderers.clear();
     for (auto const &it : actor_renderers) {
-        ActorRendererr *a_renderer = it.second;
+        ActorRenderer *a_renderer = it.second;
         delete a_renderer;
     }
     actor_renderers.clear();

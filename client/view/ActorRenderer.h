@@ -15,15 +15,15 @@ enum ActorRendererType {
     MEGAMAN_R
 };
 
-class ActorRendererr {
+class ActorRenderer {
 public:
-    ActorRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
+    ActorRenderer(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
                        Camera &camera, float pos_x, float pos_y);
     void update(float pos_x, float pos_y, int dir_x, int dir_y);
     float get_x();
     float get_y();
     virtual void render() = 0;
-    virtual ~ActorRendererr() { }
+    virtual ~ActorRenderer() { }
 
 protected:
     SDL2pp::Renderer *renderer;
@@ -35,22 +35,22 @@ protected:
     int dir_y;
 };
 
-class MetRenderer : public ActorRendererr {
+class MetRenderer : public ActorRenderer {
 public:
-    using ActorRendererr::ActorRendererr;
+    using ActorRenderer::ActorRenderer;
     void render();
 };
 
-class MegaManRenderer : public ActorRendererr {
+class MegaManRenderer : public ActorRenderer {
 public:
-    using ActorRendererr::ActorRendererr;
+    using ActorRenderer::ActorRenderer;
     void render();
 };
 
 class ActorRendererFactory {
 public:
     ActorRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
-    ActorRendererr* build_actor_renderer(std::string tile_type, float pos_x,
+    ActorRenderer* build_actor_renderer(std::string tile_type, float pos_x,
                                          float pos_y);
     virtual ~ActorRendererFactory() {}
 private:
