@@ -59,11 +59,11 @@ void StageSurface::run() {
             }
 
             // Update Game state
-//            send_events(prev_input, new_input);
+            send_events(prev_input, new_input);
 
             // Receive updates
             int count = 0;
-            while (client.new_update_packets() && count < 10) {
+            while (client.new_update_packets() && count < 100) {
                 UpdatePacket update_packet = client.receive_update();
                 replace_substr(update_packet.second, ",", " ,");
                 stage_renderer->update(update_packet.first,
