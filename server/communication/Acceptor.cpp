@@ -13,7 +13,6 @@ void Acceptor::run() {
     while (!this->quit_acceptor) {
         try {
             peer = this->socket.accept();
-            std::cout << "Accepted"  << std::endl;
         }
         catch (const SocketError& e) {
             continue;
