@@ -59,7 +59,7 @@ void StageSurface::run() {
             }
 
             // Update Game state
-//            send_events(prev_input, new_input);
+            send_events(prev_input, new_input);
 
             // Receive updates
             int count = 0;
