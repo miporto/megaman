@@ -12,8 +12,6 @@ set(SOURCES
         view/GladeLoader.h
         view/StageSurface.cpp
         view/StageSurface.h
-        view/MegamanRenderer.cpp
-        view/MegamanRenderer.h
         view/InputHandler.cpp
         view/InputHandler.h
         view/StageRenderer.cpp

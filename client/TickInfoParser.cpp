@@ -21,7 +21,6 @@ TickInfoParser::TickInfoParser(const std::string &tick_info) :
     new_tick_parser_info["Met"] = mets;
     StatusInfo megs = status_info_of("MegaMan");
     new_tick_parser_info["MegaMan"] = megs;
-
 }
 
 TickParserInfo TickInfoParser::get_parsed_tick_info() {

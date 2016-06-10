@@ -10,7 +10,6 @@
 #include "common/communication/Packet.h"
 #include "common/StageParser.h"
 #include "InputHandler.h"
-#include "MegamanRenderer.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"
 
