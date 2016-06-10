@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 
+#include "server/Logger.h"
 #include "server/model/Player.h"
 #include "ServerCommunicator.h"
 
@@ -33,7 +34,7 @@ ServerCommunicator::ServerCommunicator(Socket* peer)
 }
 
 void ServerCommunicator::send_new_player_notification(const std::string& name) {
-    std::cout << "Sending player name: "<< name << std::endl;
+    Logger::instance()->out << INFO << "Sending player name: " << name;
     this->packets_to_send.push(new NewPlayer(name));
 }
 
@@ -96,7 +97,6 @@ void StageIdWaiter::run() {
         usleep(WAIT_TIME_MICROSECONDS);
     StagePick* packet = (StagePick*)this->packets_received.pop(STAGE_PICK);
     this->stage_id.set_id(packet->get_stage_id());
-    std::cout << "Stage id received: " << packet->get_stage_id() << std::endl;
     delete packet;
 }
 

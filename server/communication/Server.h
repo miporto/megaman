@@ -7,6 +7,7 @@
 #include "common/Thread.h"
 #include "ServerCommunicator.h"
 #include "Match.h"
+#include "server/Logger.h"
 
 class Server : public Thread {
    private:
@@ -14,6 +15,7 @@ class Server : public Thread {
     Socket socket;
     std::vector<ServerCommunicator*> communicators;
     Match match;
+    Logger* logger;
 
     void configure_server_socket(const char* port);
     void wait_for_players();

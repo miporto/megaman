@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "server/Logger.h"
 #include "MegaMan.h"
 #include "Enemy.h"
 #include "Factory.h"
@@ -53,6 +54,8 @@ const std::string& MegaMan::get_name() {
 
 void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);
+    Logger::instance()->out << INFO << "Player " << this->get_name()
+    << " has been shot. Remaining energy: " << this->tank.get_energy();
 }
 
 int MegaMan::get_energy() {
