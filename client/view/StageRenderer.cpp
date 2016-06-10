@@ -22,27 +22,17 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
             std::map<std::string, std::string> element_info = it2.second;
             float x = stof(element_info["x"]);
             float y = stof(element_info["y"]);
-            AdjustedPos adjusted_pos = adjust_position(x, y);
             if (std::find(actors.begin(), actors.end(), type) != actors.end()){
                 actor_renderers[it2.first] = actor_factory
-                        .build_actor_renderer(type, adjusted_pos.first,
-                                              adjusted_pos.second);
+                        .build_actor_renderer(type, x, y);
             } else {
                 tile_renderers[it2.first] = tile_factory.build_tile_renderer(
-                        type, adjusted_pos.first, adjusted_pos.second);
+                        type, x, y);
             }
         }
     }
 }
 
-AdjustedPos StageRenderer::adjust_position(float x, float y) {
-    AdjustedPos adjusted_pos;
-    int adj_x = (int) x*50;
-    int adj_y = renderer->GetOutputHeight() - (int) (y + 1)*50;
-    adjusted_pos.first = adj_x;
-    adjusted_pos.second = adj_y;
-    return adjusted_pos;
-}
 void StageRenderer::render() {
     renderer->Copy(*background);
     TileRendererr *tile_renderer;
@@ -65,21 +55,20 @@ void StageRenderer::update(const std::string &name,
     int id = stoi(parsed_update["id"]);
     float x = stof(parsed_update["x"]);
     float y = stof(parsed_update["y"]);
-    AdjustedPos adjusted_pos = adjust_position(x, y);
     if (tile_renderers.count(id) != 0) {
         TileRendererr *t_renderer = tile_renderers[id];
-        t_renderer->update(adjusted_pos.first,  adjusted_pos.second);
+        t_renderer->update(x,  y);
     } else if (actor_renderers.count(id) != 0) {
         ActorRendererr *a_renderer = actor_renderers[id];
-        a_renderer->update(adjusted_pos.first, adjusted_pos.second, 0, 0);
+        a_renderer->update(x, y, 0, 0);
     } else {
         if (std::find(objects.begin(), objects.end(), name) != objects.end()) {
             tile_renderers[id] = tile_factory.build_tile_renderer(
-                    name, adjusted_pos.first, adjusted_pos.second);
+                    name, x, y);
         } else if (std::find(actors.begin(), actors.end(), name) !=
                 actors.end()){
-            actor_renderers[id] = actor_factory.build_actor_renderer(
-                    name, adjusted_pos.first, adjusted_pos.second);
+            actor_renderers[id] = actor_factory.build_actor_renderer(name, x,
+                                                                     y);
         }
     }
 }

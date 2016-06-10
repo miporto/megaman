@@ -5,7 +5,9 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <string>
 #include <vector>
+#include <utility>
 
+typedef std::pair<int, int> AdjustedPos;
 enum ActorRendererType {
     MET_R,
     MEGAMAN_R
@@ -13,19 +15,20 @@ enum ActorRendererType {
 class ActorRendererr {
 public:
     ActorRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
-                   int pos_x, int pos_y);
+                   float pos_x, float pos_y);
 
-    void update(int pos_x, int pos_y, int dir_x, int dir_y);
+    void update(float pos_x, float pos_y, int dir_x, int dir_y);
 
     virtual void render() = 0;
 
     virtual ~ActorRendererr() { }
 
 protected:
+    AdjustedPos adjust_position(float x, float y);
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
-    int pos_x;
-    int pos_y;
+    float pos_x;
+    float pos_y;
     int dir_x;
     int dir_y;
 };
@@ -45,8 +48,8 @@ public:
 class ActorRendererFactory {
 public:
     explicit ActorRendererFactory(SDL2pp::Renderer * renderer);
-    ActorRendererr* build_actor_renderer(std::string tile_type, int pos_x,
-                                         int pos_y);
+    ActorRendererr* build_actor_renderer(std::string tile_type, float pos_x,
+                                         float pos_y);
     virtual ~ActorRendererFactory() {}
 private:
     SDL2pp::Renderer *renderer;
