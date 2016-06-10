@@ -108,12 +108,16 @@ bool Stage::players_are_dead() {
 void Stage::run() {
     while (!this->players_are_dead() && !this->end_reached) {
         this->execute_events();
+        //Hardcodeo de acciones para pruebas de movimiento
+        //this->players[0]->get_megaman()->change_x_movement(true, true);
+        //this->players[0]->get_megaman()->change_y_movement(true, true);
         this->tick();
         this->check_collisions();
         this->get_rid_of_corpses();
         this->create_new_projectiles();
 
         usleep(SLEEP_TIME_MICROSECONDS);
+        //this->players[0]->get_megaman()->change_y_movement(false, true);
     }
 }
 
