@@ -9,11 +9,13 @@ AdjustedPos Camera::adjust_position(float x, float y) {
     return AdjustedPos(adj_x, adj_y);
 }
 
-void Camera::add_megaman(const MegamanRenderer *megaman) {
+void Camera::add_megaman(MegaManRenderer *megaman) {
     megs.push_back(megaman);
 }
 
 void Camera::calculate_baricenter() {
     // TODO
+//    MegaManRenderer *meg = megs[0];
+//    float max_x = meg->get_x();
 }
 Camera::~Camera() {}
