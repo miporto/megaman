@@ -16,11 +16,10 @@ class ActorRendererr {
 public:
     ActorRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
                    float pos_x, float pos_y);
-
     void update(float pos_x, float pos_y, int dir_x, int dir_y);
-
+    float get_x();
+    float get_y();
     virtual void render() = 0;
-
     virtual ~ActorRendererr() { }
 
 protected:

@@ -24,6 +24,14 @@ dir_y) {
     this->dir_y = dir_y;
 }
 
+float ActorRendererr::get_x() {
+    return pos_x;
+}
+
+float ActorRendererr::get_y(){
+    return pos_y;
+}
+
 void MetRenderer::render() {
     AdjustedPos pos = adjust_position(pos_x, pos_y);
     renderer->Copy(*sprites,
