@@ -14,6 +14,11 @@ void Server::configure_server_socket(const char* port) {
 
 Server::Server(const char* port)
     : quit_server(false), match(communicators) {
+
+//    log4cplus::Initializer initializer;
+//    log4cplus::PropertyConfigurator config("logsconfig");
+//    config.configure();
+
     this->configure_server_socket(port);
     this->start();
 }
