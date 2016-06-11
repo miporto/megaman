@@ -62,7 +62,7 @@ void StageSurface::run() {
             send_events(prev_input, new_input);
 
             // Receive updates
-            int count = 0;
+            unsigned int frame_ticks = cap_timer.get_ticks();
 //            while (client.new_update_packets() && count < 100) {
 //                UpdatePacket update_packet = client.receive_update();
 //                replace_substr(update_packet.second, ",", " ,");
@@ -70,11 +70,12 @@ void StageSurface::run() {
 //                                       update_packet.second);
 //                ++count;
 //            }
-            while (client.new_float_update_packets() && count < 100) {
+            while (client.new_float_update_packets() &&
+                    frame_ticks < SCREEN_TICKS_PER_FRAME * 0.8) {
                 NewUpdatePacket update_packet = client.receive_float_update();
                 stage_renderer->new_update(update_packet.first, update_packet
                         .second);
-                ++count;
+                frame_ticks = cap_timer.get_ticks();
             }
 
             while (client.new_deceased()) {
@@ -86,7 +87,7 @@ void StageSurface::run() {
             stage_renderer->render();
             renderer->Present();
             prev_input = new_input;
-            unsigned int frame_ticks = cap_timer.get_ticks();
+            frame_ticks = cap_timer.get_ticks();
             if (frame_ticks < SCREEN_TICKS_PER_FRAME) {
                 //Wait remaining time
                 SDL_Delay(SCREEN_TICKS_PER_FRAME - frame_ticks);
