@@ -10,9 +10,12 @@
 #include "common/communication/Packet.h"
 #include "common/StageParser.h"
 #include "InputHandler.h"
-#include "MegamanRenderer.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"
+#include "Timer.h"
+
+#define SCREEN_FPS 60
+#define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 
 void StageSurface::replace_substr(std::string& input,
                                   const std::string& old_str,
@@ -33,12 +36,8 @@ StageSurface::StageSurface(Client& client) : client(client){
                                     SDL_WINDOWPOS_UNDEFINED, 640, 480,
                                     SDL_WINDOW_RESIZABLE);
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
-        sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
-                ".png");
         // TODO: stage renderer should receive the stage info in its creation
         stage_renderer = new StageRenderer(renderer, s_stage_info);
-//        stage_renderer->update(s_stage_info);
-//        megaman_renderer = new MegamanRenderer(renderer);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
         throw e;
@@ -49,12 +48,13 @@ void StageSurface::run() {
     try {
         std::vector<bool> prev_input = input_handler.get_input();
         std::vector<bool> new_input = input_handler.get_input();
+        Timer cap_timer;
         while (true) {
+            cap_timer.start();
             // Input
             input_handler.read_input();
             new_input = input_handler.get_input();
             if (input_handler.is_window_closed()) {
-                // TODO: send sht_dwn signal to server
                 return;
             }
 
@@ -79,6 +79,11 @@ void StageSurface::run() {
             stage_renderer->render();
             renderer->Present();
             prev_input = new_input;
+            unsigned int frame_ticks = cap_timer.get_ticks();
+            if (frame_ticks < SCREEN_TICKS_PER_FRAME) {
+                //Wait remaining time
+                SDL_Delay(SCREEN_TICKS_PER_FRAME - frame_ticks);
+            }
         }
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
@@ -102,11 +107,10 @@ void StageSurface::send_events(std::vector<bool>& prev_input,
 }
 
 StageSurface::~StageSurface() {
-    delete sprites;
     delete renderer;
     delete sdl;
     delete stage_renderer;
-    delete megaman_renderer;
+    delete window;
 }
 
 

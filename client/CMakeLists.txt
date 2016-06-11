@@ -12,8 +12,6 @@ set(SOURCES
         view/GladeLoader.h
         view/StageSurface.cpp
         view/StageSurface.h
-        view/MegamanRenderer.cpp
-        view/MegamanRenderer.h
         view/InputHandler.cpp
         view/InputHandler.h
         view/StageRenderer.cpp
@@ -25,7 +23,7 @@ set(SOURCES
         view/TileRenderer.cpp
         view/TileRenderer.h
         view/ActorRenderer.cpp
-        view/ActorRenderer.h)
+        view/ActorRenderer.h view/Camera.cpp view/Camera.h view/Timer.cpp view/Timer.h)
 
 include(CppLint)
 

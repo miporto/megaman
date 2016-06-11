@@ -5,51 +5,57 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <string>
 #include <vector>
+#include <utility>
+#include "Camera.h"
 
+class Camera;
+typedef std::pair<int, int> AdjustedPos;
 enum ActorRendererType {
     MET_R,
     MEGAMAN_R
 };
-class ActorRendererr {
+
+class ActorRenderer {
 public:
-    ActorRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
-                   int pos_x, int pos_y);
-
-    void update(int pos_x, int pos_y, int dir_x, int dir_y);
-
+    ActorRenderer(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
+                       Camera &camera, float pos_x, float pos_y);
+    void update(float pos_x, float pos_y, int dir_x, int dir_y);
+    float get_x();
+    float get_y();
     virtual void render() = 0;
-
-    virtual ~ActorRendererr() { }
+    virtual ~ActorRenderer() { }
 
 protected:
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
-    int pos_x;
-    int pos_y;
+    Camera &camera;
+    float pos_x;
+    float pos_y;
     int dir_x;
     int dir_y;
 };
 
-class MetRenderer : public ActorRendererr {
+class MetRenderer : public ActorRenderer {
 public:
-    using ActorRendererr::ActorRendererr;
+    using ActorRenderer::ActorRenderer;
     void render();
 };
 
-class MegaManRenderer : public ActorRendererr {
+class MegaManRenderer : public ActorRenderer {
 public:
-    using ActorRendererr::ActorRendererr;
+    using ActorRenderer::ActorRenderer;
     void render();
 };
 
 class ActorRendererFactory {
 public:
-    explicit ActorRendererFactory(SDL2pp::Renderer * renderer);
-    ActorRendererr* build_actor_renderer(std::string tile_type, int pos_x,
-                                         int pos_y);
+    ActorRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
+    ActorRenderer* build_actor_renderer(std::string tile_type, float pos_x,
+                                         float pos_y);
     virtual ~ActorRendererFactory() {}
 private:
     SDL2pp::Renderer *renderer;
+    Camera &camera;
     SDL2pp::Texture *meg_sprites;
     SDL2pp::Texture *sprites;
     std::map<std::string, ActorRendererType> actor_renderers;
