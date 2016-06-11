@@ -81,6 +81,29 @@ void StageRenderer::update(const std::string &name,
         }
     }
 }
+
+void StageRenderer::new_update(const std::string &name,
+                               FloatUpdatePkt &update_info) {
+    int id = (int) update_info["id"];
+    float x = update_info["x"];
+    float y = update_info["y"];
+    if (tile_renderers.count(id) != 0) {
+        TileRenderer *t_renderer = tile_renderers[id];
+        t_renderer->update(x,  y);
+    } else if (actor_renderers.count(id) != 0) {
+        ActorRenderer *a_renderer = actor_renderers[id];
+        a_renderer->update(x, y, 0, 0);
+    } else {
+        if (std::find(objects.begin(), objects.end(), name) != objects.end()) {
+            tile_renderers[id] = tile_factory.build_tile_renderer(
+                    name, x, y);
+        } else if (std::find(actors.begin(), actors.end(), name) !=
+                   actors.end()){
+            actor_renderers[id] = actor_factory.build_actor_renderer(name, x,
+                                                                     y);
+        }
+    }
+}
 void StageRenderer::delete_renderer(int id) {
     // TODO: check with camera, cause  if its a meg it has to delete it too
     if (tile_renderers.count(id) != 0) {

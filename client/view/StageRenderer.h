@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "common/StageParser.h"
+#include "client/communication/ClientCommunicator.h"
 #include "TileRenderer.h"
 #include "ActorRenderer.h"
 #include "Camera.h"
@@ -18,6 +19,7 @@ public:
     StageRenderer(SDL2pp::Renderer *renderer, const std::string &stage_info);
     void render();
     void update(const std::string &name, const std::string &update_info);
+    void new_update(const std::string &name, FloatUpdatePkt &update_info);
     void delete_renderer(int id);
     bool are_megamans_alive();
     ~StageRenderer();
