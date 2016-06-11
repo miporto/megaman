@@ -10,7 +10,12 @@ using json = nlohmann::json;
 TickInfoParser::TickInfoParser(const std::string &tick_info) :
         tick_info(tick_info){
     json_info = json::parse(tick_info);
-
+//    std::string test = "{\"object\":{\"Block\":[{\"x\":10,\"y\": 11.7}]}}";
+//    json j = json::parse(test);
+//    std::cout << j.dump() << std::endl;
+//    std::string s_b = "13.456";
+//    float b = stof(s_b);
+//    std::cout << b << std::endl;
     StatusInfo block = status_info_of("Block");
     new_tick_parser_info["Block"] = block;
     StatusInfo stairs = status_info_of("Stairs");

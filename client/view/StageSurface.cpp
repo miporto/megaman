@@ -12,6 +12,10 @@
 #include "InputHandler.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"
+#include "Timer.h"
+
+#define SCREEN_FPS 60
+#define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 
 void StageSurface::replace_substr(std::string& input,
                                   const std::string& old_str,
@@ -44,7 +48,9 @@ void StageSurface::run() {
     try {
         std::vector<bool> prev_input = input_handler.get_input();
         std::vector<bool> new_input = input_handler.get_input();
+        Timer cap_timer;
         while (true) {
+            cap_timer.start();
             // Input
             input_handler.read_input();
             new_input = input_handler.get_input();
@@ -73,6 +79,11 @@ void StageSurface::run() {
             stage_renderer->render();
             renderer->Present();
             prev_input = new_input;
+            unsigned int frame_ticks = cap_timer.get_ticks();
+            if (frame_ticks < SCREEN_TICKS_PER_FRAME) {
+                //Wait remaining time
+                SDL_Delay(SCREEN_TICKS_PER_FRAME - frame_ticks);
+            }
         }
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;

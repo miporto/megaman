@@ -17,6 +17,7 @@ int Camera::adjust_size() {
     int height = renderer->GetOutputHeight();
     return std::min(width, height) / 10;
 }
+
 void Camera::add_megaman(int id, MegaManRenderer *megaman) {
     megs[id] = megaman;
 }
