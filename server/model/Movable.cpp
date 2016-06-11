@@ -57,7 +57,8 @@ Movable::~Movable() {}
 
 UserMovable::UserMovable(const std::vector<float>& respawn_position,
                          const float velocity_x, const float velocity_y)
-        : Movable(0, 1, velocity_x, velocity_y),
+        : Movable(respawn_position[X_COORD_POS], respawn_position[Y_COORD_POS],
+                  velocity_x, velocity_y),
           respawn_position(respawn_position),
           gravity(GRAVITY),
           direction_x(FORWARD), direction_y(FORWARD),
