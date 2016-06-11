@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-#include "common/Position.h"
+#include "Position.h"
 #include "Movable.h"
 #include "Cannon.h"
 
@@ -47,7 +47,7 @@ class MegaMan : public UserMovable {
         void receive_new_ammo(std::string& name);
         void tick();
         bool is_dead();
-        bool is_enemy();
+        bool is_megaman();
         std::pair<std::string, std::string> info();
         ~MegaMan();
 };

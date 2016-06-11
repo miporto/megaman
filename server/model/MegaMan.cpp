@@ -29,13 +29,20 @@ void EnergyTank::decrease_energy(int amount) {
 }
 
 bool EnergyTank::is_empty() {
-    return this->current_energy <= 0 && lives <= 0;
+    std::cout << "Current energy: " << this->current_energy << std::endl;
+    std::cout << "Current lives: " << this->lives << std::endl;
+    return this->current_energy <= 0 && this->lives <= 0;
 }
 
 void EnergyTank::reset() {
-    if (!this->lives) return;
+    std::cout << "Entering reset, lives: " << this->lives << std::endl;
+    if (!this->lives) {
+        this->current_energy = 0;
+        return;
+    }
     this->lives--;
     this->current_energy = this->max_energy;
+    std::cout << "Exiting reset, lives: " << this->lives << std::endl;
 }
 
 int EnergyTank::get_energy() {
@@ -45,7 +52,9 @@ int EnergyTank::get_energy() {
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan(const std::string& name) :
-        UserMovable(MegaManFactory::velocity_x(), MegaManFactory::velocity_y()),
+        UserMovable(MegaManFactory::respawn_point(),
+                    MegaManFactory::velocity_x(),
+                    MegaManFactory::velocity_y()),
         name(name) {}
 
 const std::string& MegaMan::get_name() {
@@ -75,7 +84,13 @@ Projectile* MegaMan::shoot() {
     return this->cannon.shoot(this->get_position());
 }
 
-void MegaMan::tick() { this->move(); }
+void MegaMan::tick() {
+    try {
+        this->move();
+    } catch (const MovableError& e) {
+        this->kill();
+    }
+}
 
 std::pair<std::string, std::string> MegaMan::info() {
     std::vector<float> pos = this->get_position();
@@ -89,7 +104,7 @@ std::pair<std::string, std::string> MegaMan::info() {
     return std::make_pair("MegaMan", info.dump());
 }
 
-bool MegaMan::is_enemy() { return false; }
+bool MegaMan::is_megaman() { return true; }
 
 void MegaMan::collide_with(Enemy* enemy) {
     this->correct_position(enemy->get_position(), enemy->get_side());

@@ -56,8 +56,6 @@ void Projectile::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }
 
-bool Projectile::is_enemy() { return false; }
-
 Projectile::~Projectile() {}
 
 Plasma::Plasma(int damage, float velocity_x, float velocity_y,

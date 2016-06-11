@@ -44,7 +44,7 @@ void Map::get_rid_of_corpses() {
         if (this->objects[i]->is_dead()) {
             dead_obj = this->objects[i];
             this->objects.erase(this->objects.begin() + i);
-            delete dead_obj;
+            if (!dead_obj->is_megaman()) delete dead_obj;
         }
     }
 }

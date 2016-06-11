@@ -30,6 +30,8 @@ void ServerStageSetter::to_classes(StageParserInfo& positions, Map* map) {
                 map->add_game_object(new Spike(it->second[i]));
             } else if (CLIFF_NAME == it->first) {
                 map->add_game_object(new Cliff(it->second[i]));
+            } else if (DOOR_NAME == it->first) {
+                map->add_game_object(new Door(it->second[i]));
             }
         }
     }

@@ -69,6 +69,7 @@ class StageIdWaiter : public Thread {
         explicit StageIdWaiter(ReceivedPacketsProtected& packets_received);
         void run();
         char get_stage_id();
+        void reset_stage_id();
         ~StageIdWaiter();
 };
 
@@ -79,6 +80,7 @@ class HostCommunicator : public ServerCommunicator {
         explicit HostCommunicator(Socket* peer);
         char check_stage_id();
         char receive_stage_id();
+        void reset_stage_id();
         ~HostCommunicator();
 };
 

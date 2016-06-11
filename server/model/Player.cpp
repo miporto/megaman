@@ -19,8 +19,6 @@ void Player::new_megaman() {
     this->megaman = new MegaMan(this->name);
 }
 
-bool Player::alive() {
-    return !this->megaman->is_dead();
-}
+bool Player::alive() { return !this->megaman->is_dead(); }
 
 Player::~Player() { delete this->megaman; }

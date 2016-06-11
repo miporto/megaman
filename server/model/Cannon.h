@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-#include "common/Position.h"
+#include "Position.h"
 #include "Movable.h"
 
 #define PLASMA_NAME "Plasma"
@@ -41,7 +41,6 @@ class Projectile : public Movable {
         void execute_collision_with(GameObject* other);
         virtual void tick();
         bool is_dead();
-        bool is_enemy();
         std::pair<std::string, std::string> info();
         virtual ~Projectile();
 };

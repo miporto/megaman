@@ -12,12 +12,15 @@
             {"x": 5, "y": 0},
             {"x": 6, "y": 0},
             {"x": 7, "y": 0},
-            {"x": 8, "y": 0}],
+            {"x": 8, "y": 0},
+            {"x": 1, "y": 5}],
           "Stairs": [
             {"x": 1, "y": 1},
             {"x": 1, "y": 2},
             {"x": 1, "y": 3},
-            {"x": 1, "y": 4}]}
+            {"x": 1, "y": 4}],
+          "Door": [
+            {"x": 8, "y": 1}]}
         },
       "2": {
         "spawn": {
@@ -54,9 +57,10 @@
         }
     },
     
-    "mega man": {"velocity x": 6, "velocity y": 4},
+    "mega man": {"initial x": 0, "initial y": 1,
+      "velocity x": 6, "velocity y": 4},
     
-    "energy tank": {"initial lives": 30, "max": 31},
+    "energy tank": {"initial lives": 3, "max": 15},
     
     "enemy": {
 			"Met": {"energy": 1, "velocity x": 0, "velocity y": 0},

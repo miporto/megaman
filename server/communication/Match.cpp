@@ -103,6 +103,8 @@ void Match::play_stage() {
         if (chamber.beated())
             this->stages.erase(stage_id);
     }
+
+    this->host_communicator()->reset_stage_id();
 }
 
 void Match::notify_tick(const std::string& tick_info) {

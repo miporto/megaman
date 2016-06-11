@@ -8,7 +8,7 @@
 #include <vector>
 #include <map>
 
-#include "common/Position.h"
+#include "server/model/Position.h"
 #include "common/Thread.h"
 
 typedef enum _packet_id {

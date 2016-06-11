@@ -40,6 +40,14 @@ float EnemyFactory::velocity_y(const std::string& name) {
 
 EnemyFactory::~EnemyFactory() {}
 
+std::vector<float> MegaManFactory::respawn_point() {
+    std::vector<float> respawn;
+    json j_info = FileReader::read(INFO_FILE, "mega man");
+    respawn.push_back((float) j_info["initial x"]);
+    respawn.push_back((float) j_info["initial y"]);
+    return respawn;
+}
+
 float MegaManFactory::velocity_x() {
     json j_info = FileReader::read(INFO_FILE, "mega man");
     return (float) j_info["velocity x"];

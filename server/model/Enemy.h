@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-#include "common/Position.h"
+#include "Position.h"
 #include "Movable.h"
 
 #define MET_NAME "Met"

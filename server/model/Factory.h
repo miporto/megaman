@@ -27,6 +27,7 @@ class EnemyFactory {
 
 class MegaManFactory {
     public:
+        static std::vector<float> respawn_point();
         static float velocity_x();
         static float velocity_y();
         ~MegaManFactory();
