@@ -73,6 +73,42 @@ int ClientCommunicator::receive_deceased() {
     throw "ERROR: No id on queue!";
 }
 
+NewUpdatePacket ClientCommunicator::receive_float_update() {
+    NewUpdatePacket update_pkt;
+    FloatUpdatePkt info;
+    if (new_float_update_packets()) {
+        const FloatUpdate *update = (FloatUpdate*) packets_received.pop
+                (FLOAT_UPDATE);
+//        info["id"] = update->get_id();
+//        info["x"] = update->get_x();
+//        info["y"] = update->get_y();
+//        update_pkt.first = update->get_name();
+        update_pkt.second = info;
+        delete update;
+        return update_pkt;
+    }
+    throw "ERROR: No float update on queue!";
+}
+
+NewUpdatePacket ClientCommunicator::receive_megaman_update() {
+    NewUpdatePacket update_pkt;
+    FloatUpdatePkt info;
+    if (new_megaman_update_packets()) {
+        const MegaManFloatUpdate *update = (MegaManFloatUpdate*)
+                packets_received.pop(MEGAMAN_FLOAT_UPDATE);
+//        info["id"] = update->get_id();
+//        info["x"] = update->get_x();
+//        info["y"] = update->get_y();
+//        info["d_x"] = update->get_direction_x();
+//        info["d_y"] = update->get_direction_y();
+//        update_pkt.first = update->get_name();
+        update_pkt.second = info;
+        delete update;
+        return update_pkt;
+    }
+    throw "ERROR: No megaman update on queue!";
+}
+
 void ClientCommunicator::send_action(const std::string& name,
                                      const char &action_id,
                                      const bool& pressed) {
@@ -86,6 +122,15 @@ bool ClientCommunicator::new_update_packets() {
 bool ClientCommunicator::new_deceased() {
     return !packets_received.is_empty(DECEASED);
 }
+
+bool ClientCommunicator::new_float_update_packets() {
+    return !packets_received.is_empty(FLOAT_UPDATE);
+}
+
+bool ClientCommunicator::new_megaman_update_packets() {
+    return !packets_received.is_empty(MEGAMAN_FLOAT_UPDATE);
+}
+
 ClientCommunicator::~ClientCommunicator() {
     this->waiter.join();
 }

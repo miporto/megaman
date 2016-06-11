@@ -1,6 +1,7 @@
 #ifndef COMMUNICATOR_H
 #define COMMUNICATOR_H
 
+#include <map>
 #include <string>
 #include <vector>
 #include <utility>
@@ -24,6 +25,8 @@ class TeamWaiter : public Thread {
 };
 
 typedef std::pair<std::string, std::string> UpdatePacket;
+typedef std::map<std::string, float> FloatUpdatePkt;
+typedef std::pair<std::string ,FloatUpdatePkt> NewUpdatePacket;
 class ClientCommunicator {
     private:
         Socket& socket;
@@ -40,10 +43,14 @@ class ClientCommunicator {
         const std::string receive_stage_info();
         UpdatePacket receive_update();
         int receive_deceased();
+        NewUpdatePacket receive_float_update();
+        NewUpdatePacket receive_megaman_update();
         void send_action(const std::string& name, const char& action_id,
                          const bool& pressed);
         bool new_update_packets();
         bool new_deceased();
+        bool new_float_update_packets();
+        bool new_megaman_update_packets();
         virtual ~ClientCommunicator();
 };
 

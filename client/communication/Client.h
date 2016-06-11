@@ -25,8 +25,12 @@ class Client {
 		std::string receive_stage_info();
         UpdatePacket receive_update();
         int receive_deceased();
+        NewUpdatePacket receive_float_update();
+        NewUpdatePacket receive_megaman_update();
 	    bool new_update_packets();
 	    bool new_deceased();
+        bool new_float_update_packets();
+        bool new_megaman_update_packets();
         ~Client();
 };
 
