@@ -66,7 +66,7 @@ UpdatePacket ClientCommunicator::receive_update() {
 int ClientCommunicator::receive_deceased() {
     if (new_deceased()) {
         Deceased* update = (Deceased*) packets_received.pop(DECEASED);
-        int id = update->get_id();
+        int id = update->get_object_id();
         delete update;
         return id;
     }
@@ -79,7 +79,7 @@ NewUpdatePacket ClientCommunicator::receive_float_update() {
     if (new_megaman_update_packets()) {
         const MegaManFloatUpdate *update = (MegaManFloatUpdate*)
                 packets_received.pop(MEGAMAN_FLOAT_UPDATE);
-        info["id"] = update->get_id();
+        info["id"] = update->get_object_id();
         info["x"] = update->get_x();
         info["y"] = update->get_y();
         info["d_x"] = update->get_direction_x();
@@ -89,7 +89,7 @@ NewUpdatePacket ClientCommunicator::receive_float_update() {
     } else if (new_float_update_packets()){
         const FloatUpdate *update = (FloatUpdate*) packets_received.pop
                 (FLOAT_UPDATE);
-        info["id"] = update->get_id();
+        info["id"] = update->get_object_id();
         info["x"] = update->get_x();
         info["y"] = update->get_y();
         update_pkt.first = update->get_name();
@@ -107,7 +107,7 @@ NewUpdatePacket ClientCommunicator::receive_megaman_update() {
     if (new_megaman_update_packets()) {
         const MegaManFloatUpdate *update = (MegaManFloatUpdate*)
                 packets_received.pop(MEGAMAN_FLOAT_UPDATE);
-        info["id"] = update->get_id();
+        info["id"] = update->get_object_id();
         info["x"] = update->get_x();
         info["y"] = update->get_y();
         info["d_x"] = update->get_direction_x();
