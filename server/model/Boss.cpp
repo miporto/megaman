@@ -53,11 +53,35 @@ BombMan::BombMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
         : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
+void BombMan::collide_with(Projectile* projectile) {
+    //TODO
+}
+
+void BombMan::shoot(BossChamber* chamber) {
+    //TODO
+}
+
+void BombMan::tick() {
+    //TODO
+}
+
 BombMan::~BombMan() {}
 
 MagnetMan::MagnetMan(const std::vector<float>& position,
           const float velocity_x, const float velocity_y, int energy)
         : Boss(MAGNETMAN_NAME, position, velocity_x, velocity_y, energy) {}
+
+void MagnetMan::collide_with(Projectile* projectile) {
+    //TODO
+}
+
+void MagnetMan::shoot(BossChamber* chamber) {
+    //TODO
+}
+
+void MagnetMan::tick() {
+    //TODO
+}
 
 MagnetMan::~MagnetMan() {}
 
@@ -65,16 +89,52 @@ SparkMan::SparkMan(const std::vector<float>& position,
          const float velocity_x, const float velocity_y, int energy)
         : Boss(SPARKMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
+void SparkMan::collide_with(Projectile* projectile) {
+    //TODO
+}
+
+void SparkMan::shoot(BossChamber* chamber) {
+    //TODO
+}
+
+void SparkMan::tick() {
+    //TODO
+}
+
 SparkMan::~SparkMan() {}
 
 RingMan::RingMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
         : Boss(RINGMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
+void RingMan::collide_with(Projectile* projectile) {
+    //TODO
+}
+
+void RingMan::shoot(BossChamber* chamber) {
+    //TODO
+}
+
+void RingMan::tick() {
+    //TODO
+}
+
 RingMan::~RingMan() {}
 
 FireMan::FireMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
         : Boss(FIREMAN_NAME, position, velocity_x, velocity_y, energy) {}
+
+void FireMan::collide_with(Projectile* projectile) {
+    //TODO
+}
+
+void FireMan::shoot(BossChamber* chamber) {
+    //TODO
+}
+
+void FireMan::tick() {
+    //TODO
+}
 
 FireMan::~FireMan() {}
