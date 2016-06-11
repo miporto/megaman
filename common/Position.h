@@ -14,6 +14,8 @@ class Position : public Clonable {
     private:
         float x, y;
 
+        void truncate_at_two();
+
     public:
         Position(const float x, const float y);
         explicit Position(const std::vector<float>& position);

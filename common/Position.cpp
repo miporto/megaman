@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <math.h>
 
 #include "Position.h"
 
@@ -14,6 +15,7 @@ Position::Position(const std::vector<float>& position)
 void Position::move(float x_amount, float y_amount) {
     this->x += x_amount;
     this->y += y_amount;
+    this->truncate_at_two();
 }
 
 bool Position::out_of_range() {
@@ -25,15 +27,20 @@ void Position::reset() {
     this->y = 0;
 }
 
-bool Position::operator==(const Position& other) const {
-    return (this->x == other.x && this->y == other.y);
-}
-
 std::vector<float> Position::get_position() const {
     std::vector<float> pos;
     pos.push_back(this->x);
     pos.push_back(this->y);
     return pos;
+}
+
+void Position::truncate_at_two() {
+    this->x = floor(this->x * 100) / 100;
+    this->y = floor(this->y * 100) / 100;
+}
+
+bool Position::operator==(const Position& other) const {
+    return (this->x == other.x && this->y == other.y);
 }
 
 std::string Position::str() const {
