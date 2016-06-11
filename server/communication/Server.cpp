@@ -13,7 +13,7 @@ void Server::configure_server_socket(const char* port) {
 }
 
 Server::Server(const char* port)
-    : quit_server(false), match(communicators) {
+    : quit_server(false), match(communicators), logger(Logger::instance()) {
     this->configure_server_socket(port);
     this->start();
 }
@@ -44,4 +44,5 @@ void Server::shutdown() {
 Server::~Server() {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
         delete this->communicators[i];
+    delete logger;
 }

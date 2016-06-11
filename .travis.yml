@@ -7,7 +7,7 @@ os: linux
 before_install:
   - export DEBIAN_FRONTEND=noninteractive
   - sudo -E apt-get -yq update &>> ~/apt-get-update.log
-  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install libgtkmm-3.0-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libbox2d-dev
+  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install libgtkmm-3.0-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev liblog4cpp5-dev libbox2d-dev
 script:
   - mkdir build
   - cd build
