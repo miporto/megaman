@@ -26,7 +26,7 @@ class FloatUpdate;
 class GameObject {
     private:
         const int side;
-    
+
     protected:
         Position position;
 
