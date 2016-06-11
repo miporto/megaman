@@ -14,9 +14,7 @@ set(SOURCES
         communication/QuitProtected.h
         communication/QuitProtected.cpp
         communication/Packet.h
-        communication/Packet.cpp
-    Position.h
-    Position.cpp StageParser.cpp StageParser.h SystemError.cpp SystemError.h)
+        communication/Packet.cpp StageParser.cpp StageParser.h SystemError.cpp SystemError.h)
 
 include(CppLint)
 

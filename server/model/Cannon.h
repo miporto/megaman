@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-#include "common/Position.h"
+#include "Position.h"
 #include "Movable.h"
 
 #define PLASMA_NAME "Plasma"

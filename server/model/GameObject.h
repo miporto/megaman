@@ -6,7 +6,7 @@
 #include <string>
 #include <extern/libjson/json.hpp>
 
-#include "common/Position.h"
+#include "Position.h"
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1

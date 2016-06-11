@@ -14,6 +14,8 @@ set(SOURCES
         model/Stage.cpp
         model/Factory.cpp
         model/Factory.h
+        model/Position.h
+        model/Position.cpp
         model/Object.h
         model/Object.cpp
         model/Enemy.h

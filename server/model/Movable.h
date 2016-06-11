@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "common/Position.h"
+#include "Position.h"
 #include "GameObject.h"
 
 class Movable : public GameObject {

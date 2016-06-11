@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "GameObject.h"
-#include "common/Position.h"
+#include "Position.h"
 
 #define BLOCK_NAME "Block"
 #define STAIRS_NAME "Stairs"
