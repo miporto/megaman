@@ -104,6 +104,10 @@ char StageIdWaiter::get_stage_id() {
     return this->stage_id();
 }
 
+void StageIdWaiter::reset_stage_id() {
+    this->stage_id.set_id(0);
+}
+
 StageIdWaiter::~StageIdWaiter() {}
 
 HostCommunicator::HostCommunicator(Socket* peer) :
@@ -119,6 +123,11 @@ char HostCommunicator::check_stage_id() {
 char HostCommunicator::receive_stage_id() {
     this->waiter.join();
     return this->waiter.get_stage_id();
+}
+
+void HostCommunicator::reset_stage_id() {
+    this->waiter.reset_stage_id();
+    this->waiter.start();
 }
 
 HostCommunicator::~HostCommunicator() {}
