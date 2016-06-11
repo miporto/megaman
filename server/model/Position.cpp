@@ -22,9 +22,9 @@ bool Position::out_of_range() {
     return (this->x < 0 || this->y < 0);
 }
 
-void Position::reset() {
-    this->x = 0;
-    this->y = 0;
+void Position::reset(const std::vector<float>& respawn_position) {
+    this->x = respawn_position[X_COORD_POS];
+    this->y = respawn_position[Y_COORD_POS];
 }
 
 std::vector<float> Position::get_position() const {

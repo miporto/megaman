@@ -55,7 +55,8 @@
         }
     },
     
-    "mega man": {"velocity x": 6, "velocity y": 4},
+    "mega man": {"initial x": 0, "initial y": 1,
+      "velocity x": 6, "velocity y": 4},
     
     "energy tank": {"initial lives": 30, "max": 31},
     

@@ -21,7 +21,7 @@ class Position : public Clonable {
         explicit Position(const std::vector<float>& position);
         void move(float x_amount, float y_amount);
         bool out_of_range();
-        void reset();
+        void reset(const std::vector<float>& respawn_position);
         std::vector<float> get_position() const;
 
         bool operator==(const Position& other) const;

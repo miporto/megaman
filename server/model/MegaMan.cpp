@@ -45,7 +45,9 @@ int EnergyTank::get_energy() {
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan(const std::string& name) :
-        UserMovable(MegaManFactory::velocity_x(), MegaManFactory::velocity_y()),
+        UserMovable(MegaManFactory::respawn_point(),
+                    MegaManFactory::velocity_x(),
+                    MegaManFactory::velocity_y()),
         name(name) {}
 
 const std::string& MegaMan::get_name() {
@@ -75,7 +77,13 @@ Projectile* MegaMan::shoot() {
     return this->cannon.shoot(this->get_position());
 }
 
-void MegaMan::tick() { this->move(); }
+void MegaMan::tick() {
+    try {
+        this->move();
+    } catch (const MovableError& e) {
+        this->kill();
+    }
+}
 
 std::pair<std::string, std::string> MegaMan::info() {
     std::vector<float> pos = this->get_position();
