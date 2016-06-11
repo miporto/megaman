@@ -15,6 +15,8 @@ public:
     AdjustedPos adjust_position(float x, float y);
     int adjust_size();
     void add_megaman(int id, MegaManRenderer* megaman);
+    void delete_megaman(int id); //Deletes the megaman from the array, not
+    // the object itself
     ~Camera();
 private:
     void calculate_baricenter();

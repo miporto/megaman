@@ -22,6 +22,9 @@ void Camera::add_megaman(int id, MegaManRenderer *megaman) {
     megs[id] = megaman;
 }
 
+void Camera::delete_megaman(int id) {
+    megs.erase(id);
+}
 void Camera::calculate_baricenter() {
     // TODO
     MegaManRenderer *meg = megs[0];
