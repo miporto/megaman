@@ -36,6 +36,11 @@ void Receiver::receive_packet(const char id) {
             delete info; // Stage supuestamente lo copia, pero hay que probar
             // que no desaparezca despues de esto c:
             break;
+        } case CHAMBER: {
+            char chamber_id;
+            this->socket->receive(&chamber_id, sizeof(char));
+            this->packets.push(new ChamberInfo(chamber_id));
+            break;
         } case ACTION: {
             int length;
             this->socket->receive((char*)&length, sizeof(int));

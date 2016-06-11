@@ -1,8 +1,8 @@
 {
 	"stage": {
 	  "1" : {
-        "spawn": {
-        }, "object": {
+        "spawn": {},
+        "object": {
           "Block": [
             {"x": 0, "y": 0},
             {"x": 1, "y": 0},
@@ -20,7 +20,15 @@
             {"x": 1, "y": 3},
             {"x": 1, "y": 4}],
           "Door": [
-            {"x": 8, "y": 1}]}
+            {"x": 8, "y": 1}]
+         },
+         "boss": {
+			"name": "BombMan",
+			"initial x": 2,
+			"initial y": 3,
+			"velocity x": 1,
+			"velocity y": 2,
+			"energy": 40 }
         },
       "2": {
         "spawn": {
@@ -80,11 +88,11 @@
     
     "ammo":{
 			"Plasma": {"max": 999999},
-            "Bomb": {"max": 101},
-            "Magnet": {"max": 102},
-            "Spark": {"max": 103},
-            "Fire": {"max": 104},
-            "Ring": {"max": 105}
+            "Bomb": {"max": 11},
+            "Magnet": {"max": 12},
+            "Spark": {"max": 13},
+            "Fire": {"max": 14},
+            "Ring": {"max": 15}
     },
     
     "map": {
