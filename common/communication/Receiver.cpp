@@ -87,7 +87,7 @@ void Receiver::receive_packet(const char id) {
             this->socket->receive((char *) &direction_x, sizeof(int));
             this->socket->receive((char *) &direction_y, sizeof(int));
             this->packets.push(new MegaManFloatUpdate(name,
-                                                      player_name, object_id, 
+                                                      player_name, object_id,
                                                       x, y,
                                                       direction_x, direction_y,
                                                       energy));
@@ -122,7 +122,6 @@ void Receiver::run() {
     char packet_id = 0;
     while (!this->quit) {
         try {
-            std::cout << "Receiving" << std::endl;
             this->socket->receive(&packet_id, sizeof(char));
         }
         catch (const SocketError& e) {
