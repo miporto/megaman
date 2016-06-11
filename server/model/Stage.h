@@ -27,7 +27,7 @@ class Stage {
         void check_collisions();
         void get_rid_of_corpses();
         void create_new_projectiles();
-        const std::string status();
+        void collect_updates();
         Player* player_with_name(const std::string& name);
         bool players_are_dead();
 

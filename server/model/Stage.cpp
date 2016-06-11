@@ -70,11 +70,7 @@ void Stage::execute_events() {
     }
 }
 
-void Stage::tick() {
-    std::vector<FloatUpdate*> moved_objects = this->map.tick();
-    for (unsigned int i = 0; i < moved_objects.size(); ++i)
-        this->match->notify_tick(moved_objects[i]);
-}
+void Stage::tick() { this->map.tick(); }
 
 void Stage::check_collisions() {
     this->map.check_collisions();
@@ -93,8 +89,10 @@ void Stage::create_new_projectiles() {
     //map me tiene que dar un vector de info de ellos
 }
 
-const std::string Stage::status() {
-    return this->map.status();
+void Stage::collect_updates() {
+    std::vector<FloatUpdate*> updates = this->map.updates();
+    for (unsigned int i = 0; i < updates.size(); ++i)
+        this->match->notify_tick(updates[i]);
 }
 
 bool Stage::players_are_dead() {
@@ -110,7 +108,7 @@ void Stage::run() {
         this->check_collisions();
         this->get_rid_of_corpses();
         this->create_new_projectiles();
-
+        this->collect_updates();
         usleep(SLEEP_TIME_MICROSECONDS);
     }
 }

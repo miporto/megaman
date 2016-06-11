@@ -73,9 +73,8 @@ Projectile* MegaMan::shoot() {
     return this->cannon.shoot(this->get_position());
 }
 
-bool MegaMan::tick() {
+void MegaMan::tick() {
     this->move();
-    return this->it_moved();
 }
 
 std::pair<std::string, std::string> MegaMan::info(const int id) {

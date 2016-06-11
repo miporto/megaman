@@ -77,10 +77,9 @@ Plasma::Plasma(int damage, float velocity_x, float velocity_y,
         : Projectile(PLASMA_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-bool Plasma::tick() {
+void Plasma::tick() {
     this->acknowledge_tick();
     //TODO
-    return this->it_moved();
 }
 
 Bomb::Bomb(int damage, float velocity_x, float velocity_y,
@@ -88,10 +87,9 @@ Bomb::Bomb(int damage, float velocity_x, float velocity_y,
         : Projectile(BOMB_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-bool Bomb::tick() {
+void Bomb::tick() {
     this->acknowledge_tick();
     //TODO
-    return this->it_moved();
 }
 
 Magnet::Magnet(int damage, float velocity_x, float velocity_y,
@@ -99,10 +97,9 @@ Magnet::Magnet(int damage, float velocity_x, float velocity_y,
         : Projectile(MAGNET_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-bool Magnet::tick() {
+void Magnet::tick() {
     this->acknowledge_tick();
     //TODO
-    return this->it_moved();
 }
 
 Spark::Spark(int damage, float velocity_x, float velocity_y,
@@ -110,10 +107,9 @@ Spark::Spark(int damage, float velocity_x, float velocity_y,
         : Projectile(SPARK_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-bool Spark::tick() {
+void Spark::tick() {
     this->acknowledge_tick();
     //TODO
-    return this->it_moved();
 }
 
 Fire::Fire(int damage, float velocity_x, float velocity_y,
@@ -121,10 +117,9 @@ Fire::Fire(int damage, float velocity_x, float velocity_y,
         : Projectile(FIRE_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-bool Fire::tick() {
+void Fire::tick() {
     this->acknowledge_tick();
     //TODO
-    return this->it_moved();
 }
 
 Ring::Ring(int damage, float velocity_x, float velocity_y,
@@ -132,10 +127,9 @@ Ring::Ring(int damage, float velocity_x, float velocity_y,
         : Projectile(RING_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
-bool Ring::tick() {
+void Ring::tick() {
     this->acknowledge_tick();
     //TODO
-    return this->it_moved();
 }
 
 Pellet::Pellet(float velocity_x, float velocity_y,
@@ -143,10 +137,9 @@ Pellet::Pellet(float velocity_x, float velocity_y,
         : Projectile(PELLET_NAME, PELLET_DAMAGE, velocity_x,
                      velocity_y, initial_position) {}
 
-bool Pellet::tick() {
+void Pellet::tick() {
     this->acknowledge_tick();
     this->move();
-    return this->it_moved();
 }
 
 Ammo::Ammo(const std::string& name, int max) :

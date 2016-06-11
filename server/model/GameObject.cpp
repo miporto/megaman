@@ -29,4 +29,6 @@ std::vector<float> GameObject::get_position() {
     return this->position.get_position();
 }
 
+bool GameObject::it_moved() { return false; }
+
 GameObject::~GameObject() {}

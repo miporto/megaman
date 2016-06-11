@@ -29,7 +29,7 @@ class Object : public GameObject {
         void collide_with(Projectile* projectile);
         virtual void collide_with(MegaMan* mm) = 0;
         void execute_collision_with(GameObject* other);
-        bool tick();
+        void tick();
         bool is_dead();
         bool is_enemy();
         std::pair<std::string, std::string> info(const int id);

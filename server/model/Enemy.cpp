@@ -90,13 +90,12 @@ void Met::shoot(Map* map) {
     }
 }
 
-bool Met::tick() {
+void Met::tick() {
     if (this->ticks % 15 == 0)
         this->helmet_on = false;
     else
         this->helmet_on = true;
     this->ticks++;
-    return this->it_moved();
 }
 
 Met::~Met() {}
@@ -118,9 +117,8 @@ void Bumby::shoot(Map* map) {
     map->add_game_object(new Pellet(0, -1, this->get_position()));
 }
 
-bool Bumby::tick() {
+void Bumby::tick() {
     //TODO Movimiento?
-    return this->it_moved();
 }
 
 Bumby::~Bumby() {}
@@ -149,14 +147,13 @@ void Sniper::shoot(Map* map) {
         map->add_game_object(new Pellet(-1, 0, this->get_position()));
 }
 
-bool Sniper::tick() {
+void Sniper::tick() {
     //TODO Movimiento?
     if (this->ticks % 30 == 0)
         this->shield_on = false;
     else
         this->shield_on = true;
     this->ticks++;
-    return this->it_moved();
 }
 
 Sniper::~Sniper() {}
@@ -187,14 +184,13 @@ void JumpingSniper::shoot(Map* map) {
     }
 }
 
-bool JumpingSniper::tick() {
+void JumpingSniper::tick() {
     //TODO Movimiento (Saltos)
     if (this->ticks % 30 == 0)
         this->shield_on = false;
     else
         this->shield_on = true;
     this->ticks++;
-    return this->it_moved();
 }
 
 JumpingSniper::~JumpingSniper() {}
