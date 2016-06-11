@@ -20,7 +20,7 @@ std::string NewPlayer::get_str() const {
     std::string str;
 
     str.push_back(this->id);
-    
+
     int name_len = this->name.length();
     char* len_arr = (char*)&name_len;
     for (unsigned int i = 0; i < sizeof(int); ++i)

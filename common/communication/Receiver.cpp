@@ -49,6 +49,51 @@ void Receiver::receive_packet(const char id) {
             this->packets.push(new Update(name, info));
             delete info;
             break;
+        } case FLOAT_UPDATE: {
+            int name_length;
+            this->socket->receive((char *) &name_length, sizeof(int));
+            char *name = new char[name_length + 1];
+            name[name_length] = '\0';
+            this->socket->receive(name, sizeof(char) * name_length);
+            int object_id;
+            this->socket->receive((char *) &object_id, sizeof(int));
+            float x, y;
+            this->socket->receive((char *) &x, sizeof(float));
+            this->socket->receive((char *) &y, sizeof(float));
+            this->packets.push(new FloatUpdate(name, object_id, x, y));
+            delete name;
+            break;
+        } case MEGAMAN_FLOAT_UPDATE: {
+            int name_length;
+            this->socket->receive((char *) &name_length, sizeof(int));
+            char *name = new char[name_length + 1];
+            name[name_length] = '\0';
+            this->socket->receive(name, sizeof(char) * name_length);
+            int object_id;
+            this->socket->receive((char *) &object_id, sizeof(int));
+            float x, y;
+            this->socket->receive((char *) &x, sizeof(float));
+            this->socket->receive((char *) &y, sizeof(float));
+
+            int player_name_length;
+            this->socket->receive((char *) &player_name_length, sizeof(int));
+            char *player_name = new char[player_name_length + 1];
+            player_name[player_name_length] = '\0';
+            this->socket->receive(player_name,
+                                  sizeof(char) * player_name_length);
+            float energy;
+            this->socket->receive((char *) &energy, sizeof(float));
+            int direction_x, direction_y;
+            this->socket->receive((char *) &direction_x, sizeof(int));
+            this->socket->receive((char *) &direction_y, sizeof(int));
+            this->packets.push(new MegaManFloatUpdate(name,
+                                                      player_name, object_id, 
+                                                      x, y,
+                                                      direction_x, direction_y,
+                                                      energy));
+            delete name;
+            delete player_name;
+            break;
         } case DECEASED: {
             int object_id;
             this->socket->receive((char *) &object_id, sizeof(int));
