@@ -117,6 +117,99 @@ const std::string& Update::get_update_info() const {
 
 Update::~Update() {}
 
+FloatUpdate::FloatUpdate(const std::string& name, const int object_id,
+                         const float x, const float y)
+        : name(name), object_id(object_id), x(x), y(y) {}
+
+char FloatUpdate::get_id() const { return this->id; }
+
+const std::string& FloatUpdate::get_name() const { return this->name; }
+
+int FloatUpdate::get_object_id() const { return this->object_id; }
+
+float FloatUpdate::get_x() const { return this->x; }
+
+float FloatUpdate::get_y() const { return this->y; }
+
+std::string FloatUpdate::get_str() const {
+    std::string str;
+
+    str.push_back(this->id);
+
+    int name_len = this->name.length();
+    char* len_arr = (char*)&name_len;
+    for (unsigned int i = 0; i < 4; ++i)
+        str.push_back(len_arr[i]);
+
+    str.append(this->name);
+
+    char* object_id_arr = (char*)&this->object_id;
+    for (unsigned int i = 0; i < 4; ++i)
+        str.push_back(object_id_arr[i]);
+
+    char* x_arr = (char*)&this->x;
+    for (unsigned int i = 0; i < 4; ++i)
+        str.push_back(x_arr[i]);
+
+    char* y_arr = (char*)&this->y;
+    for (unsigned int i = 0; i < 4; ++i)
+        str.push_back(y_arr[i]);
+
+    return str;
+}
+
+FloatUpdate::~FloatUpdate() {}
+
+MegaManFloatUpdate::MegaManFloatUpdate(const std::string& name,
+                                       const std::string& player_name,
+                                       const int object_id,
+                                       const float x, const float y,
+                                       const int direction_x,
+                                       const int direction_y,
+                                       const float energy)
+        : FloatUpdate(name, object_id, x, y),
+          player_name(player_name), energy(energy),
+          direction_x(direction_x), direction_y(direction_y) {}
+
+char MegaManFloatUpdate::get_id() const { return this->id; }
+
+const std::string& MegaManFloatUpdate::get_player_name() const {
+    return this->player_name;
+}
+
+float MegaManFloatUpdate::get_energy() const { return this->energy; }
+
+int MegaManFloatUpdate::get_direction_x() const { return this->direction_x; }
+
+int MegaManFloatUpdate::get_direction_y() const { return this->direction_y; }
+
+std::string MegaManFloatUpdate::get_str() const {
+    std::string str = FloatUpdate::get_str();
+
+    int name_len = this->player_name.length();
+    char* len_arr = (char*)&name_len;
+    for (unsigned int i = 0; i < 4; ++i)
+        str.push_back(len_arr[i]);
+
+    str.append(this->player_name);
+
+    char* energy_arr = (char*)&this->energy;
+    for (unsigned int i = 0; i < 4; ++i)
+        str.push_back(energy_arr[i]);
+
+    char* dir_x_arr = (char*)&this->direction_x;
+    for (unsigned int i = 0; i < 4; ++i)
+        str.push_back(dir_x_arr[i]);
+
+    char* dir_y_arr = (char*)&this->direction_y;
+    for (unsigned int i = 0; i < 4; ++i)
+        str.push_back(dir_y_arr[i]);
+
+    return str;
+}
+
+MegaManFloatUpdate::~MegaManFloatUpdate() {}
+
 Deceased::Deceased(const int object_id) : object_id(object_id) {}
 
 char Deceased::get_id() const { return this->id; }

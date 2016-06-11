@@ -91,8 +91,7 @@ class Update : public Packet {
         const std::string update_info;
 
     public:
-        explicit Update(const std::string& name,
-                        const std::string& update_info);
+        Update(const std::string& name, const std::string& update_info);
         char get_id() const;
         const std::string& get_name() const;
         std::string get_str() const;
@@ -109,8 +108,8 @@ class FloatUpdate : public Packet {
         const float y;
 
     public:
-        explicit FloatUpdate(const std::string& name, const int object_id,
-                             const float x, const float y);
+        FloatUpdate(const std::string& name, const int object_id,
+                    const float x, const float y);
         virtual char get_id() const;
         const std::string& get_name() const;
         int get_object_id() const;
@@ -129,9 +128,13 @@ class MegaManFloatUpdate : public FloatUpdate {
         const int direction_y;
 
     public:
-        explicit MegaManFloatUpdate(const std::string& name,
-                                    const int object_id,
-                                    const float x, const float y);
+        MegaManFloatUpdate(const std::string& name,
+                           const std::string& player_name,
+                           const int object_id,
+                           const float x, const float y,
+                           const int direction_x,
+                           const int direction_y,
+                           const float energy);
         char get_id() const;
         const std::string& get_player_name() const;
         float get_energy() const;
