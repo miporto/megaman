@@ -16,6 +16,8 @@ typedef enum _packet_id {
     STAGE_PICK,
     STAGE_INFO,
     UPDATE,
+    FLOAT_UPDATE,
+    MEGAMAN_FLOAT_UPDATE,
     DECEASED,
     ACTION
 } packet_id_t;
@@ -83,18 +85,60 @@ class StageInfo : public Packet {
 };
 
 class Update : public Packet {
-private:
-    static const char id = UPDATE;
-    const std::string name;
-    const std::string update_info;
+    private:
+        static const char id = UPDATE;
+        const std::string name;
+        const std::string update_info;
 
-public:
-    explicit Update(const std::string& name, const std::string& update_info);
-    char get_id() const;
-    const std::string& get_name() const;
-    std::string get_str() const;
-    const std::string& get_update_info() const;
-    ~Update();
+    public:
+        explicit Update(const std::string& name,
+                        const std::string& update_info);
+        char get_id() const;
+        const std::string& get_name() const;
+        std::string get_str() const;
+        const std::string& get_update_info() const;
+        ~Update();
+};
+
+class FloatUpdate : public Packet {
+    private:
+        static const char id = FLOAT_UPDATE;
+        const std::string name;
+        const int object_id;
+        const float x;
+        const float y;
+
+    public:
+        explicit FloatUpdate(const std::string& name, const int object_id,
+                             const float x, const float y);
+        virtual char get_id() const;
+        const std::string& get_name() const;
+        int get_object_id() const;
+        float get_x() const;
+        float get_y() const;
+        virtual std::string get_str() const;
+        virtual ~FloatUpdate();
+};
+
+class MegaManFloatUpdate : public FloatUpdate {
+    private:
+        static const char id = MEGAMAN_FLOAT_UPDATE;
+        const std::string player_name;
+        const float energy;
+        const int direction_x;
+        const int direction_y;
+
+    public:
+        explicit MegaManFloatUpdate(const std::string& name,
+                                    const int object_id,
+                                    const float x, const float y);
+        char get_id() const;
+        const std::string& get_player_name() const;
+        float get_energy() const;
+        int get_direction_x() const;
+        int get_direction_y() const;
+        std::string get_str() const;
+        ~MegaManFloatUpdate();
 };
 
 class Deceased : public Packet {
