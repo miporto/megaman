@@ -13,7 +13,7 @@ class Camera {
 public:
     explicit Camera(SDL2pp::Renderer *renderer);
     AdjustedPos adjust_position(float x, float y);
-    AdjustedSize adjust_size(int x, int y);
+    int adjust_size();
     void add_megaman(int id, MegaManRenderer* megaman);
     ~Camera();
 private:

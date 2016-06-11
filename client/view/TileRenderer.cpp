@@ -19,20 +19,18 @@ void TileRenderer::update(float pos_x, float pos_y) {
 
 void BlockRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
-    AdjustedSize size = camera.adjust_size(10, 10);
+    int size = camera.adjust_size();
     renderer->Copy(*sprites,
                    SDL2pp::Rect(52, 119, 16, 16),
-                   SDL2pp::Rect(pos.first, pos.second, size.first, size
-                           .second));
+                   SDL2pp::Rect(pos.first, pos.second, size, size));
 }
 
 void StairsRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
-    AdjustedSize size = camera.adjust_size(7, 7);
+    int size = camera.adjust_size();
     renderer->Copy(*sprites,
                    SDL2pp::Rect(35, 85, 16, 16),
-                   SDL2pp::Rect(pos.first, pos.second, size.first, size
-                           .second));
+                   SDL2pp::Rect(pos.first, pos.second, size, size));
 }
 
 void PelletRenderer::render() {
