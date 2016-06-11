@@ -102,6 +102,8 @@ class Update : public Packet {
 class FloatUpdate : public Packet {
     private:
         static const char id = FLOAT_UPDATE;
+
+    protected:
         const std::string name;
         const int object_id;
         const float x;

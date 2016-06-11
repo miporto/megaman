@@ -176,12 +176,33 @@ int MegaManFloatUpdate::get_direction_x() const { return this->direction_x; }
 int MegaManFloatUpdate::get_direction_y() const { return this->direction_y; }
 
 std::string MegaManFloatUpdate::get_str() const {
-    std::string str = FloatUpdate::get_str();
+    std::string str;
 
-    int name_len = this->player_name.length();
+    str.push_back(this->id);
+
+    int name_len = this->name.length();
     char* len_arr = (char*)&name_len;
     for (unsigned int i = 0; i < sizeof(int); ++i)
         str.push_back(len_arr[i]);
+
+    str.append(this->name);
+
+    char* object_id_arr = (char*)&this->object_id;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(object_id_arr[i]);
+
+    char* x_arr = (char*)&this->x;
+    for (unsigned int i = 0; i < sizeof(float); ++i)
+        str.push_back(x_arr[i]);
+
+    char* y_arr = (char*)&this->y;
+    for (unsigned int i = 0; i < sizeof(float); ++i)
+        str.push_back(y_arr[i]);
+
+    int player_name_len = this->player_name.length();
+    char* player_len_arr = (char*)&player_name_len;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(player_len_arr[i]);
 
     str.append(this->player_name);
 
