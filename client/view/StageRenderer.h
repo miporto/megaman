@@ -19,6 +19,7 @@ public:
     void render();
     void update(const std::string &name, const std::string &update_info);
     void delete_renderer(int id);
+    bool are_megamans_alive();
     ~StageRenderer();
 
 private:
@@ -30,6 +31,7 @@ private:
     std::map<int, ActorRenderer*> actor_renderers;
     std::vector<std::string> actors;
     std::vector<std::string> objects;
+    std::vector<int> megamans;
     TileRendererFactory tile_factory;
     ActorRendererFactory actor_factory;
 };

@@ -30,6 +30,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
                 actor_renderers[id] = actor_factory
                         .build_actor_renderer(type, x, y);
                 if (type.compare("MegaMan") == 0) {
+                    megamans.push_back(id);
                     camera.add_megaman(id, (MegaManRenderer*)
                             actor_renderers[id]);
                 }
@@ -86,10 +87,19 @@ void StageRenderer::delete_renderer(int id) {
         tile_renderers.erase(id);
     } else if (actor_renderers.count(id != 0)) {
         actor_renderers.erase(id);
+        auto pos = std::find(megamans.begin(), megamans.end(), id);
+        if (pos != megamans.end()) {
+            camera.delete_megaman(id);
+            megamans.erase(pos);
+        }
     } else {
         return;
         //throw "ERROR: Non-existing id sent";
     }
+}
+
+bool StageRenderer::are_megamans_alive() {
+    return megamans.size() > 0;
 }
 
 StageRenderer::~StageRenderer() {
