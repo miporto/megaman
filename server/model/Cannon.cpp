@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "common/communication/Packet.h"
 #include "Cannon.h"
 #include "MegaMan.h"
 #include "Enemy.h"
@@ -39,6 +40,11 @@ std::pair<std::string, std::string> Projectile::info(const int id) {
                   {"y", sy.str()},
                   {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
+}
+
+FloatUpdate* Projectile::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 
 const std::string& Projectile::get_name() { return this->name; }

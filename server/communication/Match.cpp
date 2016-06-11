@@ -116,6 +116,11 @@ void Match::notify_tick(const std::string& name, const std::string& tick_info) {
     }
 }
 
+void Match::notify_tick(FloatUpdate* update) {
+    for (unsigned int i = 0; i < this->communicators.size(); ++i)
+        this->communicators[i]->send_tick_info(update);
+}
+
 Match::~Match() {}
 
 MatchError::MatchError(const std::string error_msg) throw()

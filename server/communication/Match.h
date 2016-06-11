@@ -32,6 +32,7 @@ class Match {
         void notify_deceased(const int object_id);
         void notify_stage_info(const std::string& info);
         void notify_tick(const std::string& name, const std::string& tick_info);
+        void notify_tick(FloatUpdate* update);
         ~Match();
 };
 

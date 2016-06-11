@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 
+#include "common/communication/Packet.h"
 #include "Enemy.h"
 #include "Object.h"
 #include "Factory.h"
@@ -53,6 +54,11 @@ std::pair<std::string, std::string> Enemy::info(const int id) {
                   {"y", sy.str()},
                   {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
+}
+
+FloatUpdate* Enemy::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 
 Enemy::~Enemy() {}

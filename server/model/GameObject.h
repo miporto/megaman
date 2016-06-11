@@ -21,6 +21,7 @@ class Enemy;
 class Object;
 class Projectile;
 class MegaMan;
+class FloatUpdate;
 
 class GameObject {
     private:
@@ -44,6 +45,7 @@ class GameObject {
         virtual bool is_dead() = 0;
         virtual bool is_enemy() = 0;
         virtual std::pair<std::string, std::string> info(const int id) = 0;
+        virtual FloatUpdate* update(const int id) = 0;
         virtual ~GameObject();
 };
 

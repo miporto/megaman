@@ -9,6 +9,8 @@
 #include "Movable.h"
 #include "Cannon.h"
 
+#define MEGAMAN_NAME "MegaMan"
+
 class EnergyTank {
     private:
         int lives;
@@ -49,6 +51,7 @@ class MegaMan : public UserMovable {
         bool is_dead();
         bool is_enemy();
         std::pair<std::string, std::string> info(const int id);
+        FloatUpdate* update(const int id);
         ~MegaMan();
 };
 

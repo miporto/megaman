@@ -33,6 +33,7 @@ class Object : public GameObject {
         bool is_dead();
         bool is_enemy();
         std::pair<std::string, std::string> info(const int id);
+        FloatUpdate* update(const int id);
         virtual ~Object();
 };
 

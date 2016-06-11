@@ -5,6 +5,7 @@
 #include "MegaMan.h"
 #include "Enemy.h"
 #include "Factory.h"
+#include "common/communication/Packet.h"
 
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
@@ -94,7 +95,16 @@ std::pair<std::string, std::string> MegaMan::info(const int id) {
                   {"energy", senergy.str()},
                   {"id", id} };
 
-    return std::make_pair("MegaMan", info.dump());
+    return std::make_pair(MEGAMAN_NAME, info.dump());
+}
+
+FloatUpdate* MegaMan::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new MegaManFloatUpdate(MEGAMAN_NAME, this->name, id,
+                                  pos[X_COORD_POS], pos[Y_COORD_POS],
+                                  (int)pos[DIRECTION_X_POS],
+                                  (int)pos[DIRECTION_Y_POS],
+                                  this->tank.get_energy_percentage());
 }
 
 bool MegaMan::is_enemy() { return false; }

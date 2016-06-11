@@ -70,6 +70,10 @@ void ServerCommunicator::send_tick_info(const std::string& name,
     this->packets_to_send.push(new Update(name, tick_info));
 }
 
+void ServerCommunicator::send_tick_info(FloatUpdate* update) {
+    this->packets_to_send.push(update);
+}
+
 void ServerCommunicator::shutdown() {
     this->peer->shutdown();
 }

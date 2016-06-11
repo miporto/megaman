@@ -71,11 +71,9 @@ void Stage::execute_events() {
 }
 
 void Stage::tick() {
-    std::vector<std::pair<std::string, std::string>> moved_objects =
-            this->map.tick();
+    std::vector<FloatUpdate*> moved_objects = this->map.tick();
     for (unsigned int i = 0; i < moved_objects.size(); ++i)
-        this->match->notify_tick(moved_objects[i].first, moved_objects[i]
-                .second);
+        this->match->notify_tick(moved_objects[i]);
 }
 
 void Stage::check_collisions() {
@@ -108,16 +106,12 @@ bool Stage::players_are_dead() {
 void Stage::run() {
     while (!this->players_are_dead() && !this->end_reached) {
         this->execute_events();
-        //Hardcodeo de acciones para pruebas de movimiento
-        //this->players[0]->get_megaman()->change_x_movement(true, true);
-        //this->players[0]->get_megaman()->change_y_movement(true, true);
         this->tick();
         this->check_collisions();
         this->get_rid_of_corpses();
         this->create_new_projectiles();
 
         usleep(SLEEP_TIME_MICROSECONDS);
-        //this->players[0]->get_megaman()->change_y_movement(false, true);
     }
 }
 
