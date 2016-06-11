@@ -20,13 +20,11 @@ std::string NewPlayer::get_str() const {
     std::string str;
 
     str.push_back(this->id);
-
-    int len = this->name.length();
-    char* len_arr = (char*)&len;
-    str.push_back(len_arr[0]);
-    str.push_back(len_arr[1]);
-    str.push_back(len_arr[2]);
-    str.push_back(len_arr[3]);
+    
+    int name_len = this->name.length();
+    char* len_arr = (char*)&name_len;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(len_arr[i]);
 
     str.append(this->name);
 
@@ -62,10 +60,8 @@ std::string StageInfo::get_str() const {
 
     int len = this->stage_info.length();
     char* len_arr = (char*)&len;
-    str.push_back(len_arr[0]);
-    str.push_back(len_arr[1]);
-    str.push_back(len_arr[2]);
-    str.push_back(len_arr[3]);
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(len_arr[i]);
 
     str.append(this->stage_info);
 
@@ -92,19 +88,15 @@ std::string Update::get_str() const {
 
     int name_len = this->name.length();
     char* len_arr = (char*)&name_len;
-    str.push_back(len_arr[0]);
-    str.push_back(len_arr[1]);
-    str.push_back(len_arr[2]);
-    str.push_back(len_arr[3]);
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(len_arr[i]);
 
     str.append(this->name);
 
     int len_update = this->update_info.length();
     len_arr = (char*)&len_update;
-    str.push_back(len_arr[0]);
-    str.push_back(len_arr[1]);
-    str.push_back(len_arr[2]);
-    str.push_back(len_arr[3]);
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(len_arr[i]);
 
     str.append(this->update_info);
 
@@ -138,21 +130,21 @@ std::string FloatUpdate::get_str() const {
 
     int name_len = this->name.length();
     char* len_arr = (char*)&name_len;
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < sizeof(int); ++i)
         str.push_back(len_arr[i]);
 
     str.append(this->name);
 
     char* object_id_arr = (char*)&this->object_id;
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < sizeof(int); ++i)
         str.push_back(object_id_arr[i]);
 
     char* x_arr = (char*)&this->x;
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < sizeof(float); ++i)
         str.push_back(x_arr[i]);
 
     char* y_arr = (char*)&this->y;
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < sizeof(float); ++i)
         str.push_back(y_arr[i]);
 
     return str;
@@ -188,21 +180,21 @@ std::string MegaManFloatUpdate::get_str() const {
 
     int name_len = this->player_name.length();
     char* len_arr = (char*)&name_len;
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < sizeof(int); ++i)
         str.push_back(len_arr[i]);
 
     str.append(this->player_name);
 
     char* energy_arr = (char*)&this->energy;
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < sizeof(float); ++i)
         str.push_back(energy_arr[i]);
 
     char* dir_x_arr = (char*)&this->direction_x;
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < sizeof(int); ++i)
         str.push_back(dir_x_arr[i]);
 
     char* dir_y_arr = (char*)&this->direction_y;
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < sizeof(int); ++i)
         str.push_back(dir_y_arr[i]);
 
     return str;
@@ -219,11 +211,9 @@ std::string Deceased::get_str() const {
 
     str.push_back(this->id);
 
-    char* id_arr = (char*)&this->object_id;
-    str.push_back(id_arr[0]);
-    str.push_back(id_arr[1]);
-    str.push_back(id_arr[2]);
-    str.push_back(id_arr[3]);
+    char* object_id_arr = (char*)&this->object_id;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(object_id_arr[i]);
 
     return str;
 }
@@ -256,12 +246,10 @@ std::string Action::get_str() const {
     std::string str;
     str.push_back(this->id);
 
-    int len = this->name.length();
-    char* len_arr = (char*)&len;
-    str.push_back(len_arr[0]);
-    str.push_back(len_arr[1]);
-    str.push_back(len_arr[2]);
-    str.push_back(len_arr[3]);
+    int name_len = this->name.length();
+    char* len_arr = (char*)&name_len;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(len_arr[i]);
 
     str.append(this->name);
     str.push_back(this->action_id);
