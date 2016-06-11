@@ -3,6 +3,7 @@
 #include <string>
 #include <cmath>
 
+#include "server/Logger.h"
 #include "Movable.h"
 
 #define PX_PER_CELL_RATIO 50
@@ -171,8 +172,8 @@ void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
 
 std::vector<float> UserMovable::get_position() {
     std::vector<float> position = GameObject::get_position();
-    std::cout << "MM pos: " << position[X_COORD_POS] << " "
-    << position[Y_COORD_POS] << std::endl;
+    Logger::instance()->out << INFO << "MM pos: " << position[X_COORD_POS] <<
+            " " << position[Y_COORD_POS];
     position.push_back(this->direction_x);
     position.push_back(this->direction_y);
     return position;

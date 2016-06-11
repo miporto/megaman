@@ -33,7 +33,6 @@ class Object : public GameObject {
         void execute_collision_with(GameObject* other);
         void tick();
         bool is_dead();
-        bool is_enemy();
         std::pair<std::string, std::string> info();
         virtual ~Object();
 };

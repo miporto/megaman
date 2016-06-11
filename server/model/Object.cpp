@@ -25,8 +25,6 @@ void Object::execute_collision_with(GameObject* other) {
 
 void Object::tick() {}
 
-bool Object::is_enemy() { return false; }
-
 std::pair<std::string, std::string> Object::info() {
     return std::make_pair("", "");
 }

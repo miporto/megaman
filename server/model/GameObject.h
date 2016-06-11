@@ -42,7 +42,8 @@ class GameObject {
         virtual void execute_collision_with(GameObject* other) = 0;
         virtual void tick() = 0;
         virtual bool is_dead() = 0;
-        virtual bool is_enemy() = 0;
+        virtual bool is_enemy();
+        virtual bool is_megaman();
         virtual std::pair<std::string, std::string> info() = 0;
         virtual ~GameObject();
 };

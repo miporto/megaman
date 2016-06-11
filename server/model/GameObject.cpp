@@ -29,4 +29,8 @@ std::vector<float> GameObject::get_position() {
     return this->position.get_position();
 }
 
+bool GameObject::is_enemy() { return false; }
+
+bool GameObject::is_megaman() { return false; }
+
 GameObject::~GameObject() {}
