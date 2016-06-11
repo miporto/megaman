@@ -63,11 +63,17 @@ void StageSurface::run() {
 
             // Receive updates
             int count = 0;
-            while (client.new_update_packets() && count < 100) {
-                UpdatePacket update_packet = client.receive_update();
-                replace_substr(update_packet.second, ",", " ,");
-                stage_renderer->update(update_packet.first,
-                                       update_packet.second);
+//            while (client.new_update_packets() && count < 100) {
+//                UpdatePacket update_packet = client.receive_update();
+//                replace_substr(update_packet.second, ",", " ,");
+//                stage_renderer->update(update_packet.first,
+//                                       update_packet.second);
+//                ++count;
+//            }
+            while (client.new_float_update_packets() && count < 100) {
+                NewUpdatePacket update_packet = client.receive_float_update();
+                stage_renderer->new_update(update_packet.first, update_packet
+                        .second);
                 ++count;
             }
 
