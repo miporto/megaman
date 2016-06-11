@@ -9,6 +9,11 @@ AdjustedPos Camera::adjust_position(float x, float y) {
     return AdjustedPos(adj_x, adj_y);
 }
 
+AdjustedSize Camera::adjust_size(int x, int y) {
+    int adj_x = x * (renderer->GetOutputWidth() / 100);
+    int adj_y = y * (renderer->GetOutputHeight() / 100);
+    return AdjustedSize(adj_x, adj_y);
+}
 void Camera::add_megaman(int id, MegaManRenderer *megaman) {
     megs[id] = megaman;
 }

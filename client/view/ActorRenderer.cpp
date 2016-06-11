@@ -29,9 +29,11 @@ float ActorRenderer::get_y(){
 
 void MetRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    AdjustedSize size = camera.adjust_size(7, 7);
     renderer->Copy(*sprites,
                    SDL2pp::Rect(57, 17, 18, 19),
-                   SDL2pp::Rect(pos.first, pos.second, 50, 50));
+                   SDL2pp::Rect(pos.first, pos.second, size.first,
+                                size.second));
 }
 
 void MegaManRenderer::render() {
