@@ -79,15 +79,26 @@ NewUpdatePacket ClientCommunicator::receive_float_update() {
     if (new_float_update_packets()) {
         const FloatUpdate *update = (FloatUpdate*) packets_received.pop
                 (FLOAT_UPDATE);
-//        info["id"] = update->get_id();
-//        info["x"] = update->get_x();
-//        info["y"] = update->get_y();
-//        update_pkt.first = update->get_name();
-        update_pkt.second = info;
+        info["id"] = update->get_id();
+        info["x"] = update->get_x();
+        info["y"] = update->get_y();
+        update_pkt.first = update->get_name();
         delete update;
-        return update_pkt;
+    } else if (new_megaman_update_packets()){
+        const MegaManFloatUpdate *update = (MegaManFloatUpdate*)
+                packets_received.pop(MEGAMAN_FLOAT_UPDATE);
+        info["id"] = update->get_id();
+        info["x"] = update->get_x();
+        info["y"] = update->get_y();
+        info["d_x"] = update->get_direction_x();
+        info["d_y"] = update->get_direction_y();
+        update_pkt.first = update->get_name();
+        delete update;
+    } else {
+        throw "ERROR: No float update on queue!";
     }
-    throw "ERROR: No float update on queue!";
+    update_pkt.second = info;
+    return update_pkt;
 }
 
 NewUpdatePacket ClientCommunicator::receive_megaman_update() {
@@ -96,12 +107,12 @@ NewUpdatePacket ClientCommunicator::receive_megaman_update() {
     if (new_megaman_update_packets()) {
         const MegaManFloatUpdate *update = (MegaManFloatUpdate*)
                 packets_received.pop(MEGAMAN_FLOAT_UPDATE);
-//        info["id"] = update->get_id();
-//        info["x"] = update->get_x();
-//        info["y"] = update->get_y();
-//        info["d_x"] = update->get_direction_x();
-//        info["d_y"] = update->get_direction_y();
-//        update_pkt.first = update->get_name();
+        info["id"] = update->get_id();
+        info["x"] = update->get_x();
+        info["y"] = update->get_y();
+        info["d_x"] = update->get_direction_x();
+        info["d_y"] = update->get_direction_y();
+        update_pkt.first = update->get_name();
         update_pkt.second = info;
         delete update;
         return update_pkt;
@@ -124,7 +135,8 @@ bool ClientCommunicator::new_deceased() {
 }
 
 bool ClientCommunicator::new_float_update_packets() {
-    return !packets_received.is_empty(FLOAT_UPDATE);
+    return !packets_received.is_empty(FLOAT_UPDATE) ||
+            !packets_received.is_empty(MEGAMAN_FLOAT_UPDATE);
 }
 
 bool ClientCommunicator::new_megaman_update_packets() {
