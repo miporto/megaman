@@ -90,7 +90,8 @@ Projectile* ProjectileFactory::projectile(const std::string& name,
                                                 velocity_y, position);
     else if (name == RING_NAME) return new Ring(damage, velocity_x,
                                                 velocity_y, position);
-    return NULL;
+
+    throw FactoryError("No projectile with that name");
 }
 
 ProjectileFactory::~ProjectileFactory() {}
@@ -102,6 +103,34 @@ Ammo* AmmoFactory::ammo(const std::string& name) {
 }
 
 AmmoFactory::~AmmoFactory() {}
+
+Boss* BossFactory::boss(const char stage_id) {
+    json j_info = FileReader::read(INFO_FILE, "stage");
+    std::string boss_name = j_info["boss"]["name"];
+    std::vector<float> initial_position;
+    float initial_x = (float) j_info["boss"]["initial x"];
+    float initial_y = (float) j_info["boss"]["initial y"];
+    initial_position.push_back(initial_x);
+    initial_position.push_back(initial_y);
+    float velocity_x = (float) j_info["boss"]["velocity x"];
+    float velocity_y = (float) j_info["boss"]["velocity y"];
+    int energy = (int) j_info["boss"]["energy"];
+
+    if (boss_name == BOMBMAN_NAME)
+        return new BombMan(initial_position, velocity_x, velocity_y, energy);
+    else if (boss_name == RINGMAN_NAME)
+        return new RingMan(initial_position, velocity_x, velocity_y, energy);
+    else if (boss_name == SPARKMAN_NAME)
+        return new SparkMan(initial_position, velocity_x, velocity_y, energy);
+    else if (boss_name == MAGNETMAN_NAME)
+        return new MagnetMan(initial_position, velocity_x, velocity_y, energy);
+    else if (boss_name == FIREMAN_NAME)
+        return new FireMan(initial_position, velocity_x, velocity_y, energy);
+
+    throw FactoryError("No boss with that name");
+}
+
+BossFactory::~BossFactory() {}
 
 const std::string StageFactory::initial_stage(const char stage_id) {
     json json_file = FileReader::read(INFO_FILE, "stage");
@@ -129,3 +158,6 @@ unsigned int MapFactory::height() {
 }
 
 MapFactory::~MapFactory() {}
+
+FactoryError::FactoryError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}

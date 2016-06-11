@@ -7,6 +7,7 @@
 
 #include "extern/libjson/json.hpp"
 #include "Cannon.h"
+#include "Boss.h"
 
 using json = nlohmann::json;
 
@@ -53,6 +54,13 @@ class AmmoFactory {
         ~AmmoFactory();
 };
 
+class BossFactory {
+    public:
+        static Boss* boss(const char stage_id);
+        ~BossFactory();
+};
+
+
 class StageFactory {
     public:
         static const std::string initial_stage(const char stage_id);
@@ -64,6 +72,11 @@ class MapFactory {
         static unsigned int width();
         static unsigned int height();
         ~MapFactory();
+};
+
+class FactoryError : public SystemError {
+public:
+    explicit FactoryError(const std::string error_msg) throw();
 };
 
 #endif //FACTORY_H
