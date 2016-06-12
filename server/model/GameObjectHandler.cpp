@@ -1,5 +1,6 @@
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "server/communication/InfoMaker.h"
 #include "GameObjectHandler.h"
@@ -42,10 +43,37 @@ void GameObjectHandler::check_collisions() {
     }
 }
 
+std::vector<int> GameObjectHandler::get_rid_of_corpses() {
+    std::vector<int> deceased;
+    GameObject* dead_obj;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        if (this->objects[i]->is_dead()) {
+            dead_obj = this->objects[i];
+
+            deceased.push_back(this->object_id[dead_obj]);
+
+            this->object_id.erase(dead_obj);
+            this->objects.erase(this->objects.begin() + i);
+
+            if (!dead_obj->is_megaman()) delete dead_obj;
+        }
+    }
+    return deceased;
+}
+
 void GameObjectHandler::create_new_projectiles() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (this->objects[i]->shoots_per_tick())
             ((Shooter*)this->objects[i])->shoot(this);
+}
+
+std::vector<FloatUpdate*> GameObjectHandler::updates() {
+    std::vector<FloatUpdate*> updates;
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        if (this->objects[i]->it_moved())
+            updates.push_back(this->objects[i]->update
+                    (this->object_id[this->objects[i]]));
+    return updates;
 }
 
 GameObjectHandler::~GameObjectHandler() {

@@ -25,9 +25,9 @@ class Stage {
                             const char action_id, const bool pressed);
         void tick();
         void check_collisions();
-        void get_rid_of_corpses();
+        void acknowledge_deceased();
         void create_new_projectiles();
-        void collect_updates();
+        void acknowledge_updates();
         Player* player_with_name(const std::string& name);
         bool players_are_dead();
 

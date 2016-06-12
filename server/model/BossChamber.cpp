@@ -37,21 +37,6 @@ BossChamber::BossChamber(Match* match,
     this->match->notify_boss_chamber_info(this->status());
 }
 
-//void BossChamber::add_game_object(GameObject* object) {
-//    this->objects.push_back(object);
-//    this->object_id[object] = this->objects.size();
-//}
-
-//const std::string BossChamber::status() {
-//    InfoMaker info;
-//    std::pair<std::string, std::string> status;
-//    for (unsigned int i = 0; i < this->objects.size(); ++i) {
-//        status = this->objects[i]->info(this->object_id[this->objects[i]]);
-//        info.add(status.first, status.second);
-//    }
-//    return info.str();
-//}
-
 Player* BossChamber::player_with_name(const std::string& name) {
     for (unsigned int i = 0; i < this->players.size(); ++i) {
         if ((this->players[i]->get_name()).compare(name) == 0)
@@ -92,29 +77,14 @@ bool BossChamber::players_are_dead() {
     return true;
 }
 
-//void BossChamber::tick() {
-//    for (unsigned int i = 0; i < this->objects.size(); ++i)
-//        this->objects[i]->tick();
-//}
-
-//void BossChamber::check_collisions() {
-//    //TODO
-//}
-
-void BossChamber::get_rid_of_corpses() {
-    std::vector<int> deceased_ids;
-    //TODO
+void BossChamber::acknowledge_deceased() {
+    std::vector<int> deceased_ids = this->get_rid_of_corpses();
     for (unsigned int i = 0; i < deceased_ids.size(); ++i)
         this->match->notify_deceased(deceased_ids[i]);
 }
 
-//void BossChamber::create_new_projectiles() {
-//    this->boss->shoot(this);
-//}
-
-void BossChamber::collect_updates() {
-    std::vector<FloatUpdate*> updates;
-    //TODO
+void BossChamber::acknowledge_updates() {
+    std::vector<FloatUpdate*> updates = this->updates();
     for (unsigned int i = 0; i < updates.size(); ++i)
         this->match->notify_tick(updates[i]);
 }
@@ -124,9 +94,9 @@ void BossChamber::run(bool* exit) {
         this->execute_events();
         this->tick();
         this->check_collisions();
-        this->get_rid_of_corpses();
+        this->acknowledge_deceased();
         this->create_new_projectiles();
-        this->collect_updates();
+        this->acknowledge_updates();
         usleep(SLEEP_TIME_MICROSECONDS);
     }
 }
