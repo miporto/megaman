@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -17,6 +18,7 @@ void InputHandler::read_input() {
         } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
             switch (event.key.keysym.sym) {
                 case SDLK_LEFT:
+                    std::cout << "EVENT TRIGGERED" << std::endl;
                     keys_held[LEFT] = true;
                     break;
                 case SDLK_UP:
