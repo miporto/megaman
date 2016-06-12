@@ -21,8 +21,8 @@ public:
 private:
     void calculate_baricenter();
     SDL2pp::Renderer *renderer;
-    int offset_x;
-    int offset_y;
+    float offset_x;
+    float offset_y;
     std::map<int, MegaManRenderer*> megs;
 };
 
