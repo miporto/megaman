@@ -120,6 +120,17 @@ NewUpdatePacket ClientCommunicator::receive_megaman_update() {
     throw "ERROR: No megaman update on queue!";
 }
 
+std::string ClientCommunicator::receive_chamber_info() {
+    std::string info;
+    if (new_chamber_info_packet()) {
+        const ChamberInfo *update = (ChamberInfo*) packets_received.pop
+                (CHAMBER_INFO);
+        info = update->get_info();
+        delete update;
+        return info;
+    }
+    throw "ERROR: No chamber info on queue!";
+}
 void ClientCommunicator::send_action(const std::string& name,
                                      const char &action_id,
                                      const bool& pressed) {
@@ -141,6 +152,10 @@ bool ClientCommunicator::new_float_update_packets() {
 
 bool ClientCommunicator::new_megaman_update_packets() {
     return !packets_received.is_empty(MEGAMAN_FLOAT_UPDATE);
+}
+
+bool ClientCommunicator::new_chamber_info_packet() {
+    return !packets_received.is_empty(CHAMBER_INFO);
 }
 
 ClientCommunicator::~ClientCommunicator() {

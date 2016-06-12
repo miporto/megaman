@@ -12,7 +12,11 @@ class Camera;
 typedef std::pair<int, int> AdjustedPos;
 enum ActorRendererType {
     MET_R,
-    MEGAMAN_R
+    BUMBY_R,
+    SNIPER_R,
+    JSNIPER_R,
+    MEGAMAN_R,
+    BOMBMAN_R
 };
 
 class ActorRenderer {
@@ -41,7 +45,31 @@ public:
     void render();
 };
 
+class BumbyRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
+class SniperRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
+class JumpingSniperRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
 class MegaManRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
+class BombManRenderer : public ActorRenderer {
 public:
     using ActorRenderer::ActorRenderer;
     void render();
@@ -57,7 +85,8 @@ private:
     SDL2pp::Renderer *renderer;
     Camera &camera;
     SDL2pp::Texture *meg_sprites;
-    SDL2pp::Texture *sprites;
+    SDL2pp::Texture *enemy_sprites;
+    SDL2pp::Texture *bomb_man_sprites;
     std::map<std::string, ActorRendererType> actor_renderers;
 };
 

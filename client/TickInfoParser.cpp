@@ -7,16 +7,18 @@
 
 using json = nlohmann::json;
 
-TickInfoParser::TickInfoParser(const std::string &tick_info) :
+TickInfoParser::TickInfoParser(std::string &tick_info) :
         tick_info(tick_info){
+    replace_substr(tick_info, ",", " ,");
     json_info = json::parse(tick_info);
-//    std::cout << json_info.dump() << std::endl;
+    std::cout << json_info.dump() << std::endl;
 //    std::string test = "{\"object\":{\"Block\":[{\"x\":10,\"y\": 11.7}]}}";
 //    json j = json::parse(test);
 //    std::cout << j.dump() << std::endl;
 //    std::string s_b = "13.456";
 //    float b = stof(s_b);
 //    std::cout << b << std::endl;
+    // Tiles
     StatusInfo block = status_info_of("Block");
     new_tick_parser_info["Block"] = block;
     StatusInfo stairs = status_info_of("Stairs");
@@ -25,10 +27,29 @@ TickInfoParser::TickInfoParser(const std::string &tick_info) :
     new_tick_parser_info["Door"] = door;
     StatusInfo spike = status_info_of("Spike");
     new_tick_parser_info["Spike"] = spike;
+    // Actors
     StatusInfo mets = status_info_of("Met");
     new_tick_parser_info["Met"] = mets;
+    StatusInfo bumby = status_info_of("Bumby");
+    new_tick_parser_info["Bumby"] = bumby;
+    StatusInfo sniper = status_info_of("Sniper");
+    new_tick_parser_info["Sniper"] = sniper;
+    StatusInfo jsniper = status_info_of("JumpingSniper");
+    new_tick_parser_info["JumpingSniper"] = jsniper;
     StatusInfo megs = status_info_of("MegaMan");
     new_tick_parser_info["MegaMan"] = megs;
+    StatusInfo bombman = status_info_of("BombMan");
+    new_tick_parser_info["BombMan"] = bombman;
+}
+
+void TickInfoParser::replace_substr(std::string &input,
+                                    const std::string &old_str,
+                                    const std::string &new_str) {
+    size_t index = 0;
+    while ( (index = input.find(old_str, index))!= std::string::npos ) {
+        input.replace(index, old_str.size(), new_str);
+        index += new_str.size();
+    }
 }
 
 TickParserInfo TickInfoParser::get_parsed_tick_info() {

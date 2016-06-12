@@ -14,12 +14,14 @@ typedef std::map<std::string, StatusInfo> TickParserInfo;
 
 class TickInfoParser {
 public:
-    explicit TickInfoParser(const std::string& tick_info);
+    explicit TickInfoParser(std::string& tick_info);
     TickParserInfo get_parsed_tick_info();
     static std::map<std::string, std::string> parse_update(
             const std::string &info);
     ~TickInfoParser();
 private:
+    void replace_substr(std::string& input, const std::string& old_str,
+                        const std::string &new_str);
     StatusInfo status_info_of(const std::string& element);
     std::string tick_info;
     TickParserInfo new_tick_parser_info;

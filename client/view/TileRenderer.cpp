@@ -66,7 +66,7 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
     tile_renderers["Block"] = BLOCK_R;
     tile_renderers["Stairs"] = STAIRS_R;
     tile_renderers["Pellet"] = PELLET_R;
-    tile_renderers["Spikes"] = SPIKE_R;
+    tile_renderers["Spike"] = SPIKE_R;
     tile_renderers["Door"] = DOOR_R;
 }
 TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
