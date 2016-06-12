@@ -8,8 +8,8 @@ Camera::Camera(SDL2pp::Renderer *renderer) : renderer(renderer), offset_x(0),
 AdjustedPos Camera::adjust_position(float x, float y) {
     calculate_baricenter();
     int size = adjust_size();
-    int adj_x = (int) (x*size + offset_x);
-    int adj_y = (int) (renderer->GetOutputHeight() - (y + 1)*size - offset_y);
+    int adj_x = (int) ((x + offset_x) * size);
+    int adj_y = (int) (renderer->GetOutputHeight() - (y + 1 + offset_y)*size);
     return AdjustedPos(adj_x, adj_y);
 }
 
@@ -45,14 +45,14 @@ void Camera::calculate_baricenter() {
     int width = renderer->GetOutputWidth();
     int height = renderer->GetOutputHeight();
     if (b_x <  width * 0.25) {
-        offset_x = b_x;
+        offset_x = -b_x;
     } else if (b_x > width * 0.75) {
-        offset_x = - b_x;
+        offset_x = b_x;
     }
     if (b_y < height * 0.25) {
-        offset_y = b_y;
+        offset_y = -b_y;
     } else if (b_y > width * 0.75) {
-        offset_y = - b_y;
+        offset_y = b_y;
     }
 }
 Camera::~Camera() {}
