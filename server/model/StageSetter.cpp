@@ -1,6 +1,6 @@
 #include <string>
 
-#include "common/StageParser.h"
+#include "StageParser.h"
 #include "StageSetter.h"
 #include "Map.h"
 

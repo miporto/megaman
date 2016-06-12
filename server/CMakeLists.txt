@@ -45,7 +45,9 @@ set(SOURCES
         Logger.cpp
         Logger.h
         model/Boss.cpp
-        model/Boss.h)
+        model/Boss.h
+        model/StageParser.cpp
+        model/StageParser.h)
 
 include(CppLint)
 

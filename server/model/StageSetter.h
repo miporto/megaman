@@ -7,7 +7,7 @@
 #include "Enemy.h"
 #include "Object.h"
 #include "Map.h"
-#include "common/StageParser.h"
+#include "StageParser.h"
 
 class StageSetter {
     private:
