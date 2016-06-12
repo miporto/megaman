@@ -108,7 +108,7 @@ void StageRenderer::delete_renderer(int id) {
     // TODO: check with camera, cause  if its a meg it has to delete it too
     if (tile_renderers.count(id) != 0) {
         tile_renderers.erase(id);
-    } else if (actor_renderers.count(id != 0)) {
+    } else if (actor_renderers.count(id) != 0) {
         actor_renderers.erase(id);
         auto pos = std::find(megamans.begin(), megamans.end(), id);
         if (pos != megamans.end()) {
