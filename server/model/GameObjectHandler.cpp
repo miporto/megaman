@@ -24,6 +24,11 @@ const std::string GameObjectHandler::status() {
     return info.str();
 }
 
+void GameObjectHandler::tick() {
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        this->objects[i]->tick();
+}
+
 GameObjectHandler::~GameObjectHandler() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (!this->objects[i]->is_megaman()) delete this->objects[i];

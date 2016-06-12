@@ -23,10 +23,10 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 //    this->object_id[object] = this->objects.size();
 //}
 
-void Map::tick() {
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        this->objects[i]->tick();
-}
+//void Map::tick() {
+//    for (unsigned int i = 0; i < this->objects.size(); ++i)
+//        this->objects[i]->tick();
+//}
 
 void Map::check_collisions() {
     GameObject* current_object;

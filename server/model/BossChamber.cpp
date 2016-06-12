@@ -92,10 +92,10 @@ bool BossChamber::players_are_dead() {
     return true;
 }
 
-void BossChamber::tick() {
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        this->objects[i]->tick();
-}
+//void BossChamber::tick() {
+//    for (unsigned int i = 0; i < this->objects.size(); ++i)
+//        this->objects[i]->tick();
+//}
 
 void BossChamber::check_collisions() {
     //TODO
@@ -135,9 +135,7 @@ bool BossChamber::beated() {
     return this->boss->is_dead();
 }
 
-BossChamber::~BossChamber() {
-    delete this->boss;
-}
+BossChamber::~BossChamber() {}
 
 BossChamberError::BossChamberError(const std::string error_msg) throw()
         : SystemError(error_msg) {}
