@@ -58,6 +58,10 @@ StageParserInfo StageParser::stage_info(const std::string& info) {
             this->positions_of(info, "object", "Spike");
     pos["Spike"] = spike_positions;
 
+    std::vector<std::vector<float>> door_positions =
+            this->positions_of(info, "object", "Door");
+    pos["Door"] = door_positions;
+
     std::vector<std::vector<float>> cliff_positions =
             this->positions_of(info, "object", "Cliff");
     pos["Cliff"] = cliff_positions;
