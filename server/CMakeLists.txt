@@ -30,8 +30,8 @@ set(SOURCES
         model/Game.h
         model/Movable.cpp
         model/Movable.h
-        communication/TickInfoMaker.cpp
-        communication/TickInfoMaker.h
+        communication/InfoMaker.cpp
+        communication/InfoMaker.h
         communication/EventQueue.cpp
         communication/EventQueue.h
         model/GameObject.cpp
@@ -45,7 +45,9 @@ set(SOURCES
         Logger.cpp
         Logger.h
         model/Boss.cpp
-        model/Boss.h)
+        model/Boss.h
+        model/StageParser.cpp
+        model/StageParser.h)
 
 include(CppLint)
 

@@ -48,7 +48,7 @@ class ServerCommunicator {
         void send_tick_info(const std::string& name,
                             const std::string& tick_info);
         void send_tick_info(FloatUpdate* update);
-        void send_boss_chamber_info(const char boss_id);
+        void send_boss_chamber_info(const std::string& info);
         bool disconnected();
         virtual void shutdown();
         virtual ~ServerCommunicator();

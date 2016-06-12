@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "client/communication/Client.h"
-#include "common/StageParser.h"
+#include "server/model/StageParser.h"
 #include "InputHandler.h"
 #include "StageRenderer.h"
 

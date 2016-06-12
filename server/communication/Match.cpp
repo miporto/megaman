@@ -63,9 +63,9 @@ void Match::notify_stage_info(const std::string& info) {
         this->communicators[i]->send_stage_info(info);
 }
 
-void Match::notify_boss_chamber_info(const char boss_id) {
+void Match::notify_boss_chamber_info(const std::string& info) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
-        this->communicators[i]->send_boss_chamber_info(boss_id);
+        this->communicators[i]->send_boss_chamber_info(info);
 }
 
 void Match::add_player(Socket* peer) {
@@ -102,7 +102,6 @@ void Match::play_stage(bool* exit) {
     Stage stage(this, this->communicators, stage_info);
     stage.run(exit);
     if (stage.beated()) {
-        this->notify_boss_chamber_info(stage_id);
         BossChamber chamber(this, this->communicators, stage_id);
         chamber.run(exit);
         if (chamber.beated())
