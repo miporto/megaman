@@ -8,9 +8,10 @@
 #include "GameObject.h"
 
 class GameObjectHandler {
-    protected:
+    private:
         std::vector<GameObject*> objects;
         std::map<GameObject*, int> object_id;
+
     public:
         void set(const std::string& info);
         void add_game_object(GameObject* object);
