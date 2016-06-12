@@ -18,6 +18,7 @@ TickInfoParser::TickInfoParser(std::string &tick_info) :
 //    std::string s_b = "13.456";
 //    float b = stof(s_b);
 //    std::cout << b << std::endl;
+    // Tiles
     StatusInfo block = status_info_of("Block");
     new_tick_parser_info["Block"] = block;
     StatusInfo stairs = status_info_of("Stairs");
@@ -26,8 +27,15 @@ TickInfoParser::TickInfoParser(std::string &tick_info) :
     new_tick_parser_info["Door"] = door;
     StatusInfo spike = status_info_of("Spike");
     new_tick_parser_info["Spike"] = spike;
+    // Actors
     StatusInfo mets = status_info_of("Met");
     new_tick_parser_info["Met"] = mets;
+    StatusInfo bumby = status_info_of("Bumby");
+    new_tick_parser_info["Bumby"] = bumby;
+    StatusInfo sniper = status_info_of("Sniper");
+    new_tick_parser_info["Sniper"] = sniper;
+    StatusInfo jsniper = status_info_of("JumpingSniper");
+    new_tick_parser_info["JumpingSniper"] = jsniper;
     StatusInfo megs = status_info_of("MegaMan");
     new_tick_parser_info["MegaMan"] = megs;
     StatusInfo bombman = status_info_of("BombMan");

@@ -12,6 +12,9 @@ class Camera;
 typedef std::pair<int, int> AdjustedPos;
 enum ActorRendererType {
     MET_R,
+    BUMBY_R,
+    SNIPER_R,
+    JSNIPER_R,
     MEGAMAN_R,
     BOMBMAN_R
 };
@@ -37,6 +40,24 @@ protected:
 };
 
 class MetRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
+class BumbyRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
+class SniperRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
+class JumpingSniperRenderer : public ActorRenderer {
 public:
     using ActorRenderer::ActorRenderer;
     void render();
