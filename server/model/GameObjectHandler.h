@@ -14,6 +14,7 @@ class GameObjectHandler {
     public:
         void set(const std::string& info);
         void add_game_object(GameObject* object);
+        const std::string status();
         virtual ~GameObjectHandler();
 };
 

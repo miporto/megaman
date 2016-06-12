@@ -64,15 +64,15 @@ void Map::create_new_projectiles() {
             ((Enemy*)this->objects[i])->shoot(this);
 }
 
-const std::string Map::status() {
-    InfoMaker info;
-    std::pair<std::string, std::string> status;
-    for (unsigned int i = 0; i < this->objects.size(); ++i) {
-        status = this->objects[i]->info(this->object_id[this->objects[i]]);
-        info.add(status.first, status.second);
-    }
-    return info.str();
-}
+//const std::string Map::status() {
+//    InfoMaker info;
+//    std::pair<std::string, std::string> status;
+//    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+//        status = this->objects[i]->info(this->object_id[this->objects[i]]);
+//        info.add(status.first, status.second);
+//    }
+//    return info.str();
+//}
 
 std::vector<FloatUpdate*> Map::updates() {
     std::vector<FloatUpdate*> updates;
@@ -83,7 +83,4 @@ std::vector<FloatUpdate*> Map::updates() {
     return updates;
 }
 
-Map::~Map() {
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        if (!this->objects[i]->is_megaman()) delete this->objects[i];
-}
+Map::~Map() {}

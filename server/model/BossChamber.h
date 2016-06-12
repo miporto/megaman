@@ -33,7 +33,7 @@ class BossChamber : public GameObjectHandler {
         void collect_updates();
         Player* player_with_name(const std::string& name);
         bool players_are_dead();
-        const std::string status();
+//        const std::string status();
 
     public:
         BossChamber(Match* match,
