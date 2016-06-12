@@ -3,7 +3,7 @@ project(server)
 set(SOURCES
         communication/Acceptor.cpp
         communication/Acceptor.h
-    main.cpp
+        main.cpp
         communication/Match.cpp
         communication/Match.h
         communication/Server.cpp
@@ -14,6 +14,8 @@ set(SOURCES
         model/Stage.cpp
         model/Factory.cpp
         model/Factory.h
+        model/Position.h
+        model/Position.cpp
         model/Object.h
         model/Object.cpp
         model/Enemy.h
@@ -25,7 +27,25 @@ set(SOURCES
         model/Map.h
         model/Map.cpp
         model/Game.cpp
-        model/Game.h model/Movable.cpp model/Movable.h communication/TickInfoMaker.cpp communication/TickInfoMaker.h communication/EventQueue.cpp communication/EventQueue.h model/GameObject.cpp model/GameObject.h model/StageSetter.cpp model/StageSetter.h model/Player.cpp model/Player.h model/BossChamber.cpp model/BossChamber.h)
+        model/Game.h
+        model/Movable.cpp
+        model/Movable.h
+        communication/TickInfoMaker.cpp
+        communication/TickInfoMaker.h
+        communication/EventQueue.cpp
+        communication/EventQueue.h
+        model/GameObject.cpp
+        model/GameObject.h
+        model/StageSetter.cpp
+        model/StageSetter.h
+        model/Player.cpp
+        model/Player.h
+        model/BossChamber.cpp
+        model/BossChamber.h
+        Logger.cpp
+        Logger.h
+        model/Boss.cpp
+        model/Boss.h)
 
 include(CppLint)
 
@@ -40,6 +60,6 @@ add_dependencies(${PROJECT_NAME} common)
 add_dependencies(${PROJECT_NAME} extern)
 
 target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${PROJECT_NAME} ${BOX2D_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${LOG4CPP_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} common)
 target_link_libraries(${PROJECT_NAME} extern)

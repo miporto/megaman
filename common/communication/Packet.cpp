@@ -243,6 +243,21 @@ int Deceased::get_object_id() const { return this->object_id; }
 
 Deceased::~Deceased() { }
 
+ChamberInfo::ChamberInfo(const char chamber_id) : chamber_id(chamber_id) {}
+
+char ChamberInfo::get_id() const { return this->id; }
+
+std::string ChamberInfo::get_str() const {
+    std::string str;
+    str.push_back(this->id);
+    str.push_back(this->chamber_id);
+    return str;
+}
+
+char ChamberInfo::get_chamber_id() const { return this->chamber_id; }
+
+ChamberInfo::~ChamberInfo() {}
+
 Action::Action(const std::string& name,
                const char action_id, const bool pressed)
         : name(name), action_id(action_id), pressed(pressed) {

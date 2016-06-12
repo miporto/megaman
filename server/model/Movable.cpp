@@ -1,7 +1,9 @@
 #include <vector>
 #include <iostream>
+#include <string>
 #include <cmath>
 
+#include "server/Logger.h"
 #include "Movable.h"
 
 #define PX_PER_CELL_RATIO 50
@@ -65,8 +67,12 @@ void Movable::correct_position(const std::vector<float>& obstacle_pos,
 
 Movable::~Movable() {}
 
-UserMovable::UserMovable(const float velocity_x, const float velocity_y)
-        : Movable(0, 1, velocity_x, velocity_y), gravity(GRAVITY),
+UserMovable::UserMovable(const std::vector<float>& respawn_position,
+                         const float velocity_x, const float velocity_y)
+        : Movable(respawn_position[X_COORD_POS], respawn_position[Y_COORD_POS],
+                  velocity_x, velocity_y),
+          respawn_position(respawn_position),
+          gravity(GRAVITY),
           direction_x(FORWARD), direction_y(FORWARD),
           current_vel_x(0), current_vel_y(0), on_stairs(false) {}
 
@@ -131,7 +137,8 @@ void UserMovable::move() {
     this->position.move(x_amount, y_amount);
     this->on_stairs = false;
 
-    //if (this->position.out_of_range()) this->reset_position();
+    if (this->position.out_of_range())
+        throw MovableError("Mega Man position out of range");
 }
 
 void UserMovable::reset_movement() {
@@ -140,7 +147,7 @@ void UserMovable::reset_movement() {
 }
 
 void UserMovable::reset_position() {
-    this->position.reset();
+    this->position.reset(respawn_position);
     this->direction_x = FORWARD;
     this->direction_y = FORWARD;
     this->reset_movement();
@@ -177,11 +184,14 @@ void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
 
 std::vector<float> UserMovable::get_position() {
     std::vector<float> position = GameObject::get_position();
-//    std::cout << "MM pos: " << position[X_COORD_POS] << " "
-//    << position[Y_COORD_POS] << std::endl;
+    Logger::instance()->out << INFO << "MM pos: " << position[X_COORD_POS] <<
+            " " << position[Y_COORD_POS];
     position.push_back(this->direction_x);
     position.push_back(this->direction_y);
     return position;
 }
 
 UserMovable::~UserMovable() {}
+
+MovableError::MovableError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}

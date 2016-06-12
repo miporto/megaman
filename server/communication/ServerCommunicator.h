@@ -48,6 +48,7 @@ class ServerCommunicator {
         void send_tick_info(const std::string& name,
                             const std::string& tick_info);
         void send_tick_info(FloatUpdate* update);
+        void send_boss_chamber_info(const char boss_id);
         virtual void shutdown();
         virtual ~ServerCommunicator();
 };
@@ -73,6 +74,7 @@ class StageIdWaiter : public Thread {
         explicit StageIdWaiter(ReceivedPacketsProtected& packets_received);
         void run();
         char get_stage_id();
+        void reset_stage_id();
         ~StageIdWaiter();
 };
 
@@ -83,6 +85,7 @@ class HostCommunicator : public ServerCommunicator {
         explicit HostCommunicator(Socket* peer);
         char check_stage_id();
         char receive_stage_id();
+        void reset_stage_id();
         ~HostCommunicator();
 };
 

@@ -6,6 +6,7 @@
 #include "Stage.h"
 #include "server/communication/Match.h"
 #include "server/communication/ServerCommunicator.h"
+#include "Object.h"
 
 #define SLEEP_TIME_MICROSECONDS 10
 
@@ -53,8 +54,6 @@ void Stage::execute_action(Player* player,
     } else if (action_id == SHOOT) {
         Projectile *projectile = player->get_megaman()->shoot();
         if (projectile) this->map.add_game_object(projectile);
-    } else if (action_id == END) {
-        this->end_reached = true;
     } else {
         throw StageError("There is no action with that id");
     }
@@ -73,7 +72,11 @@ void Stage::execute_events() {
 void Stage::tick() { this->map.tick(); }
 
 void Stage::check_collisions() {
-    this->map.check_collisions();
+    try {
+        this->map.check_collisions();
+    } catch (const ObjectError& e) {
+        this->end_reached = true;
+    }
 }
 
 void Stage::get_rid_of_corpses() {

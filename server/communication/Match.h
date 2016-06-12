@@ -21,6 +21,7 @@ class Match {
         void notify_team_to_new_player(ServerCommunicator* new_comm);
         void notify_new_player_to_team(ServerCommunicator* new_comm);
         void notify_stage_pick_to_team(const char stage_id);
+        void notify_boss_chamber_info(const char boss_id);
 
     public:
         explicit Match(std::vector<ServerCommunicator*>& communicators);

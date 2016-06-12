@@ -1,11 +1,12 @@
 #include <string>
 
+#include "server/Logger.h"
 #include "Player.h"
 
 Player::Player() : megaman(NULL) {}
 
 void Player::set_name(const std::string& name) {
-    std::cout << "Players name: " << name << std::endl;
+    Logger::instance()->out << INFO << "New player: " << name;
     this->name = name;
 }
 
@@ -18,8 +19,6 @@ void Player::new_megaman() {
     this->megaman = new MegaMan(this->name);
 }
 
-bool Player::alive() {
-    return !this->megaman->is_dead();
-}
+bool Player::alive() { return !this->megaman->is_dead(); }
 
 Player::~Player() { delete this->megaman; }

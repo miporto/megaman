@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 
+#include "server/Logger.h"
 #include "server/model/Player.h"
 #include "ServerCommunicator.h"
 
@@ -33,7 +34,7 @@ ServerCommunicator::ServerCommunicator(Socket* peer)
 }
 
 void ServerCommunicator::send_new_player_notification(const std::string& name) {
-    std::cout << "Sending player name: "<< name << std::endl;
+    Logger::instance()->out << INFO << "Sending player name: " << name;
     this->packets_to_send.push(new NewPlayer(name));
 }
 
@@ -74,6 +75,10 @@ void ServerCommunicator::send_tick_info(FloatUpdate* update) {
     this->packets_to_send.push(update);
 }
 
+void ServerCommunicator::send_boss_chamber_info(const char boss_id) {
+    this->packets_to_send.push(new ChamberInfo(boss_id));
+}
+
 void ServerCommunicator::shutdown() {
     this->peer->shutdown();
 }
@@ -105,12 +110,15 @@ void StageIdWaiter::run() {
         usleep(WAIT_TIME_MICROSECONDS);
     StagePick* packet = (StagePick*)this->packets_received.pop(STAGE_PICK);
     this->stage_id.set_id(packet->get_stage_id());
-    std::cout << "Stage id received: " << packet->get_stage_id() << std::endl;
     delete packet;
 }
 
 char StageIdWaiter::get_stage_id() {
     return this->stage_id();
+}
+
+void StageIdWaiter::reset_stage_id() {
+    this->stage_id.set_id(0);
 }
 
 StageIdWaiter::~StageIdWaiter() {}
@@ -128,6 +136,11 @@ char HostCommunicator::check_stage_id() {
 char HostCommunicator::receive_stage_id() {
     this->waiter.join();
     return this->waiter.get_stage_id();
+}
+
+void HostCommunicator::reset_stage_id() {
+    this->waiter.reset_stage_id();
+    this->waiter.start();
 }
 
 HostCommunicator::~HostCommunicator() {}

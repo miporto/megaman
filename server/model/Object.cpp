@@ -20,13 +20,13 @@ void Object::collide_with(Object* object) {}
 
 void Object::collide_with(Projectile* projectile) {}
 
+void Object::collide_with(Boss* boss) {}
+
 void Object::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }
 
 void Object::tick() {}
-
-bool Object::is_enemy() { return false; }
 
 std::pair<std::string, std::string> Object::info(const int id) {
     std::vector<float> pos = this->get_position();
@@ -81,3 +81,15 @@ Cliff::Cliff(const std::vector<float>& position) :
 void Cliff::collide_with(MegaMan* mm) { mm->kill(); }
 
 Cliff::~Cliff() {}
+
+Door::Door(const std::vector<float>& position) :
+        Object(DOOR_NAME, position) {}
+
+void Door::collide_with(MegaMan* mm) {
+    throw ObjectError("Exit reached");
+}
+
+Door::~Door() {}
+
+ObjectError::ObjectError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}

@@ -63,6 +63,11 @@ void Match::notify_stage_info(const std::string& info) {
         this->communicators[i]->send_stage_info(info);
 }
 
+void Match::notify_boss_chamber_info(const char boss_id) {
+    for (unsigned int i = 0; i < this->communicators.size(); ++i)
+        this->communicators[i]->send_boss_chamber_info(boss_id);
+}
+
 void Match::add_player(Socket* peer) {
     Lock l(this->m);
 
@@ -97,11 +102,14 @@ void Match::play_stage() {
     Stage stage(this, this->communicators, stage_info);
     stage.run();
     if (stage.beated()) {
-        BossChamber chamber(stage_id);
+        this->notify_boss_chamber_info(stage_id);
+        BossChamber chamber(this, this->communicators, stage_id);
         chamber.run();
         if (chamber.beated())
             this->stages.erase(stage_id);
     }
+
+    this->host_communicator()->reset_stage_id();
 }
 
 void Match::notify_deceased(const int object_id) {

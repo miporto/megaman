@@ -24,6 +24,10 @@ void Enemy::collide_with(Object* object) {
     this->correct_position(object->get_position(), object->get_side());
 }
 
+void Enemy::collide_with(Boss* boss) {
+    this->correct_position(boss->get_position(), boss->get_side());
+}
+
 void Enemy::collide_with(MegaMan* mm) {}
 
 void Enemy::execute_collision_with(GameObject* other) {

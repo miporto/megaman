@@ -8,13 +8,14 @@
 #include <vector>
 #include <map>
 
-#include "common/Position.h"
+#include "server/model/Position.h"
 #include "common/Thread.h"
 
 typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,
     STAGE_INFO,
+    CHAMBER_INFO,
     UPDATE,
     FLOAT_UPDATE,
     MEGAMAN_FLOAT_UPDATE,
@@ -26,8 +27,7 @@ typedef enum _action_packet_id {
     RIGHT = 1,
     LEFT,
     UP,
-    SHOOT,
-    END
+    SHOOT
 } action_packet_id_t;
 
 typedef enum _stage_id {
@@ -157,6 +157,19 @@ class Deceased : public Packet {
         std::string get_str() const;
         int get_object_id() const;
         ~Deceased();
+};
+
+class ChamberInfo : public Packet {
+    private:
+        static const char id = CHAMBER_INFO;
+        const char chamber_id;
+
+    public:
+        explicit ChamberInfo(const char chamber_id);
+        char get_id() const;
+        std::string get_str() const;
+        char get_chamber_id() const;
+        ~ChamberInfo();
 };
 
 class Action : public Packet {

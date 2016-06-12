@@ -50,7 +50,7 @@ std::vector<int> Map::get_rid_of_corpses() {
 
             this->object_id.erase(dead_obj);
             this->objects.erase(this->objects.begin() + i);
-            delete dead_obj;
+            if (!dead_obj->is_megaman()) delete dead_obj;
         }
     }
 

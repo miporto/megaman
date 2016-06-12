@@ -2,8 +2,10 @@
 #define MOVABLE_H
 
 #include <vector>
+#include <string>
 
-#include "common/Position.h"
+#include "common/SystemError.h"
+#include "Position.h"
 #include "GameObject.h"
 
 class Movable : public GameObject {
@@ -25,13 +27,15 @@ class Movable : public GameObject {
 
 class UserMovable : public Movable {
     private:
+        const std::vector<float> respawn_position;
         const float gravity;
         int direction_x, direction_y;
         float current_vel_x, current_vel_y;
         bool on_stairs;
 
     public:
-        explicit UserMovable(const float velocity_x, const float velocity_y);
+        explicit UserMovable(const std::vector<float>& respawn_position,
+                             const float velocity_x, const float velocity_y);
         void change_x_movement(bool pressed, bool forward);
         void change_y_movement(bool pressed, bool forward);
         void standing_on_stairs();
@@ -42,6 +46,11 @@ class UserMovable : public Movable {
                               int obstacle_side);
         std::vector<float> get_position();
         ~UserMovable();
+};
+
+class MovableError : public SystemError {
+public:
+    explicit MovableError(const std::string error_msg) throw();
 };
 
 #endif //MOVABLE_H

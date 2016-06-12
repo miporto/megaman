@@ -6,7 +6,7 @@
 #include <string>
 #include <extern/libjson/json.hpp>
 
-#include "common/Position.h"
+#include "Position.h"
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
@@ -20,6 +20,7 @@ using json = nlohmann::json;
 class Enemy;
 class Object;
 class Projectile;
+class Boss;
 class MegaMan;
 class FloatUpdate;
 
@@ -40,14 +41,16 @@ class GameObject {
         virtual void collide_with(Enemy* enemy) = 0;
         virtual void collide_with(Object* object) = 0;
         virtual void collide_with(Projectile* projectile) = 0;
+        virtual void collide_with(Boss* boss) = 0;
         virtual void collide_with(MegaMan* mm) = 0;
         virtual void execute_collision_with(GameObject* other) = 0;
         virtual void tick() = 0;
         virtual bool is_dead() = 0;
-        virtual bool is_enemy() = 0;
         virtual bool it_moved();
         virtual std::pair<std::string, std::string> info(const int id) = 0;
         virtual FloatUpdate* update(const int id) = 0;
+        virtual bool is_enemy();
+        virtual bool is_megaman();
         virtual ~GameObject();
 };
 
