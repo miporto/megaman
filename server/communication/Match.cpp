@@ -91,7 +91,7 @@ void Match::add_player(Socket* peer) {
     }
 }
 
-void Match::play_stage() {
+void Match::play_stage(bool* exit) {
     const char stage_id = this->host_communicator()->receive_stage_id();
     const std::string& stage_info = this->stages[stage_id];
 
@@ -100,11 +100,11 @@ void Match::play_stage() {
     this->notify_stage_pick_to_team(stage_id);
 
     Stage stage(this, this->communicators, stage_info);
-    stage.run();
+    stage.run(exit);
     if (stage.beated()) {
         this->notify_boss_chamber_info(stage_id);
         BossChamber chamber(this, this->communicators, stage_id);
-        chamber.run();
+        chamber.run(exit);
         if (chamber.beated())
             this->stages.erase(stage_id);
     }

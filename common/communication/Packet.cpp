@@ -241,7 +241,7 @@ std::string Deceased::get_str() const {
 
 int Deceased::get_object_id() const { return this->object_id; }
 
-Deceased::~Deceased() { }
+Deceased::~Deceased() {}
 
 ChamberInfo::ChamberInfo(const char chamber_id) : chamber_id(chamber_id) {}
 

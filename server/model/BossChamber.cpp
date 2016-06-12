@@ -68,9 +68,9 @@ bool BossChamber::players_are_dead() {
     return true;
 }
 
-void BossChamber::run() {
+void BossChamber::run(bool* exit) {
     //TODO
-    while (!this->players_are_dead() && !this->boss->is_dead()) {
+    while (!*exit && !this->players_are_dead() && !this->boss->is_dead()) {
         this->execute_events();
 //        this->tick();
 //        this->check_collisions();

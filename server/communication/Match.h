@@ -29,7 +29,7 @@ class Match {
         bool is_full();
         bool ended();
         void add_player(Socket* peer);
-        void play_stage();
+        void play_stage(bool* exit);
         void notify_deceased(const int object_id);
         void notify_stage_info(const std::string& info);
         void notify_tick(const std::string& name, const std::string& tick_info);

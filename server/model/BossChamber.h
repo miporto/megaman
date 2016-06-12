@@ -30,7 +30,7 @@ class BossChamber {
         BossChamber(Match* match,
                     std::vector<ServerCommunicator*>& communicators,
                     const char boss_id);
-        void run();
+        void run(bool* exit);
         bool beated();
         ~BossChamber();
 };

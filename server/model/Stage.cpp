@@ -101,11 +101,12 @@ void Stage::collect_updates() {
 bool Stage::players_are_dead() {
     for (unsigned int i = 0; i < this->players.size(); ++i)
         if (this->players[i]->alive()) return false;
+    std::cout << "Players are dead" << std::endl;
     return true;
 }
 
-void Stage::run() {
-    while (!this->players_are_dead() && !this->end_reached) {
+void Stage::run(bool* exit) {
+    while (!*exit && !this->players_are_dead() && !this->end_reached) {
         this->execute_events();
         this->tick();
         this->check_collisions();
