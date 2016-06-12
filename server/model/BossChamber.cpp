@@ -42,15 +42,15 @@ BossChamber::BossChamber(Match* match,
 //    this->object_id[object] = this->objects.size();
 //}
 
-const std::string BossChamber::status() {
-    InfoMaker info;
-    std::pair<std::string, std::string> status;
-    for (unsigned int i = 0; i < this->objects.size(); ++i) {
-        status = this->objects[i]->info(this->object_id[this->objects[i]]);
-        info.add(status.first, status.second);
-    }
-    return info.str();
-}
+//const std::string BossChamber::status() {
+//    InfoMaker info;
+//    std::pair<std::string, std::string> status;
+//    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+//        status = this->objects[i]->info(this->object_id[this->objects[i]]);
+//        info.add(status.first, status.second);
+//    }
+//    return info.str();
+//}
 
 Player* BossChamber::player_with_name(const std::string& name) {
     for (unsigned int i = 0; i < this->players.size(); ++i) {
