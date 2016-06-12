@@ -148,6 +148,46 @@ void MainWindow::init_stage_pick_screen() {
 						sigc::mem_fun(*this,
 								&MainWindow::on_boss_pick_btn_clicked), BOMBMAN));
 	}
+
+	btn = NULL;
+	builder->get_widget("fireman_btn", btn);
+	if (btn) {
+		btn->signal_clicked().connect(
+				sigc::bind<char>(
+						sigc::mem_fun(*this,
+									  &MainWindow::on_boss_pick_btn_clicked),
+						FIREMAN));
+	}
+
+	btn = NULL;
+	builder->get_widget("sparkman_btn", btn);
+	if (btn) {
+		btn->signal_clicked().connect(
+				sigc::bind<char>(
+						sigc::mem_fun(*this,
+									  &MainWindow::on_boss_pick_btn_clicked),
+						SPARKMAN));
+	}
+
+	btn = NULL;
+	builder->get_widget("magnetman_btn", btn);
+	if (btn) {
+		btn->signal_clicked().connect(
+				sigc::bind<char>(
+						sigc::mem_fun(*this,
+									  &MainWindow::on_boss_pick_btn_clicked),
+						MAGNETMAN));
+	}
+
+	btn = NULL;
+	builder->get_widget("ringman_btn", btn);
+	if (btn) {
+		btn->signal_clicked().connect(
+				sigc::bind<char>(
+						sigc::mem_fun(*this,
+									  &MainWindow::on_boss_pick_btn_clicked),
+						RINGMAN));
+	}
 }
 
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
