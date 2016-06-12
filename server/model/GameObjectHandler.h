@@ -17,6 +17,7 @@ class GameObjectHandler {
         const std::string status();
         void tick();
         void check_collisions();
+        void create_new_projectiles();
         virtual ~GameObjectHandler();
 };
 

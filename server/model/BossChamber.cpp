@@ -108,9 +108,9 @@ void BossChamber::get_rid_of_corpses() {
         this->match->notify_deceased(deceased_ids[i]);
 }
 
-void BossChamber::create_new_projectiles() {
-    this->boss->shoot(this);
-}
+//void BossChamber::create_new_projectiles() {
+//    this->boss->shoot(this);
+//}
 
 void BossChamber::collect_updates() {
     std::vector<FloatUpdate*> updates;

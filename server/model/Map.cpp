@@ -58,11 +58,11 @@ std::vector<int> Map::get_rid_of_corpses() {
     return deceased;
 }
 
-void Map::create_new_projectiles() {
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        if (this->objects[i]->shoots_per_tick())
-            ((Enemy*)this->objects[i])->shoot(this);
-}
+//void Map::create_new_projectiles() {
+//    for (unsigned int i = 0; i < this->objects.size(); ++i)
+//        if (this->objects[i]->shoots_per_tick())
+//            ((Shooter*)this->objects[i])->shoot(this);
+//}
 
 //const std::string Map::status() {
 //    InfoMaker info;

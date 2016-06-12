@@ -4,6 +4,7 @@
 #include "server/communication/InfoMaker.h"
 #include "GameObjectHandler.h"
 #include "GameObjectSetter.h"
+#include "Shooter.h"
 
 void GameObjectHandler::set(const std::string& info) {
     GameObjectSetter setter(info, this);
@@ -39,6 +40,12 @@ void GameObjectHandler::check_collisions() {
                 current_object->execute_collision_with(this->objects[j]);
         }
     }
+}
+
+void GameObjectHandler::create_new_projectiles() {
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        if (this->objects[i]->shoots_per_tick())
+            ((Shooter*)this->objects[i])->shoot(this);
 }
 
 GameObjectHandler::~GameObjectHandler() {
