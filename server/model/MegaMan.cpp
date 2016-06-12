@@ -6,6 +6,7 @@
 #include "MegaMan.h"
 #include "Enemy.h"
 #include "Factory.h"
+#include "common/communication/Packet.h"
 
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
@@ -49,6 +50,10 @@ int EnergyTank::get_energy() {
     return this->current_energy;
 }
 
+float EnergyTank::get_energy_percentage() {
+    return this->current_energy / this->max_energy;
+}
+
 EnergyTank::~EnergyTank() {}
 
 MegaMan::MegaMan(const std::string& name) :
@@ -65,10 +70,6 @@ void MegaMan::decrease_energy(int amount) {
     this->tank.decrease_energy(amount);
     Logger::instance()->out << INFO << "Player " << this->get_name()
     << " has been shot. Remaining energy: " << this->tank.get_energy();
-}
-
-int MegaMan::get_energy() {
-    return this->tank.get_energy();
 }
 
 void MegaMan::kill() {
@@ -92,16 +93,33 @@ void MegaMan::tick() {
     }
 }
 
-std::pair<std::string, std::string> MegaMan::info() {
+std::pair<std::string, std::string> MegaMan::info(const int id) {
     std::vector<float> pos = this->get_position();
+    std::stringstream sx;
+    sx << pos[X_COORD_POS];
+    std::stringstream sy;
+    sy << pos[Y_COORD_POS];
+    std::stringstream senergy;
+    senergy << this->tank.get_energy_percentage();
+
     json info = { {"name", this->get_name()},
-                  {"x", (int)pos[X_COORD_POS]},
-                  {"y", (int)pos[Y_COORD_POS]},
+                  {"x", sx.str()},
+                  {"y", sy.str()},
                   {"direction x", (int)pos[DIRECTION_X_POS]},
                   {"direction y", (int)pos[DIRECTION_Y_POS]},
-                  {"energy", this->get_energy()} };
+                  {"energy", senergy.str()},
+                  {"id", id} };
 
-    return std::make_pair("MegaMan", info.dump());
+    return std::make_pair(MEGAMAN_NAME, info.dump());
+}
+
+FloatUpdate* MegaMan::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new MegaManFloatUpdate(MEGAMAN_NAME, this->name, id,
+                                  pos[X_COORD_POS], pos[Y_COORD_POS],
+                                  (int)pos[DIRECTION_X_POS],
+                                  (int)pos[DIRECTION_Y_POS],
+                                  this->tank.get_energy_percentage());
 }
 
 bool MegaMan::is_megaman() { return true; }

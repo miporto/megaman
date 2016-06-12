@@ -1,15 +1,19 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <map>
 #include <vector>
 #include <string>
+#include <utility>
 
+#include "common/communication/Packet.h"
 #include "GameObject.h"
 
 class Map {
     private:
         const unsigned int width, height;
         std::vector<GameObject*> objects;
+        std::map<GameObject*, int> object_id;
 
     public:
         Map();
@@ -17,9 +21,10 @@ class Map {
         void add_game_object(GameObject* object);
         void tick();
         void check_collisions();
-        void get_rid_of_corpses();
+        std::vector<int> get_rid_of_corpses();
         void create_new_projectiles();
         const std::string status();
+        std::vector<FloatUpdate*> updates();
         ~Map();
 };
 

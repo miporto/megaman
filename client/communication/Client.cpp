@@ -55,4 +55,36 @@ std::string Client::receive_stage_info() {
     }
     return stage_info;
 }
+
+UpdatePacket Client::receive_update() {
+    return communicator.receive_update();
+}
+
+int Client::receive_deceased() {
+    return communicator.receive_deceased();
+}
+
+NewUpdatePacket Client::receive_float_update() {
+    return communicator.receive_float_update();
+}
+
+NewUpdatePacket Client::receive_megaman_update() {
+    return communicator.receive_megaman_update();
+}
+
+bool Client::new_update_packets() {
+    return communicator.new_update_packets();
+}
+
+bool Client::new_deceased() {
+    return communicator.new_deceased();
+}
+
+bool Client::new_float_update_packets() {
+    return communicator.new_float_update_packets();
+}
+
+bool Client::new_megaman_update_packets() {
+    return communicator.new_megaman_update_packets();
+}
 Client::~Client() { this->client.shutdown(); }

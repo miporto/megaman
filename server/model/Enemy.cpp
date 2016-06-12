@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 
+#include "common/communication/Packet.h"
 #include "Enemy.h"
 #include "Object.h"
 #include "Factory.h"
@@ -46,11 +47,22 @@ bool Enemy::is_dead() { return this->energy == 0; }
 
 bool Enemy::is_enemy() { return true; }
 
-std::pair<std::string, std::string> Enemy::info() {
+std::pair<std::string, std::string> Enemy::info(const int id) {
     std::vector<float> pos = this->get_position();
-    json info = { {"x", (int)pos[X_COORD_POS]},
-                  {"y", (int)pos[Y_COORD_POS]} };
+    std::stringstream sx;
+    sx << pos[X_COORD_POS];
+    std::stringstream sy;
+    sy << pos[Y_COORD_POS];
+
+    json info = { {"x", sx.str()},
+                  {"y", sy.str()},
+                  {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
+}
+
+FloatUpdate* Enemy::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 
 Enemy::~Enemy() {}

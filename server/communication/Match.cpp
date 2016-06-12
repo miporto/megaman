@@ -98,7 +98,6 @@ void Match::play_stage() {
     if (stage_info.empty()) throw MatchError("Stage is unavaiable");
 
     this->notify_stage_pick_to_team(stage_id);
-    this->notify_stage_info(stage_info);
 
     Stage stage(this, this->communicators, stage_info);
     stage.run();
@@ -113,10 +112,21 @@ void Match::play_stage() {
     this->host_communicator()->reset_stage_id();
 }
 
-void Match::notify_tick(const std::string& tick_info) {
+void Match::notify_deceased(const int object_id) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i) {
-        this->communicators[i]->send_tick_info(tick_info);
+        this->communicators[i]->send_deceased_info(object_id);
     }
+}
+
+void Match::notify_tick(const std::string& name, const std::string& tick_info) {
+    for (unsigned int i = 0; i < this->communicators.size(); ++i) {
+        this->communicators[i]->send_tick_info(name, tick_info);
+    }
+}
+
+void Match::notify_tick(FloatUpdate* update) {
+    for (unsigned int i = 0; i < this->communicators.size(); ++i)
+        this->communicators[i]->send_tick_info(update);
 }
 
 Match::~Match() {}

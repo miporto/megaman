@@ -14,8 +14,12 @@
 typedef enum _packet_id {
     NEW_PLAYER = 1,
     STAGE_PICK,
-    STAGE,
-    CHAMBER,
+    STAGE_INFO,
+    CHAMBER_INFO,
+    UPDATE,
+    FLOAT_UPDATE,
+    MEGAMAN_FLOAT_UPDATE,
+    DECEASED,
     ACTION
 } packet_id_t;
 
@@ -23,8 +27,7 @@ typedef enum _action_packet_id {
     RIGHT = 1,
     LEFT,
     UP,
-    SHOOT,
-    END
+    SHOOT
 } action_packet_id_t;
 
 typedef enum _stage_id {
@@ -70,8 +73,8 @@ class StagePick : public Packet {
 
 class StageInfo : public Packet {
     private:
-        static const char id = STAGE;
-        std::string stage_info;
+        static const char id = STAGE_INFO;
+        const std::string stage_info;
 
     public:
         explicit StageInfo(const std::string& stage_info);
@@ -81,17 +84,92 @@ class StageInfo : public Packet {
         ~StageInfo();
 };
 
-class ChamberInfo : public Packet {
-private:
-    static const char id = CHAMBER;
-    const char chamber_id;
+class Update : public Packet {
+    private:
+        static const char id = UPDATE;
+        const std::string name;
+        const std::string update_info;
 
-public:
-    explicit ChamberInfo(const char chamber_id);
-    char get_id() const;
-    std::string get_str() const;
-    char get_chamber_id() const;
-    ~ChamberInfo();
+    public:
+        Update(const std::string& name, const std::string& update_info);
+        char get_id() const;
+        const std::string& get_name() const;
+        std::string get_str() const;
+        const std::string& get_update_info() const;
+        ~Update();
+};
+
+class FloatUpdate : public Packet {
+    private:
+        static const char id = FLOAT_UPDATE;
+
+    protected:
+        const std::string name;
+        const int object_id;
+        const float x;
+        const float y;
+
+    public:
+        FloatUpdate(const std::string& name, const int object_id,
+                    const float x, const float y);
+        virtual char get_id() const;
+        const std::string& get_name() const;
+        int get_object_id() const;
+        float get_x() const;
+        float get_y() const;
+        virtual std::string get_str() const;
+        virtual ~FloatUpdate();
+};
+
+class MegaManFloatUpdate : public FloatUpdate {
+    private:
+        static const char id = MEGAMAN_FLOAT_UPDATE;
+        const std::string player_name;
+        const float energy;
+        const int direction_x;
+        const int direction_y;
+
+    public:
+        MegaManFloatUpdate(const std::string& name,
+                           const std::string& player_name,
+                           const int object_id,
+                           const float x, const float y,
+                           const int direction_x,
+                           const int direction_y,
+                           const float energy);
+        char get_id() const;
+        const std::string& get_player_name() const;
+        float get_energy() const;
+        int get_direction_x() const;
+        int get_direction_y() const;
+        std::string get_str() const;
+        ~MegaManFloatUpdate();
+};
+
+class Deceased : public Packet {
+    private:
+        static const char id = DECEASED;
+        const int object_id;
+
+    public:
+        explicit Deceased(const int object_id);
+        char get_id() const;
+        std::string get_str() const;
+        int get_object_id() const;
+        ~Deceased();
+};
+
+class ChamberInfo : public Packet {
+    private:
+        static const char id = CHAMBER_INFO;
+        const char chamber_id;
+
+    public:
+        explicit ChamberInfo(const char chamber_id);
+        char get_id() const;
+        std::string get_str() const;
+        char get_chamber_id() const;
+        ~ChamberInfo();
 };
 
 class Action : public Packet {

@@ -5,42 +5,60 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <string>
 #include <vector>
+#include <utility>
+#include "Camera.h"
 
-class ActorRenderer;
-typedef void (ActorRenderer::*arenderer_method_t)(int,int,int,int);
-typedef std::map<std::string, arenderer_method_t> ActorRenderers;
-
-class ActorRendererr {
-public:
-    ActorRendererr(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites);
-
-    virtual void update(int pos_x, int pos_y, int dir_x, int dir_y) = 0;
-
-    virtual void render() = 0;
-
-    virtual ~ActorRendererr();
-
-private:
-    SDL2pp::Renderer *renderer;
-    SDL2pp::Texture *sprites;
-    int pos_x;
-    int pos_y;
+class Camera;
+typedef std::pair<int, int> AdjustedPos;
+enum ActorRendererType {
+    MET_R,
+    MEGAMAN_R
 };
 
 class ActorRenderer {
 public:
-    explicit ActorRenderer(SDL2pp::Renderer* renderer);
-    ActorRenderers get_renderers();
-    void render_megaman(int dest_x, int dest_y, int dir_x, int dir_y);
-    void renderMet(int dest_x, int dest_y, int dir_x, int dir_y);
-    void render_pellet(int dest_x, int dest_y, int dir_x, int dir_y);
-    virtual ~ActorRenderer();
-private:
-    ActorRenderers renderers;
-    SDL2pp::Renderer* renderer;
-    SDL2pp::Texture* sprites;
-    SDL2pp::Texture* megaman_sprites;
+    ActorRenderer(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
+                       Camera &camera, float pos_x, float pos_y);
+    void update(float pos_x, float pos_y, int dir_x, int dir_y);
+    float get_x();
+    float get_y();
+    virtual void render() = 0;
+    virtual ~ActorRenderer() { }
+
+protected:
+    SDL2pp::Renderer *renderer;
+    SDL2pp::Texture *sprites;
+    Camera &camera;
+    float pos_x;
+    float pos_y;
+    int dir_x;
+    int dir_y;
 };
 
+class MetRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
+class MegaManRenderer : public ActorRenderer {
+public:
+    using ActorRenderer::ActorRenderer;
+    void render();
+};
+
+class ActorRendererFactory {
+public:
+    ActorRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
+    ActorRenderer* build_actor_renderer(std::string tile_type, float pos_x,
+                                         float pos_y);
+    virtual ~ActorRendererFactory() {}
+private:
+    SDL2pp::Renderer *renderer;
+    Camera &camera;
+    SDL2pp::Texture *meg_sprites;
+    SDL2pp::Texture *sprites;
+    std::map<std::string, ActorRendererType> actor_renderers;
+};
 
 #endif //MEGAMAN_METRENDERER_H

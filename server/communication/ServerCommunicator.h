@@ -31,6 +31,7 @@ class ServerCommunicator {
         Sender sender;
         PacketsQueueProtected packets_to_send;
         Receiver receiver;
+
     protected:
         ReceivedPacketsProtected packets_received;
 
@@ -43,7 +44,10 @@ class ServerCommunicator {
         Player* get_player();
         PacketsQueueProtected* get_actions();
         void send_stage_info(const std::string& info);
-        void send_tick_info(const std::string& tick_info);
+        void send_deceased_info(const int object_id);
+        void send_tick_info(const std::string& name,
+                            const std::string& tick_info);
+        void send_tick_info(FloatUpdate* update);
         void send_boss_chamber_info(const char boss_id);
         virtual void shutdown();
         virtual ~ServerCommunicator();

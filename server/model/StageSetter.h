@@ -9,13 +9,13 @@
 #include "Map.h"
 #include "common/StageParser.h"
 
-class ServerStageSetter {
+class StageSetter {
     private:
         void to_classes(StageParserInfo& positions, Map* map);
 
     public:
-        ServerStageSetter(const std::string& info, Map* map);
-        ~ServerStageSetter();
+        StageSetter(const std::string& info, Map* map);
+        ~StageSetter();
 };
 
 #endif //SERVERSTAGESETTER_H

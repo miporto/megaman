@@ -15,7 +15,6 @@ void Sender::run() {
             packet = this->packets.pop();
             str = packet->get_str();
             try {
-                std::cout << "Sending" << std::endl;
                 this->socket->send(str.c_str(), sizeof(char) * str.size());
             }
             catch (const SocketError &e) {

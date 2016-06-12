@@ -4,23 +4,63 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <map>
 #include <string>
+#include <utility>
+#include "Camera.h"
 
 class TileRenderer;
-typedef void (TileRenderer::*trenderer_method_t)(int,int);
-typedef std::map<std::string, trenderer_method_t> TileRenderers;
+typedef std::map<int, TileRenderer *> TileRenderers2;
+typedef std::pair<int, int> AdjustedPos;
+enum TileRendererType {
+    BLOCK_R,
+    STAIRS_R,
+    PELLET_R
+};
 
 class TileRenderer {
 public:
-    explicit TileRenderer(SDL2pp::Renderer* renderer);
-    TileRenderers get_renderers();
-    void renderBlock(int dest_x, int dest_y);
-    void renderStairs(int dest_x, int dest_y);
-    virtual ~TileRenderer();
-private:
-    TileRenderers renderers;
-    SDL2pp::Renderer* renderer;
-    SDL2pp::Texture* sprites;
+    TileRenderer(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
+                      Camera &camera, float pos_x, float pos_y);
+    void update(float pos_x, float pos_y);
+    virtual void render() = 0;
+    virtual ~TileRenderer() { }
+
+protected:
+    SDL2pp::Renderer *renderer;
+    SDL2pp::Texture *sprites;
+    Camera &camera;
+    float pos_x;
+    float pos_y;
 };
 
+class BlockRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
+class StairsRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
+class PelletRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
+class TileRendererFactory {
+public:
+    TileRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
+    TileRenderer* build_tile_renderer(std::string tile_type, float pos_x,
+                                       float pos_y);
+    virtual ~TileRendererFactory() {}
+private:
+    SDL2pp::Renderer *renderer;
+    SDL2pp::Texture *sprites;
+    Camera &camera;
+    std::map<std::string, TileRendererType> tile_renderers;
+};
 
 #endif //MEGAMAN_BLOCKRENDERER_H

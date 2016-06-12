@@ -10,9 +10,12 @@
 #include "common/communication/Packet.h"
 #include "common/StageParser.h"
 #include "InputHandler.h"
-#include "MegamanRenderer.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"
+#include "Timer.h"
+
+#define SCREEN_FPS 60
+#define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 
 void StageSurface::replace_substr(std::string& input,
                                   const std::string& old_str,
@@ -28,19 +31,13 @@ StageSurface::StageSurface(Client& client) : client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
         replace_substr(s_stage_info, ",", " ,");
-        //s_stage_info = "{\"object\":{\"Block\":[{\"x\":10 ,\"y\":11}]}}";
-        StageParser stage_parser;
-        stage_info = stage_parser.stage_info(s_stage_info);
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
                                     SDL_WINDOWPOS_UNDEFINED, 640, 480,
                                     SDL_WINDOW_RESIZABLE);
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
-        sprites = new SDL2pp::Texture(*renderer, "resources/M484SpaceSoldier"
-                ".png");
         // TODO: stage renderer should receive the stage info in its creation
-        stage_renderer = new StageRenderer(renderer, stage_info);
-        megaman_renderer = new MegamanRenderer(renderer);
+        stage_renderer = new StageRenderer(renderer, s_stage_info);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
         throw e;
@@ -48,51 +45,53 @@ StageSurface::StageSurface(Client& client) : client(client){
 }
 
 void StageSurface::run() {
-    renderer->Clear();
-    stage_renderer->render("{}");
-    renderer->Present();
-    //SDL_Delay(1500);
     try {
-//        int run_phase = -1; // run animation phase
-//        double position = 0.0;
-//        unsigned int prev_ticks = SDL_GetTicks();
         std::vector<bool> prev_input = input_handler.get_input();
         std::vector<bool> new_input = input_handler.get_input();
+        Timer cap_timer;
         while (true) {
-            // Timing
-//            unsigned int frame_ticks = SDL_GetTicks();
-//            unsigned int frame_delta = frame_ticks - prev_ticks;
-//            prev_ticks = frame_ticks;
-
+            cap_timer.start();
             // Input
             input_handler.read_input();
             new_input = input_handler.get_input();
             if (input_handler.is_window_closed()) {
-                // TODO: send sht_dwn signal to server
                 return;
             }
 
             // Update Game state
             send_events(prev_input, new_input);
-//            if (new_input[RIGHT]) {
-//                position += frame_delta * 0.2;
-//            }
 
-            // Receive tick info
-            std::string s_tick_info = client.receive_stage_info();
-            replace_substr(s_tick_info, ",", " ,");
-//            if (position > renderer->GetOutputWidth()) {
-//                position = -50;
+            // Receive updates
+            unsigned int frame_ticks = cap_timer.get_ticks();
+//            while (client.new_update_packets() && count < 100) {
+//                UpdatePacket update_packet = client.receive_update();
+//                replace_substr(update_packet.second, ",", " ,");
+//                stage_renderer->update(update_packet.first,
+//                                       update_packet.second);
+//                ++count;
 //            }
-//            int vcenter = renderer->GetOutputHeight() - 50;
+            while (client.new_float_update_packets() &&
+                    frame_ticks < SCREEN_TICKS_PER_FRAME * 0.8) {
+                NewUpdatePacket update_packet = client.receive_float_update();
+                stage_renderer->new_update(update_packet.first, update_packet
+                        .second);
+                frame_ticks = cap_timer.get_ticks();
+            }
 
+            while (client.new_deceased()) {
+                stage_renderer->delete_renderer(client.receive_deceased());
+            }
+            if (!stage_renderer->are_megamans_alive()) return;
             // Update screen
             renderer->Clear();
-            stage_renderer->render(s_tick_info);
-//            megaman_renderer->render((int) position, vcenter);
+            stage_renderer->render();
             renderer->Present();
-            //SDL_Delay(500);
             prev_input = new_input;
+            frame_ticks = cap_timer.get_ticks();
+            if (frame_ticks < SCREEN_TICKS_PER_FRAME) {
+                //Wait remaining time
+                SDL_Delay(SCREEN_TICKS_PER_FRAME - frame_ticks);
+            }
         }
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
@@ -116,11 +115,10 @@ void StageSurface::send_events(std::vector<bool>& prev_input,
 }
 
 StageSurface::~StageSurface() {
-    delete sprites;
     delete renderer;
     delete sdl;
     delete stage_renderer;
-    delete megaman_renderer;
+    delete window;
 }
 
 

@@ -9,6 +9,8 @@
 #include "Movable.h"
 #include "Cannon.h"
 
+#define MEGAMAN_NAME "MegaMan"
+
 class EnergyTank {
     private:
         int lives;
@@ -22,6 +24,7 @@ class EnergyTank {
         void reset();
         bool is_empty();
         int get_energy();
+        float get_energy_percentage();
         ~EnergyTank();
 };
 
@@ -35,7 +38,6 @@ class MegaMan : public UserMovable {
         explicit MegaMan(const std::string& name);
         const std::string& get_name();
         void decrease_energy(int amount);
-        int get_energy();
         void kill();
         Projectile* shoot();
         void collide_with(Enemy* enemy);
@@ -48,8 +50,9 @@ class MegaMan : public UserMovable {
         void receive_new_ammo(std::string& name);
         void tick();
         bool is_dead();
+        std::pair<std::string, std::string> info(const int id);
+        FloatUpdate* update(const int id);
         bool is_megaman();
-        std::pair<std::string, std::string> info();
         ~MegaMan();
 };
 

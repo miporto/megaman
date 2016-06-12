@@ -33,7 +33,8 @@ class Boss : public Movable {
         void execute_collision_with(GameObject* other);
         virtual void shoot(BossChamber* chamber) = 0;
         virtual void tick() = 0;
-        std::pair<std::string, std::string> info();
+        std::pair<std::string, std::string> info(const int id);
+        FloatUpdate* update(const int id);
         virtual ~Boss();
 };
 

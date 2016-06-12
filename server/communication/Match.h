@@ -21,7 +21,6 @@ class Match {
         void notify_team_to_new_player(ServerCommunicator* new_comm);
         void notify_new_player_to_team(ServerCommunicator* new_comm);
         void notify_stage_pick_to_team(const char stage_id);
-        void notify_stage_info(const std::string& info);
         void notify_boss_chamber_info(const char boss_id);
 
     public:
@@ -31,7 +30,10 @@ class Match {
         bool ended();
         void add_player(Socket* peer);
         void play_stage();
-        void notify_tick(const std::string& tick_info);
+        void notify_deceased(const int object_id);
+        void notify_stage_info(const std::string& info);
+        void notify_tick(const std::string& name, const std::string& tick_info);
+        void notify_tick(FloatUpdate* update);
         ~Match();
 };
 

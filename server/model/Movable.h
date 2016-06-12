@@ -11,6 +11,7 @@
 class Movable : public GameObject {
     protected:
         const float velocity_x, velocity_y;
+        std::vector<float> previous_position;
 
     public:
         Movable(const std::vector<float>& position,
@@ -18,6 +19,7 @@ class Movable : public GameObject {
         Movable(const float x, const float y,
                 const float velocity_x, const float velocity_y);
         virtual void move();
+        bool it_moved();
         virtual void correct_position(const std::vector<float>& obstacle_pos,
                                       int obstacle_side);
         virtual ~Movable();

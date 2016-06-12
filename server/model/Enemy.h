@@ -38,7 +38,8 @@ class Enemy : public Movable {
         virtual void shoot(Map* map) = 0;
         virtual void tick() = 0;
         bool is_enemy();
-        std::pair<std::string, std::string> info();
+        std::pair<std::string, std::string> info(const int id);
+        FloatUpdate* update(const int id);
         virtual ~Enemy();
 };
 

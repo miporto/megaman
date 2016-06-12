@@ -1,16 +1,16 @@
 #include <string>
 
 #include "common/StageParser.h"
-#include "ServerStageSetter.h"
+#include "StageSetter.h"
 #include "Map.h"
 
-ServerStageSetter::ServerStageSetter(const std::string& info, Map* map) {
+StageSetter::StageSetter(const std::string& info, Map* map) {
     StageParser parser;
     StageParserInfo positions = parser.stage_info(info);
     this->to_classes(positions, map);
 }
 
-void ServerStageSetter::to_classes(StageParserInfo& positions, Map* map) {
+void StageSetter::to_classes(StageParserInfo& positions, Map* map) {
     typedef StageParserInfo::iterator iterator_info;
     for (iterator_info it = positions.begin(); it != positions.end(); ++it) {
         for (unsigned int i = 0; i < it->second.size(); ++i) {
@@ -37,4 +37,4 @@ void ServerStageSetter::to_classes(StageParserInfo& positions, Map* map) {
     }
 }
 
-ServerStageSetter::~ServerStageSetter() {}
+StageSetter::~StageSetter() {}

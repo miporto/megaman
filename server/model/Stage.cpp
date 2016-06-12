@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
+#include <utility>
 
 #include "Stage.h"
 #include "server/communication/Match.h"
@@ -29,6 +30,9 @@ Stage::Stage(Match* match,
     for (unsigned int i = 0; i < communicators.size(); ++i)
         action_queues.push_back(communicators[i]->get_actions());
     this->events = new EventQueue(action_queues);
+
+    // Making of StageInfo json for client
+    this->match->notify_stage_info(this->map.status());
 }
 
 Player* Stage::player_with_name(const std::string& name) {
@@ -65,9 +69,7 @@ void Stage::execute_events() {
     }
 }
 
-void Stage::tick() {
-    this->map.tick();
-}
+void Stage::tick() { this->map.tick(); }
 
 void Stage::check_collisions() {
     try {
@@ -78,15 +80,22 @@ void Stage::check_collisions() {
 }
 
 void Stage::get_rid_of_corpses() {
-    this->map.get_rid_of_corpses();
+    std::vector<int> deceased_ids = this->map.get_rid_of_corpses();
+    for (unsigned int i = 0; i < deceased_ids.size(); ++i)
+        this->match->notify_deceased(deceased_ids[i]);
 }
 
 void Stage::create_new_projectiles() {
     this->map.create_new_projectiles();
+    //TODO send info de proyectiles nuevos
+    // ahora o directamente en el proximo tick?
+    //map me tiene que dar un vector de info de ellos
 }
 
-const std::string Stage::status() {
-    return this->map.status();
+void Stage::collect_updates() {
+    std::vector<FloatUpdate*> updates = this->map.updates();
+    for (unsigned int i = 0; i < updates.size(); ++i)
+        this->match->notify_tick(updates[i]);
 }
 
 bool Stage::players_are_dead() {
@@ -98,16 +107,12 @@ bool Stage::players_are_dead() {
 void Stage::run() {
     while (!this->players_are_dead() && !this->end_reached) {
         this->execute_events();
-        //Hardcodeo de acciones para pruebas de movimiento
-        //this->players[0]->get_megaman()->change_x_movement(true, true);
-        //this->players[0]->get_megaman()->change_y_movement(true, true);
         this->tick();
         this->check_collisions();
         this->get_rid_of_corpses();
         this->create_new_projectiles();
-        this->match->notify_tick(this->status());
+        this->collect_updates();
         usleep(SLEEP_TIME_MICROSECONDS);
-        //this->players[0]->get_megaman()->change_y_movement(false, true);
     }
 }
 

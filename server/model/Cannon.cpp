@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "common/communication/Packet.h"
 #include "Cannon.h"
 #include "MegaMan.h"
 #include "Enemy.h"
@@ -18,7 +19,7 @@ Projectile::Projectile(const std::string& name,
         Movable(initial_position, velocity_x, velocity_y),
         name(name), damage(damage), ticks(0), dead(false) {}
 
-void Projectile::tick() {
+void Projectile::acknowledge_tick() {
     if (this->ticks > PROJECTILE_TIMEOUT)
         this->dead = true;
     this->ticks++;
@@ -28,11 +29,22 @@ bool Projectile::is_dead() {
     return this->dead;
 }
 
-std::pair<std::string, std::string> Projectile::info() {
+std::pair<std::string, std::string> Projectile::info(const int id) {
     std::vector<float> pos = this->get_position();
-    json info = { {"x", (int)pos[X_COORD_POS]},
-                  {"y", (int)pos[Y_COORD_POS]} };
+    std::stringstream sx;
+    sx << pos[X_COORD_POS];
+    std::stringstream sy;
+    sy << pos[Y_COORD_POS];
+
+    json info = { {"x", sx.str()},
+                  {"y", sy.str()},
+                  {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
+}
+
+FloatUpdate* Projectile::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 
 const std::string& Projectile::get_name() { return this->name; }
@@ -66,7 +78,7 @@ Plasma::Plasma(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Plasma::tick() {
-    Projectile::tick();
+    this->acknowledge_tick();
     //TODO
 }
 
@@ -76,7 +88,7 @@ Bomb::Bomb(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Bomb::tick() {
-    Projectile::tick();
+    this->acknowledge_tick();
     //TODO
 }
 
@@ -86,7 +98,7 @@ Magnet::Magnet(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Magnet::tick() {
-    Projectile::tick();
+    this->acknowledge_tick();
     //TODO
 }
 
@@ -96,7 +108,7 @@ Spark::Spark(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Spark::tick() {
-    Projectile::tick();
+    this->acknowledge_tick();
     //TODO
 }
 
@@ -106,7 +118,7 @@ Fire::Fire(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Fire::tick() {
-    Projectile::tick();
+    this->acknowledge_tick();
     //TODO
 }
 
@@ -116,7 +128,7 @@ Ring::Ring(int damage, float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Ring::tick() {
-    Projectile::tick();
+    this->acknowledge_tick();
     //TODO
 }
 
@@ -126,7 +138,7 @@ Pellet::Pellet(float velocity_x, float velocity_y,
                      velocity_y, initial_position) {}
 
 void Pellet::tick() {
-    Projectile::tick();
+    this->acknowledge_tick();
     this->move();
 }
 

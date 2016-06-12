@@ -5,6 +5,7 @@
 #include "Boss.h"
 #include "Enemy.h"
 #include "Object.h"
+#include "common/communication/Packet.h"
 
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
@@ -40,11 +41,17 @@ void Boss::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }
 
-std::pair<std::string, std::string> Boss::info() {
+std::pair<std::string, std::string> Boss::info(const int id) {
     std::vector<float> pos = this->get_position();
     json info = { {"x", (int)pos[X_COORD_POS]},
-                  {"y", (int)pos[Y_COORD_POS]} };
+                  {"y", (int)pos[Y_COORD_POS]},
+                  {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
+}
+
+FloatUpdate* Boss::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 
 Boss::~Boss() {}

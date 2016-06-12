@@ -34,7 +34,8 @@ class Object : public GameObject {
         void execute_collision_with(GameObject* other);
         void tick();
         bool is_dead();
-        std::pair<std::string, std::string> info();
+        std::pair<std::string, std::string> info(const int id);
+        FloatUpdate* update(const int id);
         virtual ~Object();
 };
 

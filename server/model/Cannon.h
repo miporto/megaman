@@ -40,9 +40,11 @@ class Projectile : public Movable {
         void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
-        virtual void tick();
+        void acknowledge_tick();
+        virtual void tick() = 0;
         bool is_dead();
-        std::pair<std::string, std::string> info();
+        std::pair<std::string, std::string> info(const int id);
+        FloatUpdate* update(const int id);
         virtual ~Projectile();
 };
 
