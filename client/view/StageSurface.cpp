@@ -72,7 +72,7 @@ void StageSurface::run() {
                 stage_renderer->delete_renderer(client.receive_deceased());
             }
             if (!stage_renderer->are_megamans_alive()) return;
-            
+
             // Update screen
             renderer->Clear();
             stage_renderer->render();
