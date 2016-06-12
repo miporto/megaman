@@ -7,18 +7,19 @@
 
 #include "Position.h"
 #include "Movable.h"
+#include "Shooter.h"
 
 #define MET_NAME "Met"
 #define BUMBY_NAME "Bumby"
 #define SNIPER_NAME "Sniper"
 #define JUMPING_SNIPER_NAME "JumpingSniper"
 
-class Map;
+class GameObjectHandler;
 class Object;
 class Projectile;
 class MegaMan;
 
-class Enemy : public Movable {
+class Enemy : public Movable, public Shooter {
     private:
         const std::string name;
         int energy;
@@ -35,7 +36,6 @@ class Enemy : public Movable {
         void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
-        virtual void shoot(Map* map) = 0;
         virtual void tick() = 0;
         bool shoots_per_tick();
         std::pair<std::string, std::string> info(const int id);
@@ -50,7 +50,7 @@ class Met : public Enemy {
     public:
         explicit Met(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
-        void shoot(Map* map);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~Met();
 };
@@ -61,7 +61,7 @@ class Bumby : public Enemy {
     public:
         explicit Bumby(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
-        void shoot(Map* map);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~Bumby();
 };
@@ -73,7 +73,7 @@ class Sniper : public Enemy {
     public:
         explicit Sniper(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
-        void shoot(Map* map);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~Sniper();
 };
@@ -85,7 +85,7 @@ class JumpingSniper : public Enemy {
     public:
         explicit JumpingSniper(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
-        void shoot(Map* map);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~JumpingSniper();
 };

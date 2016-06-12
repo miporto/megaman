@@ -6,7 +6,7 @@
 #include "Enemy.h"
 #include "Object.h"
 #include "Factory.h"
-#include "Map.h"
+#include "GameObjectHandler.h"
 
 Enemy::Enemy(const std::string& name,
              const std::vector<float>& position,
@@ -86,11 +86,11 @@ void Met::collide_with(Projectile* projectile) {
         this->decrease_energy(projectile->hit());
 }
 
-void Met::shoot(Map* map) {
+void Met::shoot(GameObjectHandler* handler) {
     if (!helmet_on) {
-        map->add_game_object(new Pellet(-1, 0, this->get_position()));
-        map->add_game_object(new Pellet(-1, 0.88, this->get_position()));
-        map->add_game_object(new Pellet(-1, 1, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 0, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 0.88, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 1, this->get_position()));
     }
 }
 
@@ -117,8 +117,8 @@ void Bumby::collide_with(Projectile* projectile) {
     this->decrease_energy(projectile->hit());
 }
 
-void Bumby::shoot(Map* map) {
-    map->add_game_object(new Pellet(0, -1, this->get_position()));
+void Bumby::shoot(GameObjectHandler* handler) {
+    handler->add_game_object(new Pellet(0, -1, this->get_position()));
 }
 
 void Bumby::tick() {
@@ -146,9 +146,9 @@ void Sniper::collide_with(Projectile* projectile) {
         this->decrease_energy(projectile->hit());
 }
 
-void Sniper::shoot(Map* map) {
+void Sniper::shoot(GameObjectHandler* handler) {
     if (!this->shield_on)
-        map->add_game_object(new Pellet(-1, 0, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 0, this->get_position()));
 }
 
 void Sniper::tick() {
@@ -181,10 +181,10 @@ void JumpingSniper::collide_with(Projectile* projectile) {
         this->decrease_energy(projectile->hit());
 }
 
-void JumpingSniper::shoot(Map* map) {
+void JumpingSniper::shoot(GameObjectHandler* handler) {
     if (!this->shield_on) {
-        map->add_game_object(new Pellet(-1, 0, this->get_position()));
-        map->add_game_object(new Pellet(1, 0, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 0, this->get_position()));
+        handler->add_game_object(new Pellet(1, 0, this->get_position()));
     }
 }
 
