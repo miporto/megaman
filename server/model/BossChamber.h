@@ -16,8 +16,10 @@ class BossChamber {
         Match* match;
         Boss* boss;
         std::vector<Player*> players;
-        std::vector<Projectile*> projectiles;
         EventQueue* events;
+
+        std::vector<GameObject*> objects;
+        std::map<GameObject*, int> object_id;
 
         void execute_events();
         void execute_action(Player* player,
@@ -29,12 +31,13 @@ class BossChamber {
         void collect_updates();
         Player* player_with_name(const std::string& name);
         bool players_are_dead();
+        const std::string status();
 
     public:
         BossChamber(Match* match,
                     std::vector<ServerCommunicator*>& communicators,
                     const char boss_id);
-        void add_projectile(Projectile* projectile);
+        void add_game_object(GameObject* object);
         void run(bool* exit);
         bool beated();
         ~BossChamber();

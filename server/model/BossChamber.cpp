@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
+#include <server/communication/TickInfoMaker.h>
 
 #include "BossChamber.h"
 #include "server/communication/Match.h"
@@ -22,6 +23,31 @@ BossChamber::BossChamber(Match* match,
     for (unsigned int i = 0; i < communicators.size(); ++i)
         action_queues.push_back(communicators[i]->get_actions());
     this->events = new EventQueue(action_queues);
+
+    //Objects setting: Players, Boss, Default stage
+    for (unsigned int i = 0; i < this->players.size(); ++i) {
+        this->players[i]->new_megaman();
+        this->add_game_object(this->players[i]->get_megaman());
+    }
+    this->add_game_object(this->boss);
+
+    // Making of ChamberInfo json for client
+    this->match->notify_boss_chamber_info(this->status());
+}
+
+void BossChamber::add_game_object(GameObject* object) {
+    this->objects.push_back(object);
+    this->object_id[object] = this->objects.size();
+}
+
+const std::string BossChamber::status() {
+    TickInfoMaker info;
+    std::pair<std::string, std::string> status;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        status = this->objects[i]->info(this->object_id[this->objects[i]]);
+        info.add(status.first, status.second);
+    }
+    return info.str();
 }
 
 Player* BossChamber::player_with_name(const std::string& name) {
@@ -42,14 +68,10 @@ void BossChamber::execute_action(Player* player,
         player->get_megaman()->change_y_movement(pressed, true);
     } else if (action_id == SHOOT) {
         Projectile *projectile = player->get_megaman()->shoot();
-        if (projectile) this->add_projectile(projectile);
+        if (projectile) this->add_game_object(projectile);
     } else {
         throw BossChamberError("There is no action with that id");
     }
-}
-
-void BossChamber::add_projectile(Projectile* projectile) {
-    this->projectiles.push_back(projectile);
 }
 
 void BossChamber::execute_events() {
@@ -69,11 +91,8 @@ bool BossChamber::players_are_dead() {
 }
 
 void BossChamber::tick() {
-    this->boss->tick();
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        this->players[i]->get_megaman()->tick();
-    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
-        this->projectiles[i]->tick();
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        this->objects[i]->tick();
 }
 
 void BossChamber::check_collisions() {
