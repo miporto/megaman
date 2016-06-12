@@ -8,12 +8,14 @@
 #include "StageRenderer.h"
 
 StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
-                             const std::string &stage_info) :
-        renderer(renderer), camera(renderer),
-        tile_factory(renderer, camera),
-        actor_factory(renderer, camera) {
+                             std::string &stage_info) : renderer(renderer),
+                                                        camera(renderer),
+                                                        tile_factory(renderer,
+                                                                     camera),
+                                                        actor_factory(renderer,
+                                                                      camera) {
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
-    actors = {"MegaMan", "Met"};
+    actors = {"MegaMan", "Met", "Bumby", "Sniper", "JumpingSniper", "BombMan"};
     objects = {"Block", "Stairs", "Spike", "Pellet", "Door"};
 
     TickInfoParser parser(stage_info);
@@ -123,6 +125,52 @@ void StageRenderer::delete_renderer(int id) {
 
 bool StageRenderer::are_megamans_alive() {
     return megamans.size() > 0;
+}
+
+void StageRenderer::render_boss_chamber(std::string &info) {
+    delete_all_renderers();
+    create_renderers(info);
+}
+void StageRenderer::create_renderers(std::string &info) {
+    TickInfoParser parser(info);
+    TickParserInfo parsed_info = parser.get_parsed_tick_info();
+    for (auto const &it: parsed_info) {
+        std::string type = it.first;
+        StatusInfo elements_info = it.second;
+        for (auto const &it2: elements_info) {
+            std::map<std::string, std::string> element_info = it2.second;
+            float x = stof(element_info["x"]);
+            float y = stof(element_info["y"]);
+            if (std::find(actors.begin(), actors.end(), type) != actors.end()){
+                int id = it2.first;
+                actor_renderers[id] = actor_factory
+                        .build_actor_renderer(type, x, y);
+                if (type.compare("MegaMan") == 0) {
+                    megamans.push_back(id);
+                    camera.add_megaman(id, (MegaManRenderer*)
+                            actor_renderers[id]);
+                }
+            } else {
+                tile_renderers[it2.first] = tile_factory.build_tile_renderer(
+                        type, x, y);
+            }
+        }
+    }
+}
+
+void StageRenderer::delete_all_renderers(){
+    for (auto const &it : tile_renderers) {
+        TileRenderer *t_renderer = it.second;
+        delete t_renderer;
+    }
+    tile_renderers.clear();
+    for (auto const &it : actor_renderers) {
+        camera.delete_megaman(it.first);
+        ActorRenderer *a_renderer = it.second;
+        delete a_renderer;
+    }
+    actor_renderers.clear();
+    megamans.clear();
 }
 
 StageRenderer::~StageRenderer() {

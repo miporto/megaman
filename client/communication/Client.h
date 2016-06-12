@@ -27,10 +27,12 @@ class Client {
         int receive_deceased();
         NewUpdatePacket receive_float_update();
         NewUpdatePacket receive_megaman_update();
+        std::string receive_chamber_info();
 	    bool new_update_packets();
 	    bool new_deceased();
         bool new_float_update_packets();
         bool new_megaman_update_packets();
+        bool new_chamber_info_packet();
         ~Client();
 };
 
