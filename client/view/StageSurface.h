@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "client/communication/Client.h"
-#include "server/model/StageParser.h"
+#include "server/model/GameObjectParser.h"
 #include "InputHandler.h"
 #include "StageRenderer.h"
 
@@ -22,7 +22,7 @@ private:
     void replace_substr(std::string& input, const std::string& old_str, const
     std::string& new_str);
     Client& client;
-    StageParserInfo stage_info;
+    GameObjectParserInfo stage_info;
     SDL2pp::SDL* sdl;
     SDL2pp::Window* window;
     SDL2pp::Renderer* renderer;

@@ -8,7 +8,7 @@
 
 #include "client/communication/Client.h"
 #include "common/communication/Packet.h"
-#include "server/model/StageParser.h"
+#include "server/model/GameObjectParser.h"
 #include "InputHandler.h"
 #include "StageRenderer.h"
 #include "StageSurface.h"

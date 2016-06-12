@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "server/model/StageParser.h"
+#include "server/model/GameObjectParser.h"
 #include "client/communication/ClientCommunicator.h"
 #include "TileRenderer.h"
 #include "ActorRenderer.h"

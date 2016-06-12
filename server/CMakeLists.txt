@@ -36,8 +36,8 @@ set(SOURCES
         communication/EventQueue.h
         model/GameObject.cpp
         model/GameObject.h
-        model/StageSetter.cpp
-        model/StageSetter.h
+        model/GameObjectSetter.cpp
+        model/GameObjectSetter.h
         model/Player.cpp
         model/Player.h
         model/BossChamber.cpp
@@ -46,8 +46,8 @@ set(SOURCES
         Logger.h
         model/Boss.cpp
         model/Boss.h
-        model/StageParser.cpp
-        model/StageParser.h)
+        model/GameObjectParser.cpp
+        model/GameObjectParser.h model/GameObjectHandler.cpp model/GameObjectHandler.h)
 
 include(CppLint)
 

@@ -8,19 +8,20 @@
 #include "server/communication/EventQueue.h"
 #include "Player.h"
 #include "Boss.h"
+#include "GameObjectHandler.h"
 
 class ServerCommunicator;
 class Match;
 
-class BossChamber {
+class BossChamber : public GameObjectHandler {
     private:
         Match* match;
         Boss* boss;
         std::vector<Player*> players;
         EventQueue* events;
 
-        std::vector<GameObject*> objects;
-        std::map<GameObject*, int> object_id;
+//        std::vector<GameObject*> objects;
+//        std::map<GameObject*, int> object_id;
 
         void execute_events();
         void execute_action(Player* player,
@@ -38,7 +39,7 @@ class BossChamber {
         BossChamber(Match* match,
                     std::vector<ServerCommunicator*>& communicators,
                     const char boss_id);
-        void add_game_object(GameObject* object);
+//        void add_game_object(GameObject* object);
         void run(bool* exit);
         bool beated();
         ~BossChamber();

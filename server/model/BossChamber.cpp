@@ -36,10 +36,10 @@ BossChamber::BossChamber(Match* match,
     this->match->notify_boss_chamber_info(this->status());
 }
 
-void BossChamber::add_game_object(GameObject* object) {
-    this->objects.push_back(object);
-    this->object_id[object] = this->objects.size();
-}
+//void BossChamber::add_game_object(GameObject* object) {
+//    this->objects.push_back(object);
+//    this->object_id[object] = this->objects.size();
+//}
 
 const std::string BossChamber::status() {
     InfoMaker info;
