@@ -23,22 +23,22 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 //    this->object_id[object] = this->objects.size();
 //}
 
-void Map::tick() {
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        this->objects[i]->tick();
-}
+//void Map::tick() {
+//    for (unsigned int i = 0; i < this->objects.size(); ++i)
+//        this->objects[i]->tick();
+//}
 
-void Map::check_collisions() {
-    GameObject* current_object;
-    for (unsigned int i = 0; i < this->objects.size(); ++i) {
-        current_object = this->objects[i];
-        for (unsigned int j = 0; j < this->objects.size(); ++j) {
-            if (i == j) continue;
-            if (current_object->collided_with(this->objects[j]))
-                current_object->execute_collision_with(this->objects[j]);
-        }
-    }
-}
+//void Map::check_collisions() {
+//    GameObject* current_object;
+//    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+//        current_object = this->objects[i];
+//        for (unsigned int j = 0; j < this->objects.size(); ++j) {
+//            if (i == j) continue;
+//            if (current_object->collided_with(this->objects[j]))
+//                current_object->execute_collision_with(this->objects[j]);
+//        }
+//    }
+//}
 
 std::vector<int> Map::get_rid_of_corpses() {
     std::vector<int> deceased;
@@ -58,11 +58,11 @@ std::vector<int> Map::get_rid_of_corpses() {
     return deceased;
 }
 
-void Map::create_new_projectiles() {
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        if (this->objects[i]->is_enemy())
-            ((Enemy*)this->objects[i])->shoot(this);
-}
+//void Map::create_new_projectiles() {
+//    for (unsigned int i = 0; i < this->objects.size(); ++i)
+//        if (this->objects[i]->shoots_per_tick())
+//            ((Shooter*)this->objects[i])->shoot(this);
+//}
 
 //const std::string Map::status() {
 //    InfoMaker info;
