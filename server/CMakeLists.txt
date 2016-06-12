@@ -30,8 +30,8 @@ set(SOURCES
         model/Game.h
         model/Movable.cpp
         model/Movable.h
-        communication/TickInfoMaker.cpp
-        communication/TickInfoMaker.h
+        communication/InfoMaker.cpp
+        communication/InfoMaker.h
         communication/EventQueue.cpp
         communication/EventQueue.h
         model/GameObject.cpp

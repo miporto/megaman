@@ -1,8 +1,9 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
-#include <server/communication/TickInfoMaker.h>
+#include <utility>
 
+#include "server/communication/InfoMaker.h"
 #include "BossChamber.h"
 #include "server/communication/Match.h"
 #include "server/communication/ServerCommunicator.h"
@@ -41,7 +42,7 @@ void BossChamber::add_game_object(GameObject* object) {
 }
 
 const std::string BossChamber::status() {
-    TickInfoMaker info;
+    InfoMaker info;
     std::pair<std::string, std::string> status;
     for (unsigned int i = 0; i < this->objects.size(); ++i) {
         status = this->objects[i]->info(this->object_id[this->objects[i]]);

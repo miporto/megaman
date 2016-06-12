@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "server/communication/EventQueue.h"
 #include "Player.h"
