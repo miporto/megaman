@@ -14,7 +14,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
         actor_factory(renderer, camera) {
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
     actors = {"MegaMan", "Met"};
-    objects = {"Block", "Stairs", "Pellet"};
+    objects = {"Block", "Stairs", "Spike", "Pellet", "Door"};
 
     TickInfoParser parser(stage_info);
     TickParserInfo parsed_info = parser.get_parsed_tick_info();

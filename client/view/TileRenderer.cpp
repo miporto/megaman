@@ -33,6 +33,22 @@ void StairsRenderer::render() {
                    SDL2pp::Rect(pos.first, pos.second, size, size));
 }
 
+void SpikeRenderer::render() {
+    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    int size = camera.adjust_size();
+    renderer->Copy(*sprites,
+                   SDL2pp::Rect(103, 238, 16, 16),
+                   SDL2pp::Rect(pos.first, pos.second, size, size));
+}
+
+void BossDoorRenderer::render() {
+    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    int size = camera.adjust_size();
+    renderer->Copy(*sprites,
+                   SDL2pp::Rect(0, 66, 267, 334),
+                   SDL2pp::Rect(pos.first, pos.second, size, size));
+}
+
 void PelletRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     SDL_Rect fillRect = {pos.first, pos.first, 5, 5};
@@ -45,9 +61,13 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
                                                            camera(camera) {
     sprites = new SDL2pp::Texture(*renderer, "resources/mm3_8boss_shadowman."
             "png");
+    boss_door_sprites = new SDL2pp::Texture(*renderer, "resources/boss_door"
+            ".png");
     tile_renderers["Block"] = BLOCK_R;
     tile_renderers["Stairs"] = STAIRS_R;
     tile_renderers["Pellet"] = PELLET_R;
+    tile_renderers["Spikes"] = SPIKE_R;
+    tile_renderers["Door"] = DOOR_R;
 }
 TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
                                                         float pos_x, float
@@ -66,6 +86,14 @@ TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
         case PELLET_R:
             tile_renderer = new PelletRenderer(renderer, sprites, camera,
                                                pos_x, pos_y);
+            break;
+        case SPIKE_R:
+            tile_renderer = new SpikeRenderer(renderer, sprites, camera,
+                                               pos_x, pos_y);
+            break;
+        case DOOR_R:
+            tile_renderer = new BossDoorRenderer(renderer, boss_door_sprites,
+                                                 camera, pos_x, pos_y);
             break;
         default:
             throw "ERROR: Non-existint tile renderer!";
