@@ -68,15 +68,44 @@ bool BossChamber::players_are_dead() {
     return true;
 }
 
-void BossChamber::run() {
+void BossChamber::tick() {
+    this->boss->tick();
+    for (unsigned int i = 0; i < this->players.size(); ++i)
+        this->players[i]->get_megaman()->tick();
+    for (unsigned int i = 0; i < this->projectiles.size(); ++i)
+        this->projectiles[i]->tick();
+}
+
+void BossChamber::check_collisions() {
     //TODO
-    while (!this->players_are_dead() && !this->boss->is_dead()) {
+}
+
+void BossChamber::get_rid_of_corpses() {
+    std::vector<int> deceased_ids;
+    //TODO
+    for (unsigned int i = 0; i < deceased_ids.size(); ++i)
+        this->match->notify_deceased(deceased_ids[i]);
+}
+
+void BossChamber::create_new_projectiles() {
+    this->boss->shoot(this);
+}
+
+void BossChamber::collect_updates() {
+    std::vector<FloatUpdate*> updates;
+    //TODO
+    for (unsigned int i = 0; i < updates.size(); ++i)
+        this->match->notify_tick(updates[i]);
+}
+
+void BossChamber::run(bool* exit) {
+    while (!*exit && !this->players_are_dead() && !this->boss->is_dead()) {
         this->execute_events();
-//        this->tick();
-//        this->check_collisions();
-//        this->get_rid_of_corpses();
-//        this->create_new_projectiles();
-//        this->match->notify_tick(this->status());
+        this->tick();
+        this->check_collisions();
+        this->get_rid_of_corpses();
+        this->create_new_projectiles();
+        this->collect_updates();
         usleep(SLEEP_TIME_MICROSECONDS);
     }
 }

@@ -241,7 +241,7 @@ std::string Deceased::get_str() const {
 
 int Deceased::get_object_id() const { return this->object_id; }
 
-Deceased::~Deceased() { }
+Deceased::~Deceased() {}
 
 ChamberInfo::ChamberInfo(const char chamber_id) : chamber_id(chamber_id) {}
 
@@ -260,15 +260,11 @@ ChamberInfo::~ChamberInfo() {}
 
 Action::Action(const std::string& name,
                const char action_id, const bool pressed)
-        : name(name), action_id(action_id), pressed(pressed) {
-    std::cout << "Action name: " << name << std::endl;
-}
+        : name(name), action_id(action_id), pressed(pressed) {}
 
 Action::Action(const std::string& name,
                const char action_id, const char pressed)
-        : name(name), action_id(action_id), pressed(pressed) {
-    std::cout << "Action name: " << name << std::endl;
-}
+        : name(name), action_id(action_id), pressed(pressed) {}
 
 char Action::get_id() const { return this->id; }
 

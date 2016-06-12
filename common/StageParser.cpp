@@ -12,7 +12,7 @@ StageParserPositions StageParser::positions_of
          const std::string& name,
          const std::string& object_name) {
     json json_file = json::parse(info);
-    //std::cout << json_file.dump() << std::endl;
+
     std::vector<std::vector<float>> positions;
 
     json json_positions = json_file[name][object_name];

@@ -31,7 +31,7 @@ void Server::wait_for_players() {
 void Server::run() {
     while (!this->quit_server && !this->match.ended()) {
         this->wait_for_players();
-        if (!this->quit_server) this->match.play_stage();
+        this->match.play_stage(&this->quit_server);
     }
 }
 

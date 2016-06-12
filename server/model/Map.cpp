@@ -84,5 +84,5 @@ std::vector<FloatUpdate*> Map::updates() {
 
 Map::~Map() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
-        delete this->objects[i];
+        if (!this->objects[i]->is_megaman()) delete this->objects[i];
 }

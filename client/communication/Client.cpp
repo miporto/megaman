@@ -29,11 +29,6 @@ void Client::connect_to_server() {
     }
 }
 
-/*
- * A partir de aca; metodos para todas las decisiones que toma el jugador
- * que requieren un envio de informacion el server
- */
-
 void Client::send_name(std::string& name) {
     player_name = name;
     this->communicator.send_name(name);

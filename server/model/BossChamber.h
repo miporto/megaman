@@ -22,7 +22,11 @@ class BossChamber {
         void execute_events();
         void execute_action(Player* player,
                             const char action_id, const bool pressed);
-        void add_projectile(Projectile* projectile);
+        void tick();
+        void check_collisions();
+        void get_rid_of_corpses();
+        void create_new_projectiles();
+        void collect_updates();
         Player* player_with_name(const std::string& name);
         bool players_are_dead();
 
@@ -30,7 +34,8 @@ class BossChamber {
         BossChamber(Match* match,
                     std::vector<ServerCommunicator*>& communicators,
                     const char boss_id);
-        void run();
+        void add_projectile(Projectile* projectile);
+        void run(bool* exit);
         bool beated();
         ~BossChamber();
 };

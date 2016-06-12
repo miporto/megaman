@@ -35,7 +35,7 @@ class Stage {
         Stage(Match* match,
               std::vector<ServerCommunicator*>& communicators,
               const std::string& stage_info);
-        void run();
+        void run(bool* exit);
         bool beated();
         ~Stage();
 };

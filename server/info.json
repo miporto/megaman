@@ -1,6 +1,46 @@
 {
 	"stage": {
-	  "1" : {
+	  "1": {
+        "spawn": {},
+        "object": {
+          "Block": [
+            {"x": 0, "y": 0},
+            {"x": 1, "y": 0},
+            {"x": 2, "y": 0},
+            {"x": 3, "y": 0},
+            {"x": 4, "y": 0},
+            {"x": 5, "y": 0},
+            {"x": 6, "y": 0},
+            {"x": 7, "y": 0},
+            {"x": 7, "y": 1},
+            {"x": 8, "y": 0},
+            {"x": 8, "y": 1},
+            {"x": 8, "y": 2},
+            {"x": 9, "y": 0},
+            {"x": 9, "y": 1},
+            {"x": 9, "y": 2},
+            {"x": 9, "y": 3},
+            {"x": 10, "y": 0},
+            {"x": 10, "y": 1},
+            {"x": 10, "y": 2},
+            {"x": 10, "y": 3},
+            {"x": 10, "y": 4},
+            {"x": 11, "y": 0},
+            {"x": 12, "y": 0},
+            {"x": 13, "y": 0},
+            {"x": 14, "y": 0}],
+          "Door": [
+            {"x": 8, "y": 1}]
+         },
+         "boss": {
+			"name": "BombMan",
+			"initial x": 2,
+			"initial y": 3,
+			"velocity x": 1,
+			"velocity y": 2,
+			"energy": 40 }
+	  },
+	  "2": {
         "spawn": {},
         "object": {
           "Block": [
@@ -23,14 +63,14 @@
             {"x": 8, "y": 1}]
          },
          "boss": {
-			"name": "BombMan",
+			"name": "FireMan",
 			"initial x": 2,
 			"initial y": 3,
 			"velocity x": 1,
 			"velocity y": 2,
 			"energy": 40 }
         },
-      "2": {
+      "3": {
         "spawn": {
           "Met": [{"x": 7, "y": 1}]
         }, "object": {
@@ -50,7 +90,7 @@
             {"x": 8, "y": 1},
             {"x": 8, "y": 2}]}
         },
-		"3":{"spawn":{
+		"4":{"spawn":{
 				"Met": [{"x": 10, "y": 0}], 
 				"Bumby": [{"x": 100, "y": 30}], 
 				"Sniper": [{"x": 200, "y": 20}], 
@@ -65,8 +105,7 @@
         }
     },
     
-    "mega man": {"initial x": 0, "initial y": 1,
-      "velocity x": 6, "velocity y": 4},
+    "mega man": {"initial x": 0, "initial y": 1, "velocity x": 6, "velocity y": 6},
     
     "energy tank": {"initial lives": 3, "max": 15},
     
@@ -74,7 +113,7 @@
 			"Met": {"energy": 1, "velocity x": 0, "velocity y": 0},
 			"Bumby": {"energy": 1, "velocity x": 10, "velocity y": 0},
 			"Sniper": {"energy": 2, "velocity x": 0, "velocity y": 0},
-			"JumpingSniper": {"energy": 6, "velocity x": 0, "velocity y": 42}
+			"JumpingSniper": {"energy": 6, "velocity x": 0, "velocity y": 15}
     },
     
     "projectile": {
