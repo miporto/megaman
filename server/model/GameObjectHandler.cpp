@@ -29,6 +29,18 @@ void GameObjectHandler::tick() {
         this->objects[i]->tick();
 }
 
+void GameObjectHandler::check_collisions() {
+    GameObject* current_object;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        current_object = this->objects[i];
+        for (unsigned int j = 0; j < this->objects.size(); ++j) {
+            if (i == j) continue;
+            if (current_object->collided_with(this->objects[j]))
+                current_object->execute_collision_with(this->objects[j]);
+        }
+    }
+}
+
 GameObjectHandler::~GameObjectHandler() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (!this->objects[i]->is_megaman()) delete this->objects[i];

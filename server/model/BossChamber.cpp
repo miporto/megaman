@@ -97,9 +97,9 @@ bool BossChamber::players_are_dead() {
 //        this->objects[i]->tick();
 //}
 
-void BossChamber::check_collisions() {
-    //TODO
-}
+//void BossChamber::check_collisions() {
+//    //TODO
+//}
 
 void BossChamber::get_rid_of_corpses() {
     std::vector<int> deceased_ids;

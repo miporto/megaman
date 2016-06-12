@@ -21,7 +21,7 @@ class Map : public GameObjectHandler {
 //        void set(const std::string& info);
 //        void add_game_object(GameObject* object);
 //        void tick();
-        void check_collisions();
+//        void check_collisions();
         std::vector<int> get_rid_of_corpses();
         void create_new_projectiles();
 //        const std::string status();

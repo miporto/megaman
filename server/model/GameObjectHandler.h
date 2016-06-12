@@ -16,6 +16,7 @@ class GameObjectHandler {
         void add_game_object(GameObject* object);
         const std::string status();
         void tick();
+        void check_collisions();
         virtual ~GameObjectHandler();
 };
 

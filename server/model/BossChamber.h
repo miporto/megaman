@@ -27,7 +27,7 @@ class BossChamber : public GameObjectHandler {
         void execute_action(Player* player,
                             const char action_id, const bool pressed);
 //        void tick();
-        void check_collisions();
+//        void check_collisions();
         void get_rid_of_corpses();
         void create_new_projectiles();
         void collect_updates();

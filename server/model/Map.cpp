@@ -28,17 +28,17 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 //        this->objects[i]->tick();
 //}
 
-void Map::check_collisions() {
-    GameObject* current_object;
-    for (unsigned int i = 0; i < this->objects.size(); ++i) {
-        current_object = this->objects[i];
-        for (unsigned int j = 0; j < this->objects.size(); ++j) {
-            if (i == j) continue;
-            if (current_object->collided_with(this->objects[j]))
-                current_object->execute_collision_with(this->objects[j]);
-        }
-    }
-}
+//void Map::check_collisions() {
+//    GameObject* current_object;
+//    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+//        current_object = this->objects[i];
+//        for (unsigned int j = 0; j < this->objects.size(); ++j) {
+//            if (i == j) continue;
+//            if (current_object->collided_with(this->objects[j]))
+//                current_object->execute_collision_with(this->objects[j]);
+//        }
+//    }
+//}
 
 std::vector<int> Map::get_rid_of_corpses() {
     std::vector<int> deceased;
