@@ -12,14 +12,7 @@
 #define PLAYERS_MAX 4
 
 Match::Match(std::vector<ServerCommunicator*>& communicators)
-    : communicators(communicators) {
-    //TODO Refactor de armado de este map
-    this->stages[1] = StageFactory::initial_stage(1);
-    //this->stages[2] = StageFactory::initial_stage(2);
-    //this->stages[3] = StageFactory::initial_stage(3);
-    //this->stages[4] = StageFactory::initial_stage(4);
-    //this->stages[5] = StageFactory::initial_stage(5);
-}
+    : stages(StageFactory::stages()), communicators(communicators) {}
 
 bool Match::has_started() {
     Lock l(this->m);

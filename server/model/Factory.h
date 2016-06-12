@@ -60,10 +60,10 @@ class BossFactory {
         ~BossFactory();
 };
 
-
 class StageFactory {
     public:
         static const std::string initial_stage(const char stage_id);
+        static const std::map<char, std::string> stages();
         ~StageFactory();
 };
 

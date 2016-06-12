@@ -151,6 +151,19 @@ const std::string StageFactory::initial_stage(const char stage_id) {
     return j_stage.dump();
 }
 
+const std::map<char, std::string> StageFactory::stages() {
+    std::map<char, std::string> stages;
+    json json_file = FileReader::read(INFO_FILE, "stage");
+
+    for (char i = 1; (unsigned)i <= json_file.size(); ++i) {
+        std::stringstream ss;
+        ss << i;
+        stages[i] = json_file[ss.str()].dump();
+    }
+
+    return stages;
+}
+
 StageFactory::~StageFactory() {}
 
 const std::string BossChamberFactory::chamber() {
