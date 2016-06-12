@@ -114,6 +114,8 @@ void MegaMan::collide_with(Object* object) {}
 
 void MegaMan::collide_with(Projectile* projectile) {}
 
+void MegaMan::collide_with(Boss* boss) {}
+
 void MegaMan::collide_with(MegaMan* mm) {}
 
 void MegaMan::execute_collision_with(GameObject* other) {

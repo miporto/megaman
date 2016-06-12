@@ -19,6 +19,8 @@ void Object::collide_with(Object* object) {}
 
 void Object::collide_with(Projectile* projectile) {}
 
+void Object::collide_with(Boss* boss) {}
+
 void Object::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }

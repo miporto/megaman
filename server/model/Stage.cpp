@@ -50,8 +50,6 @@ void Stage::execute_action(Player* player,
     } else if (action_id == SHOOT) {
         Projectile *projectile = player->get_megaman()->shoot();
         if (projectile) this->map.add_game_object(projectile);
-//    } else if (action_id == END) {
-//        this->end_reached = true;
     } else {
         throw StageError("There is no action with that id");
     }

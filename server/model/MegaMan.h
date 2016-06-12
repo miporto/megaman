@@ -41,6 +41,7 @@ class MegaMan : public UserMovable {
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);
+        void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
         void change_ammo(unsigned int ammo_id);

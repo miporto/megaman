@@ -32,6 +32,7 @@ class Enemy : public Movable {
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         virtual void collide_with(Projectile* projectile) = 0;
+        void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
         virtual void shoot(Map* map) = 0;

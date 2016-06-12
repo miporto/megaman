@@ -29,6 +29,7 @@ class Object : public GameObject {
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);
+        void collide_with(Boss* boss);
         virtual void collide_with(MegaMan* mm) = 0;
         void execute_collision_with(GameObject* other);
         void tick();

@@ -48,6 +48,8 @@ void Projectile::collide_with(Object* object) {}
 
 void Projectile::collide_with(Projectile* projectile) {}
 
+void Projectile::collide_with(Boss* boss) {}
+
 void Projectile::collide_with(MegaMan* mm) {
     mm->decrease_energy(this->hit());
 }

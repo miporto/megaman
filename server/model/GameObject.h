@@ -20,11 +20,13 @@ using json = nlohmann::json;
 class Enemy;
 class Object;
 class Projectile;
+class Boss;
 class MegaMan;
 
 class GameObject {
     private:
         const int side;
+
     protected:
         Position position;
 
@@ -38,6 +40,7 @@ class GameObject {
         virtual void collide_with(Enemy* enemy) = 0;
         virtual void collide_with(Object* object) = 0;
         virtual void collide_with(Projectile* projectile) = 0;
+        virtual void collide_with(Boss* boss) = 0;
         virtual void collide_with(MegaMan* mm) = 0;
         virtual void execute_collision_with(GameObject* other) = 0;
         virtual void tick() = 0;
