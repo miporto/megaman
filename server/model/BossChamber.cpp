@@ -92,14 +92,14 @@ bool BossChamber::players_are_dead() {
     return true;
 }
 
-void BossChamber::tick() {
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        this->objects[i]->tick();
-}
+//void BossChamber::tick() {
+//    for (unsigned int i = 0; i < this->objects.size(); ++i)
+//        this->objects[i]->tick();
+//}
 
-void BossChamber::check_collisions() {
-    //TODO
-}
+//void BossChamber::check_collisions() {
+//    //TODO
+//}
 
 void BossChamber::get_rid_of_corpses() {
     std::vector<int> deceased_ids;
@@ -108,9 +108,9 @@ void BossChamber::get_rid_of_corpses() {
         this->match->notify_deceased(deceased_ids[i]);
 }
 
-void BossChamber::create_new_projectiles() {
-    this->boss->shoot(this);
-}
+//void BossChamber::create_new_projectiles() {
+//    this->boss->shoot(this);
+//}
 
 void BossChamber::collect_updates() {
     std::vector<FloatUpdate*> updates;
@@ -135,9 +135,7 @@ bool BossChamber::beated() {
     return this->boss->is_dead();
 }
 
-BossChamber::~BossChamber() {
-    delete this->boss;
-}
+BossChamber::~BossChamber() {}
 
 BossChamberError::BossChamberError(const std::string error_msg) throw()
         : SystemError(error_msg) {}

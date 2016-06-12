@@ -34,6 +34,7 @@ class Boss : public Movable {
         virtual void shoot(BossChamber* chamber) = 0;
         virtual void tick() = 0;
         std::pair<std::string, std::string> info(const int id);
+        bool shoots_per_tick();
         FloatUpdate* update(const int id);
         virtual ~Boss();
 };

@@ -49,7 +49,7 @@ class GameObject {
         virtual bool it_moved();
         virtual std::pair<std::string, std::string> info(const int id) = 0;
         virtual FloatUpdate* update(const int id) = 0;
-        virtual bool is_enemy();
+        virtual bool shoots_per_tick();
         virtual bool is_megaman();
         virtual ~GameObject();
 };
