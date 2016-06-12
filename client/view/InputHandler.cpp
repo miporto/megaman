@@ -14,7 +14,7 @@ void InputHandler::read_input() {
     if (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             window_closed = true;
-        } else if (event.type == SDL_KEYDOWN) {
+        } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
             switch (event.key.keysym.sym) {
                 case SDLK_LEFT:
                     keys_held[LEFT] = true;
@@ -29,7 +29,7 @@ void InputHandler::read_input() {
                     keys_held[SHOOT] = true;
                     break;
             }
-        } else if (event.type == SDL_KEYUP) {
+        } else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
             switch (event.key.keysym.sym) {
                 case SDLK_LEFT:
                     keys_held[LEFT] = false;
