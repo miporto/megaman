@@ -100,9 +100,13 @@ void Receiver::receive_packet(const char id) {
             this->packets.push(new Deceased(object_id));
             break;
         } case CHAMBER_INFO: {
-            char chamber_id;
-            this->socket->receive(&chamber_id, sizeof(char));
-            this->packets.push(new ChamberInfo(chamber_id));
+            int length;
+            this->socket->receive((char *) &length, sizeof(int));
+            char *info = new char[length + 1];
+            info[length] = '\0';
+            this->socket->receive(info, sizeof(char) * length);
+            this->packets.push(new ChamberInfo(info));
+            delete info;
             break;
         } case ACTION: {
             int length;
