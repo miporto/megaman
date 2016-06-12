@@ -163,10 +163,12 @@ void StageRenderer::delete_all_renderers(){
     }
     tile_renderers.clear();
     for (auto const &it : actor_renderers) {
+        camera.delete_megaman(it.first);
         ActorRenderer *a_renderer = it.second;
         delete a_renderer;
     }
     actor_renderers.clear();
+    megamans.clear();
 }
 
 StageRenderer::~StageRenderer() {
