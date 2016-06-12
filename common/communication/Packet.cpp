@@ -260,15 +260,11 @@ ChamberInfo::~ChamberInfo() {}
 
 Action::Action(const std::string& name,
                const char action_id, const bool pressed)
-        : name(name), action_id(action_id), pressed(pressed) {
-    std::cout << "Action name: " << name << std::endl;
-}
+        : name(name), action_id(action_id), pressed(pressed) {}
 
 Action::Action(const std::string& name,
                const char action_id, const char pressed)
-        : name(name), action_id(action_id), pressed(pressed) {
-    std::cout << "Action name: " << name << std::endl;
-}
+        : name(name), action_id(action_id), pressed(pressed) {}
 
 char Action::get_id() const { return this->id; }
 
