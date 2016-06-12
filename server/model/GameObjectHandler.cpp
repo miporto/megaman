@@ -1,5 +1,6 @@
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "server/communication/InfoMaker.h"
 #include "GameObjectHandler.h"
@@ -40,6 +41,24 @@ void GameObjectHandler::check_collisions() {
                 current_object->execute_collision_with(this->objects[j]);
         }
     }
+}
+
+std::vector<int> GameObjectHandler::get_rid_of_corpses() {
+    std::vector<int> deceased;
+    GameObject* dead_obj;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+        if (this->objects[i]->is_dead()) {
+            dead_obj = this->objects[i];
+
+            deceased.push_back(this->object_id[dead_obj]);
+
+            this->object_id.erase(dead_obj);
+            this->objects.erase(this->objects.begin() + i);
+
+            if (!dead_obj->is_megaman()) delete dead_obj;
+        }
+    }
+    return deceased;
 }
 
 void GameObjectHandler::create_new_projectiles() {

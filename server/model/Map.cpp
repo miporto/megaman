@@ -40,23 +40,23 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 //    }
 //}
 
-std::vector<int> Map::get_rid_of_corpses() {
-    std::vector<int> deceased;
-    GameObject* dead_obj;
-    for (unsigned int i = 0; i < this->objects.size(); ++i) {
-        if (this->objects[i]->is_dead()) {
-            dead_obj = this->objects[i];
-
-            deceased.push_back(this->object_id[dead_obj]);
-
-            this->object_id.erase(dead_obj);
-            this->objects.erase(this->objects.begin() + i);
-            if (!dead_obj->is_megaman()) delete dead_obj;
-        }
-    }
-
-    return deceased;
-}
+//std::vector<int> Map::get_rid_of_corpses() {
+//    std::vector<int> deceased;
+//    GameObject* dead_obj;
+//    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+//        if (this->objects[i]->is_dead()) {
+//            dead_obj = this->objects[i];
+//
+//            deceased.push_back(this->object_id[dead_obj]);
+//
+//            this->object_id.erase(dead_obj);
+//            this->objects.erase(this->objects.begin() + i);
+//            if (!dead_obj->is_megaman()) delete dead_obj;
+//        }
+//    }
+//
+//    return deceased;
+//}
 
 //void Map::create_new_projectiles() {
 //    for (unsigned int i = 0; i < this->objects.size(); ++i)

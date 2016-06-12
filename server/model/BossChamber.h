@@ -26,9 +26,10 @@ class BossChamber : public GameObjectHandler {
         void execute_events();
         void execute_action(Player* player,
                             const char action_id, const bool pressed);
+        void acknowledge_deceased();
 //        void tick();
 //        void check_collisions();
-        void get_rid_of_corpses();
+//        void get_rid_of_corpses();
 //        void create_new_projectiles();
         void collect_updates();
         Player* player_with_name(const std::string& name);

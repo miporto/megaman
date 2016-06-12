@@ -101,9 +101,8 @@ bool BossChamber::players_are_dead() {
 //    //TODO
 //}
 
-void BossChamber::get_rid_of_corpses() {
-    std::vector<int> deceased_ids;
-    //TODO
+void BossChamber::acknowledge_deceased() {
+    std::vector<int> deceased_ids = this->get_rid_of_corpses();
     for (unsigned int i = 0; i < deceased_ids.size(); ++i)
         this->match->notify_deceased(deceased_ids[i]);
 }
@@ -124,7 +123,7 @@ void BossChamber::run(bool* exit) {
         this->execute_events();
         this->tick();
         this->check_collisions();
-        this->get_rid_of_corpses();
+        this->acknowledge_deceased();
         this->create_new_projectiles();
         this->collect_updates();
         usleep(SLEEP_TIME_MICROSECONDS);
