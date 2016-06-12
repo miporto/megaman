@@ -97,6 +97,10 @@ void Socket::receive(char* buffer, size_t size) {
 	if (!valid_socket) throw SocketError();
 }
 
+bool Socket::disconnected(){
+	return this->fd == 0;
+}
+
 void Socket::shutdown() {
 	if (!this->fd) return;
 	if (::shutdown(this->fd, SHUT_RDWR) == ERROR_CODE)

@@ -10,10 +10,10 @@ class Acceptor : public Thread {
     private:
         bool quit_acceptor;
         Socket& socket;
-        Match& match;
+        Match* match;
 
    public:
-        Acceptor(Socket& socket, Match& match);
+        Acceptor(Socket& socket, Match* match);
         void run();
         void shutdown();
         ~Acceptor();

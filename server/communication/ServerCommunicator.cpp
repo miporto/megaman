@@ -79,6 +79,10 @@ void ServerCommunicator::send_boss_chamber_info(const char boss_id) {
     this->packets_to_send.push(new ChamberInfo(boss_id));
 }
 
+bool ServerCommunicator::disconnected() {
+    return this->peer->disconnected();
+}
+
 void ServerCommunicator::shutdown() {
     this->peer->shutdown();
 }

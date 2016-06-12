@@ -33,6 +33,7 @@ class Socket {
 		Socket* accept();
 		void send(const char* buffer, size_t size);
 		void receive(char* buffer, size_t size);
+		bool disconnected();
 		void shutdown();
 };
 

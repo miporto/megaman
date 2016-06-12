@@ -9,16 +9,22 @@
 #include "Match.h"
 #include "server/Logger.h"
 
+class Acceptor;
+
 class Server : public Thread {
    private:
+    const char* port;
     bool quit_server;
     Socket socket;
     std::vector<ServerCommunicator*> communicators;
-    Match match;
+    Match* match;
+    Acceptor* acceptor;
     Logger* logger;
 
     void configure_server_socket(const char* port);
     void wait_for_players();
+    void get_rid_of_disconnected_clients();
+    void reset_match();
 
    public:
     explicit Server(const char* port);
