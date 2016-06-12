@@ -31,7 +31,7 @@ std::vector<float> GameObject::get_position() {
 
 bool GameObject::it_moved() { return false; }
 
-bool GameObject::is_enemy() { return false; }
+bool GameObject::shoots_per_tick() { return false; }
 
 bool GameObject::is_megaman() { return false; }
 

@@ -37,7 +37,7 @@ class Enemy : public Movable {
         void execute_collision_with(GameObject* other);
         virtual void shoot(Map* map) = 0;
         virtual void tick() = 0;
-        bool is_enemy();
+        bool shoots_per_tick();
         std::pair<std::string, std::string> info(const int id);
         FloatUpdate* update(const int id);
         virtual ~Enemy();

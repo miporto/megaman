@@ -60,7 +60,7 @@ std::vector<int> Map::get_rid_of_corpses() {
 
 void Map::create_new_projectiles() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
-        if (this->objects[i]->is_enemy())
+        if (this->objects[i]->shoots_per_tick())
             ((Enemy*)this->objects[i])->shoot(this);
 }
 

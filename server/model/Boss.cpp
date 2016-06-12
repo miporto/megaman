@@ -49,6 +49,8 @@ std::pair<std::string, std::string> Boss::info(const int id) {
     return std::make_pair(this->get_name(), info.dump());
 }
 
+bool Boss::shoots_per_tick() { return true; }
+
 FloatUpdate* Boss::update(const int id) {
     std::vector<float> pos = this->get_position();
     return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
