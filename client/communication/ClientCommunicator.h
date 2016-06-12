@@ -45,7 +45,7 @@ class ClientCommunicator {
         int receive_deceased();
         NewUpdatePacket receive_float_update();
         NewUpdatePacket receive_megaman_update();
-        int receive_chamber_info();
+        std::string receive_chamber_info();
         void send_action(const std::string& name, const char& action_id,
                          const bool& pressed);
         bool new_update_packets();

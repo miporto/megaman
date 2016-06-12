@@ -67,7 +67,7 @@ NewUpdatePacket Client::receive_megaman_update() {
     return communicator.receive_megaman_update();
 }
 
-int Client::receive_chamber_info() {
+std::string Client::receive_chamber_info() {
     return communicator.receive_chamber_info();
 }
 

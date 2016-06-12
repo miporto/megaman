@@ -162,13 +162,13 @@ class Deceased : public Packet {
 class ChamberInfo : public Packet {
     private:
         static const char id = CHAMBER_INFO;
-        const char chamber_id;
+        const std::string chamber_info;
 
     public:
-        explicit ChamberInfo(const char chamber_id);
+        explicit ChamberInfo(const std::string& chamber_info);
         char get_id() const;
         std::string get_str() const;
-        char get_chamber_id() const;
+        const std::string& get_info() const;
         ~ChamberInfo();
 };
 

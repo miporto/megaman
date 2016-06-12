@@ -120,14 +120,14 @@ NewUpdatePacket ClientCommunicator::receive_megaman_update() {
     throw "ERROR: No megaman update on queue!";
 }
 
-int ClientCommunicator::receive_chamber_info() {
-    int id;
+std::string ClientCommunicator::receive_chamber_info() {
+    std::string info;
     if (new_chamber_info_packet()) {
         const ChamberInfo *update = (ChamberInfo*) packets_received.pop
                 (CHAMBER_INFO);
-        id = update->get_chamber_id();
+        info = update->get_info();
         delete update;
-        return id;
+        return info;
     }
     throw "ERROR: No chamber info on queue!";
 }

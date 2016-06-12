@@ -75,8 +75,8 @@ void ServerCommunicator::send_tick_info(FloatUpdate* update) {
     this->packets_to_send.push(update);
 }
 
-void ServerCommunicator::send_boss_chamber_info(const char boss_id) {
-    this->packets_to_send.push(new ChamberInfo(boss_id));
+void ServerCommunicator::send_boss_chamber_info(const std::string& info) {
+    this->packets_to_send.push(new ChamberInfo(info));
 }
 
 bool ServerCommunicator::disconnected() {

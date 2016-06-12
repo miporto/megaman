@@ -2,12 +2,12 @@
 #include <string>
 #include <map>
 
-#include "StageParser.h"
+#include "GameObjectParser.h"
 #include "extern/libjson/json.hpp"
 
 using json = nlohmann::json;
 
-StageParserPositions StageParser::positions_of
+GameObjectParserPositions GameObjectParser::positions_of
         (const std::string& info,
          const std::string& name,
          const std::string& object_name) {
@@ -27,7 +27,7 @@ StageParserPositions StageParser::positions_of
     return positions;
 }
 
-StageParserInfo StageParser::stage_info(const std::string& info) {
+GameObjectParserInfo GameObjectParser::stage_info(const std::string& info) {
     std::map<std::string, std::vector<std::vector<float>>> pos;
 
     std::vector<std::vector<float>> met_positions =
@@ -69,4 +69,4 @@ StageParserInfo StageParser::stage_info(const std::string& info) {
     return pos;
 }
 
-StageParser::~StageParser() {}
+GameObjectParser::~GameObjectParser() {}

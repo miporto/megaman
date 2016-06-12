@@ -243,18 +243,27 @@ int Deceased::get_object_id() const { return this->object_id; }
 
 Deceased::~Deceased() {}
 
-ChamberInfo::ChamberInfo(const char chamber_id) : chamber_id(chamber_id) {}
+ChamberInfo::ChamberInfo(const std::string& chamber_info)
+        : chamber_info(chamber_info) {}
 
 char ChamberInfo::get_id() const { return this->id; }
 
 std::string ChamberInfo::get_str() const {
     std::string str;
+
     str.push_back(this->id);
-    str.push_back(this->chamber_id);
+
+    int len = this->chamber_info.length();
+    char* len_arr = (char*)&len;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(len_arr[i]);
+
+    str.append(this->chamber_info);
+
     return str;
 }
 
-char ChamberInfo::get_chamber_id() const { return this->chamber_id; }
+const std::string& ChamberInfo::get_info() const { return this->chamber_info; }
 
 ChamberInfo::~ChamberInfo() {}
 

@@ -3,24 +3,25 @@
 #include <vector>
 #include <string>
 
-#include "server/communication/TickInfoMaker.h"
+#include "server/communication/InfoMaker.h"
 #include "Map.h"
 #include "Factory.h"
-#include "StageSetter.h"
+#include "GameObjectSetter.h"
+#include "Enemy.h"
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
 
 Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 
-void Map::set(const std::string& info) {
-    StageSetter setter(info, this);
-}
+//void Map::set(const std::string& info) {
+//    GameObjectSetter setter(info, this);
+//}
 
-void Map::add_game_object(GameObject* object) {
-    this->objects.push_back(object);
-    this->object_id[object] = this->objects.size();
-}
+//void Map::add_game_object(GameObject* object) {
+//    this->objects.push_back(object);
+//    this->object_id[object] = this->objects.size();
+//}
 
 void Map::tick() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
@@ -64,7 +65,7 @@ void Map::create_new_projectiles() {
 }
 
 const std::string Map::status() {
-    TickInfoMaker info;
+    InfoMaker info;
     std::pair<std::string, std::string> status;
     for (unsigned int i = 0; i < this->objects.size(); ++i) {
         status = this->objects[i]->info(this->object_id[this->objects[i]]);

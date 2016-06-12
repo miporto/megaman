@@ -67,6 +67,12 @@ class StageFactory {
         ~StageFactory();
 };
 
+class BossChamberFactory {
+    public:
+        static const std::string chamber();
+        ~BossChamberFactory();
+};
+
 class MapFactory {
     public:
         static unsigned int width();
