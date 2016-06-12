@@ -106,15 +106,21 @@ AmmoFactory::~AmmoFactory() {}
 
 Boss* BossFactory::boss(const char stage_id) {
     json j_info = FileReader::read(INFO_FILE, "stage");
-    std::string boss_name = j_info["boss"]["name"];
+    int i = stage_id;
+    std::stringstream ss;
+    std::string s_stage_id;
+    ss << i;
+    ss >> s_stage_id;
+
+    std::string boss_name = j_info[s_stage_id]["boss"]["name"];
     std::vector<float> initial_position;
-    float initial_x = (float) j_info["boss"]["initial x"];
-    float initial_y = (float) j_info["boss"]["initial y"];
+    float initial_x = (float) j_info[s_stage_id]["boss"]["initial x"];
+    float initial_y = (float) j_info[s_stage_id]["boss"]["initial y"];
     initial_position.push_back(initial_x);
     initial_position.push_back(initial_y);
-    float velocity_x = (float) j_info["boss"]["velocity x"];
-    float velocity_y = (float) j_info["boss"]["velocity y"];
-    int energy = (int) j_info["boss"]["energy"];
+    float velocity_x = (float) j_info[s_stage_id]["boss"]["velocity x"];
+    float velocity_y = (float) j_info[s_stage_id]["boss"]["velocity y"];
+    int energy = (int) j_info[s_stage_id]["boss"]["energy"];
 
     if (boss_name == BOMBMAN_NAME)
         return new BombMan(initial_position, velocity_x, velocity_y, energy);
