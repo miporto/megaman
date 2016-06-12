@@ -67,6 +67,15 @@ void GameObjectHandler::create_new_projectiles() {
             ((Shooter*)this->objects[i])->shoot(this);
 }
 
+std::vector<FloatUpdate*> GameObjectHandler::updates() {
+    std::vector<FloatUpdate*> updates;
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        if (this->objects[i]->it_moved())
+            updates.push_back(this->objects[i]->update
+                    (this->object_id[this->objects[i]]));
+    return updates;
+}
+
 GameObjectHandler::~GameObjectHandler() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (!this->objects[i]->is_megaman()) delete this->objects[i];

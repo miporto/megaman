@@ -25,7 +25,7 @@ class Map : public GameObjectHandler {
 //        std::vector<int> get_rid_of_corpses();
 //        void create_new_projectiles();
 //        const std::string status();
-        std::vector<FloatUpdate*> updates();
+//        std::vector<FloatUpdate*> updates();
         ~Map();
 };
 

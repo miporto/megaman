@@ -19,6 +19,7 @@ class GameObjectHandler {
         void check_collisions();
         std::vector<int> get_rid_of_corpses();
         void create_new_projectiles();
+        std::vector<FloatUpdate*> updates();
         virtual ~GameObjectHandler();
 };
 

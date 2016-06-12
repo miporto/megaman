@@ -27,7 +27,7 @@ class Stage {
         void check_collisions();
         void acknowledge_deceased();
         void create_new_projectiles();
-        void collect_updates();
+        void acknowledge_updates();
         Player* player_with_name(const std::string& name);
         bool players_are_dead();
 

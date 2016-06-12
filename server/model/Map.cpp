@@ -74,13 +74,13 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 //    return info.str();
 //}
 
-std::vector<FloatUpdate*> Map::updates() {
-    std::vector<FloatUpdate*> updates;
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        if (this->objects[i]->it_moved())
-            updates.push_back(this->objects[i]->update
-                    (this->object_id[this->objects[i]]));
-    return updates;
-}
+//std::vector<FloatUpdate*> Map::updates() {
+//    std::vector<FloatUpdate*> updates;
+//    for (unsigned int i = 0; i < this->objects.size(); ++i)
+//        if (this->objects[i]->it_moved())
+//            updates.push_back(this->objects[i]->update
+//                    (this->object_id[this->objects[i]]));
+//    return updates;
+//}
 
 Map::~Map() {}

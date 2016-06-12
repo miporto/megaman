@@ -92,7 +92,7 @@ void Stage::create_new_projectiles() {
     //map me tiene que dar un vector de info de ellos
 }
 
-void Stage::collect_updates() {
+void Stage::acknowledge_updates() {
     std::vector<FloatUpdate*> updates = this->map.updates();
     for (unsigned int i = 0; i < updates.size(); ++i)
         this->match->notify_tick(updates[i]);
@@ -112,7 +112,7 @@ void Stage::run(bool* exit) {
         this->check_collisions();
         this->acknowledge_deceased();
         this->create_new_projectiles();
-        this->collect_updates();
+        this->acknowledge_updates();
         usleep(SLEEP_TIME_MICROSECONDS);
     }
 }
