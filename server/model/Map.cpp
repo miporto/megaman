@@ -9,25 +9,22 @@
 #include "GameObjectSetter.h"
 #include "Enemy.h"
 
-#define X_COORD_POS 0
-#define Y_COORD_POS 1
-
 Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 
 //void Map::set(const std::string& info) {
 //    GameObjectSetter setter(info, this);
 //}
-
+//
 //void Map::add_game_object(GameObject* object) {
 //    this->objects.push_back(object);
 //    this->object_id[object] = this->objects.size();
 //}
-
+//
 //void Map::tick() {
 //    for (unsigned int i = 0; i < this->objects.size(); ++i)
 //        this->objects[i]->tick();
 //}
-
+//
 //void Map::check_collisions() {
 //    GameObject* current_object;
 //    for (unsigned int i = 0; i < this->objects.size(); ++i) {
@@ -39,7 +36,7 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 //        }
 //    }
 //}
-
+//
 //std::vector<int> Map::get_rid_of_corpses() {
 //    std::vector<int> deceased;
 //    GameObject* dead_obj;
@@ -57,13 +54,13 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 //
 //    return deceased;
 //}
-
+//
 //void Map::create_new_projectiles() {
 //    for (unsigned int i = 0; i < this->objects.size(); ++i)
 //        if (this->objects[i]->shoots_per_tick())
 //            ((Shooter*)this->objects[i])->shoot(this);
 //}
-
+//
 //const std::string Map::status() {
 //    InfoMaker info;
 //    std::pair<std::string, std::string> status;
@@ -73,7 +70,7 @@ Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 //    }
 //    return info.str();
 //}
-
+//
 //std::vector<FloatUpdate*> Map::updates() {
 //    std::vector<FloatUpdate*> updates;
 //    for (unsigned int i = 0; i < this->objects.size(); ++i)
