@@ -8,8 +8,12 @@
 #include "Player.h"
 #include "Boss.h"
 
+class ServerCommunicator;
+class Match;
+
 class BossChamber {
     private:
+        Match* match;
         Boss* boss;
         std::vector<Player*> players;
         std::vector<Projectile*> projectiles;
@@ -23,7 +27,9 @@ class BossChamber {
         bool players_are_dead();
 
     public:
-        explicit BossChamber(const char boss_id);
+        BossChamber(Match* match,
+                    std::vector<ServerCommunicator*>& communicators,
+                    const char boss_id);
         void run();
         bool beated();
         ~BossChamber();

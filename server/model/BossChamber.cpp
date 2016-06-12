@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <string>
+#include <vector>
 
 #include "BossChamber.h"
 #include "server/communication/Match.h"
@@ -8,9 +9,19 @@
 
 #define SLEEP_TIME_MICROSECONDS 10
 
-BossChamber::BossChamber(const char boss_id)
-        : boss(BossFactory::boss(boss_id)) {
-    //TODO
+BossChamber::BossChamber(Match* match,
+                         std::vector<ServerCommunicator*>& communicators,
+                         const char boss_id)
+        : match(match), boss(BossFactory::boss(boss_id)), events(NULL) {
+    // Players setting
+    for (unsigned int i = 0; i < communicators.size(); ++i)
+        this->players.push_back(communicators[i]->get_player());
+
+    // EventQueue setting
+    std::vector<PacketsQueueProtected*> action_queues;
+    for (unsigned int i = 0; i < communicators.size(); ++i)
+        action_queues.push_back(communicators[i]->get_actions());
+    this->events = new EventQueue(action_queues);
 }
 
 Player* BossChamber::player_with_name(const std::string& name) {

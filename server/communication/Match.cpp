@@ -104,7 +104,7 @@ void Match::play_stage() {
     stage.run();
     if (stage.beated()) {
         this->notify_boss_chamber_info(stage_id);
-        BossChamber chamber(stage_id);
+        BossChamber chamber(this, this->communicators, stage_id);
         chamber.run();
         if (chamber.beated())
             this->stages.erase(stage_id);
