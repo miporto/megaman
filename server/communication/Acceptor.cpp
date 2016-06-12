@@ -3,7 +3,7 @@
 
 #include "Acceptor.h"
 
-Acceptor::Acceptor(Socket& socket, Match& match)
+Acceptor::Acceptor(Socket& socket, Match* match)
     : quit_acceptor(false), socket(socket), match(match) {
     this->start();
 }
@@ -18,7 +18,7 @@ void Acceptor::run() {
             continue;
         }
         try {
-            this->match.add_player(peer);
+            this->match->add_player(peer);
         }
         catch (const MatchError& e) {
             const char* error_msg = e.what();
