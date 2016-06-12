@@ -17,20 +17,9 @@
 #define SCREEN_FPS 60
 #define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 
-void StageSurface::replace_substr(std::string& input,
-                                  const std::string& old_str,
-                                  const std::string &new_str) {
-    size_t index = 0;
-    while ( (index = input.find(old_str, index))!= std::string::npos ) {
-        input.replace(index, old_str.size(), new_str);
-        index += new_str.size();
-    }
-}
-
 StageSurface::StageSurface(Client& client) : client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
-        replace_substr(s_stage_info, ",", " ,");
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
                                     SDL_WINDOWPOS_UNDEFINED, 640, 480,
@@ -62,10 +51,8 @@ void StageSurface::run() {
             send_events(prev_input, new_input);
 
             // Check if they entered the boss chamber
-
             if (client.new_chamber_info_packet()) {
                 std::string chamber_info = client.receive_chamber_info();
-                replace_substr(chamber_info, ",", " ,");
                 std::cout << chamber_info << std::endl;
                 stage_renderer->render_boss_chamber(chamber_info);
             }
@@ -85,6 +72,7 @@ void StageSurface::run() {
                 stage_renderer->delete_renderer(client.receive_deceased());
             }
             if (!stage_renderer->are_megamans_alive()) return;
+            
             // Update screen
             renderer->Clear();
             stage_renderer->render();
