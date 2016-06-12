@@ -7,8 +7,9 @@
 
 using json = nlohmann::json;
 
-TickInfoParser::TickInfoParser(const std::string &tick_info) :
+TickInfoParser::TickInfoParser(std::string &tick_info) :
         tick_info(tick_info){
+    replace_substr(tick_info, ",", " ,");
     json_info = json::parse(tick_info);
 //    std::cout << json_info.dump() << std::endl;
 //    std::string test = "{\"object\":{\"Block\":[{\"x\":10,\"y\": 11.7}]}}";
@@ -29,6 +30,16 @@ TickInfoParser::TickInfoParser(const std::string &tick_info) :
     new_tick_parser_info["Met"] = mets;
     StatusInfo megs = status_info_of("MegaMan");
     new_tick_parser_info["MegaMan"] = megs;
+}
+
+void TickInfoParser::replace_substr(std::string &input,
+                                    const std::string &old_str,
+                                    const std::string &new_str) {
+    size_t index = 0;
+    while ( (index = input.find(old_str, index))!= std::string::npos ) {
+        input.replace(index, old_str.size(), new_str);
+        index += new_str.size();
+    }
 }
 
 TickParserInfo TickInfoParser::get_parsed_tick_info() {

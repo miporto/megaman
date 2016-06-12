@@ -8,10 +8,12 @@
 #include "StageRenderer.h"
 
 StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
-                             const std::string &stage_info) :
-        renderer(renderer), camera(renderer),
-        tile_factory(renderer, camera),
-        actor_factory(renderer, camera) {
+                             std::string &stage_info) : renderer(renderer),
+                                                        camera(renderer),
+                                                        tile_factory(renderer,
+                                                                     camera),
+                                                        actor_factory(renderer,
+                                                                      camera) {
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
     actors = {"MegaMan", "Met"};
     objects = {"Block", "Stairs", "Spike", "Pellet", "Door"};
@@ -125,11 +127,11 @@ bool StageRenderer::are_megamans_alive() {
     return megamans.size() > 0;
 }
 
-void StageRenderer::render_boss_chamber(const std::string &info) {
+void StageRenderer::render_boss_chamber(std::string &info) {
     delete_all_renderers();
     create_renderers(info);
 }
-void StageRenderer::create_renderers(const std::string &info) {
+void StageRenderer::create_renderers(std::string &info) {
     TickInfoParser parser(info);
     TickParserInfo parsed_info = parser.get_parsed_tick_info();
     for (auto const &it: parsed_info) {
