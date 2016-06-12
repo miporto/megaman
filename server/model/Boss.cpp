@@ -43,8 +43,13 @@ void Boss::execute_collision_with(GameObject* other) {
 
 std::pair<std::string, std::string> Boss::info(const int id) {
     std::vector<float> pos = this->get_position();
-    json info = { {"x", (int)pos[X_COORD_POS]},
-                  {"y", (int)pos[Y_COORD_POS]},
+    std::stringstream sx;
+    sx << pos[X_COORD_POS];
+    std::stringstream sy;
+    sy << pos[Y_COORD_POS];
+
+    json info = { {"x", sx.str()},
+                  {"y", sy.str()},
                   {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
 }
