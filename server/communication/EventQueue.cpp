@@ -3,8 +3,16 @@
 
 #include "EventQueue.h"
 
+void EventQueue::flush_previous_actions() {
+    for (unsigned int i = 0; i < this->action_queues.size(); ++i) {
+        while (!this->action_queues[i]->is_empty())
+            delete this->action_queues[i]->pop();
+    }
+}
+
 EventQueue::EventQueue(const std::vector<PacketsQueueProtected*>& action_queues)
         : action_queues(action_queues), quit(false) {
+    this->flush_previous_actions();
     this->start();
 }
 

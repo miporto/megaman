@@ -14,6 +14,8 @@ class EventQueue : public Thread {
         const std::vector<PacketsQueueProtected*> action_queues;
         bool quit;
 
+        void flush_previous_actions();
+
     public:
         explicit EventQueue
                 (const std::vector<PacketsQueueProtected*>& action_queues);

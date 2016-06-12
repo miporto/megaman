@@ -13,8 +13,6 @@
 class Map : public GameObjectHandler {
     private:
         const unsigned int width, height;
-//        std::vector<GameObject*> objects;
-//        std::map<GameObject*, int> object_id;
 
     public:
         Map();
