@@ -125,6 +125,50 @@ bool StageRenderer::are_megamans_alive() {
     return megamans.size() > 0;
 }
 
+void StageRenderer::render_boss_chamber(const std::string &info) {
+    delete_all_renderers();
+    create_renderers(info);
+}
+void StageRenderer::create_renderers(const std::string &info) {
+    TickInfoParser parser(info);
+    TickParserInfo parsed_info = parser.get_parsed_tick_info();
+    for (auto const &it: parsed_info) {
+        std::string type = it.first;
+        StatusInfo elements_info = it.second;
+        for (auto const &it2: elements_info) {
+            std::map<std::string, std::string> element_info = it2.second;
+            float x = stof(element_info["x"]);
+            float y = stof(element_info["y"]);
+            if (std::find(actors.begin(), actors.end(), type) != actors.end()){
+                int id = it2.first;
+                actor_renderers[id] = actor_factory
+                        .build_actor_renderer(type, x, y);
+                if (type.compare("MegaMan") == 0) {
+                    megamans.push_back(id);
+                    camera.add_megaman(id, (MegaManRenderer*)
+                            actor_renderers[id]);
+                }
+            } else {
+                tile_renderers[it2.first] = tile_factory.build_tile_renderer(
+                        type, x, y);
+            }
+        }
+    }
+}
+
+void StageRenderer::delete_all_renderers(){
+    for (auto const &it : tile_renderers) {
+        TileRenderer *t_renderer = it.second;
+        delete t_renderer;
+    }
+    tile_renderers.clear();
+    for (auto const &it : actor_renderers) {
+        ActorRenderer *a_renderer = it.second;
+        delete a_renderer;
+    }
+    actor_renderers.clear();
+}
+
 StageRenderer::~StageRenderer() {
     delete background;
     for (auto const &it : tile_renderers) {

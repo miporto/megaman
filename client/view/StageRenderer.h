@@ -22,9 +22,12 @@ public:
     void new_update(const std::string &name, FloatUpdatePkt &update_info);
     void delete_renderer(int id);
     bool are_megamans_alive();
+    void render_boss_chamber(const std::string &info);
     ~StageRenderer();
 
 private:
+    void create_renderers(const std::string &info);
+    void delete_all_renderers();
     // TODO: stageRenderer should receive the background image in memory
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *background;
