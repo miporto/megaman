@@ -67,6 +67,10 @@ NewUpdatePacket Client::receive_megaman_update() {
     return communicator.receive_megaman_update();
 }
 
+int Client::receive_chamber_info() {
+    return communicator.receive_chamber_info();
+}
+
 bool Client::new_update_packets() {
     return communicator.new_update_packets();
 }
@@ -81,5 +85,9 @@ bool Client::new_float_update_packets() {
 
 bool Client::new_megaman_update_packets() {
     return communicator.new_megaman_update_packets();
+}
+
+bool Client::new_chamber_info_packet() {
+    return communicator.new_chamber_info_packet();
 }
 Client::~Client() { this->client.shutdown(); }
