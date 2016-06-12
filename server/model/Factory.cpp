@@ -155,10 +155,16 @@ const std::map<char, std::string> StageFactory::stages() {
     std::map<char, std::string> stages;
     json json_file = FileReader::read(INFO_FILE, "stage");
 
-    for (char i = 1; (unsigned)i <= json_file.size(); ++i) {
+    for (size_t i = 1; i <= json_file.size(); ++i) {
         std::stringstream ss;
         ss << i;
-        stages[i] = json_file[ss.str()].dump();
+        std::string s_stage_id;
+        ss >> s_stage_id;
+        json j_stage = json_file[s_stage_id];
+        char key;
+        ss << s_stage_id;
+        ss >> key;
+        stages[key] = j_stage.dump();
     }
 
     return stages;
