@@ -26,6 +26,7 @@ BossChamber::BossChamber(Match* match,
     this->events = new EventQueue(action_queues);
 
     //Objects setting: Players, Boss, Default stage
+    this->set(BossChamberFactory::chamber());
     for (unsigned int i = 0; i < this->players.size(); ++i) {
         this->players[i]->new_megaman();
         this->add_game_object(this->players[i]->get_megaman());

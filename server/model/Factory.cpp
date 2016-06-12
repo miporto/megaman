@@ -153,6 +153,13 @@ const std::string StageFactory::initial_stage(const char stage_id) {
 
 StageFactory::~StageFactory() {}
 
+const std::string BossChamberFactory::chamber() {
+    json json_file = FileReader::read(INFO_FILE, "chamber");
+    return json_file.dump();
+}
+
+BossChamberFactory::~BossChamberFactory() {}
+
 unsigned int MapFactory::width() {
     json j_info = FileReader::read(INFO_FILE, "map");
     return (int) j_info["width"];

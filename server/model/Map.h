@@ -18,7 +18,7 @@ class Map : public GameObjectHandler {
 
     public:
         Map();
-        void set(const std::string& info);
+//        void set(const std::string& info);
 //        void add_game_object(GameObject* object);
         void tick();
         void check_collisions();

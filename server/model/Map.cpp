@@ -14,9 +14,9 @@
 
 Map::Map() : width(MapFactory::width()), height(MapFactory::height()) {}
 
-void Map::set(const std::string& info) {
-    GameObjectSetter setter(info, this);
-}
+//void Map::set(const std::string& info) {
+//    GameObjectSetter setter(info, this);
+//}
 
 //void Map::add_game_object(GameObject* object) {
 //    this->objects.push_back(object);

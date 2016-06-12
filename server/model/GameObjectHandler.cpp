@@ -1,4 +1,11 @@
+#include <string>
+
 #include "GameObjectHandler.h"
+#include "GameObjectSetter.h"
+
+void GameObjectHandler::set(const std::string& info) {
+    GameObjectSetter setter(info, this);
+}
 
 void GameObjectHandler::add_game_object(GameObject* object) {
     this->objects.push_back(object);
