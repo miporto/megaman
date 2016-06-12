@@ -11,7 +11,7 @@ TickInfoParser::TickInfoParser(std::string &tick_info) :
         tick_info(tick_info){
     replace_substr(tick_info, ",", " ,");
     json_info = json::parse(tick_info);
-//    std::cout << json_info.dump() << std::endl;
+    std::cout << json_info.dump() << std::endl;
 //    std::string test = "{\"object\":{\"Block\":[{\"x\":10,\"y\": 11.7}]}}";
 //    json j = json::parse(test);
 //    std::cout << j.dump() << std::endl;
@@ -30,6 +30,8 @@ TickInfoParser::TickInfoParser(std::string &tick_info) :
     new_tick_parser_info["Met"] = mets;
     StatusInfo megs = status_info_of("MegaMan");
     new_tick_parser_info["MegaMan"] = megs;
+    StatusInfo bombman = status_info_of("BombMan");
+    new_tick_parser_info["BombMan"] = bombman;
 }
 
 void TickInfoParser::replace_substr(std::string &input,
