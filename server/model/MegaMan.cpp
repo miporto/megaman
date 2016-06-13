@@ -126,7 +126,10 @@ void MegaMan::collide_with(Enemy* enemy) {
 
 void MegaMan::collide_with(Object* object) {}
 
-void MegaMan::collide_with(Projectile* projectile) {}
+void MegaMan::collide_with(Projectile* projectile) {
+    if (projectile->get_name().compare(PLASMA_NAME) != 0)
+        this->decrease_energy(projectile->hit());
+}
 
 void MegaMan::collide_with(Boss* boss) {}
 

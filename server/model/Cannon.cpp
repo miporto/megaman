@@ -11,7 +11,7 @@
 #include "Factory.h"
 
 #define PELLET_DAMAGE 1
-#define PROJECTILE_TIMEOUT 70000
+#define PROJECTILE_TIMEOUT 700
 
 Projectile::Projectile(const std::string& name,
                        int damage,
@@ -21,8 +21,8 @@ Projectile::Projectile(const std::string& name,
         name(name), damage(damage), ticks(0), dead(false) {}
 
 void Projectile::acknowledge_tick() {
-//    if (this->ticks > PROJECTILE_TIMEOUT)
-//        this->dead = true;
+    if (this->ticks > PROJECTILE_TIMEOUT)
+        this->dead = true;
     this->ticks++;
 }
 
@@ -65,9 +65,7 @@ void Projectile::collide_with(Projectile* projectile) {}
 
 void Projectile::collide_with(Boss* boss) {}
 
-void Projectile::collide_with(MegaMan* mm) {
-    mm->decrease_energy(this->hit());
-}
+void Projectile::collide_with(MegaMan* mm) {}
 
 void Projectile::execute_collision_with(GameObject* other) {
     other->collide_with(this);
@@ -83,7 +81,6 @@ Plasma::Plasma(int damage, float velocity_x, float velocity_y,
 void Plasma::tick() {
     this->acknowledge_tick();
     this->move();
-    //TODO
 }
 
 Bomb::Bomb(int damage, float velocity_x, float velocity_y,
