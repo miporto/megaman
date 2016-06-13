@@ -134,6 +134,7 @@ void Receiver::run() {
             this->socket->receive(&packet_id, sizeof(char));
         }
         catch (const SocketError& e) {
+            this->socket->disconnect();
             break;
         }
         this->receive_packet(packet_id);
