@@ -95,6 +95,10 @@ TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
             tile_renderer = new PelletRenderer(renderer, sprites, camera,
                                                pos_x, pos_y);
             break;
+        case PLASMA_R:
+            tile_renderer = new PlasmaRenderer(renderer, sprites, camera,
+                                               pos_x, pos_y);
+            break;
         case SPIKE_R:
             tile_renderer = new SpikeRenderer(renderer, sprites, camera,
                                                pos_x, pos_y);
