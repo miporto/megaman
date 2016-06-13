@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Movable.h"
+#include "Shooter.h"
 
 #define BOMBMAN_NAME "BombMan"
 #define MAGNETMAN_NAME "MagnetMan"
@@ -15,7 +16,7 @@
 
 class BossChamber;
 
-class Boss : public Movable {
+class Boss : public Movable, public Shooter {
     private:
         const std::string name;
         int energy;
@@ -31,10 +32,11 @@ class Boss : public Movable {
         void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
-        virtual void shoot(BossChamber* chamber) = 0;
+        virtual void shoot(GameObjectHandler* handler) = 0;
         virtual void tick() = 0;
         std::pair<std::string, std::string> info(const int id);
         bool shoots_per_tick();
+        bool is_boss();
         FloatUpdate* update(const int id);
         virtual ~Boss();
 };
@@ -44,7 +46,7 @@ class BombMan : public Boss {
         BombMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
         void collide_with(Projectile* projectile);
-        void shoot(BossChamber* chamber);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~BombMan();
 };
@@ -54,7 +56,7 @@ class MagnetMan : public Boss {
         MagnetMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
         void collide_with(Projectile* projectile);
-        void shoot(BossChamber* chamber);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~MagnetMan();
 };
@@ -64,7 +66,7 @@ class SparkMan : public Boss {
         SparkMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
         void collide_with(Projectile* projectile);
-        void shoot(BossChamber* chamber);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~SparkMan();
 };
@@ -74,7 +76,7 @@ class RingMan : public Boss {
         RingMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
         void collide_with(Projectile* projectile);
-        void shoot(BossChamber* chamber);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~RingMan();
 };
@@ -84,7 +86,7 @@ class FireMan : public Boss {
         FireMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
         void collide_with(Projectile* projectile);
-        void shoot(BossChamber* chamber);
+        void shoot(GameObjectHandler* handler);
         void tick();
         ~FireMan();
 };

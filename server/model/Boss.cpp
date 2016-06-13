@@ -56,6 +56,8 @@ std::pair<std::string, std::string> Boss::info(const int id) {
 
 bool Boss::shoots_per_tick() { return true; }
 
+bool Boss::is_boss() { return true; }
+
 FloatUpdate* Boss::update(const int id) {
     std::vector<float> pos = this->get_position();
     return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
@@ -71,7 +73,7 @@ void BombMan::collide_with(Projectile* projectile) {
     //TODO
 }
 
-void BombMan::shoot(BossChamber* chamber) {
+void BombMan::shoot(GameObjectHandler* handler) {
     //TODO
 }
 
@@ -89,7 +91,7 @@ void MagnetMan::collide_with(Projectile* projectile) {
     //TODO
 }
 
-void MagnetMan::shoot(BossChamber* chamber) {
+void MagnetMan::shoot(GameObjectHandler* handler) {
     //TODO
 }
 
@@ -107,7 +109,7 @@ void SparkMan::collide_with(Projectile* projectile) {
     //TODO
 }
 
-void SparkMan::shoot(BossChamber* chamber) {
+void SparkMan::shoot(GameObjectHandler* handler) {
     //TODO
 }
 
@@ -125,7 +127,7 @@ void RingMan::collide_with(Projectile* projectile) {
     //TODO
 }
 
-void RingMan::shoot(BossChamber* chamber) {
+void RingMan::shoot(GameObjectHandler* handler) {
     //TODO
 }
 
@@ -143,7 +145,7 @@ void FireMan::collide_with(Projectile* projectile) {
     //TODO
 }
 
-void FireMan::shoot(BossChamber* chamber) {
+void FireMan::shoot(GameObjectHandler* handler) {
     //TODO
 }
 

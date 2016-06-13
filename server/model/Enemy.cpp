@@ -47,6 +47,8 @@ bool Enemy::is_dead() { return this->energy == 0; }
 
 bool Enemy::shoots_per_tick() { return true; }
 
+bool Enemy::is_enemy() { return true; }
+
 std::pair<std::string, std::string> Enemy::info(const int id) {
     std::vector<float> pos = this->get_position();
     std::stringstream sx;

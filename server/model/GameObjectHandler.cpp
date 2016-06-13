@@ -5,7 +5,8 @@
 #include "server/communication/InfoMaker.h"
 #include "GameObjectHandler.h"
 #include "GameObjectSetter.h"
-#include "Shooter.h"
+#include "Enemy.h"
+#include "Boss.h"
 
 void GameObjectHandler::set(const std::string& info) {
     GameObjectSetter setter(info, this);
@@ -62,9 +63,17 @@ std::vector<int> GameObjectHandler::get_rid_of_corpses() {
 }
 
 void GameObjectHandler::create_new_projectiles() {
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
-        if (this->objects[i]->shoots_per_tick())
-            ((Shooter*)this->objects[i])->shoot(this);
+//    Shooter* shooter;
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
+//        if (this->objects[i]->shoots_per_tick()) {
+//            shooter = (Shooter*)this->objects[i];
+//            shooter->shoot(this);
+//        }
+        if (this->objects[i]->is_enemy())
+            ((Enemy*)this->objects[i])->shoot(this);
+        if (this->objects[i]->is_boss())
+            ((Boss*)this->objects[i])->shoot(this);
+    }
 }
 
 std::vector<FloatUpdate*> GameObjectHandler::updates() {
