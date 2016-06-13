@@ -91,8 +91,8 @@ void Met::collide_with(Projectile* projectile) {
 void Met::shoot(GameObjectHandler* handler) {
     if (!helmet_on) {
         handler->add_game_object(new Pellet(-1, 0, this->get_position()));
-        handler->add_game_object(new Pellet(-1, 0.88, this->get_position()));
-        handler->add_game_object(new Pellet(-1, 1, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 0.33, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 0.66, this->get_position()));
     }
 }
 

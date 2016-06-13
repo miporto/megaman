@@ -126,7 +126,7 @@
 		}
     },
     
-    "mega man": {"initial x": 0, "initial y": 1, "velocity x": 6, "velocity y": 6},
+    "mega man": {"initial x": 1, "initial y": 1, "velocity x": 6, "velocity y": 6},
     
     "energy tank": {"initial lives": 3, "max": 15},
     

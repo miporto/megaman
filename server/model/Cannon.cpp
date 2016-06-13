@@ -10,7 +10,7 @@
 #include "Factory.h"
 
 #define PELLET_DAMAGE 1
-#define PROJECTILE_TIMEOUT 50
+#define PROJECTILE_TIMEOUT 5000
 
 Projectile::Projectile(const std::string& name,
                        int damage,

@@ -14,8 +14,8 @@
 Movable::Movable(const std::vector<float>& position,
                  const float velocity_x, const float velocity_y)
         : GameObject(position),
-          velocity_x(velocity_x),
-          velocity_y(velocity_y) {
+          velocity_x(velocity_x / PX_PER_CELL_RATIO),
+          velocity_y(velocity_y / PX_PER_CELL_RATIO) {
     this->previous_position = this->get_position();
 }
 
