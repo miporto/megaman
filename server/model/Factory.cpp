@@ -164,9 +164,15 @@ const std::map<char, std::string> StageFactory::stages() {
         char key;
         ss << s_stage_id;
         ss >> key;
-        stages[key] = j_stage.dump();
+        std::string info = j_stage.dump();
+        stages[key] = info;
+        std::cout << "Factory[i]: " << stages[key] << std::endl;
     }
 
+    std::cout << "Factory[1]: " << stages[1] << std::endl;
+    std::cout << "Factory[2]: " << stages[2] << std::endl;
+    std::cout << "Factory[3]: " << stages[3] << std::endl;
+    std::cout << "Factory[4]: " << stages[4] << std::endl;
     return stages;
 }
 
