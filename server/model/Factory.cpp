@@ -151,31 +151,6 @@ const std::string StageFactory::initial_stage(const char stage_id) {
     return j_stage.dump();
 }
 
-const std::map<char, std::string> StageFactory::stages() {
-    std::map<char, std::string> stages;
-    json json_file = FileReader::read(INFO_FILE, "stage");
-
-    for (size_t i = 1; i <= json_file.size(); ++i) {
-        std::stringstream ss;
-        ss << i;
-        std::string s_stage_id;
-        ss >> s_stage_id;
-        json j_stage = json_file[s_stage_id];
-        char key;
-        ss << s_stage_id;
-        ss >> key;
-        std::string info = j_stage.dump();
-        stages[key] = info;
-        std::cout << "Factory[i]: " << stages[key] << std::endl;
-    }
-
-    std::cout << "Factory[1]: " << stages[1] << std::endl;
-    std::cout << "Factory[2]: " << stages[2] << std::endl;
-    std::cout << "Factory[3]: " << stages[3] << std::endl;
-    std::cout << "Factory[4]: " << stages[4] << std::endl;
-    return stages;
-}
-
 StageFactory::~StageFactory() {}
 
 const std::string BossChamberFactory::chamber() {

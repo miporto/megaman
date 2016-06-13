@@ -13,14 +13,11 @@
 
 Match::Match(std::vector<ServerCommunicator*>& communicators)
     : communicators(communicators) {
-    this->stages[1] = StageFactory::initial_stage(1);
-    this->stages[2] = StageFactory::initial_stage(2);
-    this->stages[3] = StageFactory::initial_stage(3);
-    this->stages[4] = StageFactory::initial_stage(4);
-//    std::cout << "Match[1]: " << this->stages[1] << std::endl;
-//    std::cout << "Match[2]: " << this->stages[2] << std::endl;
-//    std::cout << "Match[3]: " << this->stages[3] << std::endl;
-//    std::cout << "Match[4]: " << this->stages[4] << std::endl;
+    this->stages[BOMBMAN] = StageFactory::initial_stage(BOMBMAN);
+    this->stages[SPARKMAN] = StageFactory::initial_stage(SPARKMAN);
+    this->stages[FIREMAN] = StageFactory::initial_stage(FIREMAN);
+    this->stages[RINGMAN] = StageFactory::initial_stage(RINGMAN);
+    //this->stages[MAGNETMAN] = StageFactory::initial_stage(MAGNETMAN);
 }
 
 bool Match::has_started() {
