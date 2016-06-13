@@ -8,13 +8,17 @@
 #include "Factory.h"
 #include "GameObjectHandler.h"
 
+#define MET_HELMET_FREC 75
+#define BUMBY_SHUFFLE_FREC 30
+#define SNIPER_SHIELD_FREC 50
+#define JUMPINGSNIPER_JUMP_FREC 15
+
 Enemy::Enemy(const std::string& name,
              const std::vector<float>& position,
              const float velocity_x, const float velocity_y,
              int energy) :
-        Movable(position, velocity_x, velocity_y),
-        name(name),
-        energy(energy) {}
+        IAMovable(position, velocity_x, velocity_y),
+        name(name), energy(energy), ticks(0) {}
 
 void Enemy::collide_with(Enemy* enemy) {
     this->correct_position(enemy->get_position(), enemy->get_side());
@@ -74,7 +78,6 @@ Met::Met(const std::vector<float>& position) :
               EnemyFactory::velocity_x(MET_NAME),
               EnemyFactory::velocity_y(MET_NAME),
               EnemyFactory::energy(MET_NAME)),
-        ticks(0),
         helmet_on(true) {}
 
 void Met::collide_with(Projectile* projectile) {
@@ -97,10 +100,11 @@ void Met::shoot(GameObjectHandler* handler) {
 }
 
 void Met::tick() {
-    if (this->ticks % 75 == 0)
+    if (this->ticks % MET_HELMET_FREC == 0)
         this->helmet_on = false;
     else
         this->helmet_on = true;
+
     this->ticks++;
 }
 
@@ -110,8 +114,7 @@ Bumby::Bumby(const std::vector<float>& position) :
         Enemy(BUMBY_NAME, position,
               EnemyFactory::velocity_x(BUMBY_NAME),
               EnemyFactory::velocity_y(BUMBY_NAME),
-              EnemyFactory::energy(BUMBY_NAME)),
-        ticks(0) {}
+              EnemyFactory::energy(BUMBY_NAME)) {}
 
 void Bumby::collide_with(Projectile* projectile) {
     if (!projectile->get_name().compare(PELLET_NAME)) return;
@@ -124,7 +127,10 @@ void Bumby::shoot(GameObjectHandler* handler) {
 }
 
 void Bumby::tick() {
-    //TODO Movimiento?
+    if (this->ticks % BUMBY_SHUFFLE_FREC == 0) this->change_x_direction();
+    this->move();
+
+    this->ticks++;
 }
 
 Bumby::~Bumby() {}
@@ -134,7 +140,6 @@ Sniper::Sniper(const std::vector<float>& position) :
               EnemyFactory::velocity_x(SNIPER_NAME),
               EnemyFactory::velocity_y(SNIPER_NAME),
               EnemyFactory::energy(SNIPER_NAME)),
-        ticks(0),
         shield_on(true) {}
 
 void Sniper::collide_with(Projectile* projectile) {
@@ -154,11 +159,11 @@ void Sniper::shoot(GameObjectHandler* handler) {
 }
 
 void Sniper::tick() {
-    //TODO Movimiento?
-    if (this->ticks % 30 == 0)
+    if (this->ticks % SNIPER_SHIELD_FREC == 0)
         this->shield_on = false;
     else
         this->shield_on = true;
+
     this->ticks++;
 }
 
@@ -169,7 +174,6 @@ JumpingSniper::JumpingSniper(const std::vector<float>& position) :
               EnemyFactory::velocity_x(JUMPING_SNIPER_NAME),
               EnemyFactory::velocity_y(JUMPING_SNIPER_NAME),
               EnemyFactory::energy(JUMPING_SNIPER_NAME)),
-        ticks(0),
         shield_on(true) {}
 
 void JumpingSniper::collide_with(Projectile* projectile) {
@@ -191,11 +195,14 @@ void JumpingSniper::shoot(GameObjectHandler* handler) {
 }
 
 void JumpingSniper::tick() {
-    //TODO Movimiento (Saltos)
-    if (this->ticks % 30 == 0)
+    if (this->ticks % SNIPER_SHIELD_FREC == 0)
         this->shield_on = false;
     else
         this->shield_on = true;
+
+    if (this->ticks % JUMPINGSNIPER_JUMP_FREC == 0) this->change_y_direction();
+    this->move();
+
     this->ticks++;
 }
 

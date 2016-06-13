@@ -19,10 +19,13 @@ class Object;
 class Projectile;
 class MegaMan;
 
-class Enemy : public Movable, public Shooter {
+class Enemy : public IAMovable, public Shooter {
     private:
         const std::string name;
         int energy;
+
+    protected:
+        int ticks;
 
     public:
         Enemy(const std::string& name, const std::vector<float>& position,
@@ -47,7 +50,6 @@ class Enemy : public Movable, public Shooter {
 
 class Met : public Enemy {
     private:
-        int ticks;
         bool helmet_on;
     public:
         explicit Met(const std::vector<float>& position);
@@ -58,8 +60,6 @@ class Met : public Enemy {
 };
 
 class Bumby : public Enemy {
-    private:
-        int ticks;
     public:
         explicit Bumby(const std::vector<float>& position);
         void collide_with(Projectile* projectile);
@@ -70,7 +70,6 @@ class Bumby : public Enemy {
 
 class Sniper : public Enemy {
     private:
-        int ticks;
         bool shield_on;
     public:
         explicit Sniper(const std::vector<float>& position);
@@ -82,7 +81,6 @@ class Sniper : public Enemy {
 
 class JumpingSniper : public Enemy {
     private:
-        int ticks;
         bool shield_on;
     public:
         explicit JumpingSniper(const std::vector<float>& position);
