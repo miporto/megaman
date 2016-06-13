@@ -100,7 +100,7 @@ void StageSurface::send_events(std::vector<bool>& prev_input,
         if (prev_input[action_id] != new_input[action_id]) {
             std::cout << "Action: " << action_id << new_input[action_id] <<
                     std::endl;
-            client.send_action((char)action_id, new_input[action_id]);
+            client.send_action((char)(action_id + 1), new_input[action_id]);
         }
     }
 }

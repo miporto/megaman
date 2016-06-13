@@ -14,6 +14,7 @@ enum TileRendererType {
     BLOCK_R,
     STAIRS_R,
     PELLET_R,
+    PLASMA_R,
     SPIKE_R,
     DOOR_R
 };
@@ -59,6 +60,12 @@ public:
 };
 
 class PelletRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
+class PlasmaRenderer : public TileRenderer {
 public:
     using TileRenderer::TileRenderer;
     void render();
