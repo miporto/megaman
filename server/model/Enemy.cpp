@@ -100,7 +100,8 @@ void Met::shoot(GameObjectHandler* handler) {
 }
 
 void Met::tick() {
-    if (this->ticks % MET_HELMET_FREC == 0)
+    if (this->ticks == 0)
+    //if (this->ticks % MET_HELMET_FREC == 0)
         this->helmet_on = false;
     else
         this->helmet_on = true;

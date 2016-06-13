@@ -11,7 +11,7 @@
 #include "Factory.h"
 
 #define PELLET_DAMAGE 1
-#define PROJECTILE_TIMEOUT 5000
+#define PROJECTILE_TIMEOUT 70000
 
 Projectile::Projectile(const std::string& name,
                        int damage,
@@ -21,8 +21,8 @@ Projectile::Projectile(const std::string& name,
         name(name), damage(damage), ticks(0), dead(false) {}
 
 void Projectile::acknowledge_tick() {
-    if (this->ticks > PROJECTILE_TIMEOUT)
-        this->dead = true;
+//    if (this->ticks > PROJECTILE_TIMEOUT)
+//        this->dead = true;
     this->ticks++;
 }
 
@@ -45,7 +45,7 @@ std::pair<std::string, std::string> Projectile::info(const int id) {
 
 FloatUpdate* Projectile::update(const int id) {
     std::vector<float> pos = this->get_position();
-    Logger::instance()->out << INFO << "Projectile pos: " <<
+    Logger::instance()->out << INFO << "UPDATE Projectile pos: " <<
             pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
     return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
