@@ -184,8 +184,6 @@ void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
 
 std::vector<float> UserMovable::get_position() {
     std::vector<float> position = GameObject::get_position();
-    Logger::instance()->out << INFO << "MM pos: " << position[X_COORD_POS] <<
-            " " << position[Y_COORD_POS];
     position.push_back(this->direction_x);
     position.push_back(this->direction_y);
     return position;

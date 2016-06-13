@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include <server/Logger.h>
 
 #include "Stage.h"
 #include "server/communication/Match.h"
@@ -107,12 +108,14 @@ bool Stage::players_are_dead() {
 
 void Stage::run(bool* exit) {
     while (!*exit && !this->players_are_dead() && !this->end_reached) {
+        Logger::instance()->out << INFO << "Stage loop init";
         this->execute_events();
         this->tick();
         this->check_collisions();
         this->acknowledge_deceased();
         this->create_new_projectiles();
         this->acknowledge_updates();
+        Logger::instance()->out << INFO << "Stage loop end";
         usleep(SLEEP_TIME_MICROSECONDS);
     }
 }

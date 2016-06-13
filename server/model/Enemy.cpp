@@ -91,13 +91,13 @@ void Met::collide_with(Projectile* projectile) {
 void Met::shoot(GameObjectHandler* handler) {
     if (!helmet_on) {
         handler->add_game_object(new Pellet(-1, 0, this->get_position()));
-        handler->add_game_object(new Pellet(-1, 0.33, this->get_position()));
-        handler->add_game_object(new Pellet(-1, 0.66, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 3.33, this->get_position()));
+        handler->add_game_object(new Pellet(-1, 6.66, this->get_position()));
     }
 }
 
 void Met::tick() {
-    if (this->ticks % 15 == 0)
+    if (this->ticks % 75 == 0)
         this->helmet_on = false;
     else
         this->helmet_on = true;
