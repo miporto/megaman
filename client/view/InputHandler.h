@@ -14,7 +14,7 @@ public:
 private:
     SDL_Event event;
     bool window_closed;
-    std::vector<bool> keys_held;//bool keys_held[5] = {false};
+    std::vector<bool> keys_held;
 };
 
 

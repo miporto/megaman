@@ -56,6 +56,13 @@ void PelletRenderer::render() {
     SDL_RenderFillRect(renderer->Get(), &fillRect);
 }
 
+void PlasmaRenderer::render() {
+    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    SDL_Rect fillRect = {pos.first, pos.first, 5, 5};
+    SDL_SetRenderDrawColor(renderer->Get(), 0x00, 0x00, 0xFF, 0xFF);
+    SDL_RenderFillRect(renderer->Get(), &fillRect);
+}
+
 TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
                                          Camera &camera) : renderer(renderer),
                                                            camera(camera) {
@@ -66,6 +73,7 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
     tile_renderers["Block"] = BLOCK_R;
     tile_renderers["Stairs"] = STAIRS_R;
     tile_renderers["Pellet"] = PELLET_R;
+    tile_renderers["Plasma"] = PLASMA_R;
     tile_renderers["Spike"] = SPIKE_R;
     tile_renderers["Door"] = DOOR_R;
 }

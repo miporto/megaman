@@ -5,7 +5,7 @@
 #include "InputHandler.h"
 #include "common/communication/Packet.h"
 
-InputHandler::InputHandler() : window_closed(false), keys_held(5) {
+InputHandler::InputHandler() : window_closed(false), keys_held(4) {
     for (size_t i = 0; i < keys_held.size(); ++i) {
         keys_held[i] = false;
     }
@@ -18,32 +18,31 @@ void InputHandler::read_input() {
         } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
             switch (event.key.keysym.sym) {
                 case SDLK_LEFT:
-                    std::cout << "EVENT TRIGGERED" << std::endl;
-                    keys_held[LEFT] = true;
+                    keys_held[LEFT-1] = true;
                     break;
                 case SDLK_UP:
-                    keys_held[UP] = true;
+                    keys_held[UP-1] = true;
                     break;
                 case SDLK_RIGHT:
-                    keys_held[RIGHT] = true;
+                    keys_held[RIGHT-1] = true;
                     break;
                 case SDLK_s:
-                    keys_held[SHOOT] = true;
+                    keys_held[SHOOT-1] = true;
                     break;
             }
         } else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
             switch (event.key.keysym.sym) {
                 case SDLK_LEFT:
-                    keys_held[LEFT] = false;
+                    keys_held[LEFT-1] = false;
                     break;
                 case SDLK_UP:
-                    keys_held[UP] = false;
+                    keys_held[UP-1] = false;
                     break;
                 case SDLK_RIGHT:
-                    keys_held[RIGHT] = false;
+                    keys_held[RIGHT-1] = false;
                     break;
                 case SDLK_s:
-                    keys_held[SHOOT] = true;
+                    keys_held[SHOOT-1] = false;
                     break;
             }
         }
