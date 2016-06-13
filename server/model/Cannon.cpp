@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "server/Logger.h"
 #include "common/communication/Packet.h"
 #include "Cannon.h"
 #include "MegaMan.h"
@@ -44,6 +45,8 @@ std::pair<std::string, std::string> Projectile::info(const int id) {
 
 FloatUpdate* Projectile::update(const int id) {
     std::vector<float> pos = this->get_position();
+    Logger::instance()->out << INFO << "Projectile pos: " <<
+            pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
     return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 
@@ -79,6 +82,7 @@ Plasma::Plasma(int damage, float velocity_x, float velocity_y,
 
 void Plasma::tick() {
     this->acknowledge_tick();
+    this->move();
     //TODO
 }
 

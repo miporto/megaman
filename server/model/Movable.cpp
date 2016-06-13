@@ -67,6 +67,20 @@ void Movable::correct_position(const std::vector<float>& obstacle_pos,
 
 Movable::~Movable() {}
 
+IAMovable::IAMovable(const std::vector<float>& position,
+          const float velocity_x, const float velocity_y)
+        : Movable(position, velocity_x, velocity_y) {}
+
+void IAMovable::change_x_direction() {
+    this->velocity_x = (-1) * this->velocity_x;
+}
+
+void IAMovable::change_y_direction() {
+    this->velocity_y = (-1) * this->velocity_y;
+}
+
+IAMovable::~IAMovable() {}
+
 UserMovable::UserMovable(const std::vector<float>& respawn_position,
                          const float velocity_x, const float velocity_y)
         : Movable(respawn_position[X_COORD_POS], respawn_position[Y_COORD_POS],
@@ -184,8 +198,6 @@ void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
 
 std::vector<float> UserMovable::get_position() {
     std::vector<float> position = GameObject::get_position();
-    Logger::instance()->out << INFO << "MM pos: " << position[X_COORD_POS] <<
-            " " << position[Y_COORD_POS];
     position.push_back(this->direction_x);
     position.push_back(this->direction_y);
     return position;
