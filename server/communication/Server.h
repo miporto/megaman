@@ -13,7 +13,6 @@ class Acceptor;
 
 class Server : public Thread {
    private:
-    const char* port;
     bool quit_server;
     Socket socket;
     std::vector<ServerCommunicator*> communicators;

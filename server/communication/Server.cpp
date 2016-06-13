@@ -13,7 +13,7 @@ void Server::configure_server_socket(const char* port) {
 }
 
 Server::Server(const char* port)
-    : port(port), quit_server(false), match(NULL),
+    : quit_server(false), match(NULL),
       acceptor(NULL), logger(Logger::instance()) {
     this->match = new Match(communicators);
     this->acceptor = new Acceptor(this->socket, this->match);
