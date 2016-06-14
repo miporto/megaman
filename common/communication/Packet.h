@@ -27,7 +27,13 @@ typedef enum _action_packet_id {
     RIGHT = 1,
     LEFT,
     UP,
-    SHOOT
+    SHOOT,
+    AMMO_0,
+    AMMO_1,
+    AMMO_2,
+    AMMO_3,
+    AMMO_4,
+    AMMO_5
 } action_packet_id_t;
 
 typedef enum _stage_id {
