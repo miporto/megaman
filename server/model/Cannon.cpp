@@ -59,7 +59,7 @@ int Projectile::hit() {
 
 void Projectile::collide_with(Enemy* enemy) {}
 
-void Projectile::collide_with(Object* object) {}
+void Projectile::collide_with(Object* object) { this->hit(); }
 
 void Projectile::collide_with(Projectile* projectile) {}
 

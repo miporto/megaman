@@ -1,7 +1,7 @@
 {
 	"stage": {
 	  "1": {
-		"spawn":{"Met": [{"x": 7, "y": 1}]},
+		"spawn":{"Met": [{"x": 10, "y": 5}]},
         "object": {
           "Stairs": [
             {"x": 5, "y": 1},
