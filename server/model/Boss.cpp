@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Object.h"
 #include "common/communication/Packet.h"
+#include "Cannon.h"
 
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
@@ -81,6 +82,8 @@ void BombMan::tick() {
     //TODO
 }
 
+const std::string BombMan::reward_ammo_name() { return BOMB_NAME; }
+
 BombMan::~BombMan() {}
 
 MagnetMan::MagnetMan(const std::vector<float>& position,
@@ -98,6 +101,8 @@ void MagnetMan::shoot(GameObjectHandler* handler) {
 void MagnetMan::tick() {
     //TODO
 }
+
+const std::string MagnetMan::reward_ammo_name() { return MAGNET_NAME; }
 
 MagnetMan::~MagnetMan() {}
 
@@ -117,6 +122,8 @@ void SparkMan::tick() {
     //TODO
 }
 
+const std::string SparkMan::reward_ammo_name() { return SPARK_NAME; }
+
 SparkMan::~SparkMan() {}
 
 RingMan::RingMan(const std::vector<float>& position,
@@ -135,6 +142,8 @@ void RingMan::tick() {
     //TODO
 }
 
+const std::string RingMan::reward_ammo_name() { return RING_NAME; }
+
 RingMan::~RingMan() {}
 
 FireMan::FireMan(const std::vector<float>& position,
@@ -152,5 +161,7 @@ void FireMan::shoot(GameObjectHandler* handler) {
 void FireMan::tick() {
     //TODO
 }
+
+const std::string FireMan::reward_ammo_name() { return FIRE_NAME; }
 
 FireMan::~FireMan() {}

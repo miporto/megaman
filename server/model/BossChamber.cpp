@@ -105,6 +105,12 @@ bool BossChamber::beated() {
     return this->boss->is_dead();
 }
 
+void BossChamber::reward_players() {
+    const std::string ammo_name = this->boss->reward_ammo_name();
+    for (unsigned int i = 0; i < this->players.size(); ++i)
+        this->players[i]->add_reward(ammo_name);
+}
+
 BossChamber::~BossChamber() {}
 
 BossChamberError::BossChamberError(const std::string error_msg) throw()

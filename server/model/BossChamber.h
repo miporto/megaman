@@ -34,6 +34,7 @@ class BossChamber : public GameObjectHandler {
                     const char boss_id);
         void run(bool* exit);
         bool beated();
+        void reward_players();
         ~BossChamber();
 };
 

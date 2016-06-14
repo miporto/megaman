@@ -38,6 +38,7 @@ class Boss : public Movable, public Shooter {
         bool shoots_per_tick();
         bool is_boss();
         FloatUpdate* update(const int id);
+        virtual const std::string reward_ammo_name() = 0;
         virtual ~Boss();
 };
 
@@ -48,6 +49,7 @@ class BombMan : public Boss {
         void collide_with(Projectile* projectile);
         void shoot(GameObjectHandler* handler);
         void tick();
+        const std::string reward_ammo_name();
         ~BombMan();
 };
 
@@ -58,6 +60,7 @@ class MagnetMan : public Boss {
         void collide_with(Projectile* projectile);
         void shoot(GameObjectHandler* handler);
         void tick();
+        const std::string reward_ammo_name();
         ~MagnetMan();
 };
 
@@ -68,6 +71,7 @@ class SparkMan : public Boss {
         void collide_with(Projectile* projectile);
         void shoot(GameObjectHandler* handler);
         void tick();
+        const std::string reward_ammo_name();
         ~SparkMan();
 };
 
@@ -78,6 +82,7 @@ class RingMan : public Boss {
         void collide_with(Projectile* projectile);
         void shoot(GameObjectHandler* handler);
         void tick();
+        const std::string reward_ammo_name();
         ~RingMan();
 };
 
@@ -88,6 +93,7 @@ class FireMan : public Boss {
         void collide_with(Projectile* projectile);
         void shoot(GameObjectHandler* handler);
         void tick();
+        const std::string reward_ammo_name();
         ~FireMan();
 };
 

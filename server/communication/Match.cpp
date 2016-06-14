@@ -103,8 +103,10 @@ void Match::play_stage(bool* exit) {
     if (stage.beated()) {
         BossChamber chamber(this, this->communicators, stage_id);
         chamber.run(exit);
-        if (chamber.beated())
+        if (chamber.beated()) {
+            chamber.reward_players();
             this->stages.erase(stage_id);
+        }
     }
 
     this->host_communicator()->reset_stage_id();
