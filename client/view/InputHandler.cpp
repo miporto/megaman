@@ -29,22 +29,22 @@ void InputHandler::read_input() {
                 case SDLK_DOWN:
                     keys_held[DOWN-1] = true;
                     break;
-                case SDLK_0:
+                case SDLK_1:
                     keys_held[AMMO_0-1] = true;
                     break;
-                case SDLK_1:
+                case SDLK_2:
                     keys_held[AMMO_1-1] = true;
                     break;
-                case SDLK_2:
+                case SDLK_3:
                     keys_held[AMMO_2-1] = true;
                     break;
-                case SDLK_3:
+                case SDLK_4:
                     keys_held[AMMO_3-1] = true;
                     break;
-                case SDLK_4:
+                case SDLK_5:
                     keys_held[AMMO_4-1] = true;
                     break;
-                case SDLK_5:
+                case SDLK_6:
                     keys_held[AMMO_5-1] = true;
                     break;
                 case SDLK_s:
