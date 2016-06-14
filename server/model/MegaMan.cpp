@@ -140,7 +140,12 @@ void MegaMan::execute_collision_with(GameObject* other) {
 }
 
 void MegaMan::change_ammo(unsigned int ammo_id) {
-    this->cannon.change_current_ammo(ammo_id);
+    try {
+        this->cannon.change_current_ammo(ammo_id);
+    } catch (const CannonError& e) {
+        Logger::instance()->out << INFO << "Player " << this->get_name()
+        << " - Cannon: " << e.what();
+    }
 }
 
 void MegaMan::receive_new_ammo(std::string& name) {

@@ -168,6 +168,8 @@ void Cannon::receive_new_ammo(std::string& name) {
 void Cannon::change_current_ammo(unsigned int ammo_id) {
     if (ammo_id < this->ammos.size())
         this->current_ammo = this->ammos[ammo_id];
+    else
+        throw CannonError("Ammo is unavaiable");
 }
 
 Projectile* Cannon::shoot(const std::vector<float>& position) {
@@ -178,3 +180,6 @@ Cannon::~Cannon() {
     for (unsigned int i = 0; i < this->ammos.size(); ++i)
         delete this->ammos[i];
 }
+
+CannonError::CannonError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}

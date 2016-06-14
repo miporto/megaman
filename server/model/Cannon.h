@@ -122,4 +122,10 @@ class Cannon {
         ~Cannon();
 };
 
+
+class CannonError : public SystemError {
+public:
+    explicit CannonError(const std::string error_msg) throw();
+};
+
 #endif //AMMO_H
