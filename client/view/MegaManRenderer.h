@@ -2,7 +2,7 @@
 #define MEGAMAN_MEGAMANRENDERER_H
 
 
-#include <extern/libSDL2pp/SDL2pp/Renderer.hh>
+#include <SDL2pp/SDL2pp.hh>
 #include <string>
 
 #include "Camera.h"

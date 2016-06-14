@@ -1,5 +1,7 @@
 #include <string>
 
+#include <SDL2pp/SDL2pp.hh>
+
 #include "Camera.h"
 #include "MegaManRenderer.h"
 
@@ -28,8 +30,15 @@ void MMegaManRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y,
 void MMegaManRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
-    renderer->Copy(*sprites, SDL2pp::Rect(103, 10, 21, 24),
-                   SDL2pp::Rect(pos.first , pos.second, size, size));
+//    std::cout << dir_x << std::endl;
+    if (dir_x < 0) {
+        renderer->Copy(*sprites, SDL2pp::Rect(103, 10, 21, 24),
+                       SDL2pp::Rect(pos.first , pos.second, size, size), 0.0,
+                       SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+    } else {
+        renderer->Copy(*sprites, SDL2pp::Rect(103, 10, 21, 24),
+                       SDL2pp::Rect(pos.first , pos.second, size, size));
+    }
 }
 
 float MMegaManRenderer::get_x() {
