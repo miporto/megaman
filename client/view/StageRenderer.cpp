@@ -50,16 +50,26 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
 
 void StageRenderer::render() {
     renderer->Copy(*background);
+
+    // Render tiles
     TileRenderer *tile_renderer;
     for (auto const &it: tile_renderers) {
         tile_renderer = it.second;
         tile_renderer->render();
     }
 
+    // Render enemies
     ActorRenderer *actor_renderer;
     for (auto const &it: actor_renderers) {
         actor_renderer = it.second;
         actor_renderer->render();
+    }
+
+    // Render bosses
+    BossRenderer *boss_renderer;
+    for (auto const &it: boss_renderers) {
+        boss_renderer = it.second;
+        boss_renderer->render();
     }
 }
 
