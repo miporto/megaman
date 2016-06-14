@@ -21,31 +21,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     actors = {"MegaMan", "Met", "Bumby", "Sniper", "JumpingSniper"};
     bosses = {BOMBMAN, MAGNETMAN, SPARKMAN, RINGMAN, FIREMAN};
     objects = {"Block", "Stairs", "Spike", "Plasma", "Pellet", "Door"};
-
-    TickInfoParser parser(stage_info);
-    TickParserInfo parsed_info = parser.get_parsed_tick_info();
-    for (auto const &it: parsed_info) {
-        std::string type = it.first;
-        StatusInfo elements_info = it.second;
-        for (auto const &it2: elements_info) {
-            std::map<std::string, std::string> element_info = it2.second;
-            float x = stof(element_info["x"]);
-            float y = stof(element_info["y"]);
-            if (std::find(actors.begin(), actors.end(), type) != actors.end()){
-                int id = it2.first;
-                actor_renderers[id] = actor_factory
-                        .build_actor_renderer(type, x, y);
-                if (type.compare("MegaMan") == 0) {
-                    megamans.push_back(id);
-                    camera.add_megaman(id, (MegaManRenderer*)
-                            actor_renderers[id]);
-                }
-            } else {
-                tile_renderers[it2.first] = tile_factory.build_tile_renderer(
-                        type, x, y);
-            }
-        }
-    }
+    create_renderers(stage_info);
 }
 
 void StageRenderer::render() {
