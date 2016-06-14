@@ -76,6 +76,12 @@ std::vector<float> Movable::get_position() {
     return position;
 }
 
+void Movable::get_initial_position_for_shot(std::vector<float>& shooter_pos,
+                                            int shooter_side) {
+    float initial_y = shooter_pos[Y_COORD_POS] + (shooter_side / 2.0);
+    shooter_pos[Y_COORD_POS] = initial_y;
+}
+
 Movable::~Movable() {}
 
 IAMovable::IAMovable(const std::vector<float>& position,
@@ -97,12 +103,12 @@ void IAMovable::change_y_direction() {
 
 IAMovable::~IAMovable() {}
 
-ProyectileMovable::ProyectileMovable(const std::vector<float>& position,
+ProjectileMovable::ProjectileMovable(const std::vector<float>& position,
                   const float velocity_x, const float velocity_y)
         : IAMovable(position, position[DIRECTION_X_POS],
                     velocity_x, velocity_y) {}
 
-ProyectileMovable::~ProyectileMovable() {}
+ProjectileMovable::~ProjectileMovable() {}
 
 UserMovable::UserMovable(const std::vector<float>& respawn_position,
                          const float velocity_x, const float velocity_y)

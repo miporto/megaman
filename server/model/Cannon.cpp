@@ -17,7 +17,7 @@ Projectile::Projectile(const std::string& name,
                        int damage,
                        float velocity_x, float velocity_y,
                        const std::vector<float>& initial_position) :
-        Movable(initial_position, velocity_x, velocity_y),
+        ProjectileMovable(initial_position, velocity_x, velocity_y),
         name(name), damage(damage), ticks(0), dead(false) {}
 
 void Projectile::acknowledge_tick() {

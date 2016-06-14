@@ -78,7 +78,10 @@ bool MegaMan::is_dead() {
 }
 
 Projectile* MegaMan::shoot() {
-    return this->cannon.shoot(this->get_position());
+    std::vector<float> projectile_initial_pos = this->get_position();
+    this->get_initial_position_for_shot(projectile_initial_pos,
+                                        this->get_side());
+    return this->cannon.shoot(projectile_initial_pos);
 }
 
 void MegaMan::tick() {

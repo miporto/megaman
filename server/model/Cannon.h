@@ -20,7 +20,7 @@ class Enemy;
 class Object;
 class MegaMan;
 
-class Projectile : public Movable {
+class Projectile : public ProjectileMovable {
     private:
         const std::string name;
         const int damage;
