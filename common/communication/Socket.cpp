@@ -29,9 +29,9 @@ const char* SocketError::what() const throw() {
 
 SocketError::~SocketError() throw() {}
 
-Socket::Socket() : fd(0) {}
+Socket::Socket() : fd(0), is_disconnected(false) {}
 
-Socket::Socket(int fd) : fd(fd) {}
+Socket::Socket(int fd) : fd(fd), is_disconnected(false) {}
 
 void Socket::operator()(struct addrinfo* info) {
 	this->fd = socket(info->ai_family, info->ai_socktype, info->ai_protocol);
@@ -97,8 +97,12 @@ void Socket::receive(char* buffer, size_t size) {
 	if (!valid_socket) throw SocketError();
 }
 
+void Socket::disconnect(){
+	this->is_disconnected = true;
+}
+
 bool Socket::disconnected(){
-	return this->fd == 0;
+	return is_disconnected;
 }
 
 void Socket::shutdown() {

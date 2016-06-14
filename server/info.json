@@ -156,5 +156,9 @@
     "map": {
 		"width": 640,
 		"height": 480
+	},
+	
+	"connection": {
+		"port": "8080"
 	}
 }

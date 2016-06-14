@@ -172,5 +172,12 @@ unsigned int MapFactory::height() {
 
 MapFactory::~MapFactory() {}
 
+const std::string ConnectionConfiguration::port() {
+    json j_info = FileReader::read(INFO_FILE, "connection");
+    return j_info["port"];
+}
+
+ConnectionConfiguration::~ConnectionConfiguration() {}
+
 FactoryError::FactoryError(const std::string error_msg) throw()
         : SystemError(error_msg) {}

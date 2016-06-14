@@ -8,8 +8,8 @@
 #define ARGS_LEN 2
 
 int main(int argc, const char* argv[]) {
-    if (argc != ARGS_LEN)
-        return EXIT_FAILURE;
+//    if (argc != ARGS_LEN)
+//        return EXIT_FAILURE;
 
     bool quit_main = false;
 

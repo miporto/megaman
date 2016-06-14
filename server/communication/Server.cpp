@@ -1,5 +1,6 @@
 #include <unistd.h>
 
+#include "server/model/Factory.h"
 #include "Server.h"
 #include "common/communication/AddrInfo.h"
 #include "Acceptor.h"
@@ -7,6 +8,7 @@
 #define SLEEP_TIME_MICROSECONDS 1000000
 
 void Server::configure_server_socket(const char* port) {
+    if (!port) port = ConnectionConfiguration::port().c_str();
     ServerAddrInfo info(port);
     this->socket(info());
     this->socket.bind_and_listen(info());

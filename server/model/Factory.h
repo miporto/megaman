@@ -79,6 +79,12 @@ class MapFactory {
         ~MapFactory();
 };
 
+class ConnectionConfiguration {
+    public:
+        static const std::string port();
+        ~ConnectionConfiguration();
+};
+
 class FactoryError : public SystemError {
 public:
     explicit FactoryError(const std::string error_msg) throw();

@@ -22,6 +22,7 @@ class SocketError : public std::exception {
 class Socket {
 	private:
 		int fd;
+		bool is_disconnected;
 	
 	public:
 		Socket();
@@ -33,6 +34,7 @@ class Socket {
 		Socket* accept();
 		void send(const char* buffer, size_t size);
 		void receive(char* buffer, size_t size);
+		void disconnect();
 		bool disconnected();
 		void shutdown();
 };
