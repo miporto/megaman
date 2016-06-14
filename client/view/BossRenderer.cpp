@@ -23,7 +23,7 @@ void BossRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y,
     this->actual_energy = energy;
 }
 
-void BBombManRenderer::render() {
+void BombManRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
     renderer->Copy(*sprites, SDL2pp::Rect(123, 12, 24, 24),
@@ -83,7 +83,7 @@ BossRenderer* BossRendererFactory::build_boss_renderer(std::string tile_type,
     BossRendererType tile_renderer_id = boss_renderers[tile_type];
     switch (tile_renderer_id) {
         case BBOMBMAN_R:
-            actor_renderer = new BBombManRenderer(renderer, bomb_man_sprites,
+            actor_renderer = new BombManRenderer(renderer, bomb_man_sprites,
                                                   camera, pos_x, pos_y, energy);
             break;
         case MAGNETMAN_R:

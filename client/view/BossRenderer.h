@@ -33,7 +33,7 @@ protected:
     int actual_energy;
 };
 
-class BBombManRenderer : public BossRenderer {
+class BombManRenderer : public BossRenderer {
 public:
     using BossRenderer::BossRenderer;
     void render();
