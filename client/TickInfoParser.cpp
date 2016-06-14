@@ -101,6 +101,12 @@ StatusInfo TickInfoParser::status_info_of(const std::string &element) {
             int y = element_info["direction ""y"];
             p_element_info["dir_y"] = std::to_string(y);
         }
+        if (element_info.count("energy") != 0) {
+            p_element_info["energy"] = element_info["energy"];
+        }
+        if (element_info.count("name") != 0) {
+            p_element_info["name"] = element_info["name"];
+        }
         status_info[element_info["id"]] = p_element_info;
         // TODO: add special info for actors
     }

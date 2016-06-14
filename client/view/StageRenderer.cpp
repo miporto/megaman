@@ -69,8 +69,11 @@ void StageRenderer::new_update(const std::string &name,
         a_renderer->update(x, y, 0, 0);
     } else if (meg_renderers.count(id) != 0){
         MMegaManRenderer *m_renderer = meg_renderers[id];
+        int dir_x = (int) update_info["dir_x"];
+        int dir_y = (int) update_info["dir_y"];
+        int energy = (int) update_info["energy"];
         // TODO: send dir and energy
-        m_renderer->update(x, y, 0,  0, 30);
+        m_renderer->update(x, y, dir_x,  dir_y, energy);
     } else if (boss_renderers.count(id) != 0) {
         BossRenderer *b_renderer = boss_renderers[id];
         // TODO: send dir and and energy
@@ -137,8 +140,10 @@ void StageRenderer::create_renderers(std::string &info) {
                         .build_actor_renderer(type, x, y);
             } else if (type.compare(MEGAMAN) == 0) {
                 // TODO: add name and energy
+                int energy = stoi(element_info["energy"]);
+                std::string name = element_info["name"];
                 MMegaManRenderer *mega_man_renderer = new MMegaManRenderer(
-                        renderer, camera, x, y, 30, "TEST");
+                        renderer, camera, x, y, energy, name);
                 meg_renderers[id] = mega_man_renderer;
                 camera.add_megaman(id, mega_man_renderer);
             } else if (std::find(objects.begin(), objects.end(), type) !=
@@ -148,8 +153,10 @@ void StageRenderer::create_renderers(std::string &info) {
             } else if (std::find(bosses.begin(), bosses.end(), type) !=
                     bosses.end()) {
                 // TODO: put actual energy.
+//                int energy = stoi(element_info["energy"]);
                 boss_renderers[id] = boss_factory.build_boss_renderer(type,
-                                                                      x, y, 30);
+                                                                      x, y,
+                                                                      30);
             }
         }
     }
