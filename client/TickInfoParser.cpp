@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "view/StageElementsConstants.h"
 #include "TickInfoParser.h"
 #include "extern/libjson/json.hpp"
 
@@ -38,8 +39,16 @@ TickInfoParser::TickInfoParser(std::string &tick_info) :
     new_tick_parser_info["JumpingSniper"] = jsniper;
     StatusInfo megs = status_info_of("MegaMan");
     new_tick_parser_info["MegaMan"] = megs;
-    StatusInfo bombman = status_info_of("BombMan");
-    new_tick_parser_info["BombMan"] = bombman;
+    StatusInfo bombman = status_info_of(BOMBMAN);
+    new_tick_parser_info[BOMBMAN] = bombman;
+    StatusInfo magnetman = status_info_of(MAGNETMAN);
+    new_tick_parser_info[MAGNETMAN] = magnetman;
+    StatusInfo sparkman = status_info_of(SPARKMAN);
+    new_tick_parser_info[SPARKMAN] = sparkman;
+    StatusInfo ringman = status_info_of(RINGMAN);
+    new_tick_parser_info[RINGMAN] = ringman;
+    StatusInfo fireman = status_info_of(FIREMAN);
+    new_tick_parser_info[FIREMAN] = fireman;
 }
 
 void TickInfoParser::replace_substr(std::string &input,
@@ -91,6 +100,12 @@ StatusInfo TickInfoParser::status_info_of(const std::string &element) {
             p_element_info["dir_x"] = std::to_string(x);
             int y = element_info["direction ""y"];
             p_element_info["dir_y"] = std::to_string(y);
+        }
+        if (element_info.count("energy") != 0) {
+            p_element_info["energy"] = element_info["energy"];
+        }
+        if (element_info.count("name") != 0) {
+            p_element_info["name"] = element_info["name"];
         }
         status_info[element_info["id"]] = p_element_info;
         // TODO: add special info for actors
