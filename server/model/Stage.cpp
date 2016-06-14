@@ -13,8 +13,9 @@
 
 Stage::Stage(Match* match,
              std::vector<ServerCommunicator*>& communicators,
+             EventQueue* events,
              const std::string& stage_info)
-        : match(match), end_reached(false) {
+        : match(match), events(events), end_reached(false) {
     // Players setting
     for (unsigned int i = 0; i < communicators.size(); ++i)
         this->players.push_back(communicators[i]->get_player());
@@ -26,11 +27,11 @@ Stage::Stage(Match* match,
         this->map.add_game_object(this->players[i]->get_megaman());
     }
 
-    // EventQueue setting
-    std::vector<PacketsQueueProtected*> action_queues;
-    for (unsigned int i = 0; i < communicators.size(); ++i)
-        action_queues.push_back(communicators[i]->get_actions());
-    this->events = new EventQueue(action_queues);
+//    // EventQueue setting
+//    std::vector<PacketsQueueProtected*> action_queues;
+//    for (unsigned int i = 0; i < communicators.size(); ++i)
+//        action_queues.push_back(communicators[i]->get_actions());
+//    this->events = new EventQueue(action_queues);
 
     // Making of StageInfo json for client
     this->match->notify_stage_info(this->map.status());

@@ -13,17 +13,18 @@
 
 BossChamber::BossChamber(Match* match,
                          std::vector<ServerCommunicator*>& communicators,
+                         EventQueue* events,
                          const char boss_id)
-        : match(match), boss(BossFactory::boss(boss_id)), events(NULL) {
+        : match(match), boss(BossFactory::boss(boss_id)), events(events) {
     // Players setting
     for (unsigned int i = 0; i < communicators.size(); ++i)
         this->players.push_back(communicators[i]->get_player());
 
-    // EventQueue setting
-    std::vector<PacketsQueueProtected*> action_queues;
-    for (unsigned int i = 0; i < communicators.size(); ++i)
-        action_queues.push_back(communicators[i]->get_actions());
-    this->events = new EventQueue(action_queues);
+//    // EventQueue setting
+//    std::vector<PacketsQueueProtected*> action_queues;
+//    for (unsigned int i = 0; i < communicators.size(); ++i)
+//        action_queues.push_back(communicators[i]->get_actions());
+//    this->events = new EventQueue(action_queues);
 
     //Objects setting: Players, Boss, Default stage
     this->set(BossChamberFactory::chamber());
