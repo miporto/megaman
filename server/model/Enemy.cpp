@@ -8,7 +8,7 @@
 #include "Factory.h"
 #include "GameObjectHandler.h"
 
-#define MET_HELMET_FREC 75
+#define MET_HELMET_FREC 175
 #define BUMBY_SHUFFLE_FREC 30
 #define SNIPER_SHIELD_FREC 50
 #define JUMPINGSNIPER_JUMP_FREC 15
@@ -100,8 +100,7 @@ void Met::shoot(GameObjectHandler* handler) {
 }
 
 void Met::tick() {
-    if (this->ticks == 0)
-    //if (this->ticks % MET_HELMET_FREC == 0)
+    if (this->ticks % MET_HELMET_FREC == 0)
         this->helmet_on = false;
     else
         this->helmet_on = true;
