@@ -56,6 +56,8 @@ void BossChamber::execute_action(Player* player,
     } else if (action_id == SHOOT) {
         Projectile *projectile = player->get_megaman()->shoot();
         if (projectile) this->add_game_object(projectile);
+    } else if (AMMO_0 <= action_id && action_id <= AMMO_5 && pressed) {
+        player->get_megaman()->change_ammo(action_id);
     } else {
         throw BossChamberError("There is no action with that id");
     }
