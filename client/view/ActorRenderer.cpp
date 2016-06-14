@@ -79,7 +79,7 @@ ActorRendererFactory::ActorRendererFactory(SDL2pp::Renderer *renderer,
     meg_sprites = new SDL2pp::Texture(*renderer, "resources/8bitmegaman.png");
     enemy_sprites = new SDL2pp::Texture(*renderer, "resources/mm3_enemysheet."
             "png");
-    bomb_man_sprites = new SDL2pp::Texture(*renderer, "resources/bomb_man.png");
+    bomb_man_sprites = new SDL2pp::Texture(*renderer, "resources/bombman.gif");
     actor_renderers["Met"] = MET_R;
     actor_renderers["Bumby"] = BUMBY_R;
     actor_renderers["Sniper"] = SNIPER_R;

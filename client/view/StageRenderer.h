@@ -11,6 +11,7 @@
 #include "TileRenderer.h"
 #include "ActorRenderer.h"
 #include "Camera.h"
+#include "BossRenderer.h"
 
 class TileRenderer;
 
@@ -34,11 +35,14 @@ private:
     Camera camera;
     std::map<int, TileRenderer*> tile_renderers;
     std::map<int, ActorRenderer*> actor_renderers;
+    std::map<int, BossRenderer*> boss_renderers;
     std::vector<std::string> actors;
+    std::vector<std::string> bosses;
     std::vector<std::string> objects;
     std::vector<int> megamans;
     TileRendererFactory tile_factory;
     ActorRendererFactory actor_factory;
+    BossRendererFactory boss_factory;
 };
 
 
