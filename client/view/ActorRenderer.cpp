@@ -66,26 +66,17 @@ void MegaManRenderer::render() {
                    SDL2pp::Rect(pos.first , pos.second, size, size));
 }
 
-void BombManRenderer::render() {
-    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
-    int size = camera.adjust_size();
-    renderer->Copy(*sprites, SDL2pp::Rect(3, 9, 24, 24),
-                   SDL2pp::Rect(pos.first , pos.second, size, size));
-}
-
 ActorRendererFactory::ActorRendererFactory(SDL2pp::Renderer *renderer,
                                            Camera &camera) : renderer(renderer),
                                                              camera(camera){
     meg_sprites = new SDL2pp::Texture(*renderer, "resources/8bitmegaman.png");
     enemy_sprites = new SDL2pp::Texture(*renderer, "resources/mm3_enemysheet."
             "png");
-    bomb_man_sprites = new SDL2pp::Texture(*renderer, "resources/bombman.gif");
     actor_renderers["Met"] = MET_R;
     actor_renderers["Bumby"] = BUMBY_R;
     actor_renderers["Sniper"] = SNIPER_R;
     actor_renderers["JumpingSniper"] = JSNIPER_R;
     actor_renderers["MegaMan"] = MEGAMAN_R;
-    actor_renderers["BombMan"] = BOMBMAN_R;
 }
 
 ActorRenderer *ActorRendererFactory::build_actor_renderer(std::string
@@ -114,10 +105,6 @@ ActorRenderer *ActorRendererFactory::build_actor_renderer(std::string
         case MEGAMAN_R:
             actor_renderer = new MegaManRenderer(renderer, meg_sprites, camera,
             pos_x, pos_y);
-            break;
-        case BOMBMAN_R:
-            actor_renderer = new BombManRenderer(renderer, bomb_man_sprites,
-                                                 camera, pos_x, pos_y);
             break;
         default:
             throw "ERROR: Non-existint actor renderer!";
