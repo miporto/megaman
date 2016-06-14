@@ -19,10 +19,11 @@ Movable::Movable(const std::vector<float>& position,
     this->previous_position = this->get_position();
 }
 
-Movable::Movable(const float x, const float y,
-                 const float velocity_x, const float velocity_y)
-        : GameObject(x, y),
-          velocity_x(velocity_x / PX_PER_CELL_RATIO),
+Movable::Movable(const std::vector<float>& position,
+        const int direction_x,
+        const float velocity_x, const float velocity_y)
+        : GameObject(position),
+          velocity_x(direction_x * (velocity_x / PX_PER_CELL_RATIO)),
           velocity_y(velocity_y / PX_PER_CELL_RATIO) {
     this->previous_position = this->get_position();
 }
@@ -65,11 +66,26 @@ void Movable::correct_position(const std::vector<float>& obstacle_pos,
     this->position.move(delta_x, delta_y);
 }
 
+std::vector<float> Movable::get_position() {
+    std::vector<float> position = GameObject::get_position();
+    int direction_x, direction_y;
+    direction_x = (this->velocity_x >= 0) ? FORWARD : BACKWARD;
+    direction_y = (this->velocity_y >= 0) ? FORWARD : BACKWARD;
+    position.push_back(direction_x);
+    position.push_back(direction_y);
+    return position;
+}
+
 Movable::~Movable() {}
 
 IAMovable::IAMovable(const std::vector<float>& position,
           const float velocity_x, const float velocity_y)
         : Movable(position, velocity_x, velocity_y) {}
+
+IAMovable::IAMovable(const std::vector<float>& position,
+          const int direction_x,
+          const float velocity_x, const float velocity_y)
+        : Movable(position, direction_x, velocity_x, velocity_y) {}
 
 void IAMovable::change_x_direction() {
     this->velocity_x = (-1) * this->velocity_x;
@@ -81,10 +97,16 @@ void IAMovable::change_y_direction() {
 
 IAMovable::~IAMovable() {}
 
+ProyectileMovable::ProyectileMovable(const std::vector<float>& position,
+                  const float velocity_x, const float velocity_y)
+        : IAMovable(position, position[DIRECTION_X_POS],
+                    velocity_x, velocity_y) {}
+
+ProyectileMovable::~ProyectileMovable() {}
+
 UserMovable::UserMovable(const std::vector<float>& respawn_position,
                          const float velocity_x, const float velocity_y)
-        : Movable(respawn_position[X_COORD_POS], respawn_position[Y_COORD_POS],
-                  velocity_x, velocity_y),
+        : Movable(respawn_position, velocity_x, velocity_y),
           respawn_position(respawn_position),
           gravity(GRAVITY),
           direction_x(FORWARD), direction_y(FORWARD),

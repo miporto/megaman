@@ -16,12 +16,14 @@ class Movable : public GameObject {
     public:
         Movable(const std::vector<float>& position,
                 const float velocity_x, const float velocity_y);
-        Movable(const float x, const float y,
-                const float velocity_x, const float velocity_y);
+        Movable(const std::vector<float>& position,
+                  const int direction_x,
+                  const float velocity_x, const float velocity_y);
         virtual void move();
         bool it_moved();
         virtual void correct_position(const std::vector<float>& obstacle_pos,
                                       int obstacle_side);
+        std::vector<float> get_position();
         virtual ~Movable();
 };
 
@@ -29,9 +31,19 @@ class IAMovable : public Movable {
     public:
         IAMovable(const std::vector<float>& position,
                   const float velocity_x, const float velocity_y);
+        IAMovable(const std::vector<float>& position,
+                  const int direction_x,
+                  const float velocity_x, const float velocity_y);
         void change_x_direction();
         void change_y_direction();
         ~IAMovable();
+};
+
+class ProyectileMovable : public IAMovable {
+    public:
+        ProyectileMovable(const std::vector<float>& position,
+                  const float velocity_x, const float velocity_y);
+        ~ProyectileMovable();
 };
 
 class UserMovable : public Movable {
