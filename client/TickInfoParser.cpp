@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "view/StageElementsConstants.h"
 #include "TickInfoParser.h"
 #include "extern/libjson/json.hpp"
 
@@ -38,8 +39,16 @@ TickInfoParser::TickInfoParser(std::string &tick_info) :
     new_tick_parser_info["JumpingSniper"] = jsniper;
     StatusInfo megs = status_info_of("MegaMan");
     new_tick_parser_info["MegaMan"] = megs;
-    StatusInfo bombman = status_info_of("BombMan");
-    new_tick_parser_info["BombMan"] = bombman;
+    StatusInfo bombman = status_info_of(BOMBMAN);
+    new_tick_parser_info[BOMBMAN] = bombman;
+    StatusInfo magnetman = status_info_of(MAGNETMAN);
+    new_tick_parser_info[MAGNETMAN] = magnetman;
+    StatusInfo sparkman = status_info_of(SPARKMAN);
+    new_tick_parser_info[SPARKMAN] = sparkman;
+    StatusInfo ringman = status_info_of(RINGMAN);
+    new_tick_parser_info[RINGMAN] = ringman;
+    StatusInfo fireman = status_info_of(FIREMAN);
+    new_tick_parser_info[FIREMAN] = fireman;
 }
 
 void TickInfoParser::replace_substr(std::string &input,
