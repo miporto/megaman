@@ -127,7 +127,10 @@ void UserMovable::change_y_movement(bool start, bool forward) {
     }
 }
 
-void UserMovable::standing_on_stairs() { this->on_stairs = true; }
+void UserMovable::standing_on_stairs() {
+    this->on_stairs = true;
+    this->reset_movement();
+}
 
 void UserMovable::move() {
     this->previous_position = this->get_position();
@@ -138,7 +141,7 @@ void UserMovable::move() {
     //MRU en eje x
     x_amount = this->current_vel_x;
 
-    if (on_stairs) {
+    if (on_stairs) { //si esta en las escaleras
         //MRU en eje y
         y_amount = this->current_vel_y;
 
