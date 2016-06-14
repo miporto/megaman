@@ -31,6 +31,7 @@ class BossChamber : public GameObjectHandler {
     public:
         BossChamber(Match* match,
                     std::vector<ServerCommunicator*>& communicators,
+                    EventQueue* events,
                     const char boss_id);
         void run(bool* exit);
         bool beated();
