@@ -1,0 +1,10 @@
+#ifndef MEGAMAN_MEGAMANRENDERER_H
+#define MEGAMAN_MEGAMANRENDERER_H
+
+
+class MegaManRenderer {
+
+};
+
+
+#endif //MEGAMAN_MEGAMANRENDERER_H
