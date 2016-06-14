@@ -27,6 +27,7 @@ typedef enum _action_packet_id {
     RIGHT = 1,
     LEFT,
     UP,
+    DOWN,
     SHOOT,
     AMMO_0,
     AMMO_1,

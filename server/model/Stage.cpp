@@ -52,9 +52,13 @@ void Stage::execute_action(Player* player,
         player->get_megaman()->change_x_movement(pressed, false);
     } else if (action_id == UP) {
         player->get_megaman()->change_y_movement(pressed, true);
+    } else if (action_id == DOWN) {
+        player->get_megaman()->change_y_movement(pressed, false);
     } else if (action_id == SHOOT) {
         Projectile *projectile = player->get_megaman()->shoot();
         if (projectile) this->map.add_game_object(projectile);
+    } else if (AMMO_0 <= action_id && action_id <= AMMO_5 && pressed) {
+        player->get_megaman()->change_ammo(action_id);
     } else {
         throw StageError("There is no action with that id");
     }
