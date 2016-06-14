@@ -5,7 +5,7 @@
 #include "InputHandler.h"
 #include "common/communication/Packet.h"
 
-InputHandler::InputHandler() : window_closed(false), keys_held(11) {
+InputHandler::InputHandler() : window_closed(false), keys_held(10) {
     for (size_t i = 0; i < keys_held.size(); ++i) {
         keys_held[i] = false;
     }

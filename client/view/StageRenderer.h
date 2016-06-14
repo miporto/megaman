@@ -12,6 +12,7 @@
 #include "ActorRenderer.h"
 #include "Camera.h"
 #include "BossRenderer.h"
+#include "MegaManRenderer.h"
 
 class TileRenderer;
 
@@ -19,7 +20,7 @@ class StageRenderer {
 public:
     StageRenderer(SDL2pp::Renderer *renderer, std::string &stage_info);
     void render();
-    void update(const std::string &name, const std::string &update_info);
+//    void update(const std::string &name, const std::string &update_info);
     void new_update(const std::string &name, FloatUpdatePkt &update_info);
     void delete_renderer(int id);
     bool are_megamans_alive();
@@ -36,10 +37,10 @@ private:
     std::map<int, TileRenderer*> tile_renderers;
     std::map<int, ActorRenderer*> actor_renderers;
     std::map<int, BossRenderer*> boss_renderers;
+    std::map<int, MMegaManRenderer*> meg_renderers;
     std::vector<std::string> actors;
     std::vector<std::string> bosses;
     std::vector<std::string> objects;
-    std::vector<int> megamans;
     TileRendererFactory tile_factory;
     ActorRendererFactory actor_factory;
     BossRendererFactory boss_factory;
