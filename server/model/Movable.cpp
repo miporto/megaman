@@ -40,9 +40,9 @@ void Movable::move() {
 }
 
 void Movable::correct_position(const std::vector<float>& obstacle_pos,
-                               int obstacle_side) {
+                               float obstacle_side) {
     std::vector<float> pos = this->get_position();
-    int side = this->get_side();
+    float side = this->get_side();
     float delta_x, delta_y;
     delta_x = delta_y = 0;
 
@@ -77,7 +77,7 @@ std::vector<float> Movable::get_position() {
 }
 
 void Movable::get_initial_position_for_shot(std::vector<float>& shooter_pos,
-                                            int shooter_side) {
+                                            float shooter_side) {
     float initial_y = shooter_pos[Y_COORD_POS] + (shooter_side / 2.0);
     shooter_pos[Y_COORD_POS] = initial_y;
 }
@@ -182,7 +182,7 @@ void UserMovable::move() {
     }
 
     this->position.move(x_amount, y_amount);
-    
+
     this->on_stairs = false;
 
     if (this->position.out_of_range())
@@ -202,9 +202,9 @@ void UserMovable::reset_position() {
 }
 
 void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
-                                   int obstacle_side) {
+                                   float obstacle_side) {
     std::vector<float> pos = this->get_position();
-    int side = this->get_side();
+    float side = this->get_side();
     float delta_x, delta_y;
     delta_x = delta_y = 0;
 

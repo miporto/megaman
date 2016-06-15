@@ -8,7 +8,7 @@ GameObject::GameObject(const std::vector<float>& position)
 GameObject::GameObject(const float x, const float y)
         : side(BODY_SIDE), position(x, y) {}
 
-int GameObject::get_side() {
+float GameObject::get_side() {
     return this->side;
 }
 

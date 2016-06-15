@@ -22,11 +22,11 @@ class Movable : public GameObject {
         virtual void move();
         bool it_moved();
         virtual void correct_position(const std::vector<float>& obstacle_pos,
-                                      int obstacle_side);
+                                      float obstacle_side);
         std::vector<float> get_position();
         //TODO Mover a clase abstracta Shooter
         void get_initial_position_for_shot(std::vector<float>& shooter_pos,
-                                           int shooter_side);
+                                           float shooter_side);
         virtual ~Movable();
 };
 
@@ -67,7 +67,7 @@ class UserMovable : public Movable {
         void reset_movement();
         void reset_position();
         void correct_position(const std::vector<float>& obstacle_pos,
-                              int obstacle_side);
+                              float obstacle_side);
         std::vector<float> get_position();
         ~UserMovable();
 };
