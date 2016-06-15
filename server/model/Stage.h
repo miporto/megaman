@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 #include "common/SystemError.h"
 #include "Player.h"
@@ -15,7 +16,7 @@ class Match;
 class Stage {
     private:
         Match* match;
-        std::vector<Player*> players;
+        std::map<std::string, Player*> players;
         Map map;
         EventQueue* events;
         bool end_reached;

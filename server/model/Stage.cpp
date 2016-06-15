@@ -2,14 +2,15 @@
 #include <string>
 #include <vector>
 #include <utility>
-#include <server/Logger.h>
+#include <map>
 
+#include "server/Logger.h"
 #include "Stage.h"
 #include "server/communication/Match.h"
 #include "server/communication/ServerCommunicator.h"
 #include "Object.h"
 
-#define SLEEP_TIME_MICROSECONDS 100
+#define SLEEP_TIME_MICROSECONDS 2000
 
 Stage::Stage(Match* match,
              std::vector<ServerCommunicator*>& communicators,
@@ -17,13 +18,16 @@ Stage::Stage(Match* match,
         : match(match), end_reached(false) {
     // Players setting
     for (unsigned int i = 0; i < communicators.size(); ++i)
-        this->players.push_back(communicators[i]->get_player());
+        this->players[communicators[i]->get_player()->get_name()]
+                = communicators[i]->get_player();
 
     // Map setting
     this->map.set(stage_info);
-    for (unsigned int i = 0; i < this->players.size(); ++i) {
-        this->players[i]->new_megaman();
-        this->map.add_game_object(this->players[i]->get_megaman());
+    for (std::map<std::string, Player*>::iterator it = this->players.begin();
+         it != this->players.end();
+         ++it) {
+        it->second->new_megaman();
+        this->map.add_game_object(it->second->get_megaman());
     }
 
     // EventQueue setting
@@ -37,11 +41,12 @@ Stage::Stage(Match* match,
 }
 
 Player* Stage::player_with_name(const std::string& name) {
-    for (unsigned int i = 0; i < this->players.size(); ++i) {
-        if ((this->players[i]->get_name()).compare(name) == 0)
-            return this->players[i];
-    }
-    throw StageError("There is no player with that name");
+    std::map<std::string, Player*>::iterator it = this->players.find(name);
+
+    if (it == this->players.end())
+        throw StageError("There is no player with that name");
+
+    return it->second;
 }
 
 void Stage::execute_action(Player* player,
@@ -90,12 +95,7 @@ void Stage::acknowledge_deceased() {
         this->match->notify_deceased(deceased_ids[i]);
 }
 
-void Stage::create_new_projectiles() {
-    this->map.create_new_projectiles();
-    //TODO send info de proyectiles nuevos
-    // ahora o directamente en el proximo tick?
-    //map me tiene que dar un vector de info de ellos
-}
+void Stage::create_new_projectiles() { this->map.create_new_projectiles(); }
 
 void Stage::acknowledge_updates() {
     std::vector<FloatUpdate*> updates = this->map.updates();
@@ -104,9 +104,9 @@ void Stage::acknowledge_updates() {
 }
 
 bool Stage::players_are_dead() {
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        if (this->players[i]->alive()) return false;
-    std::cout << "Players are dead" << std::endl;
+    for (std::map<std::string, Player*>::iterator it = this->players.begin();
+         it != this->players.end();
+         ++it) { if (it->second->alive()) return false; }
     return true;
 }
 
@@ -119,7 +119,7 @@ void Stage::run(bool* exit) {
         this->acknowledge_deceased();
         this->create_new_projectiles();
         this->acknowledge_updates();
-        usleep(SLEEP_TIME_MICROSECONDS * 20);
+        usleep(SLEEP_TIME_MICROSECONDS);
     }
 }
 
