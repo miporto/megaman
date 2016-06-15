@@ -24,8 +24,10 @@ class Projectile : public ProjectileMovable {
     private:
         const std::string name;
         const int damage;
-        int ticks;
         bool dead;
+
+    protected:
+        int ticks;
 
     public:
         Projectile(const std::string& name,
@@ -35,8 +37,8 @@ class Projectile : public ProjectileMovable {
         const std::string& get_name();
         int hit();
         void collide_with(Enemy* enemy);
-        void collide_with(Object* object);
-        void collide_with(Projectile* projectile);
+        virtual void collide_with(Object* object);
+        virtual void collide_with(Projectile* projectile);
         void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
@@ -70,6 +72,8 @@ class Magnet : public Projectile {
 };
 
 class Spark : public Projectile {
+    private:
+        static int spark_count;
     public:
         Spark(int damage, float velocity_x, float velocity_y,
               const std::vector<float>& initial_position);
@@ -87,6 +91,8 @@ class Ring : public Projectile {
     public:
         Ring(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position);
+        void collide_with(Object* object);
+        void collide_with(Projectile* projectile);
         void tick();
 };
 

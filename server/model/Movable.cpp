@@ -111,6 +111,32 @@ ProjectileMovable::ProjectileMovable(const std::vector<float>& position,
         : IAMovable(position, position[DIRECTION_X_POS],
                     velocity_x, velocity_y, side) {}
 
+void ProjectileMovable::disable_y_movement() { this->velocity_y = 0; }
+
+void ProjectileMovable::bounce(const std::vector<float>& object_pos,
+                               float object_side) {
+    std::vector<float> pos = this->get_position();
+    float side = this->get_side();
+    float mass_center_x = pos[X_COORD_POS] + (side / 2.0);
+    float mass_center_y = pos[Y_COORD_POS] + (side / 2.0);
+
+    float object_x = object_pos[X_COORD_POS];
+    float object_y = object_pos[Y_COORD_POS];
+
+    if (object_x < mass_center_x && mass_center_x < object_x + object_side) {
+        // Choco de arriba o abajo
+        this->change_y_direction();
+    } else if (object_y < mass_center_y &&
+            mass_center_y < object_y + object_side) {
+        // Choco de izq o der
+        this->change_x_direction();
+    } else {
+        // Choco juuuusto o muuuy cerca de la puntita
+        this->change_y_direction();
+        this->change_x_direction();
+    }
+}
+
 ProjectileMovable::~ProjectileMovable() {}
 
 UserMovable::UserMovable(const std::vector<float>& respawn_position,

@@ -167,8 +167,8 @@
     },
     
     "projectile": {
-            "Plasma": {"damage": 1, "velocity x": 41, "velocity y": 0},
-            "Bomb": {"damage": 2, "velocity x": 51, "velocity y": 15},
+            "Plasma": {"damage": 1, "velocity x": 4, "velocity y": 0},
+            "Bomb": {"damage": 7, "velocity x": 7, "velocity y": 15},
             "Magnet": {"damage": 3, "velocity x": 61, "velocity y": 20},
             "Spark": {"damage": 4, "velocity x": 71, "velocity y": 40},
             "Fire": {"damage": 5, "velocity x": 81, "velocity y": 10},
