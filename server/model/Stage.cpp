@@ -9,7 +9,7 @@
 #include "server/communication/ServerCommunicator.h"
 #include "Object.h"
 
-#define SLEEP_TIME_MICROSECONDS 100
+#define SLEEP_TIME_MICROSECONDS 100000
 
 Stage::Stage(Match* match,
              std::vector<ServerCommunicator*>& communicators,
@@ -112,7 +112,7 @@ bool Stage::players_are_dead() {
 }
 
 void Stage::run(bool* exit) {
-    usleep(SLEEP_TIME_MICROSECONDS * 10^6);
+    usleep(SLEEP_TIME_MICROSECONDS * 10^3);
     while (!*exit && !this->players_are_dead() && !this->end_reached) {
         Logger::instance()->out << INFO << "Stage loop init";
         this->execute_events();
@@ -122,7 +122,7 @@ void Stage::run(bool* exit) {
         this->create_new_projectiles();
         this->acknowledge_updates();
         Logger::instance()->out << INFO << "Stage loop end";
-        usleep(SLEEP_TIME_MICROSECONDS * 20);
+        usleep(SLEEP_TIME_MICROSECONDS);
     }
 }
 

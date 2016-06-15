@@ -133,6 +133,8 @@ void UserMovable::standing_on_stairs() {
 }
 
 void UserMovable::move() {
+//    std::cout << get_position()[0] << ", " << get_position()[1] << "// ";
+//    std::cout << current_vel_x << ", " << current_vel_y << std::endl;
     this->previous_position = this->get_position();
     if (!this->current_vel_x && !this->current_vel_y) return;
 
@@ -152,6 +154,9 @@ void UserMovable::move() {
     }
 
     this->position.move(x_amount, y_amount);
+
+
+
     this->on_stairs = false;
 
     if (this->position.out_of_range())
@@ -185,7 +190,8 @@ void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
 
     if (mass_center_y > obs_mass_center_y) {
         delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side - pos[Y_COORD_POS];
-        this->reset_movement();
+//        this->reset_movement();
+        this->current_vel_y = 0;
     } else {
         if (mass_center_x < obs_mass_center_x)
             delta_x = (-1) * (pos[X_COORD_POS] + side
