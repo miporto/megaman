@@ -19,7 +19,7 @@ int Camera::adjust_size() {
     return std::min(width, height) / 10;
 }
 
-void Camera::add_megaman(int id, MegaManRenderer *megaman) {
+void Camera::add_megaman(int id, MMegaManRenderer *megaman) {
     megs[id] = megaman;
 }
 

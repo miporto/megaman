@@ -12,7 +12,7 @@ InputHandler::InputHandler() : window_closed(false), keys_held(10) {
 }
 
 void InputHandler::read_input() {
-    if (SDL_PollEvent(&event)) {
+    while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             window_closed = true;
         } else if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {

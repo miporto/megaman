@@ -94,7 +94,7 @@ function(add_style_check_target TARGET_NAME SOURCES_LIST)
             "--filter=${STYLE_FILTER}"
             "--counting=detailed"
             "--extensions=cpp,h"
-            "--linelength=80"
+            "--linelength=120"
             ${SOURCES_LIST}
             DEPENDS ${SOURCES_LIST}
             COMMENT "Checking ${TARGET_NAME} code style."

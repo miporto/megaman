@@ -82,8 +82,9 @@ NewUpdatePacket ClientCommunicator::receive_float_update() {
         info["id"] = update->get_object_id();
         info["x"] = update->get_x();
         info["y"] = update->get_y();
-        info["d_x"] = update->get_direction_x();
-        info["d_y"] = update->get_direction_y();
+        info["dir_x"] = update->get_direction_x();
+        info["dir_y"] = update->get_direction_y();
+        info["energy"] = update->get_energy();
         update_pkt.first = update->get_name();
         delete update;
     } else if (new_float_update_packets()){
@@ -110,8 +111,8 @@ NewUpdatePacket ClientCommunicator::receive_megaman_update() {
         info["id"] = update->get_object_id();
         info["x"] = update->get_x();
         info["y"] = update->get_y();
-        info["d_x"] = update->get_direction_x();
-        info["d_y"] = update->get_direction_y();
+        info["dir_x"] = update->get_direction_x();
+        info["dir_y"] = update->get_direction_y();
         update_pkt.first = update->get_name();
         update_pkt.second = info;
         delete update;
