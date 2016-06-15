@@ -62,6 +62,23 @@ void Receiver::receive_packet(const char id) {
             this->packets.push(new FloatUpdate(name, object_id, x, y));
             delete name;
             break;
+        } case ENEMY_FLOAT_UPDATE: {
+            int name_length;
+            this->socket->receive((char *) &name_length, sizeof(int));
+            char *name = new char[name_length + 1];
+            name[name_length] = '\0';
+            this->socket->receive(name, sizeof(char) * name_length);
+            int object_id;
+            this->socket->receive((char *) &object_id, sizeof(int));
+            float x, y;
+            this->socket->receive((char *) &x, sizeof(float));
+            this->socket->receive((char *) &y, sizeof(float));
+            char covered;
+            this->socket->receive(&covered, sizeof(char));
+            this->packets.push(new EnemyFloatUpdate(name, object_id,
+                                                    x, y, covered));
+            delete name;
+            break;
         } case MEGAMAN_FLOAT_UPDATE: {
             int name_length;
             this->socket->receive((char *) &name_length, sizeof(int));

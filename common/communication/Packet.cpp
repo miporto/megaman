@@ -5,8 +5,8 @@
 
 #include "Packet.h"
 
-#define PRESSED_CODE 1
-#define RELEASED_CODE 0
+#define TRUE_CODE 1
+#define FALSE_CODE 0
 
 Packet::~Packet() {}
 
@@ -151,6 +151,53 @@ std::string FloatUpdate::get_str() const {
 }
 
 FloatUpdate::~FloatUpdate() {}
+
+EnemyFloatUpdate::EnemyFloatUpdate(const std::string& name, const int object_id,
+                                   const float x, const float y, bool covered)
+        : FloatUpdate(name, object_id, x, y), covered(covered) {}
+
+EnemyFloatUpdate::EnemyFloatUpdate(const std::string& name, const int object_id,
+                                   const float x, const float y,
+                                   const char covered)
+        : FloatUpdate(name, object_id, x, y), covered(covered) {}
+
+char EnemyFloatUpdate::get_id() const { return this->id; }
+
+bool EnemyFloatUpdate::is_covered() { return this->covered; }
+
+std::string EnemyFloatUpdate::get_str() const {
+    std::string str;
+
+    str.push_back(this->id);
+
+    int name_len = this->name.length();
+    char* len_arr = (char*)&name_len;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(len_arr[i]);
+
+    str.append(this->name);
+
+    char* object_id_arr = (char*)&this->object_id;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(object_id_arr[i]);
+
+    char* x_arr = (char*)&this->x;
+    for (unsigned int i = 0; i < sizeof(float); ++i)
+        str.push_back(x_arr[i]);
+
+    char* y_arr = (char*)&this->y;
+    for (unsigned int i = 0; i < sizeof(float); ++i)
+        str.push_back(y_arr[i]);
+
+    if (this->covered)
+        str.push_back(TRUE_CODE);
+    else
+        str.push_back(FALSE_CODE);
+
+    return str;
+}
+
+EnemyFloatUpdate::~EnemyFloatUpdate() {}
 
 MegaManFloatUpdate::MegaManFloatUpdate(const std::string& name,
                                        const std::string& player_name,
@@ -353,9 +400,9 @@ std::string Action::get_str() const {
     str.append(this->name);
     str.push_back(this->action_id);
     if (pressed)
-        str.push_back(PRESSED_CODE);
+        str.push_back(TRUE_CODE);
     else
-        str.push_back(RELEASED_CODE);
+        str.push_back(FALSE_CODE);
     return str;
 }
 

@@ -19,6 +19,7 @@ typedef enum _packet_id {
     CHAMBER_INFO,
     UPDATE,
     FLOAT_UPDATE,
+    ENEMY_FLOAT_UPDATE,
     MEGAMAN_FLOAT_UPDATE,
     BOSS_FLOAT_UPDATE,
     DECEASED,
@@ -130,6 +131,23 @@ class FloatUpdate : public Packet {
         virtual ~FloatUpdate();
 };
 
+class EnemyFloatUpdate : public FloatUpdate {
+    private:
+        static const char id = ENEMY_FLOAT_UPDATE;
+        bool covered;
+
+    public:
+        EnemyFloatUpdate(const std::string& name, const int object_id,
+                    const float x, const float y, bool covered);
+        EnemyFloatUpdate(const std::string& name, const int object_id,
+                         const float x, const float y, const char pressed);
+        char get_id() const;
+        bool is_covered();
+        std::string get_str() const;
+        ~EnemyFloatUpdate();
+};
+
+
 class MegaManFloatUpdate : public FloatUpdate {
     private:
         static const char id = MEGAMAN_FLOAT_UPDATE;
@@ -156,25 +174,25 @@ class MegaManFloatUpdate : public FloatUpdate {
 };
 
 class BossFloatUpdate : public FloatUpdate {
-private:
-    static const char id = BOSS_FLOAT_UPDATE;
-    const float energy;
-    const int direction_x;
-    const int direction_y;
+    private:
+        static const char id = BOSS_FLOAT_UPDATE;
+        const float energy;
+        const int direction_x;
+        const int direction_y;
 
-public:
-    BossFloatUpdate(const std::string& name,
-                       const int object_id,
-                       const float x, const float y,
-                       const int direction_x,
-                       const int direction_y,
-                       const float energy);
-    char get_id() const;
-    float get_energy() const;
-    int get_direction_x() const;
-    int get_direction_y() const;
-    std::string get_str() const;
-    ~BossFloatUpdate();
+    public:
+        BossFloatUpdate(const std::string& name,
+                           const int object_id,
+                           const float x, const float y,
+                           const int direction_x,
+                           const int direction_y,
+                           const float energy);
+        char get_id() const;
+        float get_energy() const;
+        int get_direction_x() const;
+        int get_direction_y() const;
+        std::string get_str() const;
+        ~BossFloatUpdate();
 };
 
 class Deceased : public Packet {
@@ -213,8 +231,8 @@ class Action : public Packet {
     public:
         Action(const std::string& name,
                const char action_id, const bool pressed);
-        Action(const std::string& name,
-               const char action_id, const char pressed);
+    Action(const std::string& name,
+           const char action_id, const char pressed);
         char get_id() const;
         char get_action() const;
         const std::string& get_name() const;
