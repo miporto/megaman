@@ -20,7 +20,7 @@ class Enemy;
 class Object;
 class MegaMan;
 
-class Projectile : public Movable {
+class Projectile : public ProjectileMovable {
     private:
         const std::string name;
         const int damage;
@@ -120,6 +120,12 @@ class Cannon {
         void change_current_ammo(unsigned int ammo_id);
         Projectile* shoot(const std::vector<float>& position);
         ~Cannon();
+};
+
+
+class CannonError : public SystemError {
+public:
+    explicit CannonError(const std::string error_msg) throw();
 };
 
 #endif //AMMO_H

@@ -78,7 +78,10 @@ bool MegaMan::is_dead() {
 }
 
 Projectile* MegaMan::shoot() {
-    return this->cannon.shoot(this->get_position());
+    std::vector<float> projectile_initial_pos = this->get_position();
+    this->get_initial_position_for_shot(projectile_initial_pos,
+                                        this->get_side());
+    return this->cannon.shoot(projectile_initial_pos);
 }
 
 void MegaMan::tick() {
@@ -140,7 +143,12 @@ void MegaMan::execute_collision_with(GameObject* other) {
 }
 
 void MegaMan::change_ammo(unsigned int ammo_id) {
-    this->cannon.change_current_ammo(ammo_id);
+    try {
+        this->cannon.change_current_ammo(ammo_id);
+    } catch (const CannonError& e) {
+        Logger::instance()->out << INFO << "Player " << this->get_name()
+        << " - Cannon: " << e.what();
+    }
 }
 
 void MegaMan::receive_new_ammo(std::string& name) {

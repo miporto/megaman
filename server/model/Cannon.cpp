@@ -17,7 +17,7 @@ Projectile::Projectile(const std::string& name,
                        int damage,
                        float velocity_x, float velocity_y,
                        const std::vector<float>& initial_position) :
-        Movable(initial_position, velocity_x, velocity_y),
+        ProjectileMovable(initial_position, velocity_x, velocity_y),
         name(name), damage(damage), ticks(0), dead(false) {}
 
 void Projectile::acknowledge_tick() {
@@ -59,7 +59,7 @@ int Projectile::hit() {
 
 void Projectile::collide_with(Enemy* enemy) {}
 
-void Projectile::collide_with(Object* object) {}
+void Projectile::collide_with(Object* object) { this->hit(); }
 
 void Projectile::collide_with(Projectile* projectile) {}
 
@@ -168,6 +168,8 @@ void Cannon::receive_new_ammo(std::string& name) {
 void Cannon::change_current_ammo(unsigned int ammo_id) {
     if (ammo_id < this->ammos.size())
         this->current_ammo = this->ammos[ammo_id];
+    else
+        throw CannonError("Ammo is unavaiable");
 }
 
 Projectile* Cannon::shoot(const std::vector<float>& position) {
@@ -178,3 +180,6 @@ Cannon::~Cannon() {
     for (unsigned int i = 0; i < this->ammos.size(); ++i)
         delete this->ammos[i];
 }
+
+CannonError::CannonError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}

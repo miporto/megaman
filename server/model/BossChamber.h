@@ -17,7 +17,7 @@ class BossChamber : public GameObjectHandler {
     private:
         Match* match;
         Boss* boss;
-        std::vector<Player*> players;
+        std::map<std::string, Player*> players;
         EventQueue* events;
 
         void execute_events();

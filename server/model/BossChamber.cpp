@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include <map>
 
 #include "server/communication/InfoMaker.h"
 #include "BossChamber.h"
@@ -9,7 +10,7 @@
 #include "server/communication/ServerCommunicator.h"
 #include "Factory.h"
 
-#define SLEEP_TIME_MICROSECONDS 10
+#define SLEEP_TIME_MICROSECONDS 2000
 
 BossChamber::BossChamber(Match* match,
                          std::vector<ServerCommunicator*>& communicators,
@@ -18,7 +19,8 @@ BossChamber::BossChamber(Match* match,
         : match(match), boss(BossFactory::boss(boss_id)), events(events) {
     // Players setting
     for (unsigned int i = 0; i < communicators.size(); ++i)
-        this->players.push_back(communicators[i]->get_player());
+        this->players[communicators[i]->get_player()->get_name()]
+                = communicators[i]->get_player();
 
 //    // EventQueue setting
 //    std::vector<PacketsQueueProtected*> action_queues;
@@ -28,9 +30,11 @@ BossChamber::BossChamber(Match* match,
 
     //Objects setting: Players, Boss, Default stage
     this->set(BossChamberFactory::chamber());
-    for (unsigned int i = 0; i < this->players.size(); ++i) {
-        this->players[i]->new_megaman();
-        this->add_game_object(this->players[i]->get_megaman());
+    for (std::map<std::string, Player*>::iterator it = this->players.begin();
+         it != this->players.end();
+         ++it) {
+        it->second->new_megaman();
+        this->add_game_object(it->second->get_megaman());
     }
     this->add_game_object(this->boss);
 
@@ -39,11 +43,12 @@ BossChamber::BossChamber(Match* match,
 }
 
 Player* BossChamber::player_with_name(const std::string& name) {
-    for (unsigned int i = 0; i < this->players.size(); ++i) {
-        if ((this->players[i]->get_name()).compare(name) == 0)
-            return this->players[i];
-    }
-    throw BossChamberError("There is no player with that name");
+    std::map<std::string, Player*>::iterator it = this->players.find(name);
+
+    if (it == this->players.end())
+        throw StageError("There is no player with that name");
+
+    return it->second;
 }
 
 void BossChamber::execute_action(Player* player,
@@ -77,8 +82,9 @@ void BossChamber::execute_events() {
 }
 
 bool BossChamber::players_are_dead() {
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        if (this->players[i]->alive()) return false;
+    for (std::map<std::string, Player*>::iterator it = this->players.begin();
+         it != this->players.end();
+         ++it) { if (it->second->alive()) return false; }
     return true;
 }
 
@@ -112,8 +118,10 @@ bool BossChamber::beated() {
 
 void BossChamber::reward_players() {
     const std::string ammo_name = this->boss->reward_ammo_name();
-    for (unsigned int i = 0; i < this->players.size(); ++i)
-        this->players[i]->add_reward(ammo_name);
+
+    for (std::map<std::string, Player*>::iterator it = this->players.begin();
+         it != this->players.end();
+         ++it) { it->second->add_reward(ammo_name); }
 }
 
 BossChamber::~BossChamber() {}
