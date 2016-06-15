@@ -32,8 +32,9 @@ class GameObject {
         Position position;
 
     public:
-        explicit GameObject(const std::vector<float>& position);
-        GameObject(const float x, const float y);
+        explicit GameObject(const std::vector<float>& position,
+                            const float side);
+        GameObject(const float x, const float y, const float side);
         virtual const std::string& get_name() = 0;
         float get_side();
         virtual std::vector<float> get_position();

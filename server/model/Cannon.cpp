@@ -12,12 +12,14 @@
 
 #define PELLET_DAMAGE 1
 #define PROJECTILE_TIMEOUT 700
+#define PROJECTILE_SIDE 0.5
 
 Projectile::Projectile(const std::string& name,
                        int damage,
                        float velocity_x, float velocity_y,
                        const std::vector<float>& initial_position) :
-        ProjectileMovable(initial_position, velocity_x, velocity_y),
+        ProjectileMovable(initial_position, velocity_x,
+                          velocity_y, PROJECTILE_SIDE),
         name(name), damage(damage), ticks(0), dead(false) {}
 
 void Projectile::acknowledge_tick() {

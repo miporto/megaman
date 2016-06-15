@@ -2,11 +2,11 @@
 
 #include "GameObject.h"
 
-GameObject::GameObject(const std::vector<float>& position)
-        : side(BODY_SIDE), position(position) {}
+GameObject::GameObject(const std::vector<float>& position, const float side)
+        : side(side), position(position) {}
 
-GameObject::GameObject(const float x, const float y)
-        : side(BODY_SIDE), position(x, y) {}
+GameObject::GameObject(const float x, const float y, const float side)
+        : side(side), position(x, y) {}
 
 float GameObject::get_side() {
     return this->side;

@@ -8,9 +8,11 @@
 #include "common/communication/Packet.h"
 #include "Cannon.h"
 
+#define BOSS_SIDE 1
+
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
-        : Movable(position, velocity_x, velocity_y),
+        : Movable(position, velocity_x, velocity_y, BOSS_SIDE),
           name(name), initial_energy(energy), energy(energy) {}
 
 const std::string& Boss::get_name() { return this->name; }

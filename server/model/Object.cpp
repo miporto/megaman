@@ -8,9 +8,10 @@
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
+#define OBJECT_SIDE 1
 
 Object::Object(const std::string& name, const std::vector<float>& position)
-        : GameObject(position), name(name) {}
+        : GameObject(position, OBJECT_SIDE), name(name) {}
 
 const std::string& Object::get_name() { return this->name; }
 

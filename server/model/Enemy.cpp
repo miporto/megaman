@@ -13,11 +13,13 @@
 #define SNIPER_SHIELD_FREC 50
 #define JUMPINGSNIPER_JUMP_FREC 15
 
+#define ENEMY_SIDE 1
+
 Enemy::Enemy(const std::string& name,
              const std::vector<float>& position,
              const float velocity_x, const float velocity_y,
              int energy) :
-        IAMovable(position, velocity_x, velocity_y),
+        IAMovable(position, velocity_x, velocity_y, ENEMY_SIDE),
         name(name), energy(energy), ticks(0) {}
 
 void Enemy::collide_with(Enemy* enemy) {

@@ -15,10 +15,12 @@ class Movable : public GameObject {
 
     public:
         Movable(const std::vector<float>& position,
-                const float velocity_x, const float velocity_y);
+                const float velocity_x, const float velocity_y,
+                const float side);
         Movable(const std::vector<float>& position,
-                  const int direction_x,
-                  const float velocity_x, const float velocity_y);
+                const int direction_x,
+                const float velocity_x, const float velocity_y,
+                const float side);
         virtual void move();
         bool it_moved();
         virtual void correct_position(const std::vector<float>& obstacle_pos,
@@ -33,10 +35,12 @@ class Movable : public GameObject {
 class IAMovable : public Movable {
     public:
         IAMovable(const std::vector<float>& position,
-                  const float velocity_x, const float velocity_y);
+                  const float velocity_x, const float velocity_y,
+                  const float side);
         IAMovable(const std::vector<float>& position,
                   const int direction_x,
-                  const float velocity_x, const float velocity_y);
+                  const float velocity_x, const float velocity_y,
+                  const float side);
         void change_x_direction();
         void change_y_direction();
         ~IAMovable();
@@ -45,7 +49,8 @@ class IAMovable : public Movable {
 class ProjectileMovable : public IAMovable {
     public:
         ProjectileMovable(const std::vector<float>& position,
-                  const float velocity_x, const float velocity_y);
+                          const float velocity_x, const float velocity_y,
+                          const float side);
         ~ProjectileMovable();
 };
 
@@ -58,8 +63,9 @@ class UserMovable : public Movable {
         bool on_stairs;
 
     public:
-        explicit UserMovable(const std::vector<float>& respawn_position,
-                             const float velocity_x, const float velocity_y);
+        UserMovable(const std::vector<float>& respawn_position,
+                    const float velocity_x, const float velocity_y,
+                    const float side);
         void change_x_movement(bool pressed, bool forward);
         void change_y_movement(bool pressed, bool forward);
         void standing_on_stairs();

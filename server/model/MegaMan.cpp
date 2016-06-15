@@ -8,6 +8,8 @@
 #include "Factory.h"
 #include "common/communication/Packet.h"
 
+#define MEGAMAN_SIDE 1
+
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
         max_energy(EnergyTankFactory::maximum_energy()),
@@ -55,7 +57,8 @@ EnergyTank::~EnergyTank() {}
 MegaMan::MegaMan(const std::string& name) :
         UserMovable(MegaManFactory::respawn_point(),
                     MegaManFactory::velocity_x(),
-                    MegaManFactory::velocity_y()),
+                    MegaManFactory::velocity_y(),
+                    MEGAMAN_SIDE),
         name(name) {}
 
 const std::string& MegaMan::get_name() {
