@@ -20,6 +20,7 @@ typedef enum _packet_id {
     UPDATE,
     FLOAT_UPDATE,
     MEGAMAN_FLOAT_UPDATE,
+    BOSS_FLOAT_UPDATE,
     DECEASED,
     ACTION
 } packet_id_t;
@@ -152,6 +153,28 @@ class MegaManFloatUpdate : public FloatUpdate {
         int get_direction_y() const;
         std::string get_str() const;
         ~MegaManFloatUpdate();
+};
+
+class BossFloatUpdate : public FloatUpdate {
+private:
+    static const char id = BOSS_FLOAT_UPDATE;
+    const float energy;
+    const int direction_x;
+    const int direction_y;
+
+public:
+    BossFloatUpdate(const std::string& name,
+                       const int object_id,
+                       const float x, const float y,
+                       const int direction_x,
+                       const int direction_y,
+                       const float energy);
+    char get_id() const;
+    float get_energy() const;
+    int get_direction_x() const;
+    int get_direction_y() const;
+    std::string get_str() const;
+    ~BossFloatUpdate();
 };
 
 class Deceased : public Packet {

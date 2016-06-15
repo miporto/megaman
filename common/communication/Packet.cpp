@@ -223,6 +223,64 @@ std::string MegaManFloatUpdate::get_str() const {
 
 MegaManFloatUpdate::~MegaManFloatUpdate() {}
 
+BossFloatUpdate::BossFloatUpdate(const std::string& name,
+                                       const int object_id,
+                                       const float x, const float y,
+                                       const int direction_x,
+                                       const int direction_y,
+                                       const float energy)
+        : FloatUpdate(name, object_id, x, y), energy(energy),
+          direction_x(direction_x), direction_y(direction_y) {}
+
+char BossFloatUpdate::get_id() const { return this->id; }
+
+float BossFloatUpdate::get_energy() const { return this->energy; }
+
+int BossFloatUpdate::get_direction_x() const { return this->direction_x; }
+
+int BossFloatUpdate::get_direction_y() const { return this->direction_y; }
+
+std::string BossFloatUpdate::get_str() const {
+    std::string str;
+
+    str.push_back(this->id);
+
+    int name_len = this->name.length();
+    char* len_arr = (char*)&name_len;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(len_arr[i]);
+
+    str.append(this->name);
+
+    char* object_id_arr = (char*)&this->object_id;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(object_id_arr[i]);
+
+    char* x_arr = (char*)&this->x;
+    for (unsigned int i = 0; i < sizeof(float); ++i)
+        str.push_back(x_arr[i]);
+
+    char* y_arr = (char*)&this->y;
+    for (unsigned int i = 0; i < sizeof(float); ++i)
+        str.push_back(y_arr[i]);
+
+    char* energy_arr = (char*)&this->energy;
+    for (unsigned int i = 0; i < sizeof(float); ++i)
+        str.push_back(energy_arr[i]);
+
+    char* dir_x_arr = (char*)&this->direction_x;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(dir_x_arr[i]);
+
+    char* dir_y_arr = (char*)&this->direction_y;
+    for (unsigned int i = 0; i < sizeof(int); ++i)
+        str.push_back(dir_y_arr[i]);
+
+    return str;
+}
+
+BossFloatUpdate::~BossFloatUpdate() {}
+
 Deceased::Deceased(const int object_id) : object_id(object_id) {}
 
 char Deceased::get_id() const { return this->id; }

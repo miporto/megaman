@@ -93,6 +93,27 @@ void Receiver::receive_packet(const char id) {
             delete name;
             delete player_name;
             break;
+        } case BOSS_FLOAT_UPDATE: {
+            int name_length;
+            this->socket->receive((char *) &name_length, sizeof(int));
+            char *name = new char[name_length + 1];
+            name[name_length] = '\0';
+            this->socket->receive(name, sizeof(char) * name_length);
+            int object_id;
+            this->socket->receive((char *) &object_id, sizeof(int));
+            float x, y;
+            this->socket->receive((char *) &x, sizeof(float));
+            this->socket->receive((char *) &y, sizeof(float));
+            float energy;
+            this->socket->receive((char *) &energy, sizeof(float));
+            int direction_x, direction_y;
+            this->socket->receive((char *) &direction_x, sizeof(int));
+            this->socket->receive((char *) &direction_y, sizeof(int));
+            this->packets.push(new BossFloatUpdate(name, object_id, x, y,
+                                                   direction_x, direction_y,
+                                                   energy));
+            delete name;
+            break;
         } case DECEASED: {
             int object_id;
             this->socket->receive((char *) &object_id, sizeof(int));

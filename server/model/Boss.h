@@ -19,7 +19,11 @@ class BossChamber;
 class Boss : public Movable, public Shooter {
     private:
         const std::string name;
+        const int initial_energy;
         int energy;
+
+        float get_energy_percentage();
+
     public:
         Boss(const std::string& name, const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);

@@ -11,7 +11,7 @@
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
         : Movable(position, velocity_x, velocity_y),
-          name(name), energy(energy) {}
+          name(name), initial_energy(energy), energy(energy) {}
 
 const std::string& Boss::get_name() { return this->name; }
 
@@ -59,9 +59,17 @@ bool Boss::shoots_per_tick() { return true; }
 
 bool Boss::is_boss() { return true; }
 
+float Boss::get_energy_percentage() {
+    return this->energy / this->initial_energy;
+}
+
 FloatUpdate* Boss::update(const int id) {
     std::vector<float> pos = this->get_position();
-    return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
+    return new BossFloatUpdate(this->name, id,
+                               pos[X_COORD_POS], pos[Y_COORD_POS],
+                               (int)pos[DIRECTION_X_POS],
+                               (int)pos[DIRECTION_Y_POS],
+                               this->get_energy_percentage());
 }
 
 Boss::~Boss() {}
