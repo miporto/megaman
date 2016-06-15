@@ -157,7 +157,7 @@ void UserMovable::change_y_movement(bool start, bool forward) {
 
 void UserMovable::standing_on_stairs() {
     this->on_stairs = true;
-    this->reset_movement();
+    this->current_vel_y = 0;
 }
 
 void UserMovable::move() {
@@ -171,7 +171,7 @@ void UserMovable::move() {
     //MRU en eje x
     x_amount = this->current_vel_x;
 
-    if (on_stairs) { //si esta en las escaleras
+    if (on_stairs) {
         //MRU en eje y
         y_amount = this->current_vel_y;
 
@@ -182,9 +182,7 @@ void UserMovable::move() {
     }
 
     this->position.move(x_amount, y_amount);
-
-
-
+    
     this->on_stairs = false;
 
     if (this->position.out_of_range())
