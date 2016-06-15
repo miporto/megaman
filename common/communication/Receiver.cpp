@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Receiver.h"
 
 Receiver::Receiver(Socket* socket,
@@ -107,18 +106,6 @@ void Receiver::receive_packet(const char id) {
             this->socket->receive(info, sizeof(char) * length);
             this->packets.push(new ChamberInfo(info));
             delete info;
-            break;
-        } case ACTION: {
-            int length;
-            this->socket->receive((char*)&length, sizeof(int));
-            char* name = new char[length + 1];
-            name[length] = '\0';
-            this->socket->receive(name, sizeof(char) * length);
-            char action_id, pressed;
-            this->socket->receive(&action_id, sizeof(char));
-            this->socket->receive(&pressed, sizeof(char));
-            this->packets.push(new Action(name, action_id, pressed));
-            delete name;
             break;
         } default:
             // Si el ID es desconocido, es posible que el resto del

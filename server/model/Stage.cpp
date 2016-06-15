@@ -14,7 +14,7 @@
 
 Stage::Stage(Match* match,
              std::vector<ServerCommunicator*>& communicators,
-             EventQueue* events,
+             EventQueue& events,
              const std::string& stage_info)
         : match(match), events(events), end_reached(false) {
     // Players setting
@@ -30,12 +30,6 @@ Stage::Stage(Match* match,
         it->second->new_megaman();
         this->map.add_game_object(it->second->get_megaman());
     }
-
-//    // EventQueue setting
-//    std::vector<PacketsQueueProtected*> action_queues;
-//    for (unsigned int i = 0; i < communicators.size(); ++i)
-//        action_queues.push_back(communicators[i]->get_actions());
-//    this->events = new EventQueue(action_queues);
 
     // Making of StageInfo json for client
     this->match->notify_stage_info(this->map.status());
@@ -71,8 +65,8 @@ void Stage::execute_action(Player* player,
 }
 
 void Stage::execute_events() {
-    while (!this->events->is_empty()) {
-        Action* action = this->events->pop();
+    while (!this->events.is_empty()) {
+        Action* action = this->events.pop();
         Player* player = this->player_with_name(action->get_name());
         this->execute_action(player,
                              action->get_action(), action->is_pressed());
@@ -126,9 +120,7 @@ void Stage::run(bool* exit) {
 
 bool Stage::beated() { return !players_are_dead() && this->end_reached; }
 
-Stage::~Stage() {
-    delete this->events;
-}
+Stage::~Stage() {}
 
 StageError::StageError(const std::string error_msg) throw()
         : SystemError(error_msg) {}

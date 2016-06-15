@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <common/SystemError.h>
 
 #include "server/model/Position.h"
 #include "common/Thread.h"
@@ -235,14 +236,17 @@ class ReceivedPacketsProtected {
     private:
         Mutex m;
         std::map<char, std::vector<Packet*>> packets;
-        PacketsQueueProtected actions;
 
     public:
         bool is_empty(const char id);
         Packet* pop(const char id);
         void push(Packet* packet);
-        PacketsQueueProtected* get_actions();
         ~ReceivedPacketsProtected();
+};
+
+class PacketError : public SystemError {
+    public:
+        explicit PacketError(const std::string error_msg) throw();
 };
 
 #endif  // PACKET_H

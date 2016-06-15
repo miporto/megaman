@@ -18,7 +18,7 @@ class Stage {
         Match* match;
         std::map<std::string, Player*> players;
         Map map;
-        EventQueue* events;
+        EventQueue& events;
         bool end_reached;
 
         void execute_events();
@@ -35,7 +35,7 @@ class Stage {
     public:
         Stage(Match* match,
               std::vector<ServerCommunicator*>& communicators,
-              EventQueue* events,
+              EventQueue& events,
               const std::string& stage_info);
         void run(bool* exit);
         bool beated();

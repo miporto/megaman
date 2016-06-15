@@ -352,13 +352,10 @@ Packet* ReceivedPacketsProtected::pop(const char id) {
 void ReceivedPacketsProtected::push(Packet* packet) {
     Lock l(this->m);
     if (packet->get_id() == ACTION)
-        this->actions.push(packet);
+        throw PacketError("Action Packet does not belong in "
+                                  "ReceivedPacketsProtected structure");
     else
         this->packets[packet->get_id()].push_back(packet);
-}
-
-PacketsQueueProtected* ReceivedPacketsProtected::get_actions() {
-    return &(this->actions);
 }
 
 ReceivedPacketsProtected::~ReceivedPacketsProtected() {
@@ -371,3 +368,6 @@ ReceivedPacketsProtected::~ReceivedPacketsProtected() {
              ++i)
             delete this->packets[iterator->first][i];
 }
+
+PacketError::PacketError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}

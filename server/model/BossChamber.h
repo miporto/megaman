@@ -18,7 +18,7 @@ class BossChamber : public GameObjectHandler {
         Match* match;
         Boss* boss;
         std::map<std::string, Player*> players;
-        EventQueue* events;
+        EventQueue& events;
 
         void execute_events();
         void execute_action(Player* player,
@@ -31,7 +31,7 @@ class BossChamber : public GameObjectHandler {
     public:
         BossChamber(Match* match,
                     std::vector<ServerCommunicator*>& communicators,
-                    EventQueue* events,
+                    EventQueue& events,
                     const char boss_id);
         void run(bool* exit);
         bool beated();

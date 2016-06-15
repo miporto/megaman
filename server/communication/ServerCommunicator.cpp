@@ -25,10 +25,10 @@ void NameWaiter::run() {
 
 NameWaiter::~NameWaiter() { this->join(); }
 
-ServerCommunicator::ServerCommunicator(Socket* peer)
+ServerCommunicator::ServerCommunicator(Socket* peer, EventQueue& events)
     : peer(peer),
       sender(this->peer, this->packets_to_send),
-      receiver(this->peer, this->packets_received) {
+      receiver(this->peer, this->packets_received, events) {
     this->sender.start();
     this->receiver.start();
 }
@@ -52,10 +52,6 @@ const std::string& ServerCommunicator::name() {
 
 Player* ServerCommunicator::get_player() {
     return &this->player;
-}
-
-PacketsQueueProtected* ServerCommunicator::get_actions() {
-    return this->packets_received.get_actions();
 }
 
 void ServerCommunicator::send_stage_info(const std::string& info) {
@@ -127,11 +123,9 @@ void StageIdWaiter::reset_stage_id() {
 
 StageIdWaiter::~StageIdWaiter() {}
 
-HostCommunicator::HostCommunicator(Socket* peer) :
-        ServerCommunicator(peer),
-        waiter(this->packets_received) {
-    this->waiter.start();
-}
+HostCommunicator::HostCommunicator(Socket* peer, EventQueue& events) :
+        ServerCommunicator(peer, events),
+        waiter(this->packets_received) { this->waiter.start(); }
 
 char HostCommunicator::check_stage_id() {
     return this->waiter.get_stage_id();

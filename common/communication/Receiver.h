@@ -1,12 +1,9 @@
 #ifndef RECEIVER_H
 #define RECEIVER_H
 
-#include <sstream>
-
 #include "common/Thread.h"
 #include "Socket.h"
 #include "Packet.h"
-#include "QuitProtected.h"
 
 class Receiver : public Thread {
     protected:
@@ -14,7 +11,7 @@ class Receiver : public Thread {
         ReceivedPacketsProtected& packets;
         bool started, quit;
 
-        void receive_packet(const char id);
+        virtual void receive_packet(const char id);
 
     public:
         Receiver(Socket* socket,
@@ -22,7 +19,7 @@ class Receiver : public Thread {
         void start();
         void run();
         void shutdown();
-        ~Receiver();
+        virtual ~Receiver();
 };
 
 #endif //RECEIVER_H

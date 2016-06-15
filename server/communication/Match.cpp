@@ -76,12 +76,12 @@ void Match::add_player(Socket* peer) {
         throw MatchError("Mega Man Co-op match has already started");
 
     if (!this->has_host()) {
-        HostCommunicator* hc = new HostCommunicator(peer);
+        HostCommunicator* hc = new HostCommunicator(peer, events);
         this->communicators.push_back(hc);
         hc->receive_name();
 
     } else {
-        ServerCommunicator* c = new ServerCommunicator(peer);
+        ServerCommunicator* c = new ServerCommunicator(peer, events);
         this->communicators.push_back(c);
         c->receive_name();
 
@@ -98,16 +98,10 @@ void Match::play_stage(bool* exit) {
 
     this->notify_stage_pick_to_team(stage_id);
 
-    // EventQueue setting
-    std::vector<PacketsQueueProtected*> action_queues;
-    for (unsigned int i = 0; i < communicators.size(); ++i)
-        action_queues.push_back(communicators[i]->get_actions());
-    EventQueue* events = new EventQueue(action_queues);
-
-    Stage stage(this, this->communicators, events, stage_info);
+    Stage stage(this, this->communicators, this->events, stage_info);
     stage.run(exit);
     if (stage.beated()) {
-        BossChamber chamber(this, this->communicators, events, stage_id);
+        BossChamber chamber(this, this->communicators, this->events, stage_id);
         chamber.run(exit);
         if (chamber.beated()) {
             chamber.reward_players();
