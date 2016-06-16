@@ -41,9 +41,9 @@ class IAMovable : public Movable {
                   const int direction_x,
                   const float velocity_x, const float velocity_y,
                   const float side);
-        void change_x_direction();
-        void change_y_direction();
-        ~IAMovable();
+        virtual void change_x_direction();
+        virtual void change_y_direction();
+        virtual ~IAMovable();
 };
 
 class ProjectileMovable : public IAMovable {
@@ -61,13 +61,32 @@ class ProjectileMovable : public IAMovable {
         ~ProjectileMovable();
 };
 
-class UserMovable : public Movable {
-    private:
-        const std::vector<float> respawn_position;
+class GravityAffectedMovable : public IAMovable {
+    protected:
         const float gravity;
         int direction_x, direction_y;
         float current_vel_x, current_vel_y;
+
+    public:
+        GravityAffectedMovable(const std::vector<float>& position,
+                               const float velocity_x, const float velocity_y,
+                               const float side);
+        void jump();
+        void change_x_direction();
+        void change_y_direction();
+        virtual void move();
+        void correct_position(const std::vector<float>& obstacle_pos,
+                          float obstacle_side);
+        std::vector<float> get_position();
+        ~GravityAffectedMovable();
+};
+
+class UserMovable : public GravityAffectedMovable {
+    private:
+        const std::vector<float> respawn_position;
         bool on_stairs;
+
+        void reset_movement();
 
     public:
         UserMovable(const std::vector<float>& respawn_position,
@@ -77,11 +96,10 @@ class UserMovable : public Movable {
         void change_y_movement(bool pressed, bool forward);
         void standing_on_stairs();
         void move();
-        void reset_movement();
         void reset_position();
-        void correct_position(const std::vector<float>& obstacle_pos,
-                              float obstacle_side);
-        std::vector<float> get_position();
+        //void correct_position(const std::vector<float>& obstacle_pos,
+        //                        float obstacle_side);
+        //std::vector<float> get_position();
         ~UserMovable();
 };
 

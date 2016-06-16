@@ -12,8 +12,10 @@
 
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
-        : Movable(position, velocity_x, velocity_y, BOSS_SIDE),
-          name(name), initial_energy(energy), energy(energy) {}
+        : GravityAffectedMovable(position, velocity_x, velocity_y, BOSS_SIDE),
+          name(name), initial_energy(energy), energy(energy) {
+    this->change_x_direction();
+}
 
 const std::string& Boss::get_name() { return this->name; }
 

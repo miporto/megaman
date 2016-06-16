@@ -16,7 +16,7 @@
 
 class BossChamber;
 
-class Boss : public Movable, public Shooter {
+class Boss : public GravityAffectedMovable, public Shooter {
     private:
         const std::string name;
         const int initial_energy;
