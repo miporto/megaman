@@ -7,6 +7,7 @@
 
 #include "Position.h"
 #include "Movable.h"
+#include "GameObjectHandler.h"
 
 #define PLASMA_NAME "Plasma"
 #define BOMB_NAME "Bomb"
@@ -19,6 +20,7 @@
 class Enemy;
 class Object;
 class MegaMan;
+class GameObjectHandler;
 
 class Projectile : public ProjectileMovable {
     private:
@@ -111,7 +113,8 @@ class Ammo {
 
     public:
         Ammo(const std::string& name, int max);
-        Projectile* use(const std::vector<float>& position);
+        void use(GameObjectHandler* handler,
+                        const std::vector<float>& position);
         ~Ammo();
 };
 
@@ -124,7 +127,8 @@ class Cannon {
         Cannon();
         void receive_new_ammo(std::string& name);
         void change_current_ammo(unsigned int ammo_id);
-        Projectile* shoot(const std::vector<float>& position);
+        void shoot(GameObjectHandler* handler,
+                   const std::vector<float>& position);
         ~Cannon();
 };
 

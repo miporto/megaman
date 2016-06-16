@@ -11,6 +11,8 @@
 
 #define MEGAMAN_NAME "MegaMan"
 
+class GameObjectHandler;
+
 class EnergyTank {
     private:
         int lives;
@@ -39,7 +41,7 @@ class MegaMan : public UserMovable {
         const std::string& get_name();
         void decrease_energy(int amount);
         void kill();
-        Projectile* shoot();
+        void shoot(GameObjectHandler* handler);
         void collide_with(Enemy* enemy);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);

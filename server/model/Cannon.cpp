@@ -10,6 +10,7 @@
 #include "Object.h"
 #include "Enemy.h"
 #include "Factory.h"
+#include "GameObjectHandler.h"
 
 #define PROJECTILE_TIMEOUT 700
 #define PROJECTILE_SIDE 0.5
@@ -175,12 +176,12 @@ void Pellet::tick() {
 Ammo::Ammo(const std::string& name, int max) :
         name(name), max(max), quantity(max) {}
 
-Projectile* Ammo::use(const std::vector<float>& position) {
+void Ammo::use(GameObjectHandler* handler, const std::vector<float>& position) {
     if (this->quantity) {
         this->quantity--;
-        return ProjectileFactory::projectile(this->name, position);
+        handler->add_game_object
+                (ProjectileFactory::projectile(this->name, position));
     }
-    return NULL;
 }
 
 Ammo::~Ammo() {}
@@ -201,8 +202,9 @@ void Cannon::change_current_ammo(unsigned int ammo_id) {
         throw CannonError("Ammo is unavaiable");
 }
 
-Projectile* Cannon::shoot(const std::vector<float>& position) {
-    return this->current_ammo->use(position);
+void Cannon::shoot(GameObjectHandler* handler,
+                   const std::vector<float>& position) {
+    this->current_ammo->use(handler, position);
 }
 
 Cannon::~Cannon() {

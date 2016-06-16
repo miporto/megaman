@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Factory.h"
 #include "common/communication/Packet.h"
+#include "GameObjectHandler.h"
 
 #define MEGAMAN_SIDE 1
 
@@ -80,11 +81,12 @@ bool MegaMan::is_dead() {
     return this->tank.is_empty();
 }
 
-Projectile* MegaMan::shoot() {
+void MegaMan::shoot(GameObjectHandler* handler) {
     std::vector<float> projectile_initial_pos = this->get_position();
     this->get_initial_position_for_shot(projectile_initial_pos,
                                         this->get_side());
-    return this->cannon.shoot(projectile_initial_pos);
+
+    this->cannon.shoot(handler, projectile_initial_pos);
 }
 
 void MegaMan::tick() {
