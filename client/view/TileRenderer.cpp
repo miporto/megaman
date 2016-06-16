@@ -51,16 +51,14 @@ void BossDoorRenderer::render() {
 
 void PelletRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
-    SDL_Rect fillRect = {pos.first, pos.second, 20, 20};
-    SDL_SetRenderDrawColor(renderer->Get(), 0xFF, 0x00, 0x00, 0xFF);
-    SDL_RenderFillRect(renderer->Get(), &fillRect);
+    renderer->SetDrawColor(0xFF, 0, 0);
+    renderer->FillRect(pos.first, pos.second, pos.first + 10, pos.second + 10);
 }
 
 void PlasmaRenderer::render() {
-    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
-    SDL_Rect fillRect = {pos.first, pos.second, 20, 20};
-    SDL_SetRenderDrawColor(renderer->Get(), 0x00, 0x00, 0xFF, 0xFF);
-    SDL_RenderFillRect(renderer->Get(), &fillRect);
+    AdjustedPos pos = camera.adjust_proyectile_position(pos_x, pos_y);
+    renderer->SetDrawColor(0, 0, 0xFF);
+    renderer->FillRect(pos.first, pos.second, pos.first + 10, pos.second + 10);
 }
 
 TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
