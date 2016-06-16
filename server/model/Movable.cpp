@@ -296,7 +296,6 @@ void UserMovable::change_y_movement(bool start, bool forward) {
 void UserMovable::standing_on_stairs() {
     this->on_stairs = true;
     this->current_vel_y = 0;
-    //TODO probar con if (current_vel_y != velocity_y) current_vel_y = 0;
 }
 
 void UserMovable::move() {
