@@ -54,7 +54,8 @@ void Movable::correct_position(const std::vector<float>& obstacle_pos,
     float mass_center_x = pos[X_COORD_POS] + (side / 2.0);
     float obs_mass_center_x = obstacle_pos[X_COORD_POS] + (obstacle_side / 2.0);
 
-    if (mass_center_y > obs_mass_center_y) {
+    if (mass_center_y > obs_mass_center_y + (obstacle_side / 3.5)) {
+        //if (mass_center_y > obs_mass_center_y) {
         delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side - pos[Y_COORD_POS];
     } else {
         if (mass_center_x < obs_mass_center_x)
@@ -224,7 +225,8 @@ void GravityAffectedMovable::correct_position
     float mass_center_x = pos[X_COORD_POS] + (side / 2.0);
     float obs_mass_center_x = obstacle_pos[X_COORD_POS] + (obstacle_side / 2.0);
 
-    if (mass_center_y > obs_mass_center_y) {
+    if (mass_center_y > obs_mass_center_y + (obstacle_side / 3.5)) {
+    //if (mass_center_y > obs_mass_center_y) {
         delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side - pos[Y_COORD_POS];
         this->current_vel_y = 0;
     } else {
