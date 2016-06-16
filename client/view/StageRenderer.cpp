@@ -57,7 +57,7 @@ void StageRenderer::render() {
 }
 
 void StageRenderer::new_update(const std::string &name,
-                               FloatUpdatePkt &update_info) {
+                               UpdateInfo &update_info) {
     int id = (int) update_info["id"];
     float x = update_info["x"];
     float y = update_info["y"];

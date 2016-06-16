@@ -23,15 +23,11 @@ class Client {
         void pick_stage(char stage_id);
 		void send_action(const char action_id, const bool pressed);
 		std::string receive_stage_info();
-        UpdatePacket receive_update();
         int receive_deceased();
-        NewUpdatePacket receive_float_update();
-        NewUpdatePacket receive_megaman_update();
+        UpdatePacket receive_update();
         std::string receive_chamber_info();
-	    bool new_update_packets();
 	    bool new_deceased();
-        bool new_float_update_packets();
-        bool new_megaman_update_packets();
+        bool new_update_packets();
         bool new_chamber_info_packet();
         ~Client();
 };
