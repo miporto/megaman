@@ -52,9 +52,14 @@ std::pair<std::string, std::string> Boss::info(const int id) {
     sx << pos[X_COORD_POS];
     std::stringstream sy;
     sy << pos[Y_COORD_POS];
+    std::stringstream senergy;
+    senergy << this->get_energy_percentage();
 
     json info = { {"x", sx.str()},
                   {"y", sy.str()},
+                  {"direction x", (int)pos[DIRECTION_X_POS]},
+                  {"direction y", (int)pos[DIRECTION_Y_POS]},
+                  {"energy", senergy.str()},
                   {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
 }
@@ -64,7 +69,7 @@ bool Boss::shoots_per_tick() { return true; }
 bool Boss::is_boss() { return true; }
 
 float Boss::get_energy_percentage() {
-    return this->energy / this->initial_energy;
+    return (this->energy / this->initial_energy) * 100;
 }
 
 FloatUpdate* Boss::update(const int id) {
