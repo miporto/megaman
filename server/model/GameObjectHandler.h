@@ -12,6 +12,9 @@ class GameObjectHandler {
         std::vector<GameObject*> objects;
         std::map<GameObject*, int> object_id;
 
+        float dist(const std::vector<float>& position,
+             const std::vector<float>& other_position);
+
     public:
         void set(const std::string& info);
         void add_game_object(GameObject* object);
