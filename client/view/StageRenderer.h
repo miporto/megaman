@@ -21,7 +21,7 @@ public:
     StageRenderer(SDL2pp::Renderer *renderer, std::string &stage_info);
     void render();
 //    void update(const std::string &name, const std::string &update_info);
-    void new_update(const std::string &name, FloatUpdatePkt &update_info);
+    void new_update(const std::string &name, UpdateInfo &update_info);
     void delete_renderer(int id);
     bool are_megamans_alive();
     void render_boss_chamber(std::string &info);

@@ -163,7 +163,7 @@ EnemyFloatUpdate::EnemyFloatUpdate(const std::string& name, const int object_id,
 
 char EnemyFloatUpdate::get_id() const { return this->id; }
 
-bool EnemyFloatUpdate::is_covered() { return this->covered; }
+char EnemyFloatUpdate::is_covered() { return this->covered; }
 
 std::string EnemyFloatUpdate::get_str() const {
     std::string str;
