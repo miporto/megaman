@@ -184,6 +184,17 @@ void GravityAffectedMovable::change_y_direction() {
     this->current_vel_y = this->direction_y * this->current_vel_y;
 }
 
+void GravityAffectedMovable::start_x_movement() {
+    this->current_vel_x = this->direction_x * this->velocity_x;
+}
+void GravityAffectedMovable::start_y_movement() {
+    if (this->current_vel_y) return;
+    this->current_vel_y = this->velocity_y * this->direction_y;
+}
+void GravityAffectedMovable::stop_x_movement() { this->current_vel_x = 0; }
+
+void GravityAffectedMovable::stop_y_movement() { this->current_vel_y = 0; }
+
 void GravityAffectedMovable::move() {
     this->previous_position = this->get_position();
     if (!this->current_vel_x && !this->current_vel_y) return;
@@ -264,7 +275,7 @@ void UserMovable::change_x_movement(bool start, bool forward) {
 }
 
 void UserMovable::change_y_movement(bool start, bool forward) {
-    if (current_vel_y) return; //Si ya esta moviendose en y, ignoro la accion
+    if (this->current_vel_y) return; //Si ya esta moviendose en y, ignoro la accion
     std::cout << "Y movement" << std::endl;
     if (forward) {
         std::cout << "forward" << std::endl;

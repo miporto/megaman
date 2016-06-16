@@ -26,9 +26,11 @@ class Movable : public GameObject {
         virtual void correct_position(const std::vector<float>& obstacle_pos,
                                       float obstacle_side);
         std::vector<float> get_position();
+
         //TODO Mover a clase abstracta Shooter
         void get_initial_position_for_shot(std::vector<float>& shooter_pos,
                                            float shooter_side);
+
         virtual ~Movable();
 };
 
@@ -74,6 +76,10 @@ class GravityAffectedMovable : public IAMovable {
         void jump();
         void change_x_direction();
         void change_y_direction();
+        void start_x_movement();
+        void start_y_movement();
+        void stop_x_movement();
+        void stop_y_movement();
         virtual void move();
         void correct_position(const std::vector<float>& obstacle_pos,
                           float obstacle_side);
@@ -97,9 +103,6 @@ class UserMovable : public GravityAffectedMovable {
         void standing_on_stairs();
         void move();
         void reset_position();
-        //void correct_position(const std::vector<float>& obstacle_pos,
-        //                        float obstacle_side);
-        //std::vector<float> get_position();
         ~UserMovable();
 };
 
