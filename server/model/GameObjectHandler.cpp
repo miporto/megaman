@@ -85,6 +85,28 @@ std::vector<FloatUpdate*> GameObjectHandler::updates() {
     return updates;
 }
 
+std::vector<float> GameObjectHandler::closest_enemy_for_megaman
+        (const std::vector<float>& position) {
+    std::vector<float> result;
+    result[X_COORD_POS] = 0;
+    result[Y_COORD_POS] = 0;
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        if (this->objects[i]->is_enemy() || this->objects[i]->is_boss())
+            return this->objects[i]->get_position();
+    return result;
+}
+
+std::vector<float> GameObjectHandler::closest_megaman
+        (const std::vector<float>& position) {
+    std::vector<float> result;
+    result[X_COORD_POS] = 0;
+    result[Y_COORD_POS] = 0;
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        if (this->objects[i]->is_megaman())
+            return this->objects[i]->get_position();
+    return result;
+}
+
 GameObjectHandler::~GameObjectHandler() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (!this->objects[i]->is_megaman()) delete this->objects[i];

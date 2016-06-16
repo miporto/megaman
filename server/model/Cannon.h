@@ -67,9 +67,12 @@ class Bomb : public Projectile {
 };
 
 class Magnet : public Projectile {
+    private:
+        std::vector<float> target_position;
     public:
         Magnet(int damage, float velocity_x, float velocity_y,
-               const std::vector<float>& initial_position);
+               const std::vector<float>& initial_position,
+               const std::vector<float>& target_position);
         void tick();
 };
 
@@ -106,7 +109,7 @@ class Pellet : public Projectile {
 };
 
 class Ammo {
-    protected:
+    private:
         const std::string name;
         const int max;
         int quantity;

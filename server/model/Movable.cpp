@@ -109,7 +109,12 @@ ProjectileMovable::ProjectileMovable(const std::vector<float>& position,
                                      const float velocity_x,
                                      const float velocity_y, const float side)
         : IAMovable(position, position[DIRECTION_X_POS],
-                    velocity_x, velocity_y, side) {}
+                    velocity_x, velocity_y, side),
+          potential_velocity_y(velocity_y) {}
+
+void ProjectileMovable::enable_y_movement() {
+    this->velocity_y = this->potential_velocity_y;
+}
 
 void ProjectileMovable::disable_y_movement() { this->velocity_y = 0; }
 
@@ -135,6 +140,23 @@ void ProjectileMovable::bounce(const std::vector<float>& object_pos,
         this->change_y_direction();
         this->change_x_direction();
     }
+}
+
+bool ProjectileMovable::target_x_reached
+        (const std::vector<float>& target_position) {
+    std::vector<float> pos = this->get_position();
+    if (pos[X_COORD_POS] <= target_position[X_COORD_POS] &&
+            target_position[X_COORD_POS] <= pos[X_COORD_POS] + this->get_side())
+        return true;
+    return false;
+}
+
+bool ProjectileMovable::target_below_proyectile
+        (const std::vector<float>& target_position) {
+    std::vector<float> pos = this->get_position();
+    if (target_position[Y_COORD_POS] < pos[Y_COORD_POS])
+        return true;
+    return false;
 }
 
 ProjectileMovable::~ProjectileMovable() {}

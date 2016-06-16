@@ -21,6 +21,9 @@ class GameObjectHandler {
         std::vector<int> get_rid_of_corpses();
         void create_new_projectiles();
         std::vector<FloatUpdate*> updates();
+        std::vector<float> closest_enemy_for_megaman
+                (const std::vector<float>& position);
+        std::vector<float> closest_megaman(const std::vector<float>& position);
         virtual ~GameObjectHandler();
 };
 
