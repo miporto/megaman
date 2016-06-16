@@ -72,8 +72,9 @@ int EnergyTankFactory::maximum_energy() {
 
 EnergyTankFactory::~EnergyTankFactory() {}
 
-Projectile* ProjectileFactory::projectile(const std::string& name,
-                                          const std::vector<float>& position) {
+Projectile* ProjectileFactory::projectile
+        (const std::string& name, const std::vector<float>& position,
+         const std::vector<float>& target_position) {
     json j_info = FileReader::read(INFO_FILE, "projectile");
     int damage = (int) j_info[name]["damage"];
     float velocity_x = (float) j_info[name]["velocity x"];
@@ -83,7 +84,8 @@ Projectile* ProjectileFactory::projectile(const std::string& name,
     else if (name == BOMB_NAME) return new Bomb(damage, velocity_x,
                                                 velocity_y, position);
     else if (name == MAGNET_NAME) return new Magnet(damage, velocity_x,
-                                                    velocity_y, position);
+                                                    velocity_y, position,
+                                                    target_position);
     else if (name == SPARK_NAME) return new Spark(damage, velocity_x,
                                                   velocity_y, position);
     else if (name == FIRE_NAME) return new Fire(damage, velocity_x,

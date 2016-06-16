@@ -102,15 +102,21 @@ void Bomb::tick() {
 }
 
 Magnet::Magnet(int damage, float velocity_x, float velocity_y,
-               const std::vector<float>& initial_position)
+               const std::vector<float>& initial_position,
+               const std::vector<float>& target_position)
         : Projectile(MAGNET_NAME, damage, velocity_x,
                      velocity_y, initial_position) {
-    //TODO
+    this->disable_y_movement();
 }
 
 void Magnet::tick() {
     this->acknowledge_tick();
-    //TODO
+    if (this->target_x_reached(target_position)) {
+        this->enable_y_movement();
+        if (this->target_below_proyectile(target_position))
+            this->change_y_direction();
+    }
+    this->move();
 }
 
 int Spark::spark_count = 0;
@@ -180,7 +186,10 @@ void Ammo::use(GameObjectHandler* handler, const std::vector<float>& position) {
     if (this->quantity) {
         this->quantity--;
         handler->add_game_object
-                (ProjectileFactory::projectile(this->name, position));
+                (ProjectileFactory::projectile
+                         (this->name,
+                          position,
+                          handler->closest_enemy_for_megaman(position)));
     }
 }
 

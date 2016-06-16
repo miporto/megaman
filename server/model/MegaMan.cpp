@@ -50,7 +50,7 @@ int EnergyTank::get_energy() {
 }
 
 float EnergyTank::get_energy_percentage() {
-    return this->current_energy / this->max_energy;
+    return (this->current_energy / this->max_energy) * 100;
 }
 
 EnergyTank::~EnergyTank() {}
