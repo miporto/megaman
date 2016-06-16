@@ -7,6 +7,7 @@
 
 #include "Position.h"
 #include "Movable.h"
+#include "GameObjectHandler.h"
 
 #define PLASMA_NAME "Plasma"
 #define BOMB_NAME "Bomb"
@@ -19,13 +20,16 @@
 class Enemy;
 class Object;
 class MegaMan;
+class GameObjectHandler;
 
 class Projectile : public ProjectileMovable {
     private:
         const std::string name;
         const int damage;
-        int ticks;
         bool dead;
+
+    protected:
+        int ticks;
 
     public:
         Projectile(const std::string& name,
@@ -35,8 +39,8 @@ class Projectile : public ProjectileMovable {
         const std::string& get_name();
         int hit();
         void collide_with(Enemy* enemy);
-        void collide_with(Object* object);
-        void collide_with(Projectile* projectile);
+        virtual void collide_with(Object* object);
+        virtual void collide_with(Projectile* projectile);
         void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
         void execute_collision_with(GameObject* other);
@@ -70,6 +74,8 @@ class Magnet : public Projectile {
 };
 
 class Spark : public Projectile {
+    private:
+        static int spark_count;
     public:
         Spark(int damage, float velocity_x, float velocity_y,
               const std::vector<float>& initial_position);
@@ -87,6 +93,8 @@ class Ring : public Projectile {
     public:
         Ring(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position);
+        void collide_with(Object* object);
+        void collide_with(Projectile* projectile);
         void tick();
 };
 
@@ -105,7 +113,8 @@ class Ammo {
 
     public:
         Ammo(const std::string& name, int max);
-        Projectile* use(const std::vector<float>& position);
+        void use(GameObjectHandler* handler,
+                        const std::vector<float>& position);
         ~Ammo();
 };
 
@@ -118,7 +127,8 @@ class Cannon {
         Cannon();
         void receive_new_ammo(std::string& name);
         void change_current_ammo(unsigned int ammo_id);
-        Projectile* shoot(const std::vector<float>& position);
+        void shoot(GameObjectHandler* handler,
+                   const std::vector<float>& position);
         ~Cannon();
 };
 

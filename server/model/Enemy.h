@@ -44,7 +44,7 @@ class Enemy : public IAMovable, public Shooter {
         bool is_enemy();
         virtual void shoot(GameObjectHandler* handler) = 0;
         std::pair<std::string, std::string> info(const int id);
-        FloatUpdate* update(const int id);
+        virtual FloatUpdate* update(const int id);
         virtual ~Enemy();
 };
 
@@ -56,6 +56,7 @@ class Met : public Enemy {
         void collide_with(Projectile* projectile);
         void shoot(GameObjectHandler* handler);
         void tick();
+        FloatUpdate* update(const int id);
         ~Met();
 };
 
@@ -76,6 +77,7 @@ class Sniper : public Enemy {
         void collide_with(Projectile* projectile);
         void shoot(GameObjectHandler* handler);
         void tick();
+        FloatUpdate* update(const int id);
         ~Sniper();
 };
 
@@ -87,6 +89,7 @@ class JumpingSniper : public Enemy {
         void collide_with(Projectile* projectile);
         void shoot(GameObjectHandler* handler);
         void tick();
+        FloatUpdate* update(const int id);
         ~JumpingSniper();
 };
 

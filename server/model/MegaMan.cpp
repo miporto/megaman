@@ -7,6 +7,9 @@
 #include "Enemy.h"
 #include "Factory.h"
 #include "common/communication/Packet.h"
+#include "GameObjectHandler.h"
+
+#define MEGAMAN_SIDE 1
 
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
@@ -55,7 +58,8 @@ EnergyTank::~EnergyTank() {}
 MegaMan::MegaMan(const std::string& name) :
         UserMovable(MegaManFactory::respawn_point(),
                     MegaManFactory::velocity_x(),
-                    MegaManFactory::velocity_y()),
+                    MegaManFactory::velocity_y(),
+                    MEGAMAN_SIDE),
         name(name) {}
 
 const std::string& MegaMan::get_name() {
@@ -77,11 +81,12 @@ bool MegaMan::is_dead() {
     return this->tank.is_empty();
 }
 
-Projectile* MegaMan::shoot() {
+void MegaMan::shoot(GameObjectHandler* handler) {
     std::vector<float> projectile_initial_pos = this->get_position();
     this->get_initial_position_for_shot(projectile_initial_pos,
                                         this->get_side());
-    return this->cannon.shoot(projectile_initial_pos);
+
+    this->cannon.shoot(handler, projectile_initial_pos);
 }
 
 void MegaMan::tick() {

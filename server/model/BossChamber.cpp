@@ -10,23 +10,17 @@
 #include "server/communication/ServerCommunicator.h"
 #include "Factory.h"
 
-#define SLEEP_TIME_MICROSECONDS 2000
+#define SLEEP_TIME_MICROSECONDS 100000
 
 BossChamber::BossChamber(Match* match,
                          std::vector<ServerCommunicator*>& communicators,
-                         EventQueue* events,
+                         EventQueue& events,
                          const char boss_id)
         : match(match), boss(BossFactory::boss(boss_id)), events(events) {
     // Players setting
     for (unsigned int i = 0; i < communicators.size(); ++i)
         this->players[communicators[i]->get_player()->get_name()]
                 = communicators[i]->get_player();
-
-//    // EventQueue setting
-//    std::vector<PacketsQueueProtected*> action_queues;
-//    for (unsigned int i = 0; i < communicators.size(); ++i)
-//        action_queues.push_back(communicators[i]->get_actions());
-//    this->events = new EventQueue(action_queues);
 
     //Objects setting: Players, Boss, Default stage
     this->set(BossChamberFactory::chamber());
@@ -62,8 +56,7 @@ void BossChamber::execute_action(Player* player,
     } else if (action_id == DOWN) {
         player->get_megaman()->change_y_movement(pressed, false);
     } else if (action_id == SHOOT) {
-        Projectile *projectile = player->get_megaman()->shoot();
-        if (projectile) this->add_game_object(projectile);
+        player->get_megaman()->shoot(this);
     } else if (AMMO_0 <= action_id && action_id <= AMMO_5 && pressed) {
         player->get_megaman()->change_ammo(action_id);
     } else {
@@ -72,8 +65,8 @@ void BossChamber::execute_action(Player* player,
 }
 
 void BossChamber::execute_events() {
-    while (!this->events->is_empty()) {
-        Action* action = this->events->pop();
+    while (!this->events.is_empty()) {
+        Action* action = this->events.pop();
         Player* player = this->player_with_name(action->get_name());
         this->execute_action(player,
                              action->get_action(), action->is_pressed());
@@ -101,6 +94,7 @@ void BossChamber::acknowledge_updates() {
 }
 
 void BossChamber::run(bool* exit) {
+    usleep(SLEEP_TIME_MICROSECONDS * 10^3);
     while (!*exit && !this->players_are_dead() && !this->boss->is_dead()) {
         this->execute_events();
         this->tick();

@@ -7,18 +7,24 @@
 #include "common/communication/Packet.h"
 #include "Cannon.h"
 #include "MegaMan.h"
+#include "Object.h"
 #include "Enemy.h"
 #include "Factory.h"
+#include "GameObjectHandler.h"
+
+#define PROJECTILE_TIMEOUT 700
+#define PROJECTILE_SIDE 0.5
 
 #define PELLET_DAMAGE 1
-#define PROJECTILE_TIMEOUT 700
+#define FIRE_SHUFFLE_FREC 30
 
 Projectile::Projectile(const std::string& name,
                        int damage,
                        float velocity_x, float velocity_y,
                        const std::vector<float>& initial_position) :
-        ProjectileMovable(initial_position, velocity_x, velocity_y),
-        name(name), damage(damage), ticks(0), dead(false) {}
+        ProjectileMovable(initial_position, velocity_x,
+                          velocity_y, PROJECTILE_SIDE),
+        name(name), damage(damage), dead(false), ticks(0) {}
 
 void Projectile::acknowledge_tick() {
     if (this->ticks > PROJECTILE_TIMEOUT)
@@ -76,7 +82,9 @@ Projectile::~Projectile() {}
 Plasma::Plasma(int damage, float velocity_x, float velocity_y,
                const std::vector<float>& initial_position)
         : Projectile(PLASMA_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {}
+                     velocity_y, initial_position) {
+    this->disable_y_movement();
+}
 
 void Plasma::tick() {
     this->acknowledge_tick();
@@ -90,37 +98,51 @@ Bomb::Bomb(int damage, float velocity_x, float velocity_y,
 
 void Bomb::tick() {
     this->acknowledge_tick();
-    //TODO
+    this->move();
 }
 
 Magnet::Magnet(int damage, float velocity_x, float velocity_y,
                const std::vector<float>& initial_position)
         : Projectile(MAGNET_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {}
+                     velocity_y, initial_position) {
+    //TODO
+}
 
 void Magnet::tick() {
     this->acknowledge_tick();
     //TODO
 }
 
+int Spark::spark_count = 0;
+
 Spark::Spark(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position)
         : Projectile(SPARK_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {}
+                     velocity_y, initial_position) {
+    if (this->spark_count % 3 == 0)
+        this->change_y_direction();
+    else if (this->spark_count % 2 == 0)
+        this->disable_y_movement();
+
+    this->spark_count++;
+}
 
 void Spark::tick() {
     this->acknowledge_tick();
-    //TODO
+    this->move();
 }
 
 Fire::Fire(int damage, float velocity_x, float velocity_y,
            const std::vector<float>& initial_position)
         : Projectile(FIRE_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {}
+                     velocity_y, initial_position) {
+    this->disable_y_movement();
+}
 
 void Fire::tick() {
     this->acknowledge_tick();
-    //TODO
+    if (this->ticks % FIRE_SHUFFLE_FREC == 0) this->change_x_direction();
+    this->move();
 }
 
 Ring::Ring(int damage, float velocity_x, float velocity_y,
@@ -128,9 +150,17 @@ Ring::Ring(int damage, float velocity_x, float velocity_y,
         : Projectile(RING_NAME, damage, velocity_x,
                      velocity_y, initial_position) {}
 
+void Ring::collide_with(Object* object) {
+    this->bounce(object->get_position(), object->get_side());
+}
+
+void Ring::collide_with(Projectile* projectile) {
+    this->bounce(projectile->get_position(), projectile->get_side());
+}
+
 void Ring::tick() {
     this->acknowledge_tick();
-    //TODO
+    this->move();
 }
 
 Pellet::Pellet(float velocity_x, float velocity_y,
@@ -146,12 +176,12 @@ void Pellet::tick() {
 Ammo::Ammo(const std::string& name, int max) :
         name(name), max(max), quantity(max) {}
 
-Projectile* Ammo::use(const std::vector<float>& position) {
+void Ammo::use(GameObjectHandler* handler, const std::vector<float>& position) {
     if (this->quantity) {
         this->quantity--;
-        return ProjectileFactory::projectile(this->name, position);
+        handler->add_game_object
+                (ProjectileFactory::projectile(this->name, position));
     }
-    return NULL;
 }
 
 Ammo::~Ammo() {}
@@ -172,8 +202,9 @@ void Cannon::change_current_ammo(unsigned int ammo_id) {
         throw CannonError("Ammo is unavaiable");
 }
 
-Projectile* Cannon::shoot(const std::vector<float>& position) {
-    return this->current_ammo->use(position);
+void Cannon::shoot(GameObjectHandler* handler,
+                   const std::vector<float>& position) {
+    this->current_ammo->use(handler, position);
 }
 
 Cannon::~Cannon() {

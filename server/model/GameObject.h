@@ -26,16 +26,17 @@ class FloatUpdate;
 
 class GameObject {
     private:
-        const int side;
+        const float side;
 
     protected:
         Position position;
 
     public:
-        explicit GameObject(const std::vector<float>& position);
-        GameObject(const float x, const float y);
+        explicit GameObject(const std::vector<float>& position,
+                            const float side);
+        GameObject(const float x, const float y, const float side);
         virtual const std::string& get_name() = 0;
-        int get_side();
+        float get_side();
         virtual std::vector<float> get_position();
         bool collided_with(GameObject* other);
         virtual void collide_with(Enemy* enemy) = 0;

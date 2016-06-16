@@ -15,28 +15,32 @@ class Movable : public GameObject {
 
     public:
         Movable(const std::vector<float>& position,
-                const float velocity_x, const float velocity_y);
+                const float velocity_x, const float velocity_y,
+                const float side);
         Movable(const std::vector<float>& position,
-                  const int direction_x,
-                  const float velocity_x, const float velocity_y);
+                const int direction_x,
+                const float velocity_x, const float velocity_y,
+                const float side);
         virtual void move();
         bool it_moved();
         virtual void correct_position(const std::vector<float>& obstacle_pos,
-                                      int obstacle_side);
+                                      float obstacle_side);
         std::vector<float> get_position();
         //TODO Mover a clase abstracta Shooter
         void get_initial_position_for_shot(std::vector<float>& shooter_pos,
-                                           int shooter_side);
+                                           float shooter_side);
         virtual ~Movable();
 };
 
 class IAMovable : public Movable {
     public:
         IAMovable(const std::vector<float>& position,
-                  const float velocity_x, const float velocity_y);
+                  const float velocity_x, const float velocity_y,
+                  const float side);
         IAMovable(const std::vector<float>& position,
                   const int direction_x,
-                  const float velocity_x, const float velocity_y);
+                  const float velocity_x, const float velocity_y,
+                  const float side);
         void change_x_direction();
         void change_y_direction();
         ~IAMovable();
@@ -45,7 +49,10 @@ class IAMovable : public Movable {
 class ProjectileMovable : public IAMovable {
     public:
         ProjectileMovable(const std::vector<float>& position,
-                  const float velocity_x, const float velocity_y);
+                          const float velocity_x, const float velocity_y,
+                          const float side);
+        void disable_y_movement();
+        void bounce(const std::vector<float>& object_pos, float object_side);
         ~ProjectileMovable();
 };
 
@@ -58,8 +65,9 @@ class UserMovable : public Movable {
         bool on_stairs;
 
     public:
-        explicit UserMovable(const std::vector<float>& respawn_position,
-                             const float velocity_x, const float velocity_y);
+        UserMovable(const std::vector<float>& respawn_position,
+                    const float velocity_x, const float velocity_y,
+                    const float side);
         void change_x_movement(bool pressed, bool forward);
         void change_y_movement(bool pressed, bool forward);
         void standing_on_stairs();
@@ -67,7 +75,7 @@ class UserMovable : public Movable {
         void reset_movement();
         void reset_position();
         void correct_position(const std::vector<float>& obstacle_pos,
-                              int obstacle_side);
+                              float obstacle_side);
         std::vector<float> get_position();
         ~UserMovable();
 };

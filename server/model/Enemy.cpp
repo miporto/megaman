@@ -13,11 +13,13 @@
 #define SNIPER_SHIELD_FREC 50
 #define JUMPINGSNIPER_JUMP_FREC 15
 
+#define ENEMY_SIDE 1
+
 Enemy::Enemy(const std::string& name,
              const std::vector<float>& position,
              const float velocity_x, const float velocity_y,
              int energy) :
-        IAMovable(position, velocity_x, velocity_y),
+        IAMovable(position, velocity_x, velocity_y, ENEMY_SIDE),
         name(name), energy(energy), ticks(0) {}
 
 void Enemy::collide_with(Enemy* enemy) {
@@ -68,7 +70,9 @@ std::pair<std::string, std::string> Enemy::info(const int id) {
 
 FloatUpdate* Enemy::update(const int id) {
     std::vector<float> pos = this->get_position();
-    return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
+    return new EnemyFloatUpdate(this->name, id,
+                                pos[X_COORD_POS], pos[Y_COORD_POS],
+                                false);
 }
 
 Enemy::~Enemy() {}
@@ -106,6 +110,13 @@ void Met::tick() {
         this->helmet_on = true;
 
     this->ticks++;
+}
+
+FloatUpdate* Met::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new EnemyFloatUpdate(MET_NAME, id,
+                                pos[X_COORD_POS], pos[Y_COORD_POS],
+                                this->helmet_on);
 }
 
 Met::~Met() {}
@@ -167,6 +178,13 @@ void Sniper::tick() {
     this->ticks++;
 }
 
+FloatUpdate* Sniper::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new EnemyFloatUpdate(SNIPER_NAME, id,
+                                pos[X_COORD_POS], pos[Y_COORD_POS],
+                                this->shield_on);
+}
+
 Sniper::~Sniper() {}
 
 JumpingSniper::JumpingSniper(const std::vector<float>& position) :
@@ -204,6 +222,13 @@ void JumpingSniper::tick() {
     this->move();
 
     this->ticks++;
+}
+
+FloatUpdate* JumpingSniper::update(const int id) {
+    std::vector<float> pos = this->get_position();
+    return new EnemyFloatUpdate(JUMPING_SNIPER_NAME, id,
+                                pos[X_COORD_POS], pos[Y_COORD_POS],
+                                this->shield_on);
 }
 
 JumpingSniper::~JumpingSniper() {}

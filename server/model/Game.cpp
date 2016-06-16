@@ -6,6 +6,7 @@
 
 class Match;
 
+/*
 Game::Game(Match* match)
         : running(true), match(match), events(NULL) {}
 
@@ -105,3 +106,4 @@ Game::~Game() {
 
 GameError::GameError(const std::string error_msg) throw()
         : SystemError(error_msg) {}
+*/

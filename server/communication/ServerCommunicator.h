@@ -3,15 +3,15 @@
 
 #include <sstream>
 #include <string>
-#include <server/model/Player.h>
 
+#include "server/model/Player.h"
 #include "common/Thread.h"
 #include "common/communication/Socket.h"
 #include "common/communication/Sender.h"
-#include "common/communication/Receiver.h"
 #include "common/communication/Packet.h"
 #include "common/communication/QuitProtected.h"
 #include "server/model/Stage.h"
+#include "ServerReceiver.h"
 
 class NameWaiter : public Thread {
     private:
@@ -30,19 +30,18 @@ class ServerCommunicator {
         Socket* peer;
         Sender sender;
         PacketsQueueProtected packets_to_send;
-        Receiver receiver;
+        ServerReceiver receiver;
 
     protected:
         ReceivedPacketsProtected packets_received;
 
     public:
-        explicit ServerCommunicator(Socket* peer);
+        ServerCommunicator(Socket* peer, EventQueue& events);
         void send_new_player_notification(const std::string& name);
         void send_stage_pick(const char stage_id);
         void receive_name();
         const std::string& name();
         Player* get_player();
-        PacketsQueueProtected* get_actions();
         void send_stage_info(const std::string& info);
         void send_deceased_info(const int object_id);
         void send_tick_info(const std::string& name,
@@ -83,7 +82,7 @@ class HostCommunicator : public ServerCommunicator {
     private:
         StageIdWaiter waiter;
     public:
-        explicit HostCommunicator(Socket* peer);
+        HostCommunicator(Socket* peer, EventQueue& events);
         char check_stage_id();
         char receive_stage_id();
         void reset_stage_id();

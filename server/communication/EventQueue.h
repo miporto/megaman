@@ -1,28 +1,21 @@
 #ifndef EVENTQUEUE_H
 #define EVENTQUEUE_H
 
-#include <vector>
 #include <queue>
 
 #include "common/Thread.h"
 #include "common/communication/Packet.h"
 
-class EventQueue : public Thread {
+class EventQueue {
     private:
         Mutex m;
         std::queue<Action*> queue;
-        const std::vector<PacketsQueueProtected*> action_queues;
-        bool quit;
-
-        void flush_previous_actions();
 
     public:
-        explicit EventQueue
-                (const std::vector<PacketsQueueProtected*>& action_queues);
-        void run();
+        void push(Action* action);
         bool is_empty();
         Action* pop();
-        void shutdown();
+        void flush_previous_actions();
         ~EventQueue();
 };
 
