@@ -72,7 +72,7 @@ void StageRenderer::new_update(const std::string &name,
         MMegaManRenderer *m_renderer = meg_renderers[id];
         int dir_x = (int) update_info["dir_x"];
         int dir_y = (int) update_info["dir_y"];
-        int energy = (int) update_info["energy"];
+        float energy =  update_info["energy"];
         m_renderer->update(x, y, dir_x,  dir_y, energy);
     } else if (boss_renderers.count(id) != 0) {
         int dir_x = (int) update_info["dir_x"];
@@ -156,10 +156,10 @@ void StageRenderer::create_renderers(std::string &info) {
             } else if (std::find(bosses.begin(), bosses.end(), type) !=
                     bosses.end()) {
                 // TODO: put actual energy.
-                int energy = stoi(element_info["energy"]);
+//                int energy = stoi(element_info["energy"]);
                 boss_renderers[id] = boss_factory.build_boss_renderer(type,
                                                                       x, y,
-                                                                      energy);
+                                                                      30);
             }
         }
     }
