@@ -85,10 +85,13 @@ Boss::~Boss() {}
 
 BombMan::BombMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
-        : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {}
+        : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {
+    this->start_x_movement();
+}
 
 void BombMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(BOMB_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void BombMan::shoot(GameObjectHandler* handler) {
@@ -108,7 +111,8 @@ MagnetMan::MagnetMan(const std::vector<float>& position,
         : Boss(MAGNETMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
 void MagnetMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(MAGNET_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void MagnetMan::shoot(GameObjectHandler* handler) {
@@ -128,7 +132,8 @@ SparkMan::SparkMan(const std::vector<float>& position,
         : Boss(SPARKMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
 void SparkMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(SPARK_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void SparkMan::shoot(GameObjectHandler* handler) {
@@ -148,7 +153,8 @@ RingMan::RingMan(const std::vector<float>& position,
         : Boss(RINGMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
 void RingMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(RING_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void RingMan::shoot(GameObjectHandler* handler) {
@@ -168,7 +174,8 @@ FireMan::FireMan(const std::vector<float>& position,
         : Boss(FIREMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
 void FireMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(FIRE_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void FireMan::shoot(GameObjectHandler* handler) {
