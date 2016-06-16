@@ -142,7 +142,7 @@ class EnemyFloatUpdate : public FloatUpdate {
         EnemyFloatUpdate(const std::string& name, const int object_id,
                          const float x, const float y, const char pressed);
         char get_id() const;
-        bool is_covered();
+        char is_covered();
         std::string get_str() const;
         ~EnemyFloatUpdate();
 };
