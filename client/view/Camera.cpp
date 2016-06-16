@@ -13,6 +13,13 @@ AdjustedPos Camera::adjust_position(float x, float y) {
     return AdjustedPos(adj_x, adj_y);
 }
 
+AdjustedPos Camera::adjust_proyectile_position(float x, float y) {
+    calculate_baricenter();
+    int size = adjust_size();
+    int adj_x = (int) ((x + offset_x) * size);
+    int adj_y = (int) (renderer->GetOutputHeight() - (y + offset_y) * size);
+    return AdjustedPos(adj_x, adj_y);
+}
 int Camera::adjust_size() {
     int width = renderer->GetOutputWidth();
     int height = renderer->GetOutputHeight();
