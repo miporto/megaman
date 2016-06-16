@@ -65,19 +65,21 @@ void StageRenderer::new_update(const std::string &name,
         TileRenderer *t_renderer = tile_renderers[id];
         t_renderer->update(x,  y);
     } else if (actor_renderers.count(id) != 0) {
+        int covered = (int) update_info["covered"];
         ActorRenderer *a_renderer = actor_renderers[id];
-        a_renderer->update(x, y, 0, 0);
+        a_renderer->update(x, y, covered, 0);
     } else if (meg_renderers.count(id) != 0){
         MMegaManRenderer *m_renderer = meg_renderers[id];
         int dir_x = (int) update_info["dir_x"];
         int dir_y = (int) update_info["dir_y"];
         int energy = (int) update_info["energy"];
-        // TODO: send dir and energy
         m_renderer->update(x, y, dir_x,  dir_y, energy);
     } else if (boss_renderers.count(id) != 0) {
+        int dir_x = (int) update_info["dir_x"];
+        int dir_y = (int) update_info["dir_y"];
+        int energy = (int) update_info["energy"];
         BossRenderer *b_renderer = boss_renderers[id];
-        // TODO: send dir and and energy
-        b_renderer->update(x, y, 0, 0, 30);
+        b_renderer->update(x, y, dir_x, dir_y, energy);
     } else {
         if (std::find(objects.begin(), objects.end(), name) != objects.end()) {
             tile_renderers[id] = tile_factory.build_tile_renderer(
@@ -88,8 +90,9 @@ void StageRenderer::new_update(const std::string &name,
                                                                      y);
         } else if (std::find(bosses.begin(), bosses.end(), name) !=
                    bosses.end()) {
-            // TODO: send energy
-            boss_renderers[id] = boss_factory.build_boss_renderer(name, x, y, 30);
+            int energy = (int) update_info["energy"];
+            boss_renderers[id] = boss_factory.build_boss_renderer(name, x, y,
+                                                                  energy);
         }
     }
 }
@@ -153,10 +156,10 @@ void StageRenderer::create_renderers(std::string &info) {
             } else if (std::find(bosses.begin(), bosses.end(), type) !=
                     bosses.end()) {
                 // TODO: put actual energy.
-//                int energy = stoi(element_info["energy"]);
+                int energy = stoi(element_info["energy"]);
                 boss_renderers[id] = boss_factory.build_boss_renderer(type,
                                                                       x, y,
-                                                                      30);
+                                                                      energy);
             }
         }
     }
