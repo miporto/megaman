@@ -123,10 +123,27 @@ bool StageRenderer::are_megamans_alive() {
     return meg_renderers.size() > 0;
 }
 
+bool StageRenderer::game_ended() {
+    if (on_boss_chamber) {
+        return boss_renderers.size() == 0 || meg_renderers.size() == 0;
+    }
+    return meg_renderers.size() == 0;
+}
+
+void StageRenderer::render_end_game_msg() {
+//    SDL2pp::SDLTTF ttf;
+//    SDL2pp::Font font(DATA_PATH "/Vera.ttf", 12);
+//    if (boss_renderers.size() == 0 && meg_renderers.size() > 0) {
+//
+//    }
+}
+
 void StageRenderer::render_boss_chamber(std::string &info) {
+    on_boss_chamber = true;
     delete_all_renderers();
     create_renderers(info);
 }
+
 void StageRenderer::create_renderers(std::string &info) {
     TickInfoParser parser(info);
     TickParserInfo parsed_info = parser.get_parsed_tick_info();
