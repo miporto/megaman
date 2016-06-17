@@ -59,7 +59,7 @@ void PelletRenderer::render() {
 void BombRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
-    renderer->Copy(*sprites, SDL2pp::Rect(123, 144, 24, 24),
+    renderer->Copy(*sprites, SDL2pp::Rect(59, 62, 20, 20),
                    SDL2pp::Rect(pos.first , pos.second, size/2, size/2));
 }
 
