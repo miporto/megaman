@@ -15,6 +15,7 @@ class Camera {
 public:
     explicit Camera(SDL2pp::Renderer *renderer);
     AdjustedPos adjust_position(float x, float y);
+    AdjustedPos adjust_proyectile_position(float x, float y);
     int adjust_size();
     void add_megaman(int id, MMegaManRenderer* megaman);
     void delete_megaman(int id); //Deletes the megaman from the array, not

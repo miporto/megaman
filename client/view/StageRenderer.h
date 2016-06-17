@@ -25,6 +25,8 @@ public:
     void delete_renderer(int id);
     bool are_megamans_alive();
     void render_boss_chamber(std::string &info);
+    void render_end_game_msg();
+    bool game_ended();
     ~StageRenderer();
 
 private:
@@ -44,6 +46,7 @@ private:
     TileRendererFactory tile_factory;
     ActorRendererFactory actor_factory;
     BossRendererFactory boss_factory;
+    bool on_boss_chamber = false;
 };
 
 
