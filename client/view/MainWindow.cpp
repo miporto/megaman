@@ -5,13 +5,6 @@
 #include <string>
 #include <gtkmm/entry.h>
 #include <gtkmm/entrybuffer.h>
-
-#include "MainWindow.h"
-#include "GameLoopThread.h"
-#include "GladeLoader.h"
-#include "common/communication/Packet.h"
-#include "StageRenderer.h"
-
 #include <gtkmm/main.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
@@ -21,7 +14,13 @@
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
 #include <gtkmm/window.h>
-//#include <giomm.h>
+#include <vector>
+
+#include "MainWindow.h"
+#include "GameLoopThread.h"
+#include "GladeLoader.h"
+#include "common/communication/Packet.h"
+#include "StageRenderer.h"
 
 
 #define CONTAINER_NAME "container"
@@ -34,19 +33,15 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
 	set_border_width(0);
 	layout.put(bg_image, 0, 0);
 	init_welcome_screen();
-    init_insert_name();
+    init_insert_name_screen();
     init_stage_pick_screen();
     main_frame.pack_start(*welcome_screen);
     main_frame.pack_start(*insert_name);
     main_frame.pack_start(*stage_pick);
-	//main_frame.pack_start(stage);
     add(main_frame);
-	//layout.put(*welcome_screen, 0, 0);
-	//add(layout);
 	show_all();
     insert_name->hide();
     stage_pick->hide();
-	//stage.hide();
 }
 
 
@@ -77,9 +72,6 @@ void MainWindow::on_new_game_btn_clicked() {
 	std::cout << std::endl;
     welcome_screen->hide();
     insert_name->show();
-	//layout.remove(*welcome_screen);
-	//init_insert_name();
-	//layout.put(*insert_name, 0, 0);
 }
 
 void MainWindow::on_about_btn_clicked() {}
@@ -90,7 +82,7 @@ void MainWindow::on_exit_game_btn_clicked() {
 }
 
 // INSERT NAME SCREEN
-void MainWindow::init_insert_name() {
+void MainWindow::init_insert_name_screen() {
 	insert_name = NULL;
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
 			"resources/insert_name.glade", &insert_name);
@@ -120,26 +112,40 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	std::cout << name.c_str() << std::endl;
 	std::string sname = name.raw();
 	this->client.send_name(sname);
-	//init_stage_pick_screen();
-	//layout.remove(*insert_name);
-	//layout.put(*stage_pick, 0, 0);
+    this->name = sname;
     insert_name->hide();
 	stage_pick->show();
 }
 
 void MainWindow::on_cancel_btn_clicked() {
 	std::cout << "Going back to welcome screen" << std::endl;
-	//layout.remove(*insert_name);
-	//layout.put(*welcome_screen, 0, 0);
     insert_name->hide();
 	welcome_screen->show();
 }
 
 // STAGE PICK SCREEN
+
+void MainWindow::init_players(GladeLoader::ScreenBuilder &builder) {
+    std::vector<std::string> glade_player_ids = {"player_1", "player_2",
+                                                 "player_3", "player_4"};
+    Gtk::Box *box = NULL;
+    for (auto const &it : glade_player_ids) {
+        builder->get_widget(it, box);
+        if (box) {
+            player_boxes.push_back(box);
+        } else {
+            std::cout << "ERROR INIT PLAYERS" << std::endl;
+        }
+        box = NULL;
+    }
+    new_player(name);
+}
+
 void MainWindow::init_stage_pick_screen() {
 	stage_pick = NULL;
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
 			"resources/stage_pick_box.glade", &stage_pick);
+    init_players(builder);
 	Gtk::Button* btn = NULL;
 	builder->get_widget("bombman_btn", btn);
 	if (btn) {
@@ -190,6 +196,23 @@ void MainWindow::init_stage_pick_screen() {
 	}
 }
 
+void MainWindow::new_player(const std::string &name) {
+    if (players.count(name) == 0 && player_boxes.size() > 0) {
+        Gtk::Box *box = player_boxes.back();
+        player_boxes.pop_back();
+        change_box_to_connected(box, name);
+        players[name] = box;
+    }
+}
+
+void MainWindow::change_box_to_connected(Gtk::Box *box, const std::string &name) {
+    std::vector<Gtk::Widget*> children = box->get_children();
+    for (auto const &it: children) {
+        if (auto label = dynamic_cast<Gtk::Label*>(it)) {
+            label->set_text("Test");
+        }
+    }
+}
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
 	client.pick_stage(stage_id);
@@ -197,7 +220,6 @@ void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
     iconify();
     stage_pick->hide();
 }
-
 
 void MainWindow::trigger_game_loop() {
     game_loop = new GameLoopThread(*this, client);

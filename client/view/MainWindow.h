@@ -9,13 +9,16 @@
 #include <gtkmm/layout.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/socket.h>
+#include <map>
 #include <string>
+#include <vector>
 
 #include "client/communication/Client.h"
 #include "common/communication/Socket.h"
 #include "GameLoopThread.h"
 #include "StageSurface.h"
 #include "StageRenderer.h"
+#include "GladeLoader.h"
 
 class GameLoopThread;
 
@@ -23,12 +26,12 @@ class MainWindow: public Gtk::Window {
 public:
 	MainWindow(const char* hostname, const char* port);
 	void resume_stage_pick();
+    void new_player(const std::string &name);
 	virtual ~MainWindow();
 
 protected:
 	Gtk::Layout layout;
 	Gtk::Image bg_image;
-//    StageSurface* surface;
 
     Gtk::Box main_frame;
     Gtk::Box* welcome_screen;
@@ -36,6 +39,9 @@ protected:
 	Gtk::Box* insert_name;
 	Gtk::Box* stage_pick;
 	Gtk::Box* loading;
+    std::string name;
+	std::vector<Gtk::Box*> player_boxes;
+    std::map<std::string, Gtk::Box*> players;
 
 	GameLoopThread* game_loop;
 
@@ -50,10 +56,12 @@ protected:
 private:
 	Client client;
 	void init_welcome_screen();
-	void init_insert_name();
+	void init_insert_name_screen();
 	void init_stage_pick_screen();
 	void trigger_game_loop();
 	bool show_stage_pick();
+    void init_players(GladeLoader::ScreenBuilder &builder);
+    void change_box_to_connected(Gtk::Box *box, const std::string &name);
 };
 
 #endif  // MAINWINDOW_H
