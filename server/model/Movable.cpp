@@ -9,7 +9,7 @@
 #define PX_PER_CELL_RATIO 50
 #define FORWARD 1
 #define BACKWARD -1
-#define GRAVITY -0.01
+#define GRAVITY -0.05
 
 Movable::Movable(const std::vector<float>& position,
                  const float velocity_x, const float velocity_y,
@@ -195,6 +195,14 @@ void GravityAffectedMovable::start_y_movement() {
 void GravityAffectedMovable::stop_x_movement() { this->current_vel_x = 0; }
 
 void GravityAffectedMovable::stop_y_movement() { this->current_vel_y = 0; }
+
+bool GravityAffectedMovable::no_x_movement() {
+    return this->current_vel_x == 0;
+}
+
+bool GravityAffectedMovable::no_y_movement() {
+    return this->current_vel_y == 0;
+}
 
 void GravityAffectedMovable::move() {
     this->previous_position = this->get_position();

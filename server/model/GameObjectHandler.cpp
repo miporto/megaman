@@ -96,8 +96,8 @@ float GameObjectHandler::dist(const std::vector<float>& position,
 std::vector<float> GameObjectHandler::closest_enemy_for_megaman
         (const std::vector<float>& position) {
     std::vector<float> result;
-    result[X_COORD_POS] = std::numeric_limits<float>::infinity();
-    result[Y_COORD_POS] = std::numeric_limits<float>::infinity();
+    result.push_back(std::numeric_limits<float>::infinity());
+    result.push_back(std::numeric_limits<float>::infinity());
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if ((this->objects[i]->is_enemy() || this->objects[i]->is_boss()) &&
       dist(this->objects[i]->get_position(), position) < dist(result, position))
@@ -108,8 +108,8 @@ std::vector<float> GameObjectHandler::closest_enemy_for_megaman
 std::vector<float> GameObjectHandler::closest_megaman
         (const std::vector<float>& position) {
     std::vector<float> result;
-    result[X_COORD_POS] = std::numeric_limits<float>::infinity();
-    result[Y_COORD_POS] = std::numeric_limits<float>::infinity();
+    result.push_back(std::numeric_limits<float>::infinity());
+    result.push_back(std::numeric_limits<float>::infinity());
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if ((this->objects[i]->is_megaman()) &&
       dist(this->objects[i]->get_position(), position) < dist(result, position))

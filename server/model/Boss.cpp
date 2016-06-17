@@ -7,6 +7,7 @@
 #include "Object.h"
 #include "common/communication/Packet.h"
 #include "Cannon.h"
+#include "Factory.h"
 
 #define BOSS_SIDE 1
 
@@ -87,6 +88,7 @@ BombMan::BombMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
         : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {
     this->start_x_movement();
+    this->jump();
 }
 
 void BombMan::collide_with(Projectile* projectile) {
@@ -95,11 +97,16 @@ void BombMan::collide_with(Projectile* projectile) {
 }
 
 void BombMan::shoot(GameObjectHandler* handler) {
-    //TODO
+    handler->add_game_object(ProjectileFactory::projectile
+                                     (BOMB_NAME, this->get_position()));
 }
 
 void BombMan::tick() {
     //TODO
+    if (this->no_y_movement()) {
+        this->change_x_direction();
+        this->jump();
+    }
 }
 
 const std::string BombMan::reward_ammo_name() { return BOMB_NAME; }
