@@ -59,6 +59,8 @@ void BossChamber::execute_action(Player* player,
         player->get_megaman()->shoot(this);
     } else if (AMMO_0 <= action_id && action_id <= AMMO_5 && pressed) {
         player->get_megaman()->change_ammo(action_id);
+    } else if (AMMO_0 <= action_id && action_id <= AMMO_5 && !pressed) {
+        // Ignoro los eventos key_released
     } else {
         throw BossChamberError("There is no action with that id");
     }
