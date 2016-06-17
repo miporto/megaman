@@ -60,9 +60,12 @@ class Plasma : public Projectile {
 };
 
 class Bomb : public Projectile {
+    private:
+        bool has_bounced;
     public:
         Bomb(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position);
+        void collide_with(Object* object);
         void tick();
 };
 

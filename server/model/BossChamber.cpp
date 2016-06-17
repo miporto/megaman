@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <map>
+#include <server/Logger.h>
 
 #include "server/communication/InfoMaker.h"
 #include "BossChamber.h"
@@ -59,6 +60,8 @@ void BossChamber::execute_action(Player* player,
         player->get_megaman()->shoot(this);
     } else if (AMMO_0 <= action_id && action_id <= AMMO_5 && pressed) {
         player->get_megaman()->change_ammo(action_id);
+    } else if (AMMO_0 <= action_id && action_id <= AMMO_5 && !pressed) {
+        // Ignoro los eventos key_released
     } else {
         throw BossChamberError("There is no action with that id");
     }
@@ -99,11 +102,15 @@ void BossChamber::run(bool* exit) {
         this->execute_events();
         this->tick();
         this->check_collisions();
-        this->acknowledge_deceased();
+        //this->acknowledge_deceased();
         this->create_new_projectiles();
         this->acknowledge_updates();
+        this->acknowledge_deceased();
         usleep(SLEEP_TIME_MICROSECONDS);
     }
+
+    if (this->boss->is_dead())
+        Logger::instance()->out << INFO << "Boss chamber beated";
 }
 
 bool BossChamber::beated() {
