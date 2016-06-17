@@ -12,8 +12,9 @@
 
 #define BOSS_SIDE 1
 
+#define BOMBMAN_SHOOT_FREC 35
 #define BOMBMAN_JUMP_FREC 150
-#define BOMBMAN_SHUFFLE_FREC 75
+#define BOMBMAN_SHUFFLE_FREC 35
 #define RINGMAN_JUMP_FREC 350
 #define RINGMAN_SHUFFLE_FREC 10
 #define FIREMAN_JUMP_FREC 450
@@ -109,7 +110,7 @@ void BombMan::collide_with(Projectile* projectile) {
 }
 
 void BombMan::shoot(GameObjectHandler* handler) {
-    if (this->no_y_movement())
+    if (this->no_y_movement() && this->ticks % BOMBMAN_SHOOT_FREC == 0)
         handler->add_game_object(ProjectileFactory::projectile
                                          (BOMB_NAME, this->get_position()));
 }

@@ -58,7 +58,8 @@ std::vector<int> GameObjectHandler::get_rid_of_corpses() {
             this->object_id.erase(dead_obj);
             this->objects.erase(this->objects.begin() + i);
 
-            if (!dead_obj->is_megaman()) delete dead_obj;
+            if (!dead_obj->is_megaman() && !dead_obj->is_boss())
+                delete dead_obj;
         }
     }
     return deceased;
