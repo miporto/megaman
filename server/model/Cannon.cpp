@@ -186,14 +186,23 @@ void Ammo::use(GameObjectHandler* handler, const std::vector<float>& position) {
     if (this->quantity) {
         this->quantity--;
         handler->add_game_object
-                (ProjectileFactory::projectile
-                         (this->name,
-                          position,
-                          handler->closest_enemy_for_megaman(position)));
+                (ProjectileFactory::projectile(this->name, position));
     }
 }
 
 Ammo::~Ammo() {}
+
+MagnetAmmo::MagnetAmmo(const std::string& name, int max) : Ammo(name, max) {}
+
+void MagnetAmmo::use(GameObjectHandler* handler,
+                     const std::vector<float>& position) {
+    if (this->quantity) {
+        this->quantity--;
+        handler->add_game_object
+                (ProjectileFactory::projectile(this->name, position,
+                                 handler->closest_enemy_for_megaman(position)));
+    }
+}
 
 Cannon::Cannon() {
     this->ammos.push_back(AmmoFactory::ammo(PLASMA_NAME));

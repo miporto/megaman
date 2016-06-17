@@ -139,7 +139,9 @@ void MegaMan::collide_with(Projectile* projectile) {
         this->decrease_energy(projectile->hit());
 }
 
-void MegaMan::collide_with(Boss* boss) {}
+void MegaMan::collide_with(Boss* boss) {
+    this->correct_position(boss->get_position(), boss->get_side());
+}
 
 void MegaMan::collide_with(MegaMan* mm) {}
 

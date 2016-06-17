@@ -134,7 +134,8 @@ void Bumby::collide_with(Projectile* projectile) {
 }
 
 void Bumby::shoot(GameObjectHandler* handler) {
-    handler->add_game_object(new Pellet(0, -1, this->get_position()));
+    if (this->ticks % BUMBY_SHUFFLE_FREC == 0)
+        handler->add_game_object(new Pellet(0, -1, this->get_position()));
 }
 
 void Bumby::tick() {

@@ -80,6 +80,8 @@ class GravityAffectedMovable : public IAMovable {
         void start_y_movement();
         void stop_x_movement();
         void stop_y_movement();
+        bool no_x_movement();
+        bool no_y_movement();
         virtual void move();
         void correct_position(const std::vector<float>& obstacle_pos,
                           float obstacle_side);
