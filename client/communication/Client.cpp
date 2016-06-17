@@ -1,6 +1,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Client.h"
 #include "common/communication/AddrInfo.h"
@@ -32,6 +33,10 @@ void Client::connect_to_server() {
 void Client::send_name(std::string& name) {
     player_name = name;
     this->communicator.send_name(name);
+}
+
+std::vector<std::string> Client::get_teammates() {
+    return teammates;
 }
 
 void Client::pick_stage(char stage_id) {

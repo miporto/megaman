@@ -20,6 +20,7 @@ class Client {
         Client(const char* hostname, const char* port);
         void connect_to_server();
         void send_name(std::string& name);
+		std::vector<std::string> get_teammates();
         void pick_stage(char stage_id);
 		void send_action(const char action_id, const bool pressed);
 		std::string receive_stage_info();
