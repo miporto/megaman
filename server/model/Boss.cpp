@@ -15,12 +15,17 @@
 #define BOMBMAN_JUMP_FREC 150
 #define BOMBMAN_SHUFFLE_FREC 75
 #define RINGMAN_JUMP_FREC 350
-#define RINGMAN_SHUFFLE_FREC 15
+#define RINGMAN_SHUFFLE_FREC 10
+#define FIREMAN_JUMP_FREC 450
+#define FIREMAN_SHUFFLE_FREC 350
+#define MAGNETMAN_JUMP_FREC 1500
+#define MAGNETMAN_SHUFFLE_FREC 350
+#define MAGNETMAN_STOP_FREC 555
 
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
         : GravityAffectedMovable(position, velocity_x, velocity_y, BOSS_SIDE),
-          name(name), initial_energy(energy), energy(energy) {
+          name(name), initial_energy(energy), energy(energy), ticks(0) {
     this->change_x_direction();
 }
 
@@ -94,8 +99,7 @@ Boss::~Boss() {}
 
 BombMan::BombMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
-        : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy),
-          ticks(0) {
+        : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {
     this->start_x_movement();
 }
 
@@ -125,7 +129,9 @@ BombMan::~BombMan() {}
 
 MagnetMan::MagnetMan(const std::vector<float>& position,
           const float velocity_x, const float velocity_y, int energy)
-        : Boss(MAGNETMAN_NAME, position, velocity_x, velocity_y, energy) {}
+        : Boss(MAGNETMAN_NAME, position, velocity_x, velocity_y, energy) {
+    this->start_x_movement();
+}
 
 void MagnetMan::collide_with(Projectile* projectile) {
     if (!projectile->get_name().compare(MAGNET_NAME)) return;
@@ -133,11 +139,23 @@ void MagnetMan::collide_with(Projectile* projectile) {
 }
 
 void MagnetMan::shoot(GameObjectHandler* handler) {
-    //TODO
+    handler->add_game_object(ProjectileFactory::projectile
+                     (MAGNET_NAME, this->get_position(),
+                      handler->closest_megaman(this->get_position())));
 }
 
 void MagnetMan::tick() {
-    //TODO
+    if (this->no_y_movement() && this->ticks % MAGNETMAN_JUMP_FREC == 0)
+        this->start_jump();
+    if (this->ticks % MAGNETMAN_SHUFFLE_FREC == 0)
+        this->change_x_direction();
+    if (this->no_y_movement() && !this->no_x_movement()
+        && this->ticks % MAGNETMAN_STOP_FREC == 0)
+        this->stop_x_movement();
+    else
+        this->start_x_movement();
+    this->move();
+    this->ticks++;
 }
 
 const std::string MagnetMan::reward_ammo_name() { return MAGNET_NAME; }
@@ -168,6 +186,7 @@ void SparkMan::tick() {
         this->start_jump();
     }
     this->move();
+    this->ticks++;
 }
 
 const std::string SparkMan::reward_ammo_name() { return SPARK_NAME; }
@@ -176,8 +195,7 @@ SparkMan::~SparkMan() {}
 
 RingMan::RingMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
-        : Boss(RINGMAN_NAME, position, velocity_x, velocity_y, energy),
-          ticks(0) {
+        : Boss(RINGMAN_NAME, position, velocity_x, velocity_y, energy) {
     this->start_x_movement();
 }
 
@@ -187,8 +205,8 @@ void RingMan::collide_with(Projectile* projectile) {
 }
 
 void RingMan::shoot(GameObjectHandler* handler) {
-        handler->add_game_object(ProjectileFactory::projectile
-                                         (RING_NAME, this->get_position()));
+    handler->add_game_object(ProjectileFactory::projectile(RING_NAME,
+                                                           this->get_position()));
 }
 
 void RingMan::tick() {
@@ -206,7 +224,9 @@ RingMan::~RingMan() {}
 
 FireMan::FireMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
-        : Boss(FIREMAN_NAME, position, velocity_x, velocity_y, energy) {}
+        : Boss(FIREMAN_NAME, position, velocity_x, velocity_y, energy) {
+    this->start_x_movement();
+}
 
 void FireMan::collide_with(Projectile* projectile) {
     if (!projectile->get_name().compare(FIRE_NAME)) return;
@@ -214,11 +234,17 @@ void FireMan::collide_with(Projectile* projectile) {
 }
 
 void FireMan::shoot(GameObjectHandler* handler) {
-    //TODO
+    handler->add_game_object(ProjectileFactory::projectile(FIRE_NAME,
+                                                           this->get_position()));
 }
 
 void FireMan::tick() {
-    //TODO
+    if (this->ticks % FIREMAN_SHUFFLE_FREC == 0)
+        this->change_x_direction();
+    else if (this->ticks % FIREMAN_JUMP_FREC == 0)
+        this->start_jump();
+    this->move();
+    this->ticks++;
 }
 
 const std::string FireMan::reward_ammo_name() { return FIRE_NAME; }

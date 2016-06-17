@@ -24,6 +24,9 @@ class Boss : public GravityAffectedMovable, public Shooter {
 
         float get_energy_percentage();
 
+    protected:
+        int ticks;
+
     public:
         Boss(const std::string& name, const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
@@ -47,8 +50,6 @@ class Boss : public GravityAffectedMovable, public Shooter {
 };
 
 class BombMan : public Boss {
-    private:
-        int ticks;
     public:
         BombMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
@@ -82,8 +83,6 @@ class SparkMan : public Boss {
 };
 
 class RingMan : public Boss {
-    private:
-        int ticks;
     public:
         RingMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
