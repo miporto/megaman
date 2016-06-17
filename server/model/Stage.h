@@ -31,6 +31,7 @@ class Stage {
         void acknowledge_updates();
         Player* player_with_name(const std::string& name);
         bool players_are_dead();
+        void release_megamen();
 
     public:
         Stage(Match* match,

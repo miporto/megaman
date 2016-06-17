@@ -104,6 +104,8 @@ bool Stage::players_are_dead() {
     return true;
 }
 
+void Stage::release_megamen() { this->map.release_megamen(); }
+
 void Stage::run(bool* exit) {
     usleep(SLEEP_TIME_MICROSECONDS * 10^3);
     while (!*exit && !this->players_are_dead() && !this->end_reached) {
@@ -115,6 +117,7 @@ void Stage::run(bool* exit) {
         this->acknowledge_updates();
         usleep(SLEEP_TIME_MICROSECONDS);
     }
+    this->release_megamen();
 }
 
 bool Stage::beated() { return !players_are_dead() && this->end_reached; }

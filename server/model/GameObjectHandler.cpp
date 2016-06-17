@@ -119,5 +119,6 @@ std::vector<float> GameObjectHandler::closest_megaman
 
 GameObjectHandler::~GameObjectHandler() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
-        if (!this->objects[i]->is_megaman()) delete this->objects[i];
+        if (!this->objects[i]->is_megaman())
+            delete this->objects[i];
 }

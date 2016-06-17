@@ -36,8 +36,8 @@
 			"name": "BombMan",
 			"initial x": 10,
 			"initial y": 1,
-			"velocity x": 2,
-			"velocity y": 10,
+			"velocity x": 3,
+			"velocity y": 20,
 			"energy": 40 }
 	  },
 	  "2": {

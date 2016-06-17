@@ -9,8 +9,9 @@
 
 class GameObjectHandler {
     private:
-        std::vector<GameObject*> objects;
         std::map<GameObject*, int> object_id;
+    protected:
+        std::vector<GameObject*> objects;
 
         float dist(const std::vector<float>& position,
              const std::vector<float>& other_position);
