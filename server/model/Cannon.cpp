@@ -13,7 +13,7 @@
 #include "GameObjectHandler.h"
 
 #define PROJECTILE_TIMEOUT 600
-#define PROJECTILE_SIDE 0.3
+#define PROJECTILE_SIDE 0.2
 
 #define PELLET_DAMAGE 1
 
