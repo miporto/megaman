@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <map>
+#include <server/Logger.h>
 
 #include "server/communication/InfoMaker.h"
 #include "BossChamber.h"
@@ -107,6 +108,9 @@ void BossChamber::run(bool* exit) {
         this->acknowledge_deceased();
         usleep(SLEEP_TIME_MICROSECONDS);
     }
+
+    if (this->boss->is_dead())
+        Logger::instance()->out << INFO << "Boss chamber beated";
 }
 
 bool BossChamber::beated() {

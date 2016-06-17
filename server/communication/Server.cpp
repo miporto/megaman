@@ -63,6 +63,7 @@ void Server::reset_match() {
 }
 
 void Server::shutdown() {
+    Logger::instance()->out << INFO << "Server shutdown";
     this->quit_server = true;
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
         this->communicators[i]->shutdown();

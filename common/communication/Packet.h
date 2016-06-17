@@ -42,10 +42,10 @@ typedef enum _action_packet_id {
 
 typedef enum _stage_id {
     BOMBMAN = 1,
-    SPARKMAN,
     FIREMAN,
-    RINGMAN,
-    MAGNETMAN
+    SPARKMAN,
+    MAGNETMAN,
+    RINGMAN
 } stage_id_t;
 
 class Packet {

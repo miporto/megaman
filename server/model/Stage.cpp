@@ -82,6 +82,7 @@ void Stage::check_collisions() {
         this->map.check_collisions();
     } catch (const ObjectError& e) {
         this->end_reached = true;
+        Logger::instance()->out << INFO << "Stage beated";
     }
 }
 
