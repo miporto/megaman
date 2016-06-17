@@ -20,7 +20,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
     actors = {MET, BUMBY, SNIPER, JSNIPER};
     bosses = {BOMBMAN, MAGNETMAN, SPARKMAN, RINGMAN, FIREMAN};
-    objects = {BLOCK, STAIRS, SPIKE, DOOR, PELLET, PLASMA};
+    objects = {BLOCK, STAIRS, SPIKE, DOOR, PELLET, BOMB, PLASMA};
     create_renderers(stage_info);
 }
 

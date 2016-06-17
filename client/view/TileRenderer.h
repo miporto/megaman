@@ -14,6 +14,7 @@ enum TileRendererType {
     BLOCK_R,
     STAIRS_R,
     PELLET_R,
+    BOMB_R,
     PLASMA_R,
     SPIKE_R,
     DOOR_R
@@ -65,6 +66,12 @@ public:
     void render();
 };
 
+class BombRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
 class PlasmaRenderer : public TileRenderer {
 public:
     using TileRenderer::TileRenderer;
@@ -80,6 +87,7 @@ public:
 private:
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
+    SDL2pp::Texture *bomb_sprites;
     SDL2pp::Texture *boss_door_sprites;
     Camera &camera;
     std::map<std::string, TileRendererType> tile_renderers;

@@ -3,6 +3,7 @@
 
 #include "TileRenderer.h"
 #include "Camera.h"
+#include "StageElementsConstants.h"
 
 TileRenderer::TileRenderer(SDL2pp::Renderer *renderer,
                              SDL2pp::Texture *sprites, Camera &camera,
@@ -55,6 +56,13 @@ void PelletRenderer::render() {
     renderer->FillRect(pos.first, pos.second, pos.first + 10, pos.second + 10);
 }
 
+void BombRenderer::render() {
+    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    int size = camera.adjust_size();
+    renderer->Copy(*sprites, SDL2pp::Rect(123, 144, 24, 24),
+                   SDL2pp::Rect(pos.first , pos.second, size/2, size/2));
+}
+
 void PlasmaRenderer::render() {
     AdjustedPos pos = camera.adjust_proyectile_position(pos_x, pos_y);
     renderer->SetDrawColor(0, 0, 0xFF);
@@ -66,14 +74,16 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
                                                            camera(camera) {
     sprites = new SDL2pp::Texture(*renderer, "resources/mm3_8boss_shadowman."
             "png");
+    bomb_sprites = new SDL2pp::Texture(*renderer, "resources/bombman.gif");
     boss_door_sprites = new SDL2pp::Texture(*renderer, "resources/boss_door"
             ".png");
-    tile_renderers["Block"] = BLOCK_R;
-    tile_renderers["Stairs"] = STAIRS_R;
-    tile_renderers["Pellet"] = PELLET_R;
-    tile_renderers["Plasma"] = PLASMA_R;
-    tile_renderers["Spike"] = SPIKE_R;
-    tile_renderers["Door"] = DOOR_R;
+    tile_renderers[BLOCK] = BLOCK_R;
+    tile_renderers[STAIRS] = STAIRS_R;
+    tile_renderers[PELLET] = PELLET_R;
+    tile_renderers[BOMB] = BOMB_R;
+    tile_renderers[PLASMA] = PLASMA_R;
+    tile_renderers[SPIKE] = SPIKE_R;
+    tile_renderers[DOOR] = DOOR_R;
 }
 TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
                                                         float pos_x, float
@@ -91,6 +101,10 @@ TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
             break;
         case PELLET_R:
             tile_renderer = new PelletRenderer(renderer, sprites, camera,
+                                               pos_x, pos_y);
+            break;
+        case BOMB_R:
+            tile_renderer = new BombRenderer(renderer, bomb_sprites, camera,
                                                pos_x, pos_y);
             break;
         case PLASMA_R:
