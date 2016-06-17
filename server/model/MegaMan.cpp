@@ -156,7 +156,7 @@ void MegaMan::change_ammo(unsigned int ammo_id) {
         << " changed cannon ammo to id: " << ammo_id;
     } catch (const CannonError& e) {
         Logger::instance()->out << INFO << "Player " << this->get_name()
-        << " - Cannon: " << e.what() << "(id " << ammo_id << ")";
+        << " - Cannon: " << e.what() << " (id " << ammo_id << ")";
     }
 }
 
