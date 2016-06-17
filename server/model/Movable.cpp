@@ -170,7 +170,7 @@ GravityAffectedMovable::GravityAffectedMovable
           direction_x(FORWARD), direction_y(FORWARD),
           current_vel_x(0), current_vel_y(0) {}
 
-void GravityAffectedMovable::jump() {
+void GravityAffectedMovable::start_jump() {
     this->direction_y = FORWARD;
     this->current_vel_y = this->velocity_y * this->direction_y;
 }

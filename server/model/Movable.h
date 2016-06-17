@@ -73,7 +73,7 @@ class GravityAffectedMovable : public IAMovable {
         GravityAffectedMovable(const std::vector<float>& position,
                                const float velocity_x, const float velocity_y,
                                const float side);
-        void jump();
+        void start_jump();
         void change_x_direction();
         void change_y_direction();
         void start_x_movement();

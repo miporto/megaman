@@ -2,6 +2,7 @@
 #include <utility>
 #include <string>
 
+#include "server/Logger.h"
 #include "Boss.h"
 #include "Enemy.h"
 #include "Object.h"
@@ -75,6 +76,8 @@ float Boss::get_energy_percentage() {
 
 FloatUpdate* Boss::update(const int id) {
     std::vector<float> pos = this->get_position();
+    Logger::instance()->out << INFO << "Boss pos: " <<
+            pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
     return new BossFloatUpdate(this->name, id,
                                pos[X_COORD_POS], pos[Y_COORD_POS],
                                (int)pos[DIRECTION_X_POS],
@@ -88,7 +91,7 @@ BombMan::BombMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
         : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {
     this->start_x_movement();
-    this->jump();
+    this->start_jump();
 }
 
 void BombMan::collide_with(Projectile* projectile) {
@@ -97,16 +100,17 @@ void BombMan::collide_with(Projectile* projectile) {
 }
 
 void BombMan::shoot(GameObjectHandler* handler) {
-    handler->add_game_object(ProjectileFactory::projectile
-                                     (BOMB_NAME, this->get_position()));
+    if (this->no_y_movement())
+        handler->add_game_object(ProjectileFactory::projectile
+                                         (BOMB_NAME, this->get_position()));
 }
 
 void BombMan::tick() {
-    //TODO
     if (this->no_y_movement()) {
         this->change_x_direction();
-        this->jump();
+        this->start_jump();
     }
+    this->move();
 }
 
 const std::string BombMan::reward_ammo_name() { return BOMB_NAME; }

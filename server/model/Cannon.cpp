@@ -200,7 +200,7 @@ void MagnetAmmo::use(GameObjectHandler* handler,
         this->quantity--;
         handler->add_game_object
                 (ProjectileFactory::projectile(this->name, position,
-                                 handler->closest_enemy_for_megaman(position)));
+                                  handler->closest_enemy_for_megaman(position)));
     }
 }
 
