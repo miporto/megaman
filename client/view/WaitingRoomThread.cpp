@@ -12,12 +12,25 @@ WaitingRoomThread::WaitingRoomThread(MainWindow &window, Client &client) :
 }
 
 void WaitingRoomThread::run() {
-    std::vector<std::string> new_teammates = client.get_teammates();
-    if (new_teammates.size() != teammates.size()) {
-        //TODO: send all names of the teammates.
+    while (!end) {
+        std::vector<std::string> new_teammates = client.get_teammates();
+        send_new_teammates(new_teammates);
+        teammates = new_teammates;
+        usleep(2000000);
     }
 }
 
-void WaitingRoomThread::send_teammates() {
+void WaitingRoomThread::end_waiting() {
+    end = true;
+}
+
+void WaitingRoomThread::send_new_teammates(std::vector<std::string> &new_teammates) {
+    for (auto const &it : new_teammates) {
+        if (std::find(teammates.begin(), teammates.end(), it) ==
+            teammates.end()) {
+            std::cout << it << std::endl;
+            window.new_player(it);
+        }
+    }
 }
 WaitingRoomThread::~WaitingRoomThread() {}

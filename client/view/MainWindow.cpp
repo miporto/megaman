@@ -146,6 +146,7 @@ void MainWindow::init_stage_pick_screen() {
 	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
 			"resources/stage_pick_box.glade", &stage_pick);
     init_players(builder);
+    trigger_waiting_loop();
 	Gtk::Button* btn = NULL;
 	builder->get_widget("bombman_btn", btn);
 	if (btn) {
@@ -196,6 +197,11 @@ void MainWindow::init_stage_pick_screen() {
 	}
 }
 
+void MainWindow::trigger_waiting_loop() {
+    waiting_loop = new WaitingRoomThread(*this, client);
+    waiting_loop->start();
+}
+
 void MainWindow::new_player(const std::string &name) {
     if (players.count(name) == 0 && player_boxes.size() > 0) {
         Gtk::Box *box = player_boxes.back();
@@ -213,8 +219,12 @@ void MainWindow::change_box_to_connected(Gtk::Box *box, const std::string &name)
         }
     }
 }
+
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
+    waiting_loop->end_waiting();
+    waiting_loop->join();
+    delete waiting_loop;
 	client.pick_stage(stage_id);
     trigger_game_loop();
     iconify();
@@ -235,6 +245,8 @@ bool MainWindow::show_stage_pick() {
     deiconify();
     stage_pick->show();
     game_loop->join();
+    //delete game_loop;
     return false;
 }
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() {
+}

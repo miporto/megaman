@@ -19,6 +19,7 @@
 #include "StageSurface.h"
 #include "StageRenderer.h"
 #include "GladeLoader.h"
+#include "WaitingRoomThread.h"
 
 class GameLoopThread;
 
@@ -44,6 +45,7 @@ protected:
     std::map<std::string, Gtk::Box*> players;
 
 	GameLoopThread* game_loop;
+    WaitingRoomThread* waiting_loop;
 
 	//Signal Handlers
 	void on_new_game_btn_clicked();
@@ -61,6 +63,7 @@ private:
 	void trigger_game_loop();
 	bool show_stage_pick();
     void init_players(GladeLoader::ScreenBuilder &builder);
+    void trigger_waiting_loop();
     void change_box_to_connected(Gtk::Box *box, const std::string &name);
 };
 
