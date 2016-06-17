@@ -47,6 +47,8 @@ class Boss : public GravityAffectedMovable, public Shooter {
 };
 
 class BombMan : public Boss {
+    private:
+        int ticks;
     public:
         BombMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);
@@ -80,6 +82,8 @@ class SparkMan : public Boss {
 };
 
 class RingMan : public Boss {
+    private:
+        int ticks;
     public:
         RingMan(const std::vector<float>& position,
              const float velocity_x, const float velocity_y, int energy);

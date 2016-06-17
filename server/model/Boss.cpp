@@ -12,6 +12,11 @@
 
 #define BOSS_SIDE 1
 
+#define BOMBMAN_JUMP_FREC 150
+#define BOMBMAN_SHUFFLE_FREC 75
+#define RINGMAN_JUMP_FREC 350
+#define RINGMAN_SHUFFLE_FREC 15
+
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
         : GravityAffectedMovable(position, velocity_x, velocity_y, BOSS_SIDE),
@@ -89,9 +94,9 @@ Boss::~Boss() {}
 
 BombMan::BombMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
-        : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {
+        : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy),
+          ticks(0) {
     this->start_x_movement();
-    this->start_jump();
 }
 
 void BombMan::collide_with(Projectile* projectile) {
@@ -106,11 +111,12 @@ void BombMan::shoot(GameObjectHandler* handler) {
 }
 
 void BombMan::tick() {
-    if (this->no_y_movement()) {
-        this->change_x_direction();
+    if (this->ticks % BOMBMAN_JUMP_FREC == 0)
         this->start_jump();
-    }
+    if (this->no_y_movement() && this->ticks % BOMBMAN_SHUFFLE_FREC == 0)
+        this->change_x_direction();
     this->move();
+    this->ticks++;
 }
 
 const std::string BombMan::reward_ammo_name() { return BOMB_NAME; }
@@ -140,7 +146,10 @@ MagnetMan::~MagnetMan() {}
 
 SparkMan::SparkMan(const std::vector<float>& position,
          const float velocity_x, const float velocity_y, int energy)
-        : Boss(SPARKMAN_NAME, position, velocity_x, velocity_y, energy) {}
+        : Boss(SPARKMAN_NAME, position, velocity_x, velocity_y, energy) {
+    this->start_x_movement();
+    this->start_jump();
+}
 
 void SparkMan::collide_with(Projectile* projectile) {
     if (!projectile->get_name().compare(SPARK_NAME)) return;
@@ -148,11 +157,17 @@ void SparkMan::collide_with(Projectile* projectile) {
 }
 
 void SparkMan::shoot(GameObjectHandler* handler) {
-    //TODO
+    if (this->no_y_movement())
+        handler->add_game_object(ProjectileFactory::projectile
+                                         (SPARK_NAME, this->get_position()));
 }
 
 void SparkMan::tick() {
-    //TODO
+    if (this->no_y_movement()) {
+        this->change_x_direction();
+        this->start_jump();
+    }
+    this->move();
 }
 
 const std::string SparkMan::reward_ammo_name() { return SPARK_NAME; }
@@ -161,7 +176,10 @@ SparkMan::~SparkMan() {}
 
 RingMan::RingMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
-        : Boss(RINGMAN_NAME, position, velocity_x, velocity_y, energy) {}
+        : Boss(RINGMAN_NAME, position, velocity_x, velocity_y, energy),
+          ticks(0) {
+    this->start_x_movement();
+}
 
 void RingMan::collide_with(Projectile* projectile) {
     if (!projectile->get_name().compare(RING_NAME)) return;
@@ -169,11 +187,17 @@ void RingMan::collide_with(Projectile* projectile) {
 }
 
 void RingMan::shoot(GameObjectHandler* handler) {
-    //TODO
+        handler->add_game_object(ProjectileFactory::projectile
+                                         (RING_NAME, this->get_position()));
 }
 
 void RingMan::tick() {
-    //TODO
+    if (this->ticks % RINGMAN_JUMP_FREC == 0)
+        this->start_jump();
+    if (this->ticks % RINGMAN_SHUFFLE_FREC == 0)
+        this->change_x_direction();
+    this->move();
+    this->ticks++;
 }
 
 const std::string RingMan::reward_ammo_name() { return RING_NAME; }
