@@ -12,12 +12,12 @@
 #include "Factory.h"
 #include "GameObjectHandler.h"
 
-#define PROJECTILE_TIMEOUT 700
-#define PROJECTILE_SIDE 0.5
+#define PROJECTILE_TIMEOUT 600
+#define PROJECTILE_SIDE 0.3
 
 #define PELLET_DAMAGE 1
 
-#define BOMB_JUMP_FREC 7
+#define BOMB_JUMP_FREC 20
 #define FIRE_SHUFFLE_FREC 30
 
 Projectile::Projectile(const std::string& name,
@@ -96,7 +96,16 @@ void Plasma::tick() {
 Bomb::Bomb(int damage, float velocity_x, float velocity_y,
            const std::vector<float>& initial_position)
         : Projectile(BOMB_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {}
+                     velocity_y, initial_position), has_bounced(false) {}
+
+void Bomb::collide_with(Object* object) {
+    if (!has_bounced) {
+        this->bounce(object->get_position(), object->get_side());
+        this->has_bounced = true;
+    } else {
+        Projectile::collide_with(object);
+    }
+}
 
 void Bomb::tick() {
     this->acknowledge_tick();

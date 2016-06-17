@@ -112,9 +112,10 @@ void Stage::run(bool* exit) {
         this->execute_events();
         this->tick();
         this->check_collisions();
-        this->acknowledge_deceased();
+        //this->acknowledge_deceased();
         this->create_new_projectiles();
         this->acknowledge_updates();
+        this->acknowledge_deceased();
         usleep(SLEEP_TIME_MICROSECONDS);
     }
     this->release_megamen();
