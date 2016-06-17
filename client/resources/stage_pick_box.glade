@@ -32,10 +32,34 @@
           </packing>
         </child>
         <child>
-          <object class="GtkImage" id="image6">
+          <object class="GtkBox" id="player_1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">Megasprite.png</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkImage" id="image6">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Megasprite.png</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Disconnected</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -75,10 +99,34 @@
         <property name="can_focus">False</property>
         <property name="homogeneous">True</property>
         <child>
-          <object class="GtkImage" id="image7">
+          <object class="GtkBox" id="player_3">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">Megasprite.png</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkImage" id="image7">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Megasprite.png</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Disconnected</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -106,10 +154,34 @@
           </packing>
         </child>
         <child>
-          <object class="GtkImage" id="image8">
+          <object class="GtkBox" id="player_2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">Megasprite.png</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkImage" id="image8">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Megasprite.png</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label3">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Disconnected</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -149,10 +221,34 @@
           </packing>
         </child>
         <child>
-          <object class="GtkImage" id="image9">
+          <object class="GtkBox" id="player_4">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">Megasprite.png</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkImage" id="image9">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">Megasprite.png</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label4">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Disconnected</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
