@@ -16,6 +16,8 @@
 #define PROJECTILE_SIDE 0.5
 
 #define PELLET_DAMAGE 1
+
+#define BOMB_JUMP_FREC 7
 #define FIRE_SHUFFLE_FREC 30
 
 Projectile::Projectile(const std::string& name,
@@ -98,6 +100,7 @@ Bomb::Bomb(int damage, float velocity_x, float velocity_y,
 
 void Bomb::tick() {
     this->acknowledge_tick();
+    if (this->ticks % BOMB_JUMP_FREC == 0) this->change_y_direction();
     this->move();
 }
 

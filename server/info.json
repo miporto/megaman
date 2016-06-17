@@ -66,10 +66,10 @@
          },
          "boss": {
 			"name": "FireMan",
-			"initial x": 2,
-			"initial y": 3,
-			"velocity x": 1,
-			"velocity y": 2,
+			"initial x": 15,
+			"initial y": 1,
+			"velocity x": 30,
+			"velocity y": 15,
 			"energy": 40 }
         },
       "3": {
@@ -90,9 +90,16 @@
             {"x": 11, "y": 2}],
           "Stairs": [
             {"x": 8, "y": 1},
-            {"x": 8, "y": 2}]}
+            {"x": 8, "y": 2}]},
+        "boss": {
+          "name": "SparkMan",
+          "initial x": 12,
+          "initial y": 1,
+          "velocity x": 3,
+          "velocity y": 15,
+          "energy": 40 }
         },
-		"4":{"spawn":{
+      "4":{"spawn":{
 				"Met": [{"x": 10, "y": 0}], 
 				"Bumby": [{"x": 100, "y": 30}], 
 				"Sniper": [{"x": 200, "y": 20}], 
@@ -103,7 +110,34 @@
                 "Spike": [{"x": 150, "y": 0}], 
                 "Stairs": [{"x": 250, "y": 150}],
                 "Cliff": [{"x": 350, "y": 0}]  
-            }
+            },
+        "boss": {
+          "name": "MagnetMan",
+          "initial x": 10,
+          "initial y": 5,
+          "velocity x": 10,
+          "velocity y": 5,
+          "energy": 40 }
+        },
+      "5":{"spawn":{
+          "Met": [{"x": 10, "y": 0}],
+          "Bumby": [{"x": 100, "y": 30}],
+          "Sniper": [{"x": 200, "y": 20}],
+          "JumpingSniper": [{"x": 300, "y": 30}]
+        },
+          "object":{
+            "Block": [{"x": 250, "y": 300}],
+            "Spike": [{"x": 150, "y": 0}],
+            "Stairs": [{"x": 250, "y": 150}],
+            "Cliff": [{"x": 350, "y": 0}]
+          },
+        "boss": {
+          "name": "RingMan",
+          "initial x": 12,
+          "initial y": 3,
+          "velocity x": 6,
+          "velocity y": 25,
+          "energy": 40 }
         }
     },
     
@@ -160,8 +194,8 @@
     },
     
     "projectile": {
-            "Plasma": {"damage": 1, "velocity x": 4, "velocity y": 0},
-            "Bomb": {"damage": 7, "velocity x": 7, "velocity y": 15},
+            "Plasma": {"damage": 1, "velocity x": 14, "velocity y": 0},
+            "Bomb": {"damage": 7, "velocity x": 8, "velocity y": 10},
             "Magnet": {"damage": 3, "velocity x": 61, "velocity y": 20},
             "Spark": {"damage": 4, "velocity x": 71, "velocity y": 40},
             "Fire": {"damage": 5, "velocity x": 81, "velocity y": 10},
