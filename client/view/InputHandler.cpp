@@ -5,7 +5,7 @@
 #include "InputHandler.h"
 #include "common/communication/Packet.h"
 
-InputHandler::InputHandler() : window_closed(false), keys_held(10) {
+InputHandler::InputHandler() : window_closed(false), keys_held(11) {
     for (size_t i = 0; i < keys_held.size(); ++i) {
         keys_held[i] = false;
     }
@@ -65,22 +65,22 @@ void InputHandler::read_input() {
                 case SDLK_DOWN:
                     keys_held[DOWN] = false;
                     break;
-                case SDLK_0:
+                case SDLK_1:
                     keys_held[AMMO_0] = false;
                     break;
-                case SDLK_1:
+                case SDLK_2:
                     keys_held[AMMO_1] = false;
                     break;
-                case SDLK_2:
+                case SDLK_3:
                     keys_held[AMMO_2] = false;
                     break;
-                case SDLK_3:
+                case SDLK_4:
                     keys_held[AMMO_3] = false;
                     break;
-                case SDLK_4:
+                case SDLK_5:
                     keys_held[AMMO_4] = false;
                     break;
-                case SDLK_5:
+                case SDLK_6:
                     keys_held[AMMO_5] = false;
                     break;
                 case SDLK_s:
