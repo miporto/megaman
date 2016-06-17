@@ -12,13 +12,13 @@ class MMegaManRenderer {
 public:
     MMegaManRenderer(SDL2pp::Renderer *renderer, Camera &camera, float pos_x,
                      float pos_y, int energy, const std::string &name);
-    void update(float pos_x, float pos_y, int dir_x, int dir_y, int energy);
+    void update(float pos_x, float pos_y, int dir_x, int dir_y, float energy);
     void render();
     float get_x();
     float get_y();
     ~MMegaManRenderer();
 private:
-    void render_energy();
+    void render_energy(int size);
     void render_name();
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
@@ -28,7 +28,7 @@ private:
     int dir_x;
     int dir_y;
     int initial_energy;
-    int actual_energy;
+    float actual_energy;
     const std::string &name;
 };
 

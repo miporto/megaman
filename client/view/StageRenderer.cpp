@@ -20,7 +20,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
     actors = {MET, BUMBY, SNIPER, JSNIPER};
     bosses = {BOMBMAN, MAGNETMAN, SPARKMAN, RINGMAN, FIREMAN};
-    objects = {BLOCK, STAIRS, SPIKE, DOOR, PELLET, PLASMA};
+    objects = {BLOCK, STAIRS, SPIKE, DOOR, PELLET, BOMB, PLASMA};
     create_renderers(stage_info);
 }
 
@@ -72,7 +72,7 @@ void StageRenderer::new_update(const std::string &name,
         MMegaManRenderer *m_renderer = meg_renderers[id];
         int dir_x = (int) update_info["dir_x"];
         int dir_y = (int) update_info["dir_y"];
-        int energy = (int) update_info["energy"];
+        float energy =  update_info["energy"];
         m_renderer->update(x, y, dir_x,  dir_y, energy);
     } else if (boss_renderers.count(id) != 0) {
         int dir_x = (int) update_info["dir_x"];
@@ -123,10 +123,27 @@ bool StageRenderer::are_megamans_alive() {
     return meg_renderers.size() > 0;
 }
 
+bool StageRenderer::game_ended() {
+    if (on_boss_chamber) {
+        return boss_renderers.size() == 0 || meg_renderers.size() == 0;
+    }
+    return meg_renderers.size() == 0;
+}
+
+void StageRenderer::render_end_game_msg() {
+//    SDL2pp::SDLTTF ttf;
+//    SDL2pp::Font font(DATA_PATH "/Vera.ttf", 12);
+//    if (boss_renderers.size() == 0 && meg_renderers.size() > 0) {
+//
+//    }
+}
+
 void StageRenderer::render_boss_chamber(std::string &info) {
+    on_boss_chamber = true;
     delete_all_renderers();
     create_renderers(info);
 }
+
 void StageRenderer::create_renderers(std::string &info) {
     TickInfoParser parser(info);
     TickParserInfo parsed_info = parser.get_parsed_tick_info();
@@ -156,10 +173,10 @@ void StageRenderer::create_renderers(std::string &info) {
             } else if (std::find(bosses.begin(), bosses.end(), type) !=
                     bosses.end()) {
                 // TODO: put actual energy.
-                int energy = stoi(element_info["energy"]);
+//                int energy = stoi(element_info["energy"]);
                 boss_renderers[id] = boss_factory.build_boss_renderer(type,
                                                                       x, y,
-                                                                      energy);
+                                                                      30);
             }
         }
     }

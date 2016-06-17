@@ -7,6 +7,7 @@
 #define CLIFF "Cliff"
 #define DOOR "Door"
 #define PELLET "Pellet"
+#define BOMB "Bomb"
 #define PLASMA "Plasma"
 #define MEGAMAN "MegaMan"
 #define BOMBMAN "BombMan"
