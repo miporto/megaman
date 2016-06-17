@@ -109,16 +109,22 @@ class Pellet : public Projectile {
 };
 
 class Ammo {
-    private:
+    protected:
         const std::string name;
         const int max;
         int quantity;
 
     public:
         Ammo(const std::string& name, int max);
-        void use(GameObjectHandler* handler,
+        virtual void use(GameObjectHandler* handler,
                         const std::vector<float>& position);
-        ~Ammo();
+        virtual ~Ammo();
+};
+
+class MagnetAmmo : public Ammo {
+    public:
+        MagnetAmmo(const std::string& name, int max);
+        void use(GameObjectHandler* handler, const std::vector<float>& position);
 };
 
 class Cannon {

@@ -111,6 +111,7 @@ ProjectileFactory::~ProjectileFactory() {}
 Ammo* AmmoFactory::ammo(const std::string& name) {
     json j_info = FileReader::read(INFO_FILE, "ammo");
     int max = (int) j_info[name]["max"];
+    if (name == MAGNET_NAME) return new MagnetAmmo(name, max);
     return new Ammo(name, max);
 }
 
