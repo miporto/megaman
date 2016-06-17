@@ -113,6 +113,7 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
 	std::string sname = name.raw();
 	this->client.send_name(sname);
     this->name = sname;
+    new_player(name);
     insert_name->hide();
 	stage_pick->show();
 }
@@ -138,7 +139,6 @@ void MainWindow::init_players(GladeLoader::ScreenBuilder &builder) {
         }
         box = NULL;
     }
-    new_player(name);
 }
 
 void MainWindow::init_stage_pick_screen() {
@@ -209,7 +209,7 @@ void MainWindow::change_box_to_connected(Gtk::Box *box, const std::string &name)
     std::vector<Gtk::Widget*> children = box->get_children();
     for (auto const &it: children) {
         if (auto label = dynamic_cast<Gtk::Label*>(it)) {
-            label->set_text("Test");
+            label->set_text(name);
         }
     }
 }
