@@ -50,7 +50,7 @@ int EnergyTank::get_energy() {
 }
 
 float EnergyTank::get_energy_percentage() {
-    return this->current_energy / this->max_energy;
+    return (this->current_energy / this->max_energy) * 100;
 }
 
 EnergyTank::~EnergyTank() {}
@@ -139,7 +139,9 @@ void MegaMan::collide_with(Projectile* projectile) {
         this->decrease_energy(projectile->hit());
 }
 
-void MegaMan::collide_with(Boss* boss) {}
+void MegaMan::collide_with(Boss* boss) {
+    this->correct_position(boss->get_position(), boss->get_side());
+}
 
 void MegaMan::collide_with(MegaMan* mm) {}
 

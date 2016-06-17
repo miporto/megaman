@@ -2,18 +2,22 @@
 #include <utility>
 #include <string>
 
+#include "server/Logger.h"
 #include "Boss.h"
 #include "Enemy.h"
 #include "Object.h"
 #include "common/communication/Packet.h"
 #include "Cannon.h"
+#include "Factory.h"
 
 #define BOSS_SIDE 1
 
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
-        : Movable(position, velocity_x, velocity_y, BOSS_SIDE),
-          name(name), initial_energy(energy), energy(energy) {}
+        : GravityAffectedMovable(position, velocity_x, velocity_y, BOSS_SIDE),
+          name(name), initial_energy(energy), energy(energy) {
+    this->change_x_direction();
+}
 
 const std::string& Boss::get_name() { return this->name; }
 
@@ -50,9 +54,14 @@ std::pair<std::string, std::string> Boss::info(const int id) {
     sx << pos[X_COORD_POS];
     std::stringstream sy;
     sy << pos[Y_COORD_POS];
+    std::stringstream senergy;
+    senergy << this->get_energy_percentage();
 
     json info = { {"x", sx.str()},
                   {"y", sy.str()},
+                  {"direction x", (int)pos[DIRECTION_X_POS]},
+                  {"direction y", (int)pos[DIRECTION_Y_POS]},
+                  {"energy", senergy.str()},
                   {"id", id} };
     return std::make_pair(this->get_name(), info.dump());
 }
@@ -62,11 +71,13 @@ bool Boss::shoots_per_tick() { return true; }
 bool Boss::is_boss() { return true; }
 
 float Boss::get_energy_percentage() {
-    return this->energy / this->initial_energy;
+    return (this->energy / this->initial_energy) * 100;
 }
 
 FloatUpdate* Boss::update(const int id) {
     std::vector<float> pos = this->get_position();
+    Logger::instance()->out << INFO << "Boss pos: " <<
+            pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
     return new BossFloatUpdate(this->name, id,
                                pos[X_COORD_POS], pos[Y_COORD_POS],
                                (int)pos[DIRECTION_X_POS],
@@ -78,18 +89,28 @@ Boss::~Boss() {}
 
 BombMan::BombMan(const std::vector<float>& position,
         const float velocity_x, const float velocity_y, int energy)
-        : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {}
+        : Boss(BOMBMAN_NAME, position, velocity_x, velocity_y, energy) {
+    this->start_x_movement();
+    this->start_jump();
+}
 
 void BombMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(BOMB_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void BombMan::shoot(GameObjectHandler* handler) {
-    //TODO
+    if (this->no_y_movement())
+        handler->add_game_object(ProjectileFactory::projectile
+                                         (BOMB_NAME, this->get_position()));
 }
 
 void BombMan::tick() {
-    //TODO
+    if (this->no_y_movement()) {
+        this->change_x_direction();
+        this->start_jump();
+    }
+    this->move();
 }
 
 const std::string BombMan::reward_ammo_name() { return BOMB_NAME; }
@@ -101,7 +122,8 @@ MagnetMan::MagnetMan(const std::vector<float>& position,
         : Boss(MAGNETMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
 void MagnetMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(MAGNET_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void MagnetMan::shoot(GameObjectHandler* handler) {
@@ -121,7 +143,8 @@ SparkMan::SparkMan(const std::vector<float>& position,
         : Boss(SPARKMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
 void SparkMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(SPARK_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void SparkMan::shoot(GameObjectHandler* handler) {
@@ -141,7 +164,8 @@ RingMan::RingMan(const std::vector<float>& position,
         : Boss(RINGMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
 void RingMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(RING_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void RingMan::shoot(GameObjectHandler* handler) {
@@ -161,7 +185,8 @@ FireMan::FireMan(const std::vector<float>& position,
         : Boss(FIREMAN_NAME, position, velocity_x, velocity_y, energy) {}
 
 void FireMan::collide_with(Projectile* projectile) {
-    //TODO
+    if (!projectile->get_name().compare(FIRE_NAME)) return;
+    this->decrease_energy(projectile->hit());
 }
 
 void FireMan::shoot(GameObjectHandler* handler) {

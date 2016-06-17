@@ -67,9 +67,12 @@ class Bomb : public Projectile {
 };
 
 class Magnet : public Projectile {
+    private:
+        std::vector<float> target_position;
     public:
         Magnet(int damage, float velocity_x, float velocity_y,
-               const std::vector<float>& initial_position);
+               const std::vector<float>& initial_position,
+               const std::vector<float>& target_position);
         void tick();
 };
 
@@ -113,9 +116,15 @@ class Ammo {
 
     public:
         Ammo(const std::string& name, int max);
-        void use(GameObjectHandler* handler,
+        virtual void use(GameObjectHandler* handler,
                         const std::vector<float>& position);
-        ~Ammo();
+        virtual ~Ammo();
+};
+
+class MagnetAmmo : public Ammo {
+    public:
+        MagnetAmmo(const std::string& name, int max);
+        void use(GameObjectHandler* handler, const std::vector<float>& position);
 };
 
 class Cannon {

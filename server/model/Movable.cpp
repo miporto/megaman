@@ -9,7 +9,7 @@
 #define PX_PER_CELL_RATIO 50
 #define FORWARD 1
 #define BACKWARD -1
-#define GRAVITY -0.01
+#define GRAVITY -0.05
 
 Movable::Movable(const std::vector<float>& position,
                  const float velocity_x, const float velocity_y,
@@ -54,7 +54,8 @@ void Movable::correct_position(const std::vector<float>& obstacle_pos,
     float mass_center_x = pos[X_COORD_POS] + (side / 2.0);
     float obs_mass_center_x = obstacle_pos[X_COORD_POS] + (obstacle_side / 2.0);
 
-    if (mass_center_y > obs_mass_center_y) {
+    if (mass_center_y > obs_mass_center_y + (obstacle_side / 3.5)) {
+        //if (mass_center_y > obs_mass_center_y) {
         delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side - pos[Y_COORD_POS];
     } else {
         if (mass_center_x < obs_mass_center_x)
@@ -109,7 +110,12 @@ ProjectileMovable::ProjectileMovable(const std::vector<float>& position,
                                      const float velocity_x,
                                      const float velocity_y, const float side)
         : IAMovable(position, position[DIRECTION_X_POS],
-                    velocity_x, velocity_y, side) {}
+                    velocity_x, velocity_y, side),
+          potential_velocity_y(velocity_y) {}
+
+void ProjectileMovable::enable_y_movement() {
+    this->velocity_y = this->potential_velocity_y;
+}
 
 void ProjectileMovable::disable_y_movement() { this->velocity_y = 0; }
 
@@ -137,16 +143,128 @@ void ProjectileMovable::bounce(const std::vector<float>& object_pos,
     }
 }
 
+bool ProjectileMovable::target_x_reached
+        (const std::vector<float>& target_position) {
+    std::vector<float> pos = this->get_position();
+    if (pos[X_COORD_POS] <= target_position[X_COORD_POS] &&
+            target_position[X_COORD_POS] <= pos[X_COORD_POS] + this->get_side())
+        return true;
+    return false;
+}
+
+bool ProjectileMovable::target_below_proyectile
+        (const std::vector<float>& target_position) {
+    std::vector<float> pos = this->get_position();
+    if (target_position[Y_COORD_POS] < pos[Y_COORD_POS])
+        return true;
+    return false;
+}
+
 ProjectileMovable::~ProjectileMovable() {}
+
+GravityAffectedMovable::GravityAffectedMovable
+        (const std::vector<float>& position, const float velocity_x,
+         const float velocity_y, const float side)
+        : IAMovable(position, velocity_x, velocity_y, side),
+          gravity(GRAVITY),
+          direction_x(FORWARD), direction_y(FORWARD),
+          current_vel_x(0), current_vel_y(0) {}
+
+void GravityAffectedMovable::start_jump() {
+    this->direction_y = FORWARD;
+    this->current_vel_y = this->velocity_y * this->direction_y;
+}
+
+void GravityAffectedMovable::change_x_direction() {
+    this->direction_x = (-1) * this->direction_x;
+    this->current_vel_x = this->direction_x * this->current_vel_x;
+}
+
+void GravityAffectedMovable::change_y_direction() {
+    this->direction_y = (-1) * this->direction_y;
+    this->current_vel_y = this->direction_y * this->current_vel_y;
+}
+
+void GravityAffectedMovable::start_x_movement() {
+    this->current_vel_x = this->direction_x * this->velocity_x;
+}
+void GravityAffectedMovable::start_y_movement() {
+    if (this->current_vel_y) return;
+    this->current_vel_y = this->velocity_y * this->direction_y;
+}
+void GravityAffectedMovable::stop_x_movement() { this->current_vel_x = 0; }
+
+void GravityAffectedMovable::stop_y_movement() { this->current_vel_y = 0; }
+
+bool GravityAffectedMovable::no_x_movement() {
+    return this->current_vel_x == 0;
+}
+
+bool GravityAffectedMovable::no_y_movement() {
+    return this->current_vel_y == 0;
+}
+
+void GravityAffectedMovable::move() {
+    this->previous_position = this->get_position();
+    if (!this->current_vel_x && !this->current_vel_y) return;
+
+    float x_amount, y_amount;
+
+    //MRU en eje x
+    x_amount = this->current_vel_x;
+
+    //MRUV en eje y
+    this->current_vel_y = this->current_vel_y + this->gravity;
+    y_amount = this->current_vel_y;
+
+    this->position.move(x_amount, y_amount);
+}
+
+void GravityAffectedMovable::correct_position
+        (const std::vector<float>& obstacle_pos, float obstacle_side) {
+    std::vector<float> pos = this->get_position();
+    float side = this->get_side();
+    float delta_x, delta_y;
+    delta_x = delta_y = 0;
+
+    float mass_center_y = pos[Y_COORD_POS] + (side / 2.0);
+    float obs_mass_center_y = obstacle_pos[Y_COORD_POS] + (obstacle_side / 2.0);
+
+    float mass_center_x = pos[X_COORD_POS] + (side / 2.0);
+    float obs_mass_center_x = obstacle_pos[X_COORD_POS] + (obstacle_side / 2.0);
+
+    if (mass_center_y > obs_mass_center_y + (obstacle_side / 3.5)) {
+    //if (mass_center_y > obs_mass_center_y) {
+        delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side - pos[Y_COORD_POS];
+        this->current_vel_y = 0;
+    } else {
+        if (mass_center_x < obs_mass_center_x)
+            delta_x = (-1) * (pos[X_COORD_POS] + side
+                              - obstacle_pos[X_COORD_POS]);
+        else
+            delta_x = obstacle_pos[X_COORD_POS] + obstacle_side
+                      - pos[X_COORD_POS];
+        this->current_vel_x = 0;
+    }
+
+    this->position.move(delta_x, delta_y);
+}
+
+std::vector<float> GravityAffectedMovable::get_position() {
+    std::vector<float> position = GameObject::get_position();
+    position.push_back(this->direction_x);
+    position.push_back(this->direction_y);
+    return position;
+}
+
+GravityAffectedMovable::~GravityAffectedMovable() {}
 
 UserMovable::UserMovable(const std::vector<float>& respawn_position,
                          const float velocity_x, const float velocity_y,
                          const float side)
-        : Movable(respawn_position, velocity_x, velocity_y, side),
-          respawn_position(respawn_position),
-          gravity(GRAVITY),
-          direction_x(FORWARD), direction_y(FORWARD),
-          current_vel_x(0), current_vel_y(0), on_stairs(false) {}
+        : GravityAffectedMovable(respawn_position, velocity_x,
+                                 velocity_y, side),
+          respawn_position(respawn_position), on_stairs(false) {}
 
 void UserMovable::change_x_movement(bool start, bool forward) {
     std::cout << "X movement" << std::endl;
@@ -167,7 +285,7 @@ void UserMovable::change_x_movement(bool start, bool forward) {
 }
 
 void UserMovable::change_y_movement(bool start, bool forward) {
-    if (current_vel_y) return; //Si ya esta moviendose en y, ignoro la accion
+    if (this->current_vel_y) return; //Si ya esta moviendose en y, ignoro la accion
     std::cout << "Y movement" << std::endl;
     if (forward) {
         std::cout << "forward" << std::endl;
@@ -231,6 +349,7 @@ void UserMovable::reset_position() {
     this->reset_movement();
 }
 
+/*
 void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
                                    float obstacle_side) {
     std::vector<float> pos = this->get_position();
@@ -246,7 +365,6 @@ void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
 
     if (mass_center_y > obs_mass_center_y) {
         delta_y = obstacle_pos[Y_COORD_POS] + obstacle_side - pos[Y_COORD_POS];
-//        this->reset_movement();
         this->current_vel_y = 0;
     } else {
         if (mass_center_x < obs_mass_center_x)
@@ -261,12 +379,14 @@ void UserMovable::correct_position(const std::vector<float>& obstacle_pos,
     this->position.move(delta_x, delta_y);
 }
 
+
 std::vector<float> UserMovable::get_position() {
     std::vector<float> position = GameObject::get_position();
     position.push_back(this->direction_x);
     position.push_back(this->direction_y);
     return position;
 }
+*/
 
 UserMovable::~UserMovable() {}
 

@@ -1,6 +1,8 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <limits>
+#include <math.h>
 
 #include "server/communication/InfoMaker.h"
 #include "GameObjectHandler.h"
@@ -83,6 +85,36 @@ std::vector<FloatUpdate*> GameObjectHandler::updates() {
             updates.push_back(this->objects[i]->update
                     (this->object_id[this->objects[i]]));
     return updates;
+}
+
+float GameObjectHandler::dist(const std::vector<float>& position,
+                              const std::vector<float>& other_position) {
+    return sqrt(pow((position[X_COORD_POS] - other_position[X_COORD_POS]), 2) +
+                pow((position[Y_COORD_POS] - other_position[Y_COORD_POS]), 2));
+}
+
+std::vector<float> GameObjectHandler::closest_enemy_for_megaman
+        (const std::vector<float>& position) {
+    std::vector<float> result;
+    result.push_back(std::numeric_limits<float>::infinity());
+    result.push_back(std::numeric_limits<float>::infinity());
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        if ((this->objects[i]->is_enemy() || this->objects[i]->is_boss()) &&
+      dist(this->objects[i]->get_position(), position) < dist(result, position))
+            result = this->objects[i]->get_position();
+    return result;
+}
+
+std::vector<float> GameObjectHandler::closest_megaman
+        (const std::vector<float>& position) {
+    std::vector<float> result;
+    result.push_back(std::numeric_limits<float>::infinity());
+    result.push_back(std::numeric_limits<float>::infinity());
+    for (unsigned int i = 0; i < this->objects.size(); ++i)
+        if ((this->objects[i]->is_megaman()) &&
+      dist(this->objects[i]->get_position(), position) < dist(result, position))
+            result = this->objects[i]->get_position();
+    return result;
 }
 
 GameObjectHandler::~GameObjectHandler() {

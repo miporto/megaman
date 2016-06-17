@@ -144,7 +144,7 @@ UpdatePacket ClientCommunicator::receive_boos_update() {
     UpdatePacket update_pkt;
     UpdateInfo info;
     BossFloatUpdate *update = (BossFloatUpdate *) packets_received.pop
-            (ENEMY_FLOAT_UPDATE);
+            (BOSS_FLOAT_UPDATE);
     info["id"] = update->get_object_id();
     info["x"] = update->get_x();
     info["y"] = update->get_y();

@@ -82,8 +82,6 @@ Projectile* ProjectileFactory::projectile(const std::string& name,
                                                velocity_y, position);
     else if (name == BOMB_NAME) return new Bomb(damage, velocity_x,
                                                 velocity_y, position);
-    else if (name == MAGNET_NAME) return new Magnet(damage, velocity_x,
-                                                    velocity_y, position);
     else if (name == SPARK_NAME) return new Spark(damage, velocity_x,
                                                   velocity_y, position);
     else if (name == FIRE_NAME) return new Fire(damage, velocity_x,
@@ -94,11 +92,26 @@ Projectile* ProjectileFactory::projectile(const std::string& name,
     throw FactoryError("No projectile with that name");
 }
 
+Projectile* ProjectileFactory::projectile
+        (const std::string& name, const std::vector<float>& position,
+         const std::vector<float>& target_position) {
+    json j_info = FileReader::read(INFO_FILE, "projectile");
+    int damage = (int) j_info[name]["damage"];
+    float velocity_x = (float) j_info[name]["velocity x"];
+    float velocity_y = (float) j_info[name]["velocity y"];
+    if (name == MAGNET_NAME) return new Magnet(damage, velocity_x,
+                                                    velocity_y, position,
+                                                    target_position);
+
+    throw FactoryError("No projectile with that name");
+}
+
 ProjectileFactory::~ProjectileFactory() {}
 
 Ammo* AmmoFactory::ammo(const std::string& name) {
     json j_info = FileReader::read(INFO_FILE, "ammo");
     int max = (int) j_info[name]["max"];
+    if (name == MAGNET_NAME) return new MagnetAmmo(name, max);
     return new Ammo(name, max);
 }
 
