@@ -53,8 +53,8 @@ std::pair<std::string, std::string> Projectile::info(const int id) {
 
 FloatUpdate* Projectile::update(const int id) {
     std::vector<float> pos = this->get_position();
-    Logger::instance()->out << INFO << "UPDATE Projectile pos: " <<
-            pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
+    //Logger::instance()->out << INFO << "UPDATE Projectile pos: " <<
+    //        pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
     return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 

@@ -1,6 +1,7 @@
 #include <utility>
 #include <vector>
 #include <string>
+#include <server/Logger.h>
 
 #include "common/communication/Packet.h"
 #include "Enemy.h"
@@ -47,6 +48,8 @@ void Enemy::decrease_energy(int amount) {
         this->energy = 0;
     else
         this->energy -= amount;
+    Logger::instance()->out << INFO << "Enemy " << this->get_name()
+    << " has been shot. Remaining energy: " << this->energy;
 }
 
 bool Enemy::is_dead() { return this->energy == 0; }
