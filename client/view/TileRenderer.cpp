@@ -51,7 +51,7 @@ void BossDoorRenderer::render() {
 }
 
 void PelletRenderer::render() {
-    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    AdjustedPos pos = camera.adjust_proyectile_position(pos_x, pos_y);
     renderer->SetDrawColor(0xFF, 0, 0);
     renderer->FillRect(pos.first, pos.second, pos.first + 10, pos.second + 10);
 }
