@@ -38,6 +38,7 @@ class Boss : public GravityAffectedMovable, public Shooter {
         virtual void collide_with(Projectile* projectile) = 0;
         void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
+        void collide_with(PowerUp* pu);
         void execute_collision_with(GameObject* other);
         virtual void shoot(GameObjectHandler* handler) = 0;
         virtual void tick() = 0;

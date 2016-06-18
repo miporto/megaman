@@ -13,8 +13,6 @@
 #define DIRECTION_X_POS 2
 #define DIRECTION_Y_POS 3
 
-#define BODY_SIDE 1
-
 using json = nlohmann::json;
 
 class Enemy;
@@ -22,6 +20,7 @@ class Object;
 class Projectile;
 class Boss;
 class MegaMan;
+class PowerUp;
 class FloatUpdate;
 
 class GameObject {
@@ -44,6 +43,7 @@ class GameObject {
         virtual void collide_with(Projectile* projectile) = 0;
         virtual void collide_with(Boss* boss) = 0;
         virtual void collide_with(MegaMan* mm) = 0;
+        virtual void collide_with(PowerUp* pu) = 0;
         virtual void execute_collision_with(GameObject* other) = 0;
         virtual void tick() = 0;
         virtual bool is_dead() = 0;

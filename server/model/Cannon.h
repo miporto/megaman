@@ -45,6 +45,7 @@ class Projectile : public ProjectileMovable {
         virtual void collide_with(Projectile* projectile);
         void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
+        void collide_with(PowerUp* pu);
         void execute_collision_with(GameObject* other);
         void acknowledge_tick();
         virtual void tick() = 0;
@@ -131,6 +132,7 @@ class Ammo {
         Ammo(const std::string& name, int max);
         virtual void use(GameObjectHandler* handler,
                         const std::vector<float>& position);
+        void increase(const int amount);
         virtual ~Ammo();
 };
 
@@ -151,13 +153,14 @@ class Cannon {
         void change_current_ammo(unsigned int ammo_id);
         void shoot(GameObjectHandler* handler,
                    const std::vector<float>& position);
+        void increase_ammo(const int amount);
         ~Cannon();
 };
 
 
 class CannonError : public SystemError {
-public:
-    explicit CannonError(const std::string error_msg) throw();
+    public:
+        explicit CannonError(const std::string error_msg) throw();
 };
 
 #endif //AMMO_H

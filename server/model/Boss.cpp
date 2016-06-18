@@ -58,6 +58,8 @@ void Boss::collide_with(Boss* boss) {
 
 void Boss::collide_with(MegaMan* mm) {}
 
+void Boss::collide_with(PowerUp* pu) {}
+
 void Boss::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }

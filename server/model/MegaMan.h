@@ -15,14 +15,16 @@ class GameObjectHandler;
 
 class EnergyTank {
     private:
+        const int max_lives;
         int lives;
         const int max_energy;
         int current_energy;
 
     public:
         EnergyTank();
-        void increase_energy(int amount);
+        void increase_energy(const int amount);
         void decrease_energy(int amount);
+        void extra_life();
         void reset();
         bool is_empty();
         int get_energy();
@@ -47,9 +49,13 @@ class MegaMan : public UserMovable {
         void collide_with(Projectile* projectile);
         void collide_with(Boss* boss);
         void collide_with(MegaMan* mm);
+        void collide_with(PowerUp* pu);
         void execute_collision_with(GameObject* other);
         void change_ammo(unsigned int ammo_id);
         void receive_new_ammo(std::string& name);
+        void extra_life();
+        void increase_energy(const int amount);
+        void increase_ammo(const int amount);
         void tick();
         bool is_dead();
         std::pair<std::string, std::string> info(const int id);

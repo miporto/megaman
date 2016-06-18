@@ -81,6 +81,8 @@ void Projectile::collide_with(Boss* boss) {}
 
 void Projectile::collide_with(MegaMan* mm) {}
 
+void Projectile::collide_with(PowerUp* pu) {}
+
 void Projectile::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }
@@ -220,6 +222,13 @@ void Ammo::use(GameObjectHandler* handler, const std::vector<float>& position) {
     }
 }
 
+void Ammo::increase(const int amount) {
+    if (this->quantity + amount > this->max)
+        this->quantity = this->max;
+    else
+        this->quantity += amount;
+}
+
 Ammo::~Ammo() {}
 
 MagnetAmmo::MagnetAmmo(const std::string& name, int max) : Ammo(name, max) {}
@@ -254,6 +263,10 @@ void Cannon::change_current_ammo(unsigned int ammo_id) {
 void Cannon::shoot(GameObjectHandler* handler,
                    const std::vector<float>& position) {
     this->current_ammo->use(handler, position);
+}
+
+void Cannon::increase_ammo(const int amount) {
+    this->current_ammo->increase(amount);
 }
 
 Cannon::~Cannon() {

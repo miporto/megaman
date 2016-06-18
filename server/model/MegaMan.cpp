@@ -12,12 +12,16 @@
 #define MEGAMAN_SIDE 0.75
 
 EnergyTank::EnergyTank() :
-        lives(EnergyTankFactory::initial_lives()),
+        max_lives(EnergyTankFactory::initial_lives()),
+        lives(this->max_lives),
         max_energy(EnergyTankFactory::maximum_energy()),
-        current_energy(EnergyTankFactory::maximum_energy()) {}
+        current_energy(this->max_energy) {}
 
-void EnergyTank::increase_energy(int amount) {
-    this->current_energy += amount;
+void EnergyTank::increase_energy(const int amount) {
+    if (this->current_energy + amount > this->max_energy)
+        this->current_energy = this->max_energy;
+    else
+        this->current_energy += amount;
 }
 
 void EnergyTank::decrease_energy(int amount) {
@@ -30,6 +34,10 @@ void EnergyTank::decrease_energy(int amount) {
     } else {
         this->current_energy -= amount;
     }
+}
+
+void EnergyTank::extra_life() {
+    if (this->lives >= this->max_lives) this->lives++;
 }
 
 bool EnergyTank::is_empty() {
@@ -89,6 +97,14 @@ void MegaMan::shoot(GameObjectHandler* handler) {
     this->cannon.shoot(handler, projectile_initial_pos);
 }
 
+void MegaMan::increase_energy(const int amount) {
+    this->tank.increase_energy(amount);
+}
+
+void MegaMan::increase_ammo(const int amount) {
+    this->cannon.increase_ammo(amount);
+}
+
 void MegaMan::tick() {
     try {
         this->move();
@@ -146,6 +162,8 @@ void MegaMan::collide_with(Boss* boss) {
 
 void MegaMan::collide_with(MegaMan* mm) {}
 
+void MegaMan::collide_with(PowerUp* pu) {}
+
 void MegaMan::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }
@@ -163,6 +181,10 @@ void MegaMan::change_ammo(unsigned int ammo_id) {
 
 void MegaMan::receive_new_ammo(std::string& name) {
     this->cannon.receive_new_ammo(name);
+}
+
+void MegaMan::extra_life() {
+    this->tank.extra_life();
 }
 
 MegaMan::~MegaMan() {}

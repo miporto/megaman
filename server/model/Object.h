@@ -31,6 +31,7 @@ class Object : public GameObject {
         void collide_with(Projectile* projectile);
         void collide_with(Boss* boss);
         virtual void collide_with(MegaMan* mm) = 0;
+        void collide_with(PowerUp* pu);
         void execute_collision_with(GameObject* other);
         void tick();
         bool is_dead();

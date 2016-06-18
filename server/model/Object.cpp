@@ -24,6 +24,8 @@ void Object::collide_with(Projectile* projectile) {}
 
 void Object::collide_with(Boss* boss) {}
 
+void Object::collide_with(PowerUp* pu) {}
+
 void Object::execute_collision_with(GameObject* other) {
     other->collide_with(this);
 }

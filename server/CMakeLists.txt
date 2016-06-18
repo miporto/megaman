@@ -47,7 +47,7 @@ set(SOURCES
         model/Boss.cpp
         model/Boss.h
         model/GameObjectParser.cpp
-        model/GameObjectParser.h model/GameObjectHandler.cpp model/GameObjectHandler.h model/Shooter.h communication/ServerReceiver.cpp communication/ServerReceiver.h)
+        model/GameObjectParser.h model/GameObjectHandler.cpp model/GameObjectHandler.h model/Shooter.h communication/ServerReceiver.cpp communication/ServerReceiver.h model/PowerUp.cpp model/PowerUp.h)
 
 include(CppLint)
 
