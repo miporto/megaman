@@ -3,7 +3,7 @@
 	  "1": {
 		"spawn":{
           "Met": [{"x": 6, "y": 1}],
-          "Bumby": [{"x": 5, "y": 10}]
+          "Bumby": [{"x": 7, "y": 7}]
         },
         "object": {
           "Block": [
@@ -213,7 +213,7 @@
 			"Met": {"energy": 1, "velocity x": 0, "velocity y": 0},
 			"Bumby": {"energy": 1, "velocity x": 10, "velocity y": 0},
 			"Sniper": {"energy": 2, "velocity x": 0, "velocity y": 0},
-			"JumpingSniper": {"energy": 6, "velocity x": 0, "velocity y": 10}
+			"JumpingSniper": {"energy": 6, "velocity x": 0, "velocity y": 8}
     },
     
     "projectile": {

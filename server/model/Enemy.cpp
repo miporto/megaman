@@ -98,6 +98,8 @@ void Met::collide_with(Projectile* projectile) {
 
     else if (!this->helmet_on)
         this->decrease_energy(projectile->hit());
+
+    projectile->hit();
 }
 
 void Met::shoot(GameObjectHandler* handler) {
@@ -169,6 +171,8 @@ void Sniper::collide_with(Projectile* projectile) {
 
     else if (!this->shield_on)
         this->decrease_energy(projectile->hit());
+
+    projectile->hit();
 }
 
 void Sniper::shoot(GameObjectHandler* handler) {
@@ -211,6 +215,8 @@ void JumpingSniper::collide_with(Projectile* projectile) {
 
     else if (!this->shield_on)
         this->decrease_energy(projectile->hit());
+
+    projectile->hit();
 }
 
 void JumpingSniper::shoot(GameObjectHandler* handler) {
