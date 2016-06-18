@@ -64,10 +64,10 @@ void BombRenderer::render() {
 }
 
 void FireRenderer::render() {
-    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    AdjustedPos pos = camera.adjust_proyectile_position(pos_x, pos_y);
     int size = camera.adjust_size();
     renderer->Copy(*sprites, SDL2pp::Rect(223, 68, 14, 16),
-                   SDL2pp::Rect(pos.first , pos.second, size/2, size/2));
+                   SDL2pp::Rect(pos.first, pos.second - size/2, size/2, size/2));
 }
 
 void MagnetRenderer::render() {
