@@ -134,7 +134,7 @@ bool StageRenderer::game_ended() {
 
 void StageRenderer::render_end_game_msg() {
     SDL2pp::SDLTTF ttf;
-    SDL2pp::Font font("resources/Vera.ttf", 48);
+    SDL2pp::Font font("resources/megaman_2.ttf", 48);
     std::string text;
     if (meg_renderers.size() == 0) {
         text = "GAME OVER";
