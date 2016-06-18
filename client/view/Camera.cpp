@@ -13,6 +13,14 @@ AdjustedPos Camera::adjust_position(float x, float y) {
     return AdjustedPos(adj_x, adj_y);
 }
 
+AdjustedPos Camera::adjust_enemy_meg_position(float x, float y){
+    calculate_baricenter();
+    int size = adjust_enemy_size();
+    int adj_x = (int) ((x + offset_x) * size);
+    int adj_y = (int) (renderer->GetOutputHeight() - (y + 1 + offset_y)*size);
+    return AdjustedPos(adj_x, adj_y);
+}
+
 AdjustedPos Camera::adjust_proyectile_position(float x, float y) {
     calculate_baricenter();
     int size = adjust_size();
@@ -26,6 +34,10 @@ int Camera::adjust_size() {
     return std::min(width, height) / 10;
 }
 
+int Camera::adjust_enemy_size() {
+    return (int) (adjust_size() * 0.75);
+}
+
 void Camera::add_megaman(int id, MMegaManRenderer *megaman) {
     megs[id] = megaman;
 }
@@ -34,7 +46,6 @@ void Camera::delete_megaman(int id) {
     megs.erase(id);
 }
 void Camera::calculate_baricenter() {
-    // TODO: do not change offset when megs are on the map border
     float max_x = -1;
     float min_x = max_x;
     float max_y = -1;
