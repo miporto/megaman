@@ -12,12 +12,13 @@ WaitingRoomThread::WaitingRoomThread(MainWindow &window, Client &client) :
 }
 
 void WaitingRoomThread::run() {
-    while (!end) {
+    while (!client.new_stage_pick()) {
         std::vector<std::string> new_teammates = client.get_teammates();
         send_new_teammates(new_teammates);
         teammates = new_teammates;
-        usleep(2000000);
+        usleep(20000);
     }
+//    window.trigger_game_loop();
 }
 
 void WaitingRoomThread::end_waiting() {

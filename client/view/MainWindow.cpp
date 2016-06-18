@@ -222,14 +222,12 @@ void MainWindow::change_box_to_connected(Gtk::Box *box, const std::string &name)
 
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
-    waiting_loop->end_waiting();
-    waiting_loop->join();
-    delete waiting_loop;
 	client.pick_stage(stage_id);
     trigger_game_loop();
 }
 
 void MainWindow::trigger_game_loop() {
+    waiting_loop->join();
     game_loop = new GameLoopThread(*this, client);
     game_loop->start();
     iconify();
@@ -239,6 +237,7 @@ void MainWindow::trigger_game_loop() {
 void MainWindow::resume_stage_pick() {
     Glib::signal_idle().connect(sigc::mem_fun(*this,
                                                &MainWindow::show_stage_pick));
+//    trigger_waiting_loop();
 }
 
 bool MainWindow::show_stage_pick() {
@@ -249,4 +248,5 @@ bool MainWindow::show_stage_pick() {
     return false;
 }
 MainWindow::~MainWindow() {
+    delete waiting_loop;
 }
