@@ -29,7 +29,7 @@ void BossRenderer::render_energy(int size) {
 //            std::endl;
     renderer->SetDrawColor(0xff, 0xff, 0);
     renderer->FillRect(renderer->GetOutputWidth() - 150, 10,
-                       renderer->GetOutputWidth() - energy_percent, size/2);
+                       renderer->GetOutputWidth() - energy_percent - 50, size/2);
 }
 
 void BombManRenderer::render() {
