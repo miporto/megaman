@@ -217,6 +217,8 @@ void Ammo::use(GameObjectHandler* handler, const std::vector<float>& position) {
         this->quantity--;
         handler->add_game_object
                 (ProjectileFactory::projectile(this->name, position, true));
+        Logger::instance()->out << ERROR << "MEGAMAN SHOOTING " << this->name
+        << ". AMMO LEFT: " << this->quantity;
     }
 }
 

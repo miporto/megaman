@@ -11,13 +11,16 @@
 #include "Enemy.h"
 #include "Boss.h"
 
+unsigned int GameObjectHandler::objects_count = 0;
+
 void GameObjectHandler::set(const std::string& info) {
     GameObjectSetter setter(info, this);
 }
 
 void GameObjectHandler::add_game_object(GameObject* object) {
     this->objects.push_back(object);
-    this->object_id[object] = this->objects.size();
+    this->objects_count++;
+    this->object_id[object] = this->objects_count;//this->objects.size();
 }
 
 const std::string GameObjectHandler::status() {

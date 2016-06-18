@@ -85,10 +85,13 @@ bool Boss::shoots_per_tick() { return true; }
 bool Boss::is_boss() { return true; }
 
 float Boss::get_energy_percentage() {
-    return (this->energy / this->initial_energy) * 100;
+    return ((float)this->energy / (float)this->initial_energy) * 100;
 }
 
 FloatUpdate* Boss::update(const int id) {
+    Logger::instance()->out << ERROR << "BOSS SENDING ENERGY PERCENTAGE: "
+    << this->get_energy_percentage();
+
     std::vector<float> pos = this->get_position();
     return new BossFloatUpdate(this->name, id,
                                pos[X_COORD_POS], pos[Y_COORD_POS],
