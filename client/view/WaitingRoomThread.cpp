@@ -16,9 +16,9 @@ void WaitingRoomThread::run() {
         std::vector<std::string> new_teammates = client.get_teammates();
         send_new_teammates(new_teammates);
         teammates = new_teammates;
-        usleep(20000);
+        usleep(10000);
     }
-//    window.trigger_game_loop();
+    window.trigger_game_loop();
 }
 
 void WaitingRoomThread::end_waiting() {

@@ -1,8 +1,6 @@
 #include <glibmm/fileutils.h>
 #include <glibmm/main.h>
 #include <glibmm/markup.h>
-#include <iostream>
-#include <string>
 #include <gtkmm/entry.h>
 #include <gtkmm/entrybuffer.h>
 #include <gtkmm/main.h>
@@ -14,6 +12,9 @@
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
 #include <gtkmm/window.h>
+#include <iostream>
+#include <map>
+#include <string>
 #include <vector>
 
 #include "MainWindow.h"
@@ -81,6 +82,7 @@ void MainWindow::on_exit_game_btn_clicked() {
 	unset_application();
 }
 
+
 // INSERT NAME SCREEN
 void MainWindow::init_insert_name_screen() {
 	insert_name = NULL;
@@ -116,6 +118,7 @@ void MainWindow::on_confirm_name_btn_clicked(Gtk::Entry* text_entry) {
     new_player(name);
     insert_name->hide();
 	stage_pick->show();
+    trigger_waiting_loop();
 }
 
 void MainWindow::on_cancel_btn_clicked() {
@@ -124,7 +127,29 @@ void MainWindow::on_cancel_btn_clicked() {
 	welcome_screen->show();
 }
 
+
 // STAGE PICK SCREEN
+void MainWindow::init_stage_pick_screen() {
+	stage_pick = NULL;
+	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
+			"resources/stage_pick_box.glade", &stage_pick);
+    init_players(builder);
+    std::map<std::string, char> bosses;
+    bosses["bombman_btn"] = BOMBMAN;
+    bosses["fireman_btn"] = FIREMAN;
+    bosses["sparkman_btn"] = SPARKMAN;
+    bosses["magnetman_btn"] = MAGNETMAN;
+    bosses["ringman_btn"] = RINGMAN;
+    for (auto const &it : bosses) {
+        Gtk::Button* btn = NULL;
+        builder->get_widget(it.first, btn);
+        if (btn) {
+            btn->signal_clicked().connect(sigc::bind<char>(sigc::mem_fun(*this,
+                                          &MainWindow::on_boss_pick_btn_clicked),
+                                                           it.second));
+        }
+    }
+}
 
 void MainWindow::init_players(GladeLoader::ScreenBuilder &builder) {
     std::vector<std::string> glade_player_ids = {"player_1", "player_2",
@@ -139,62 +164,6 @@ void MainWindow::init_players(GladeLoader::ScreenBuilder &builder) {
         }
         box = NULL;
     }
-}
-
-void MainWindow::init_stage_pick_screen() {
-	stage_pick = NULL;
-	GladeLoader::ScreenBuilder builder = GladeLoader::load_glade_file(
-			"resources/stage_pick_box.glade", &stage_pick);
-    init_players(builder);
-    trigger_waiting_loop();
-	Gtk::Button* btn = NULL;
-	builder->get_widget("bombman_btn", btn);
-	if (btn) {
-		btn->signal_clicked().connect(
-				sigc::bind<char>(
-						sigc::mem_fun(*this,
-								&MainWindow::on_boss_pick_btn_clicked), BOMBMAN));
-	}
-
-	btn = NULL;
-	builder->get_widget("fireman_btn", btn);
-	if (btn) {
-		btn->signal_clicked().connect(
-				sigc::bind<char>(
-						sigc::mem_fun(*this,
-									  &MainWindow::on_boss_pick_btn_clicked),
-						FIREMAN));
-	}
-
-	btn = NULL;
-	builder->get_widget("sparkman_btn", btn);
-	if (btn) {
-		btn->signal_clicked().connect(
-				sigc::bind<char>(
-						sigc::mem_fun(*this,
-									  &MainWindow::on_boss_pick_btn_clicked),
-						SPARKMAN));
-	}
-
-	btn = NULL;
-	builder->get_widget("magnetman_btn", btn);
-	if (btn) {
-		btn->signal_clicked().connect(
-				sigc::bind<char>(
-						sigc::mem_fun(*this,
-									  &MainWindow::on_boss_pick_btn_clicked),
-						MAGNETMAN));
-	}
-
-	btn = NULL;
-	builder->get_widget("ringman_btn", btn);
-	if (btn) {
-		btn->signal_clicked().connect(
-				sigc::bind<char>(
-						sigc::mem_fun(*this,
-									  &MainWindow::on_boss_pick_btn_clicked),
-						RINGMAN));
-	}
 }
 
 void MainWindow::trigger_waiting_loop() {
@@ -223,7 +192,6 @@ void MainWindow::change_box_to_connected(Gtk::Box *box, const std::string &name)
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
 	client.pick_stage(stage_id);
-    trigger_game_loop();
 }
 
 void MainWindow::trigger_game_loop() {
@@ -248,5 +216,7 @@ bool MainWindow::show_stage_pick() {
     return false;
 }
 MainWindow::~MainWindow() {
-    delete waiting_loop;
+    if (waiting_loop) {
+        delete waiting_loop;
+    }
 }
