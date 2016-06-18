@@ -99,10 +99,14 @@ void MegaMan::shoot(GameObjectHandler* handler) {
 
 void MegaMan::increase_energy(const int amount) {
     this->tank.increase_energy(amount);
+    Logger::instance()->out << INFO << "Player " << this->get_name()
+    << " found extra energy capsule. Remaining energy: " << this->tank.get_energy();
 }
 
 void MegaMan::increase_ammo(const int amount) {
     this->cannon.increase_ammo(amount);
+    Logger::instance()->out << INFO << "Player " << this->get_name()
+    << " found extra plasma capsule";
 }
 
 void MegaMan::tick() {
@@ -185,6 +189,8 @@ void MegaMan::receive_new_ammo(std::string& name) {
 
 void MegaMan::extra_life() {
     this->tank.extra_life();
+    Logger::instance()->out << INFO << "Player " << this->get_name()
+    << " found extra life capsule";
 }
 
 MegaMan::~MegaMan() {}
