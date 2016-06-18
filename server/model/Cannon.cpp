@@ -12,12 +12,12 @@
 #include "Factory.h"
 #include "GameObjectHandler.h"
 
-#define PROJECTILE_TIMEOUT 700
-#define PROJECTILE_SIDE 0.5
+#define PROJECTILE_TIMEOUT 600
+#define PROJECTILE_SIDE 0.2
 
 #define PELLET_DAMAGE 1
 
-#define BOMB_JUMP_FREC 7
+#define BOMB_JUMP_FREC 20
 #define FIRE_SHUFFLE_FREC 30
 
 Projectile::Projectile(const std::string& name,
@@ -53,8 +53,8 @@ std::pair<std::string, std::string> Projectile::info(const int id) {
 
 FloatUpdate* Projectile::update(const int id) {
     std::vector<float> pos = this->get_position();
-    Logger::instance()->out << INFO << "UPDATE Projectile pos: " <<
-            pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
+    //Logger::instance()->out << INFO << "UPDATE Projectile pos: " <<
+    //        pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
     return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 
@@ -96,7 +96,16 @@ void Plasma::tick() {
 Bomb::Bomb(int damage, float velocity_x, float velocity_y,
            const std::vector<float>& initial_position)
         : Projectile(BOMB_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {}
+                     velocity_y, initial_position), has_bounced(false) {}
+
+void Bomb::collide_with(Object* object) {
+    if (!has_bounced) {
+        this->bounce(object->get_position(), object->get_side());
+        this->has_bounced = true;
+    } else {
+        Projectile::collide_with(object);
+    }
+}
 
 void Bomb::tick() {
     this->acknowledge_tick();

@@ -37,6 +37,8 @@ void Boss::decrease_energy(int amount) {
         this->energy = 0;
     else
         this->energy -= amount;
+    Logger::instance()->out << INFO << "Boss " << this->get_name()
+    << " has been shot. Remaining energy: " << this->energy;
 }
 
 bool Boss::is_dead() { return this->energy <= 0; }
@@ -87,8 +89,6 @@ float Boss::get_energy_percentage() {
 
 FloatUpdate* Boss::update(const int id) {
     std::vector<float> pos = this->get_position();
-    Logger::instance()->out << INFO << "Boss pos: " <<
-            pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
     return new BossFloatUpdate(this->name, id,
                                pos[X_COORD_POS], pos[Y_COORD_POS],
                                (int)pos[DIRECTION_X_POS],

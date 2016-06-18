@@ -68,6 +68,10 @@ std::string Client::receive_chamber_info() {
     return communicator.receive_chamber_info();
 }
 
+bool Client::new_stage_pick() {
+    return communicator.new_stage_pick();
+}
+
 bool Client::new_deceased() {
     return communicator.new_deceased();
 }

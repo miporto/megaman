@@ -8,6 +8,7 @@
 
 #define X_COORD_POS 0
 #define Y_COORD_POS 1
+
 #define OBJECT_SIDE 1
 
 Object::Object(const std::string& name, const std::vector<float>& position)

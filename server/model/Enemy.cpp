@@ -1,6 +1,7 @@
 #include <utility>
 #include <vector>
 #include <string>
+#include <server/Logger.h>
 
 #include "common/communication/Packet.h"
 #include "Enemy.h"
@@ -13,7 +14,7 @@
 #define SNIPER_SHIELD_FREC 50
 #define JUMPINGSNIPER_JUMP_FREC 15
 
-#define ENEMY_SIDE 1
+#define ENEMY_SIDE 0.75
 
 Enemy::Enemy(const std::string& name,
              const std::vector<float>& position,
@@ -47,6 +48,8 @@ void Enemy::decrease_energy(int amount) {
         this->energy = 0;
     else
         this->energy -= amount;
+    Logger::instance()->out << INFO << "Enemy " << this->get_name()
+    << " has been shot. Remaining energy: " << this->energy;
 }
 
 bool Enemy::is_dead() { return this->energy == 0; }

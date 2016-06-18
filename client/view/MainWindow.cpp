@@ -227,13 +227,13 @@ void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
     delete waiting_loop;
 	client.pick_stage(stage_id);
     trigger_game_loop();
-    iconify();
-    stage_pick->hide();
 }
 
 void MainWindow::trigger_game_loop() {
     game_loop = new GameLoopThread(*this, client);
     game_loop->start();
+    iconify();
+    stage_pick->hide();
 }
 
 void MainWindow::resume_stage_pick() {

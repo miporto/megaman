@@ -3,6 +3,7 @@
 #include <vector>
 #include <limits>
 #include <math.h>
+#include <server/Logger.h>
 
 #include "server/communication/InfoMaker.h"
 #include "GameObjectHandler.h"
@@ -52,6 +53,9 @@ std::vector<int> GameObjectHandler::get_rid_of_corpses() {
     for (unsigned int i = 0; i < this->objects.size(); ++i) {
         if (this->objects[i]->is_dead()) {
             dead_obj = this->objects[i];
+
+            Logger::instance()->out << INFO <<
+                    dead_obj->get_name() << " is dead";
 
             deceased.push_back(this->object_id[dead_obj]);
 

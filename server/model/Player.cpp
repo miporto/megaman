@@ -24,6 +24,8 @@ void Player::new_megaman() {
 bool Player::alive() { return !this->megaman->is_dead(); }
 
 void Player::add_reward(const std::string& ammo_name) {
+    Logger::instance()->out << INFO << "Player " << name <<
+            " has been rewarded with ammo: " << ammo_name;
     this->ammo_rewards.push_back(ammo_name);
 }
 

@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <map>
+#include <server/Logger.h>
 
 #include "server/model/Player.h"
 #include "server/model/BossChamber.h"
@@ -14,10 +15,10 @@
 Match::Match(std::vector<ServerCommunicator*>& communicators)
     : communicators(communicators) {
     this->stages[BOMBMAN] = StageFactory::initial_stage(BOMBMAN);
-    this->stages[SPARKMAN] = StageFactory::initial_stage(SPARKMAN);
     this->stages[FIREMAN] = StageFactory::initial_stage(FIREMAN);
+    this->stages[SPARKMAN] = StageFactory::initial_stage(SPARKMAN);
+    this->stages[MAGNETMAN] = StageFactory::initial_stage(MAGNETMAN);
     this->stages[RINGMAN] = StageFactory::initial_stage(RINGMAN);
-    //this->stages[MAGNETMAN] = StageFactory::initial_stage(MAGNETMAN);
 }
 
 bool Match::has_started() {
