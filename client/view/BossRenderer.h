@@ -20,6 +20,7 @@ public:
                  Camera &camera, float pos_x, float pos_y, int energy);
     void update(float pos_x, float pos_y, int dir_x, int dir_y, int energy);
     virtual void render() = 0;
+    void render_energy(int size);
     virtual ~BossRenderer() {}
 protected:
     SDL2pp::Renderer *renderer;
