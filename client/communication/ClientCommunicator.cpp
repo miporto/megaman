@@ -169,6 +169,9 @@ std::string ClientCommunicator::receive_chamber_info() {
     throw "ERROR: No chamber info on queue!";
 }
 
+bool ClientCommunicator::new_stage_pick() {
+    return !packets_received.is_empty(STAGE_PICK);
+}
 bool ClientCommunicator::new_update_packets() {
     return new_float_update_packets() || new_megaman_update_packets() ||
            new_enemy_update() || new_boss_update();

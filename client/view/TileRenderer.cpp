@@ -59,7 +59,35 @@ void PelletRenderer::render() {
 void BombRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
-    renderer->Copy(*sprites, SDL2pp::Rect(123, 144, 24, 24),
+    renderer->Copy(*sprites, SDL2pp::Rect(59, 62, 20, 20),
+                   SDL2pp::Rect(pos.first , pos.second, size/2, size/2));
+}
+
+void FireRenderer::render() {
+    AdjustedPos pos = camera.adjust_proyectile_position(pos_x, pos_y);
+    int size = camera.adjust_size();
+    renderer->Copy(*sprites, SDL2pp::Rect(223, 68, 14, 16),
+                   SDL2pp::Rect(pos.first, pos.second - size/2, size/2, size/2));
+}
+
+void MagnetRenderer::render() {
+    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    int size = camera.adjust_size();
+    renderer->Copy(*sprites, SDL2pp::Rect(346, 19, 16, 12),
+                   SDL2pp::Rect(pos.first , pos.second, size/2, size/2));
+}
+
+void RingRenderer::render() {
+    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    int size = camera.adjust_size();
+    renderer->Copy(*sprites, SDL2pp::Rect(226, 60, 16, 16),
+                   SDL2pp::Rect(pos.first , pos.second, size/2, size/2));
+}
+
+void SparkRenderer::render() {
+    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    int size = camera.adjust_size();
+    renderer->Copy(*sprites, SDL2pp::Rect(235, 69, 12, 8),
                    SDL2pp::Rect(pos.first , pos.second, size/2, size/2));
 }
 
@@ -75,12 +103,20 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
     sprites = new SDL2pp::Texture(*renderer, "resources/mm3_8boss_shadowman."
             "png");
     bomb_sprites = new SDL2pp::Texture(*renderer, "resources/bombman.gif");
+    fire_sprites = new SDL2pp::Texture(*renderer, "resources/fireman.gif");
+    magnet_sprites = new SDL2pp::Texture(*renderer, "resources/magnetman.gif");
+    ring_sprites = new SDL2pp::Texture(*renderer, "resources/ringman.gif");
+    spark_sprites = new SDL2pp::Texture(*renderer, "resources/sparkman.gif");
     boss_door_sprites = new SDL2pp::Texture(*renderer, "resources/boss_door"
             ".png");
     tile_renderers[BLOCK] = BLOCK_R;
     tile_renderers[STAIRS] = STAIRS_R;
     tile_renderers[PELLET] = PELLET_R;
     tile_renderers[BOMB] = BOMB_R;
+    tile_renderers[FIRE] = FIRE_R;
+    tile_renderers[MAGNET] = MAGNET_R;
+    tile_renderers[RING] = RING_R;
+    tile_renderers[SPARK] = SPARK_R;
     tile_renderers[PLASMA] = PLASMA_R;
     tile_renderers[SPIKE] = SPIKE_R;
     tile_renderers[DOOR] = DOOR_R;
@@ -106,6 +142,22 @@ TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
         case BOMB_R:
             tile_renderer = new BombRenderer(renderer, bomb_sprites, camera,
                                                pos_x, pos_y);
+            break;
+        case FIRE_R:
+            tile_renderer = new FireRenderer(renderer, fire_sprites, camera,
+                                             pos_x, pos_y);
+            break;
+        case MAGNET_R:
+            tile_renderer = new MagnetRenderer(renderer, magnet_sprites, camera,
+                                             pos_x, pos_y);
+            break;
+        case RING_R:
+            tile_renderer = new RingRenderer(renderer, ring_sprites, camera,
+                                             pos_x, pos_y);
+            break;
+        case SPARK_R:
+            tile_renderer = new SparkRenderer(renderer, spark_sprites, camera,
+                                             pos_x, pos_y);
             break;
         case PLASMA_R:
             tile_renderer = new PlasmaRenderer(renderer, sprites, camera,
