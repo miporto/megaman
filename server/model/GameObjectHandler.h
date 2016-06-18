@@ -23,6 +23,7 @@ class GameObjectHandler {
         void tick();
         void check_collisions();
         std::vector<int> get_rid_of_corpses();
+        virtual void spawn_powerup(const std::vector<float> initial_position);
         void create_new_projectiles();
         std::vector<FloatUpdate*> updates();
         std::vector<float> closest_enemy_for_megaman

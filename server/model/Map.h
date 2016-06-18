@@ -17,6 +17,7 @@ class Map : public GameObjectHandler {
     public:
         Map();
         void release_megamen();
+        void spawn_powerup(const std::vector<float> initial_position);
         ~Map();
 };
 
