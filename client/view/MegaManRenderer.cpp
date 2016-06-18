@@ -43,7 +43,7 @@ void MMegaManRenderer::render() {
 }
 
 void MMegaManRenderer::render_energy(int size) {
-    float energy_percent = actual_energy * size * 2;
+    float energy_percent = actual_energy;
 //    std::cout << "Energy: " << actual_energy << ", " << energy_percent <<
 //            std::endl;
     renderer->SetDrawColor(34, 139, 34);
