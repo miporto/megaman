@@ -9,6 +9,7 @@
 #include "Factory.h"
 #include "GameObjectHandler.h"
 
+#define AVG_PELLET_VEL 15
 #define MET_HELMET_FREC 175
 #define BUMBY_SHUFFLE_FREC 30
 #define BUMBY_SHOOT_FREC 10
@@ -101,9 +102,9 @@ void Met::collide_with(Projectile* projectile) {
 
 void Met::shoot(GameObjectHandler* handler) {
     if (!helmet_on) {
-        handler->add_game_object(new Pellet(-1, 0, this->get_position()));
-        handler->add_game_object(new Pellet(-1, 1, this->get_position()));
-        handler->add_game_object(new Pellet(-1, 1.66, this->get_position()));
+        handler->add_game_object(new Pellet(-2 * AVG_PELLET_VEL, 0, this->get_position()));
+        handler->add_game_object(new Pellet(-1.66 * AVG_PELLET_VEL, AVG_PELLET_VEL, this->get_position()));
+        handler->add_game_object(new Pellet(-AVG_PELLET_VEL, AVG_PELLET_VEL * 1.66, this->get_position()));
     }
 }
 
@@ -139,7 +140,8 @@ void Bumby::collide_with(Projectile* projectile) {
 
 void Bumby::shoot(GameObjectHandler* handler) {
     if (this->ticks % BUMBY_SHOOT_FREC == 0)
-        handler->add_game_object(new Pellet(0, -1, this->get_position()));
+        handler->add_game_object(new Pellet(0, -AVG_PELLET_VEL,
+                                            this->get_position()));
 }
 
 void Bumby::tick() {
@@ -171,7 +173,8 @@ void Sniper::collide_with(Projectile* projectile) {
 
 void Sniper::shoot(GameObjectHandler* handler) {
     if (!this->shield_on)
-        handler->add_game_object(new Pellet(-1, 0, this->get_position()));
+        handler->add_game_object(new Pellet(-AVG_PELLET_VEL, 0,
+                                            this->get_position()));
 }
 
 void Sniper::tick() {
@@ -212,8 +215,10 @@ void JumpingSniper::collide_with(Projectile* projectile) {
 
 void JumpingSniper::shoot(GameObjectHandler* handler) {
     if (!this->shield_on) {
-        handler->add_game_object(new Pellet(-1, 0, this->get_position()));
-        handler->add_game_object(new Pellet(1, 0, this->get_position()));
+        handler->add_game_object(new Pellet(-AVG_PELLET_VEL, 0,
+                                            this->get_position()));
+        handler->add_game_object(new Pellet(AVG_PELLET_VEL, 0,
+                                            this->get_position()));
     }
 }
 

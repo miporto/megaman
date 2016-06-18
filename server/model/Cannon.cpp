@@ -172,10 +172,19 @@ void Fire::tick() {
     this->move();
 }
 
+int Ring::ring_count = 0;
+
 Ring::Ring(int damage, float velocity_x, float velocity_y,
            const std::vector<float>& initial_position, bool thrown_by_megaman)
         : Projectile(RING_NAME, damage, velocity_x,
-                     velocity_y, initial_position, thrown_by_megaman) {}
+                     velocity_y, initial_position, thrown_by_megaman) {
+    if (this->ring_count % 3 == 0)
+        this->change_y_direction();
+    else if (this->ring_count % 2 == 0)
+        this->disable_y_movement();
+
+    this->ring_count++;
+}
 
 void Ring::collide_with(Object* object) {
     this->bounce(object->get_position(), object->get_side());

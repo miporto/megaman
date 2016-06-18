@@ -103,6 +103,8 @@ class Fire : public Projectile {
 };
 
 class Ring : public Projectile {
+    private:
+        static int ring_count;
     public:
         Ring(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position,
