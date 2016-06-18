@@ -44,10 +44,12 @@ class EnergyTankFactory {
 class ProjectileFactory {
     public:
         static Projectile* projectile(const std::string& name,
-                                      const std::vector<float>& position);
+                                      const std::vector<float>& position,
+                                      bool thrown_by_megaman);
         static Projectile* projectile
                 (const std::string& name, const std::vector<float>& position,
-                 const std::vector<float>& target_position);
+                 const std::vector<float>& target_position,
+                 bool thrown_by_megaman);
         ~ProjectileFactory();
 };
 

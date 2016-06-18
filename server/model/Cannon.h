@@ -27,6 +27,7 @@ class Projectile : public ProjectileMovable {
         const std::string name;
         const int damage;
         bool dead;
+        bool thrown_by_megaman;
 
     protected:
         int ticks;
@@ -35,7 +36,8 @@ class Projectile : public ProjectileMovable {
         Projectile(const std::string& name,
                    int damage,
                    float velocity_x, float velocity_y,
-                   const std::vector<float>& initial_position);
+                   const std::vector<float>& initial_position,
+                   bool thrown_by_megaman);
         const std::string& get_name();
         int hit();
         void collide_with(Enemy* enemy);
@@ -47,6 +49,7 @@ class Projectile : public ProjectileMovable {
         void acknowledge_tick();
         virtual void tick() = 0;
         bool is_dead();
+        bool was_thrown_by_megaman();
         std::pair<std::string, std::string> info(const int id);
         FloatUpdate* update(const int id);
         virtual ~Projectile();
@@ -64,7 +67,8 @@ class Bomb : public Projectile {
         bool has_bounced;
     public:
         Bomb(int damage, float velocity_x, float velocity_y,
-             const std::vector<float>& initial_position);
+             const std::vector<float>& initial_position,
+             bool thrown_by_megaman);
         void collide_with(Object* object);
         void tick();
 };
@@ -75,7 +79,8 @@ class Magnet : public Projectile {
     public:
         Magnet(int damage, float velocity_x, float velocity_y,
                const std::vector<float>& initial_position,
-               const std::vector<float>& target_position);
+               const std::vector<float>& target_position,
+               bool thrown_by_megaman);
         void tick();
 };
 
@@ -84,21 +89,26 @@ class Spark : public Projectile {
         static int spark_count;
     public:
         Spark(int damage, float velocity_x, float velocity_y,
-              const std::vector<float>& initial_position);
+              const std::vector<float>& initial_position,
+              bool thrown_by_megaman);
         void tick();
 };
 
 class Fire : public Projectile {
     public:
         Fire(int damage, float velocity_x, float velocity_y,
-             const std::vector<float>& initial_position);
+             const std::vector<float>& initial_position,
+             bool thrown_by_megaman);
         void tick();
 };
 
 class Ring : public Projectile {
+    private:
+        static int ring_count;
     public:
         Ring(int damage, float velocity_x, float velocity_y,
-             const std::vector<float>& initial_position);
+             const std::vector<float>& initial_position,
+             bool thrown_by_megaman);
         void collide_with(Object* object);
         void collide_with(Projectile* projectile);
         void tick();

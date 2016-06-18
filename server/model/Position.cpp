@@ -19,7 +19,7 @@ void Position::move(float x_amount, float y_amount) {
 }
 
 bool Position::out_of_range() {
-    return (this->x < 0 || this->y < 0);
+    return this->y < 0;//(this->x < 0 || this->y < 0);
 }
 
 void Position::reset(const std::vector<float>& respawn_position) {

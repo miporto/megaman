@@ -95,7 +95,10 @@ void Match::play_stage(bool* exit) {
     const char stage_id = this->host_communicator()->receive_stage_id();
     const std::string& stage_info = this->stages[stage_id];
 
-    if (stage_info.empty()) throw MatchError("Stage is unavaiable");
+    if (stage_info.empty()) {
+        Logger::instance()->out << ERROR << "Stage played or unavaiable";
+        throw MatchError("Stage is unavaiable");
+    }
 
     this->notify_stage_pick_to_team(stage_id);
 
