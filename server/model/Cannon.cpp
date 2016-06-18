@@ -125,7 +125,8 @@ Magnet::Magnet(int damage, float velocity_x, float velocity_y,
                const std::vector<float>& target_position,
                bool thrown_by_megaman)
         : Projectile(MAGNET_NAME, damage, velocity_x,
-                     velocity_y, initial_position, thrown_by_megaman) {
+                     velocity_y, initial_position, thrown_by_megaman),
+          target_position(target_position) {
     this->disable_y_movement();
 }
 

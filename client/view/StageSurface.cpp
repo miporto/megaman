@@ -53,7 +53,7 @@ void StageSurface::run() {
             // Check if they entered the boss chamber
             if (client.new_chamber_info_packet()) {
                 std::string chamber_info = client.receive_chamber_info();
-                std::cout << chamber_info << std::endl;
+                //std::cout << chamber_info << std::endl;
                 stage_renderer->render_boss_chamber(chamber_info);
             }
 

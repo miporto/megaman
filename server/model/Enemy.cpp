@@ -11,6 +11,7 @@
 
 #define MET_HELMET_FREC 175
 #define BUMBY_SHUFFLE_FREC 30
+#define BUMBY_SHOOT_FREC 10
 #define SNIPER_SHIELD_FREC 50
 #define JUMPINGSNIPER_JUMP_FREC 15
 
@@ -137,7 +138,7 @@ void Bumby::collide_with(Projectile* projectile) {
 }
 
 void Bumby::shoot(GameObjectHandler* handler) {
-    if (this->ticks % BUMBY_SHUFFLE_FREC == 0)
+    if (this->ticks % BUMBY_SHOOT_FREC == 0)
         handler->add_game_object(new Pellet(0, -1, this->get_position()));
 }
 
