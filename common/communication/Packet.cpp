@@ -150,6 +150,10 @@ std::string FloatUpdate::get_str() const {
     return str;
 }
 
+FloatUpdate* FloatUpdate::clone() const {
+    return new FloatUpdate(*this);
+}
+
 FloatUpdate::~FloatUpdate() {}
 
 EnemyFloatUpdate::EnemyFloatUpdate(const std::string& name, const int object_id,
@@ -195,6 +199,10 @@ std::string EnemyFloatUpdate::get_str() const {
         str.push_back(FALSE_CODE);
 
     return str;
+}
+
+EnemyFloatUpdate* EnemyFloatUpdate::clone() const {
+    return new EnemyFloatUpdate(*this);
 }
 
 EnemyFloatUpdate::~EnemyFloatUpdate() {}
@@ -268,6 +276,10 @@ std::string MegaManFloatUpdate::get_str() const {
     return str;
 }
 
+MegaManFloatUpdate* MegaManFloatUpdate::clone() const {
+    return new MegaManFloatUpdate(*this);
+}
+
 MegaManFloatUpdate::~MegaManFloatUpdate() {}
 
 BossFloatUpdate::BossFloatUpdate(const std::string& name,
@@ -324,6 +336,10 @@ std::string BossFloatUpdate::get_str() const {
         str.push_back(dir_y_arr[i]);
 
     return str;
+}
+
+BossFloatUpdate* BossFloatUpdate::clone() const {
+    return new BossFloatUpdate(*this);
 }
 
 BossFloatUpdate::~BossFloatUpdate() {}

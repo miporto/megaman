@@ -127,7 +127,8 @@ void Match::notify_tick(const std::string& name, const std::string& tick_info) {
 
 void Match::notify_tick(FloatUpdate* update) {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
-        this->communicators[i]->send_tick_info(update);
+        this->communicators[i]->send_tick_info(update->clone());
+    delete update;
 }
 
 Match::~Match() {}
