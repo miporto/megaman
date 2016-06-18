@@ -205,18 +205,21 @@ void MainWindow::trigger_game_loop() {
 void MainWindow::resume_stage_pick() {
     Glib::signal_idle().connect(sigc::mem_fun(*this,
                                                &MainWindow::show_stage_pick));
-//    trigger_waiting_loop();
+    waiting_loop->start();
 }
 
 bool MainWindow::show_stage_pick() {
     deiconify();
     stage_pick->show();
     game_loop->join();
-    //delete game_loop;
+    delete game_loop;
     return false;
 }
+
 MainWindow::~MainWindow() {
     if (waiting_loop) {
+        waiting_loop->end_wait();
+        waiting_loop->join();
         delete waiting_loop;
     }
 }
