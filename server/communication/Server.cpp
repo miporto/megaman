@@ -24,13 +24,9 @@ Server::Server(const char* port)
 }
 
 void Server::wait_for_players() {
-    //Acceptor acceptor(this->socket, this->match);
-
     while (!this->quit_server &&
            !this->match->is_full() && !this->match->has_started())
         usleep(SLEEP_TIME_MICROSECONDS);
-
-    //acceptor.shutdown();
 }
 
 void Server::run() {
@@ -53,7 +49,8 @@ void Server::get_rid_of_disconnected_clients() {
 
 void Server::reset_match() {
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
-        this->communicators[i]->shutdown();
+        if (!this->communicators[i]->disconnected())
+            this->communicators[i]->shutdown();
     for (unsigned int i = 0; i < this->communicators.size(); ++i) {
         this->communicators.erase(this->communicators.begin() + i);
         delete this->communicators[i];
@@ -66,7 +63,8 @@ void Server::shutdown() {
     Logger::instance()->out << INFO << "Server shutdown";
     this->quit_server = true;
     for (unsigned int i = 0; i < this->communicators.size(); ++i)
-        this->communicators[i]->shutdown();
+        if (!this->communicators[i]->disconnected())
+            this->communicators[i]->shutdown();
     this->acceptor->shutdown();
 }
 
