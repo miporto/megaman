@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <vector>
 
 #include "server/model/Factory.h"
 #include "Server.h"
@@ -38,23 +39,31 @@ void Server::run() {
 }
 
 void Server::get_rid_of_disconnected_clients() {
-    for (unsigned int i = 0; i < this->communicators.size(); ++i)
-        if (this->communicators[i]->disconnected()) {
-            this->communicators.erase(this->communicators.begin() + i);
-            delete this->communicators[i];
-
-            if (i == 0) this->reset_match();
+    for (std::vector<ServerCommunicator*>::iterator it = this->communicators.begin();
+         it != this->communicators.end();) {
+        if ((*it)->disconnected()) {
+            // Si el Host esta desconectado, el Match se reinicia
+            if (it == this->communicators.begin()) {
+                this->reset_match();
+                break;
+            }
+            delete (*it);
+            it = this->communicators.erase(it);
+        } else {
+            ++it;
         }
+    }
 }
 
 void Server::reset_match() {
-    for (unsigned int i = 0; i < this->communicators.size(); ++i)
+    // Clients shutdown & close
+    for (unsigned int i = 0; i < this->communicators.size(); ++i) {
         if (!this->communicators[i]->disconnected())
             this->communicators[i]->shutdown();
-    for (unsigned int i = 0; i < this->communicators.size(); ++i) {
-        this->communicators.erase(this->communicators.begin() + i);
         delete this->communicators[i];
     }
+
+    this->communicators.clear();
     delete this->match;
     this->match = new Match(this->communicators);
 }
