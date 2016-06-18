@@ -112,7 +112,8 @@ void BombMan::collide_with(Projectile* projectile) {
 void BombMan::shoot(GameObjectHandler* handler) {
     if (this->no_y_movement() && this->ticks % BOMBMAN_SHOOT_FREC == 0)
         handler->add_game_object(ProjectileFactory::projectile
-                                         (BOMB_NAME, this->get_position()));
+                                         (BOMB_NAME, this->get_position(),
+                                          false));
 }
 
 void BombMan::tick() {
@@ -142,7 +143,7 @@ void MagnetMan::collide_with(Projectile* projectile) {
 void MagnetMan::shoot(GameObjectHandler* handler) {
     handler->add_game_object(ProjectileFactory::projectile
                      (MAGNET_NAME, this->get_position(),
-                      handler->closest_megaman(this->get_position())));
+                      handler->closest_megaman(this->get_position()), false));
 }
 
 void MagnetMan::tick() {
@@ -178,7 +179,9 @@ void SparkMan::collide_with(Projectile* projectile) {
 void SparkMan::shoot(GameObjectHandler* handler) {
     if (this->no_y_movement())
         handler->add_game_object(ProjectileFactory::projectile
-                                         (SPARK_NAME, this->get_position()));
+                                         (SPARK_NAME,
+                                          this->get_position(),
+                                          false));
 }
 
 void SparkMan::tick() {
@@ -207,7 +210,8 @@ void RingMan::collide_with(Projectile* projectile) {
 
 void RingMan::shoot(GameObjectHandler* handler) {
     handler->add_game_object(ProjectileFactory::projectile(RING_NAME,
-                                                           this->get_position()));
+                                                           this->get_position(),
+                                                           false));
 }
 
 void RingMan::tick() {
@@ -236,7 +240,8 @@ void FireMan::collide_with(Projectile* projectile) {
 
 void FireMan::shoot(GameObjectHandler* handler) {
     handler->add_game_object(ProjectileFactory::projectile(FIRE_NAME,
-                                                           this->get_position()));
+                                                           this->get_position(),
+                                                           false));
 }
 
 void FireMan::tick() {

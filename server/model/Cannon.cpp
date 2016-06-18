@@ -23,10 +23,12 @@
 Projectile::Projectile(const std::string& name,
                        int damage,
                        float velocity_x, float velocity_y,
-                       const std::vector<float>& initial_position) :
+                       const std::vector<float>& initial_position,
+                       bool thrown_by_megaman):
         ProjectileMovable(initial_position, velocity_x,
                           velocity_y, PROJECTILE_SIDE),
-        name(name), damage(damage), dead(false), ticks(0) {}
+        name(name), damage(damage), dead(false),
+        thrown_by_megaman(thrown_by_megaman), ticks(0) {}
 
 void Projectile::acknowledge_tick() {
     if (this->ticks > PROJECTILE_TIMEOUT)
@@ -36,6 +38,10 @@ void Projectile::acknowledge_tick() {
 
 bool Projectile::is_dead() {
     return this->dead;
+}
+
+bool Projectile::was_thrown_by_megaman() {
+    return this->thrown_by_megaman;
 }
 
 std::pair<std::string, std::string> Projectile::info(const int id) {
@@ -84,7 +90,7 @@ Projectile::~Projectile() {}
 Plasma::Plasma(int damage, float velocity_x, float velocity_y,
                const std::vector<float>& initial_position)
         : Projectile(PLASMA_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {
+                     velocity_y, initial_position, true) {
     this->disable_y_movement();
 }
 
@@ -94,9 +100,10 @@ void Plasma::tick() {
 }
 
 Bomb::Bomb(int damage, float velocity_x, float velocity_y,
-           const std::vector<float>& initial_position)
+           const std::vector<float>& initial_position, bool thrown_by_megaman)
         : Projectile(BOMB_NAME, damage, velocity_x,
-                     velocity_y, initial_position), has_bounced(false) {}
+                     velocity_y, initial_position, thrown_by_megaman),
+          has_bounced(false) {}
 
 void Bomb::collide_with(Object* object) {
     if (!has_bounced) {
@@ -115,9 +122,10 @@ void Bomb::tick() {
 
 Magnet::Magnet(int damage, float velocity_x, float velocity_y,
                const std::vector<float>& initial_position,
-               const std::vector<float>& target_position)
+               const std::vector<float>& target_position,
+               bool thrown_by_megaman)
         : Projectile(MAGNET_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {
+                     velocity_y, initial_position, thrown_by_megaman) {
     this->disable_y_movement();
 }
 
@@ -134,9 +142,9 @@ void Magnet::tick() {
 int Spark::spark_count = 0;
 
 Spark::Spark(int damage, float velocity_x, float velocity_y,
-             const std::vector<float>& initial_position)
+             const std::vector<float>& initial_position, bool thrown_by_megaman)
         : Projectile(SPARK_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {
+                     velocity_y, initial_position, thrown_by_megaman) {
     if (this->spark_count % 3 == 0)
         this->change_y_direction();
     else if (this->spark_count % 2 == 0)
@@ -151,9 +159,9 @@ void Spark::tick() {
 }
 
 Fire::Fire(int damage, float velocity_x, float velocity_y,
-           const std::vector<float>& initial_position)
+           const std::vector<float>& initial_position, bool thrown_by_megaman)
         : Projectile(FIRE_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {
+                     velocity_y, initial_position, thrown_by_megaman) {
     this->disable_y_movement();
 }
 
@@ -164,9 +172,9 @@ void Fire::tick() {
 }
 
 Ring::Ring(int damage, float velocity_x, float velocity_y,
-           const std::vector<float>& initial_position)
+           const std::vector<float>& initial_position, bool thrown_by_megaman)
         : Projectile(RING_NAME, damage, velocity_x,
-                     velocity_y, initial_position) {}
+                     velocity_y, initial_position, thrown_by_megaman) {}
 
 void Ring::collide_with(Object* object) {
     this->bounce(object->get_position(), object->get_side());
@@ -184,7 +192,7 @@ void Ring::tick() {
 Pellet::Pellet(float velocity_x, float velocity_y,
            const std::vector<float>& initial_position)
         : Projectile(PELLET_NAME, PELLET_DAMAGE, velocity_x,
-                     velocity_y, initial_position) {}
+                     velocity_y, initial_position, false) {}
 
 void Pellet::tick() {
     this->acknowledge_tick();
@@ -198,7 +206,7 @@ void Ammo::use(GameObjectHandler* handler, const std::vector<float>& position) {
     if (this->quantity) {
         this->quantity--;
         handler->add_game_object
-                (ProjectileFactory::projectile(this->name, position));
+                (ProjectileFactory::projectile(this->name, position, true));
     }
 }
 
@@ -212,7 +220,8 @@ void MagnetAmmo::use(GameObjectHandler* handler,
         this->quantity--;
         handler->add_game_object
                 (ProjectileFactory::projectile(this->name, position,
-                                  handler->closest_enemy_for_megaman(position)));
+                                  handler->closest_enemy_for_megaman(position),
+                                               true));
     }
 }
 
