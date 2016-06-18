@@ -30,6 +30,7 @@ public:
     ~StageRenderer();
 
 private:
+    void render_ready_msg();
     void create_renderers(std::string &info);
     void delete_all_renderers();
     // TODO: stageRenderer should receive the background image in memory

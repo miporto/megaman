@@ -132,6 +132,22 @@ bool StageRenderer::game_ended() {
     return meg_renderers.size() == 0;
 }
 
+void StageRenderer::render_ready_msg() {
+    SDL2pp::SDLTTF ttf;
+    SDL2pp::Font font("resources/megaman_2.ttf", 48);
+    std::string text = "READY?";
+    SDL2pp::Texture text_sprite(
+            *renderer,
+            font.RenderText_Blended(text, SDL_Color{255, 255, 255, 255}));
+    int text_w= text_sprite.GetWidth();
+    int text_h = text_sprite.GetHeight();
+    int hcenter = renderer->GetOutputWidth() / 2;
+    int vcenter = renderer->GetOutputHeight() / 2;
+    renderer->Copy(text_sprite, SDL2pp::NullOpt, SDL2pp::Rect(hcenter - text_w/2,
+                                                              vcenter - text_h/2,
+                                                              text_w, text_h));
+}
+
 void StageRenderer::render_end_game_msg() {
     SDL2pp::SDLTTF ttf;
     SDL2pp::Font font("resources/megaman_2.ttf", 48);
