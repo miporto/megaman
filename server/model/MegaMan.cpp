@@ -50,7 +50,7 @@ int EnergyTank::get_energy() {
 }
 
 float EnergyTank::get_energy_percentage() {
-    return (this->current_energy / this->max_energy) * 100;
+    return ((float)this->current_energy / (float)this->max_energy) * 100;
 }
 
 EnergyTank::~EnergyTank() {}
@@ -118,6 +118,9 @@ std::pair<std::string, std::string> MegaMan::info(const int id) {
 }
 
 FloatUpdate* MegaMan::update(const int id) {
+    Logger::instance()->out << ERROR << "MEGAMAN SENDING ENERGY PERCENTAGE: "
+    << this->tank.get_energy_percentage();
+
     std::vector<float> pos = this->get_position();
     return new MegaManFloatUpdate(MEGAMAN_NAME, this->name, id,
                                   pos[X_COORD_POS], pos[Y_COORD_POS],

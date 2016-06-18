@@ -260,11 +260,11 @@
     
     "ammo":{
 			"Plasma": {"max": 999999},
-            "Bomb": {"max": 11},
-            "Magnet": {"max": 12},
-            "Spark": {"max": 13},
-            "Fire": {"max": 14},
-            "Ring": {"max": 15}
+            "Bomb": {"max": 10},
+            "Magnet": {"max": 20},
+            "Spark": {"max": 30},
+            "Fire": {"max": 40},
+            "Ring": {"max": 50}
     },
     
     "map": {
