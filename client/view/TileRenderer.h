@@ -15,6 +15,10 @@ enum TileRendererType {
     STAIRS_R,
     PELLET_R,
     BOMB_R,
+    FIRE_R,
+    MAGNET_R,
+    RING_R,
+    SPARK_R,
     PLASMA_R,
     SPIKE_R,
     DOOR_R
@@ -72,6 +76,30 @@ public:
     void render();
 };
 
+class FireRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
+class MagnetRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
+class RingRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
+class SparkRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
 class PlasmaRenderer : public TileRenderer {
 public:
     using TileRenderer::TileRenderer;
@@ -88,6 +116,10 @@ private:
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
     SDL2pp::Texture *bomb_sprites;
+    SDL2pp::Texture *fire_sprites;
+    SDL2pp::Texture *magnet_sprites;
+    SDL2pp::Texture *ring_sprites;
+    SDL2pp::Texture *spark_sprites;
     SDL2pp::Texture *boss_door_sprites;
     Camera &camera;
     std::map<std::string, TileRendererType> tile_renderers;

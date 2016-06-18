@@ -20,7 +20,8 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
     actors = {MET, BUMBY, SNIPER, JSNIPER};
     bosses = {BOMBMAN, MAGNETMAN, SPARKMAN, RINGMAN, FIREMAN};
-    objects = {BLOCK, STAIRS, SPIKE, DOOR, PELLET, BOMB, PLASMA};
+    objects = {BLOCK, STAIRS, SPIKE, DOOR, PELLET, BOMB, FIRE, MAGNET, RING,
+               SPARK, PLASMA};
     create_renderers(stage_info);
 }
 
@@ -58,6 +59,7 @@ void StageRenderer::render() {
 
 void StageRenderer::new_update(const std::string &name,
                                UpdateInfo &update_info) {
+    std::cout << name << std::endl;
     int id = (int) update_info["id"];
     float x = update_info["x"];
     float y = update_info["y"];

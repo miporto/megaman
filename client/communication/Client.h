@@ -26,6 +26,7 @@ class Client {
         int receive_deceased();
         UpdatePacket receive_update();
         std::string receive_chamber_info();
+        bool new_stage_pick();
 	    bool new_deceased();
         bool new_update_packets();
         bool new_chamber_info_packet();

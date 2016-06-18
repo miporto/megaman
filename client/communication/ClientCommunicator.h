@@ -68,6 +68,7 @@ public:
     void send_action(const std::string &name, const char &action_id,
                      const bool &pressed);
 
+    bool new_stage_pick();
     bool new_update_packets();
 
     bool new_deceased();
