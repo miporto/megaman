@@ -48,6 +48,15 @@ void ClientCommunicator::send_action(const std::string &name,
     this->packets_to_send.push(new Action(name, action_id, pressed));
 }
 
+char ClientCommunicator::receive_stage_id() {
+    if (new_stage_id()) {
+        StagePick *pick = (StagePick*) packets_received.pop(STAGE_PICK);
+        char id = pick->get_stage_id();
+        delete pick;
+        return id;
+    }
+    throw "No stage id present.";
+}
 const std::string ClientCommunicator::receive_stage_info() {
     if (!this->packets_received.is_empty(STAGE_INFO)) {
         StageInfo *stage = (StageInfo *) this->packets_received.pop(STAGE_INFO);
@@ -169,7 +178,7 @@ std::string ClientCommunicator::receive_chamber_info() {
     throw "ERROR: No chamber info on queue!";
 }
 
-bool ClientCommunicator::new_stage_pick() {
+bool ClientCommunicator::new_stage_id() {
     return !packets_received.is_empty(STAGE_PICK);
 }
 bool ClientCommunicator::new_update_packets() {
