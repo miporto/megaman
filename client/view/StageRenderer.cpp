@@ -135,14 +135,22 @@ bool StageRenderer::game_ended() {
 void StageRenderer::render_end_game_msg() {
     SDL2pp::SDLTTF ttf;
     SDL2pp::Font font("resources/Vera.ttf", 48);
-    std::string text = "Test";
+    std::string text;
+    if (meg_renderers.size() == 0) {
+        text = "GAME OVER";
+    } else {
+        text = "YOU WON!!";
+    }
     SDL2pp::Texture text_sprite(
             *renderer,
             font.RenderText_Blended(text, SDL_Color{255, 255, 255, 255}));
-    int hcenter= text_sprite.GetWidth() / 2;
-    int vcenter = text_sprite.GetHeight() / 2;
-    renderer->Copy(text_sprite, SDL2pp::NullOpt, SDL2pp::Rect(hcenter, vcenter, hcenter*2,
-                                                              vcenter*2));
+    int text_w= text_sprite.GetWidth();
+    int text_h = text_sprite.GetHeight();
+    int hcenter = renderer->GetOutputWidth() / 2;
+    int vcenter = renderer->GetOutputHeight() / 2;
+    renderer->Copy(text_sprite, SDL2pp::NullOpt, SDL2pp::Rect(hcenter - text_w/2,
+                                                              vcenter - text_h/2,
+                                                              text_w, text_h));
 }
 
 void StageRenderer::render_boss_chamber(std::string &info) {
