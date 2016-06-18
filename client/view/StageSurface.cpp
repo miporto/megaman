@@ -71,12 +71,20 @@ void StageSurface::run() {
             while (client.new_deceased()) {
                 stage_renderer->delete_renderer(client.receive_deceased());
             }
-            if (stage_renderer->game_ended()) return;
 
-            // Update screen
-            renderer->Clear();
-            stage_renderer->render();
-            renderer->Present();
+            if (stage_renderer->game_ended()) {
+                renderer->Clear();
+                stage_renderer->render();
+                stage_renderer->render_end_game_msg();
+                renderer->Present();
+                SDL_Delay(1000);
+                return;
+            } else {
+                renderer->Clear();
+                stage_renderer->render();
+                renderer->Present();
+            }
+
             prev_input = new_input;
             frame_ticks = cap_timer.get_ticks();
             if (frame_ticks < SCREEN_TICKS_PER_FRAME) {

@@ -133,11 +133,16 @@ bool StageRenderer::game_ended() {
 }
 
 void StageRenderer::render_end_game_msg() {
-//    SDL2pp::SDLTTF ttf;
-//    SDL2pp::Font font(DATA_PATH "/Vera.ttf", 12);
-//    if (boss_renderers.size() == 0 && meg_renderers.size() > 0) {
-//
-//    }
+    SDL2pp::SDLTTF ttf;
+    SDL2pp::Font font("resources/Vera.ttf", 48);
+    std::string text = "Test";
+    SDL2pp::Texture text_sprite(
+            *renderer,
+            font.RenderText_Blended(text, SDL_Color{255, 255, 255, 255}));
+    int hcenter= text_sprite.GetWidth() / 2;
+    int vcenter = text_sprite.GetHeight() / 2;
+    renderer->Copy(text_sprite, SDL2pp::NullOpt, SDL2pp::Rect(hcenter, vcenter, hcenter*2,
+                                                              vcenter*2));
 }
 
 void StageRenderer::render_boss_chamber(std::string &info) {
