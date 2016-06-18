@@ -15,13 +15,14 @@
 #define BOMBMAN_SHOOT_FREC 35
 #define BOMBMAN_JUMP_FREC 150
 #define BOMBMAN_SHUFFLE_FREC 35
-#define RINGMAN_JUMP_FREC 350
+#define RINGMAN_JUMP_FREC 150
 #define RINGMAN_SHUFFLE_FREC 10
-#define FIREMAN_JUMP_FREC 450
-#define FIREMAN_SHUFFLE_FREC 350
-#define MAGNETMAN_JUMP_FREC 1500
-#define MAGNETMAN_SHUFFLE_FREC 350
-#define MAGNETMAN_STOP_FREC 555
+#define FIREMAN_JUMP_FREC 150
+#define FIREMAN_SHUFFLE_FREC 30
+#define MAGNETMAN_SHOOT_FREC 20
+#define MAGNETMAN_JUMP_FREC 100
+#define MAGNETMAN_SHUFFLE_FREC 50
+#define MAGNETMAN_STOP_FREC 65
 
 Boss::Boss(const std::string& name, const std::vector<float>& position,
      const float velocity_x, const float velocity_y, int energy)
@@ -112,7 +113,8 @@ void BombMan::collide_with(Projectile* projectile) {
 void BombMan::shoot(GameObjectHandler* handler) {
     if (this->no_y_movement() && this->ticks % BOMBMAN_SHOOT_FREC == 0)
         handler->add_game_object(ProjectileFactory::projectile
-                                         (BOMB_NAME, this->get_position()));
+                                         (BOMB_NAME, this->get_position(),
+                                          false));
 }
 
 void BombMan::tick() {
@@ -140,21 +142,22 @@ void MagnetMan::collide_with(Projectile* projectile) {
 }
 
 void MagnetMan::shoot(GameObjectHandler* handler) {
-    handler->add_game_object(ProjectileFactory::projectile
-                     (MAGNET_NAME, this->get_position(),
-                      handler->closest_megaman(this->get_position())));
+    if (this->ticks % MAGNETMAN_SHOOT_FREC == 0)
+        handler->add_game_object(ProjectileFactory::projectile
+                         (MAGNET_NAME, this->get_position(),
+                          handler->closest_megaman(this->get_position()), false));
 }
 
 void MagnetMan::tick() {
     if (this->no_y_movement() && this->ticks % MAGNETMAN_JUMP_FREC == 0)
         this->start_jump();
-    if (this->ticks % MAGNETMAN_SHUFFLE_FREC == 0)
+    if (this->ticks % MAGNETMAN_SHUFFLE_FREC == 0) {
         this->change_x_direction();
-    if (this->no_y_movement() && !this->no_x_movement()
-        && this->ticks % MAGNETMAN_STOP_FREC == 0)
-        this->stop_x_movement();
-    else
         this->start_x_movement();
+    }
+    if (this->ticks % MAGNETMAN_STOP_FREC == 0)
+        this->stop_x_movement();
+
     this->move();
     this->ticks++;
 }
@@ -178,7 +181,9 @@ void SparkMan::collide_with(Projectile* projectile) {
 void SparkMan::shoot(GameObjectHandler* handler) {
     if (this->no_y_movement())
         handler->add_game_object(ProjectileFactory::projectile
-                                         (SPARK_NAME, this->get_position()));
+                                         (SPARK_NAME,
+                                          this->get_position(),
+                                          false));
 }
 
 void SparkMan::tick() {
@@ -207,7 +212,8 @@ void RingMan::collide_with(Projectile* projectile) {
 
 void RingMan::shoot(GameObjectHandler* handler) {
     handler->add_game_object(ProjectileFactory::projectile(RING_NAME,
-                                                           this->get_position()));
+                                                           this->get_position(),
+                                                           false));
 }
 
 void RingMan::tick() {
@@ -236,7 +242,8 @@ void FireMan::collide_with(Projectile* projectile) {
 
 void FireMan::shoot(GameObjectHandler* handler) {
     handler->add_game_object(ProjectileFactory::projectile(FIRE_NAME,
-                                                           this->get_position()));
+                                                           this->get_position(),
+                                                           false));
 }
 
 void FireMan::tick() {
