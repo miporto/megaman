@@ -203,10 +203,10 @@ void StageRenderer::create_renderers(std::string &info) {
             } else if (std::find(bosses.begin(), bosses.end(), type) !=
                     bosses.end()) {
                 // TODO: put actual energy.
-//                int energy = stoi(element_info["energy"]);
+                int energy = stoi(element_info["energy"]);
                 boss_renderers[id] = boss_factory.build_boss_renderer(type,
                                                                       x, y,
-                                                                      30);
+                                                                      energy);
             }
         }
     }
