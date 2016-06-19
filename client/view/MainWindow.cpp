@@ -28,6 +28,8 @@
 
 MainWindow::MainWindow(const char* hostname, const char* port) :
         bg_image("resources/background.png"), client(hostname, port) {
+    waiting_loop = NULL;
+    game_loop = NULL;
 	set_title("Mega Man");
 	set_size_request(640, 480);
     set_position(Gtk::WIN_POS_CENTER);
@@ -198,10 +200,13 @@ void MainWindow::trigger_game_loop() {
     waiting_loop->join();
     game_loop = new GameLoopThread(*this, client);
     game_loop->start();
-    iconify();
-    stage_pick->hide();
+    halt_stage_pick();
 }
 
+void MainWindow::halt_stage_pick() {
+    Glib::signal_idle().connect(sigc::mem_fun(*this,
+                                              &MainWindow::hide_stage_pick));
+}
 void MainWindow::resume_stage_pick() {
     Glib::signal_idle().connect(sigc::mem_fun(*this,
                                                &MainWindow::show_stage_pick));
@@ -216,6 +221,11 @@ bool MainWindow::show_stage_pick() {
     return false;
 }
 
+bool MainWindow::hide_stage_pick() {
+    iconify();
+    stage_pick->hide();
+    return false;
+}
 MainWindow::~MainWindow() {
     if (waiting_loop) {
         waiting_loop->end_wait();

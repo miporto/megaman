@@ -27,6 +27,7 @@ class MainWindow: public Gtk::Window {
 public:
 	MainWindow(const char* hostname, const char* port);
     void trigger_game_loop();
+    void halt_stage_pick();
 	void resume_stage_pick();
     void new_player(const std::string &name);
 	virtual ~MainWindow();
@@ -62,6 +63,7 @@ private:
 	void init_insert_name_screen();
 	void init_stage_pick_screen();
 	bool show_stage_pick();
+    bool hide_stage_pick();
     void init_players(GladeLoader::ScreenBuilder &builder);
     void trigger_waiting_loop();
     void change_box_to_connected(Gtk::Box *box, const std::string &name);
