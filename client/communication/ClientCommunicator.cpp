@@ -7,7 +7,7 @@
 
 TeamWaiter::TeamWaiter(std::vector<std::string> &teammates,
                        ReceivedPacketsProtected &packets_received) :
-        started(false), teammates(teammates),
+        quit(false), started(false), teammates(teammates),
         packets_received(packets_received) {}
 
 void TeamWaiter::start() {
@@ -15,7 +15,7 @@ void TeamWaiter::start() {
     Thread::start();
 }
 void TeamWaiter::run() {
-    while (this->packets_received.is_empty(STAGE_PICK)) {
+    while (this->packets_received.is_empty(STAGE_PICK) && !quit) {
         if (!this->packets_received.is_empty(NEW_PLAYER)) {
             NewPlayer *packet = (NewPlayer *) this->packets_received
                     .pop(NEW_PLAYER);
@@ -24,6 +24,10 @@ void TeamWaiter::run() {
             delete packet;
         }
     }
+}
+
+void TeamWaiter::shutdown() {
+    quit = true;
 }
 
 TeamWaiter::~TeamWaiter() {
@@ -219,5 +223,5 @@ bool ClientCommunicator::new_chamber_info_packet() {
 }
 
 ClientCommunicator::~ClientCommunicator() {
-//    this->waiter.join();
+    this->waiter.shutdown();
 }

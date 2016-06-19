@@ -15,6 +15,7 @@
 
 class TeamWaiter : public Thread {
 private:
+    bool quit;
     bool started;
     std::vector<std::string> &teammates;
     ReceivedPacketsProtected &packets_received;
@@ -23,6 +24,7 @@ public:
                ReceivedPacketsProtected &packets_received);
     void start();
     void run();
+    void shutdown();
 
     ~TeamWaiter();
 };
