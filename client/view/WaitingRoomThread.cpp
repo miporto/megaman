@@ -20,8 +20,8 @@ void WaitingRoomThread::run() {
     }
     if (client.new_stage_id()) {
         client.receive_stage_id();
+        window.trigger_game_loop();
     }
-    window.trigger_game_loop();
 }
 
 void WaitingRoomThread::end_wait() {
