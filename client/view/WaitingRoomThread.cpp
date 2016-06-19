@@ -19,8 +19,7 @@ void WaitingRoomThread::run() {
         usleep(10000);
     }
     if (client.new_stage_id()) {
-        client.receive_stage_id();
-        window.trigger_game_loop();
+        window.trigger_game_loop(client.receive_stage_id());
     }
 }
 
