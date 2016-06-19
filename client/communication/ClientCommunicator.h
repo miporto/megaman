@@ -15,13 +15,16 @@
 
 class TeamWaiter : public Thread {
 private:
+    bool quit;
+    bool started;
     std::vector<std::string> &teammates;
     ReceivedPacketsProtected &packets_received;
 public:
     TeamWaiter(std::vector<std::string> &teammates,
                ReceivedPacketsProtected &packets_received);
-
+    void start();
     void run();
+    void shutdown();
 
     ~TeamWaiter();
 };
@@ -53,6 +56,8 @@ public:
 
     void send_stage_pick(char &stage_id);
 
+    char receive_stage_id();
+
     const std::string receive_stage_info();
 
     UpdatePacket receive_update();
@@ -68,7 +73,8 @@ public:
     void send_action(const std::string &name, const char &action_id,
                      const bool &pressed);
 
-    bool new_stage_pick();
+    bool new_stage_id();
+
     bool new_update_packets();
 
     bool new_deceased();
