@@ -80,6 +80,8 @@ bool ServerCommunicator::disconnected() {
 }
 
 void ServerCommunicator::shutdown() {
+    this->sender.shutdown();
+    this->receiver.shutdown();
     this->peer->shutdown();
 }
 
