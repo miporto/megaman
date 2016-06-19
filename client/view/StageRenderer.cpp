@@ -120,15 +120,16 @@ void StageRenderer::delete_renderer(int id) {
     }
 }
 
-bool StageRenderer::are_megamans_alive() {
-    return meg_renderers.size() > 0;
-}
-
 bool StageRenderer::game_ended() {
     if (on_boss_chamber) {
         return boss_renderers.size() == 0 || meg_renderers.size() == 0;
     }
     return meg_renderers.size() == 0;
+}
+
+bool StageRenderer::game_won() {
+    return on_boss_chamber && boss_renderers.size() == 0 &&
+            meg_renderers.size() > 0;
 }
 
 void StageRenderer::render_ready_msg() {

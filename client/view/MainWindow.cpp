@@ -47,6 +47,9 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
     stage_pick->hide();
 }
 
+void MainWindow::set_stage_as_completed(char id) {
+    if (stages.count(id) != 0) stages[id] = false;
+}
 
 // WELCOME SCREEN
 void MainWindow::init_welcome_screen() {
@@ -150,6 +153,8 @@ void MainWindow::init_stage_pick_screen() {
                                           &MainWindow::on_boss_pick_btn_clicked),
                                                            it.second));
         }
+        // Set all stages to playable
+        stages[it.second] = true;
     }
 }
 
@@ -193,12 +198,17 @@ void MainWindow::change_box_to_connected(Gtk::Box *box, const std::string &name)
 
 void MainWindow::on_boss_pick_btn_clicked(char stage_id) {
 	std::cout << "Boss selected" << std::endl;
-	client.pick_stage(stage_id);
+	if (stages[stage_id]) {
+        client.pick_stage(stage_id);
+    } else {
+        // TODO: launch a popup or something
+        std::cout << "Level completed" << std::endl;
+    }
 }
 
-void MainWindow::trigger_game_loop() {
+void MainWindow::trigger_game_loop(char stage_id) {
     waiting_loop->join();
-    game_loop = new GameLoopThread(*this, client);
+    game_loop = new GameLoopThread(*this, client, stage_id);
     game_loop->start();
     halt_stage_pick();
 }
