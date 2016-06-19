@@ -86,7 +86,7 @@ class Magnet : public Projectile {
 
 class Spark : public Projectile {
     private:
-        static int spark_count;
+        static int spark_number;
     public:
         Spark(int damage, float velocity_x, float velocity_y,
               const std::vector<float>& initial_position,
@@ -104,7 +104,7 @@ class Fire : public Projectile {
 
 class Ring : public Projectile {
     private:
-        static int ring_count;
+        static int ring_number;
     public:
         Ring(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position,
