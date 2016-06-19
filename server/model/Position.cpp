@@ -50,6 +50,4 @@ std::string Position::str() const {
     return str;
 }
 
-Position* Position::clone() const { return new Position(*this); }
-
 Position::~Position() {}

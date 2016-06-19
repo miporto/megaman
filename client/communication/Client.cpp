@@ -1,6 +1,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Client.h"
 #include "common/communication/AddrInfo.h"
@@ -34,13 +35,20 @@ void Client::send_name(std::string& name) {
     this->communicator.send_name(name);
 }
 
+std::vector<std::string> Client::get_teammates() {
+    return teammates;
+}
+
 void Client::pick_stage(char stage_id) {
     this->communicator.send_stage_pick(stage_id);
 }
 
 void Client::send_action(const char action_id, const bool pressed) {
-    // TODO: send the players name to the communicator
     this->communicator.send_action(player_name, action_id, pressed);
+}
+
+char Client::receive_stage_id() {
+    return communicator.receive_stage_id();
 }
 
 std::string Client::receive_stage_info() {
@@ -63,8 +71,8 @@ std::string Client::receive_chamber_info() {
     return communicator.receive_chamber_info();
 }
 
-bool Client::new_stage_pick() {
-    return communicator.new_stage_pick();
+bool Client::new_stage_id() {
+    return communicator.new_stage_id();
 }
 
 bool Client::new_deceased() {
