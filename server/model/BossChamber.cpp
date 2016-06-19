@@ -125,7 +125,7 @@ void BossChamber::reward_players() {
          ++it) { it->second->add_reward(ammo_name); }
 }
 
-BossChamber::~BossChamber() {}
+BossChamber::~BossChamber() { delete this->boss; }
 
 BossChamberError::BossChamberError(const std::string error_msg) throw()
         : SystemError(error_msg) {}
