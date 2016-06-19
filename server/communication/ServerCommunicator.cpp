@@ -84,7 +84,7 @@ void ServerCommunicator::shutdown() {
 }
 
 ServerCommunicator::~ServerCommunicator() {
-    this->peer->shutdown();
+    //this->peer->shutdown();
     delete this->peer;
 }
 
