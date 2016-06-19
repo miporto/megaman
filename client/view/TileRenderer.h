@@ -21,7 +21,8 @@ enum TileRendererType {
     SPARK_R,
     PLASMA_R,
     SPIKE_R,
-    DOOR_R
+    DOOR_R,
+    CLIFF_R
 };
 
 class TileRenderer {
@@ -53,6 +54,12 @@ public:
 };
 
 class SpikeRenderer : public TileRenderer {
+public:
+    using TileRenderer::TileRenderer;
+    void render();
+};
+
+class CliffRenderer : public TileRenderer {
 public:
     using TileRenderer::TileRenderer;
     void render();
@@ -111,7 +118,7 @@ public:
     TileRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
     TileRenderer* build_tile_renderer(std::string tile_type, float pos_x,
                                        float pos_y);
-    virtual ~TileRendererFactory() {}
+    ~TileRendererFactory();
 private:
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
@@ -121,6 +128,7 @@ private:
     SDL2pp::Texture *ring_sprites;
     SDL2pp::Texture *spark_sprites;
     SDL2pp::Texture *boss_door_sprites;
+    SDL2pp::Texture *tile_sprites;
     Camera &camera;
     std::map<std::string, TileRendererType> tile_renderers;
 };

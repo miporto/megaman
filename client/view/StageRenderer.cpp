@@ -20,7 +20,7 @@ StageRenderer::StageRenderer(SDL2pp::Renderer *renderer,
     background = new SDL2pp::Texture(*renderer, "resources/background.png");
     actors = {MET, BUMBY, SNIPER, JSNIPER};
     bosses = {BOMBMAN, MAGNETMAN, SPARKMAN, RINGMAN, FIREMAN};
-    objects = {BLOCK, STAIRS, SPIKE, DOOR, PELLET, BOMB, FIRE, MAGNET, RING,
+    objects = {BLOCK, STAIRS, CLIFF, SPIKE, DOOR, PELLET, BOMB, FIRE, MAGNET, RING,
                SPARK, PLASMA};
     create_renderers(stage_info);
 }
@@ -59,7 +59,6 @@ void StageRenderer::render() {
 
 void StageRenderer::new_update(const std::string &name,
                                UpdateInfo &update_info) {
-    //std::cout << name << std::endl;
     int id = (int) update_info["id"];
     float x = update_info["x"];
     float y = update_info["y"];
@@ -67,9 +66,9 @@ void StageRenderer::new_update(const std::string &name,
         TileRenderer *t_renderer = tile_renderers[id];
         t_renderer->update(x,  y);
     } else if (actor_renderers.count(id) != 0) {
-        int covered = (int) update_info["covered"];
+        char covered = (char) update_info["covered"];
         ActorRenderer *a_renderer = actor_renderers[id];
-        a_renderer->update(x, y, covered, 0);
+        a_renderer->update(x, y, covered);
     } else if (meg_renderers.count(id) != 0){
         MMegaManRenderer *m_renderer = meg_renderers[id];
         int dir_x = (int) update_info["dir_x"];
@@ -204,10 +203,10 @@ void StageRenderer::create_renderers(std::string &info) {
             } else if (std::find(bosses.begin(), bosses.end(), type) !=
                     bosses.end()) {
                 // TODO: put actual energy.
-//                int energy = stoi(element_info["energy"]);
+                int energy = stoi(element_info["energy"]);
                 boss_renderers[id] = boss_factory.build_boss_renderer(type,
                                                                       x, y,
-                                                                      30);
+                                                                      energy);
             }
         }
     }

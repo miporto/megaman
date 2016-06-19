@@ -19,36 +19,14 @@ TickInfoParser::TickInfoParser(std::string &tick_info) :
 //    std::string s_b = "13.456";
 //    float b = stof(s_b);
 //    std::cout << b << std::endl;
-    // Tiles
-    StatusInfo block = status_info_of("Block");
-    new_tick_parser_info["Block"] = block;
-    StatusInfo stairs = status_info_of("Stairs");
-    new_tick_parser_info["Stairs"] = stairs;
-    StatusInfo door = status_info_of("Door");
-    new_tick_parser_info["Door"] = door;
-    StatusInfo spike = status_info_of("Spike");
-    new_tick_parser_info["Spike"] = spike;
-    // Actors
-    StatusInfo mets = status_info_of("Met");
-    new_tick_parser_info["Met"] = mets;
-    StatusInfo bumby = status_info_of("Bumby");
-    new_tick_parser_info["Bumby"] = bumby;
-    StatusInfo sniper = status_info_of("Sniper");
-    new_tick_parser_info["Sniper"] = sniper;
-    StatusInfo jsniper = status_info_of("JumpingSniper");
-    new_tick_parser_info["JumpingSniper"] = jsniper;
-    StatusInfo megs = status_info_of("MegaMan");
-    new_tick_parser_info["MegaMan"] = megs;
-    StatusInfo bombman = status_info_of(BOMBMAN);
-    new_tick_parser_info[BOMBMAN] = bombman;
-    StatusInfo magnetman = status_info_of(MAGNETMAN);
-    new_tick_parser_info[MAGNETMAN] = magnetman;
-    StatusInfo sparkman = status_info_of(SPARKMAN);
-    new_tick_parser_info[SPARKMAN] = sparkman;
-    StatusInfo ringman = status_info_of(RINGMAN);
-    new_tick_parser_info[RINGMAN] = ringman;
-    StatusInfo fireman = status_info_of(FIREMAN);
-    new_tick_parser_info[FIREMAN] = fireman;
+    std::vector<std::string> elements = {BLOCK, STAIRS, CLIFF, SPIKE, DOOR,
+                                         BOMBMAN, MAGNETMAN, SPARKMAN, RINGMAN,
+                                         FIREMAN, MET, BUMBY, SNIPER, JSNIPER,
+                                         MEGAMAN};
+    for (auto const &it : elements) {
+        StatusInfo info = status_info_of(it);
+        new_tick_parser_info[it] = info;
+    }
 }
 
 void TickInfoParser::replace_substr(std::string &input,
