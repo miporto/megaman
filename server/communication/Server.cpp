@@ -31,10 +31,11 @@ void Server::wait_for_players() {
 }
 
 void Server::run() {
-    while (!this->quit_server && !this->match->ended()) {
+    while (!this->quit_server) {
         this->wait_for_players();
         if (!this->quit_server) this->match->play_stage(&this->quit_server);
         if (!this->quit_server) this->get_rid_of_disconnected_clients();
+        if (this->match->ended()) this->reset_match();
     }
 }
 
@@ -66,6 +67,7 @@ void Server::reset_match() {
     this->communicators.clear();
     delete this->match;
     this->match = new Match(this->communicators);
+    this->acceptor->set_match(this->match);
 }
 
 void Server::shutdown() {

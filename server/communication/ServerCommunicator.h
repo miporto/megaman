@@ -69,10 +69,12 @@ class StageIdWaiter : public Thread {
     private:
         StageIDProtected stage_id;
         ReceivedPacketsProtected& packets_received;
+        bool running;
 
     public:
         explicit StageIdWaiter(ReceivedPacketsProtected& packets_received);
         void run();
+        void shutdown();
         char get_stage_id();
         void reset_stage_id();
         ~StageIdWaiter();
@@ -80,7 +82,8 @@ class StageIdWaiter : public Thread {
 
 class HostCommunicator : public ServerCommunicator {
     private:
-        StageIdWaiter waiter;
+        //StageIdWaiter waiter;
+        char stage_pick;
     public:
         HostCommunicator(Socket* peer, EventQueue& events);
         char check_stage_id();
