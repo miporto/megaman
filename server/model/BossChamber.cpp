@@ -125,7 +125,11 @@ void BossChamber::reward_players() {
          ++it) { it->second->add_reward(ammo_name); }
 }
 
-BossChamber::~BossChamber() { delete this->boss; }
+BossChamber::~BossChamber() {
+    if (this->beated()) delete this->boss;
+    // De lo contrario, forma parte del GameObjectHandler y el se
+    // encarga de hacer el delete
+}
 
 BossChamberError::BossChamberError(const std::string error_msg) throw()
         : SystemError(error_msg) {}
