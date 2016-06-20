@@ -5,7 +5,12 @@
 
 Sender::Sender(Socket* socket,
                PacketsQueueProtected& packets)
-        : socket(socket), packets(packets), quit(false) {}
+        : socket(socket), packets(packets), started(false), quit(false) {}
+
+void Sender::start() {
+    started = true;
+    Thread::start();
+}
 
 void Sender::run() {
     Packet* packet;
@@ -33,5 +38,5 @@ void Sender::shutdown() {
 
 Sender::~Sender() {
     this->shutdown();
-    this->join();
+    if (started) this->join();
 }
