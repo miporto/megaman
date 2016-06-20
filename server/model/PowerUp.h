@@ -15,6 +15,7 @@ class PowerUp : public GameObject {
     private:
         const std::string name;
         bool dead;
+        bool was_updated;
 
     public:
         PowerUp(const std::string& name, const std::vector<float>& position);
@@ -31,6 +32,8 @@ class PowerUp : public GameObject {
         bool is_dead();
         std::pair<std::string, std::string> info(const int id);
         FloatUpdate* update(const int id);
+        bool is_powerup();
+        bool updated();
         virtual ~PowerUp();
 };
 

@@ -11,6 +11,7 @@
 #include "Enemy.h"
 #include "Boss.h"
 #include "MegaMan.h"
+#include "PowerUp.h"
 
 unsigned int GameObjectHandler::objects_count = 0;
 
@@ -95,8 +96,8 @@ std::vector<FloatUpdate*> GameObjectHandler::updates() {
     std::vector<FloatUpdate*> updates;
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (this->objects[i]->it_moved() ||
-                (this->objects[i]->is_megaman() &&
-                        ((MegaMan*)this->objects[i])->energy_changed()))
+         (this->objects[i]->is_megaman() && ((MegaMan*)this->objects[i])->energy_changed()) ||
+               (this->objects[i]->is_powerup() && !(((PowerUp*)this->objects[i])->updated())))
             updates.push_back(this->objects[i]->update
                     (this->object_id[this->objects[i]]));
     return updates;

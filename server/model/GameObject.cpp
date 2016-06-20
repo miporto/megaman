@@ -39,4 +39,6 @@ bool GameObject::is_enemy() { return false; }
 
 bool GameObject::is_boss() { return false; }
 
+bool GameObject::is_powerup() { return false; }
+
 GameObject::~GameObject() {}

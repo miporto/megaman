@@ -16,7 +16,8 @@
 #define EXTRA_PLASMA 4
 
 PowerUp::PowerUp(const std::string& name, const std::vector<float>& position)
-        : GameObject(position, POWERUP_SIDE), name(name), dead(false) {}
+        : GameObject(position, POWERUP_SIDE), name(name),
+          dead(false), was_updated(false) {}
 
 const std::string& PowerUp::get_name() { return this->name; }
 
@@ -52,9 +53,14 @@ std::pair<std::string, std::string> PowerUp::info(const int id) {
 }
 
 FloatUpdate* PowerUp::update(const int id) {
+    this->was_updated = true;
     std::vector<float> pos = this->get_position();
     return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
+
+bool PowerUp::is_powerup() { return true; }
+
+bool PowerUp::updated() { return this->was_updated; }
 
 bool PowerUp::is_dead() { return this->dead; }
 

@@ -52,10 +52,9 @@ class GameObject {
         virtual FloatUpdate* update(const int id) = 0;
         virtual bool shoots_per_tick();
         virtual bool is_megaman();
-        //
         virtual bool is_enemy();
         virtual bool is_boss();
-        //
+        virtual bool is_powerup();
         virtual ~GameObject();
 };
 
