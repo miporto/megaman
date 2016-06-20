@@ -126,7 +126,8 @@ FloatUpdate* Met::update(const int id) {
                                 this->helmet_on);
 }
 
-bool Met::status_changed() { return this->ticks % MET_HELMET_FREC == 0; }
+bool Met::status_changed() { return (this->ticks % MET_HELMET_FREC == 0) ||
+            ((this->ticks - 1) % MET_HELMET_FREC == 0); }
 
 Met::~Met() {}
 
@@ -201,7 +202,8 @@ FloatUpdate* Sniper::update(const int id) {
                                 this->shield_on);
 }
 
-bool Sniper::status_changed() { return this->ticks % SNIPER_SHIELD_FREC == 0; }
+bool Sniper::status_changed() { return (this->ticks % SNIPER_SHIELD_FREC == 0) ||
+                                       ((this->ticks - 1) % SNIPER_SHIELD_FREC == 0); }
 
 Sniper::~Sniper() {}
 
@@ -253,6 +255,7 @@ FloatUpdate* JumpingSniper::update(const int id) {
                                 this->shield_on);
 }
 
-bool JumpingSniper::status_changed() { return this->ticks % SNIPER_SHIELD_FREC == 0; }
+bool JumpingSniper::status_changed() { return (this->ticks % SNIPER_SHIELD_FREC == 0) ||
+                                              ((this->ticks - 1) % SNIPER_SHIELD_FREC == 0); }
 
 JumpingSniper::~JumpingSniper() {}
