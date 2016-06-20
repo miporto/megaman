@@ -77,7 +77,10 @@ int Projectile::hit() {
 
 void Projectile::collide_with(Enemy* enemy) {}
 
-void Projectile::collide_with(Object* object) { this->hit(); }
+void Projectile::collide_with(Object* object) {
+    if (!object->get_name().compare(STAIRS_NAME)) return;
+    this->hit();
+}
 
 void Projectile::collide_with(Projectile* projectile) {}
 
@@ -110,6 +113,7 @@ Bomb::Bomb(int damage, float velocity_x, float velocity_y,
           has_bounced(false) {}
 
 void Bomb::collide_with(Object* object) {
+    if (!object->get_name().compare(STAIRS_NAME)) return;
     if (!has_bounced) {
         this->bounce(object->get_position(), object->get_side());
         this->has_bounced = true;
@@ -195,6 +199,7 @@ Ring::Ring(int damage, float velocity_x, float velocity_y,
 }
 
 void Ring::collide_with(Object* object) {
+    if (!object->get_name().compare(STAIRS_NAME)) return;
     this->bounce(object->get_position(), object->get_side());
 }
 
