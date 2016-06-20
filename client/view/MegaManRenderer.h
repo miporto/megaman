@@ -18,8 +18,8 @@ public:
     float get_y();
     ~MegaManRenderer();
 private:
-    void render_energy(int size);
-    void render_name();
+    void render_energy(int size, int x, int y);
+    void render_name(int x, int y);
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *sprites;
     Camera &camera;
@@ -31,7 +31,7 @@ private:
     int dir_x;
     int dir_y;
     float actual_energy;
-    const std::string &name;
+    const std::string name;
 };
 
 

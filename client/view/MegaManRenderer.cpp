@@ -55,13 +55,29 @@ void MegaManRenderer::render() {
     renderer->Copy(*sprites, SDL2pp::Rect(meg_x, meg_y, size_meg_x, size_meg_y),
                    SDL2pp::Rect(pos.first , pos.second, size, size), 0.0,
                    SDL2pp::NullOpt, flip);
-    render_energy(size);
+    render_energy(size, pos.first, pos.second);
+    render_name(pos.first, pos.second);
 }
 
-void MegaManRenderer::render_energy(int size) {
-    float energy_percent = actual_energy;
+void MegaManRenderer::render_energy(int size, int x, int y) {
+    float energy = actual_energy*size*1.5/100;
     renderer->SetDrawColor(34, 139, 34);
-    renderer->FillRect(10, 10, (int) energy_percent, size/2);
+    renderer->FillRect(x, y-size/2, (int) energy, y-size);
+}
+
+void MegaManRenderer::render_name(int x, int y) {
+    SDL2pp::SDLTTF ttf;
+    SDL2pp::Font font("resources/megaman_2.ttf", 10);
+    std::string text = name;
+    std::cout << text << std::endl;
+    SDL2pp::Texture text_sprite(
+            *renderer,
+            font.RenderText_Blended(text, SDL_Color{255, 255, 255, 255}));
+    int text_w= text_sprite.GetWidth();
+    int text_h = text_sprite.GetHeight();
+    renderer->Copy(text_sprite, SDL2pp::NullOpt, SDL2pp::Rect(x + text_w/2,
+                                                              y - text_h,
+                                                              text_w, text_h));
 }
 float MegaManRenderer::get_x() {
     return pos_x;
