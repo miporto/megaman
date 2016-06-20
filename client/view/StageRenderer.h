@@ -23,17 +23,16 @@ public:
 //    void update(const std::string &name, const std::string &update_info);
     void new_update(const std::string &name, UpdateInfo &update_info);
     void delete_renderer(int id);
-    bool are_megamans_alive();
     void render_boss_chamber(std::string &info);
     void render_end_game_msg();
     bool game_ended();
+    bool game_won();
     ~StageRenderer();
 
 private:
     void render_ready_msg();
     void create_renderers(std::string &info);
     void delete_all_renderers();
-    // TODO: stageRenderer should receive the background image in memory
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *background;
     Camera camera;

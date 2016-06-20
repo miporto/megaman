@@ -38,7 +38,15 @@ void SpikeRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
     renderer->Copy(*sprites,
-                   SDL2pp::Rect(103, 238, 16, 16),
+                   SDL2pp::Rect(35, 103, 16, 16),
+                   SDL2pp::Rect(pos.first, pos.second, size, size));
+}
+
+void CliffRenderer::render() {
+    AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
+    int size = camera.adjust_size();
+    renderer->Copy(*sprites,
+                   SDL2pp::Rect(103, 1, 16, 16),
                    SDL2pp::Rect(pos.first, pos.second, size, size));
 }
 
@@ -109,6 +117,7 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
     spark_sprites = new SDL2pp::Texture(*renderer, "resources/sparkman.gif");
     boss_door_sprites = new SDL2pp::Texture(*renderer, "resources/boss_door"
             ".png");
+    tile_sprites = new SDL2pp::Texture(*renderer, "resources/tiles2.gif");
     tile_renderers[BLOCK] = BLOCK_R;
     tile_renderers[STAIRS] = STAIRS_R;
     tile_renderers[PELLET] = PELLET_R;
@@ -120,7 +129,9 @@ TileRendererFactory::TileRendererFactory(SDL2pp::Renderer *renderer,
     tile_renderers[PLASMA] = PLASMA_R;
     tile_renderers[SPIKE] = SPIKE_R;
     tile_renderers[DOOR] = DOOR_R;
+    tile_renderers[CLIFF] = CLIFF_R;
 }
+
 TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
                                                         float pos_x, float
                                                         pos_y) {
@@ -164,15 +175,29 @@ TileRenderer* TileRendererFactory::build_tile_renderer(std::string tile_type,
                                                pos_x, pos_y);
             break;
         case SPIKE_R:
-            tile_renderer = new SpikeRenderer(renderer, sprites, camera,
+            tile_renderer = new SpikeRenderer(renderer, tile_sprites, camera,
                                                pos_x, pos_y);
             break;
         case DOOR_R:
             tile_renderer = new BossDoorRenderer(renderer, boss_door_sprites,
                                                  camera, pos_x, pos_y);
             break;
+        case CLIFF_R:
+            tile_renderer = new CliffRenderer(renderer, tile_sprites,
+                                                 camera, pos_x, pos_y);
+            break;
         default:
             throw "ERROR: Non-existint tile renderer!";
     }
     return tile_renderer;
+}
+
+TileRendererFactory::~TileRendererFactory() {
+    delete sprites;
+    delete fire_sprites;
+    delete magnet_sprites;
+    delete ring_sprites;
+    delete spark_sprites;
+    delete boss_door_sprites;
+    delete tile_sprites;
 }

@@ -8,15 +8,12 @@ ActorRenderer::ActorRenderer(SDL2pp::Renderer *renderer,
                                                            sprites(sprites),
                                                            camera(camera),
                                                            pos_x(pos_x),
-                                                           pos_y(pos_y),
-                                                           dir_x(0), dir_y(0) {}
+                                                           pos_y(pos_y), covered(0){}
 
-void ActorRenderer::update(float pos_x, float pos_y, int dir_x, int
-dir_y) {
+void ActorRenderer::update(float pos_x, float pos_y, char covered) {
     this->pos_x = pos_x;
     this->pos_y = pos_y;
-    this->dir_x = dir_x;
-    this->dir_y = dir_y;
+    this->covered = covered;
 }
 
 float ActorRenderer::get_x() {
@@ -30,9 +27,15 @@ float ActorRenderer::get_y(){
 void MetRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
-    renderer->Copy(*sprites,
-                   SDL2pp::Rect(57, 17, 18, 19),
-                   SDL2pp::Rect(pos.first, pos.second, size, size));
+    if (covered != 0) {
+        renderer->Copy(*sprites,
+                       SDL2pp::Rect(35, 21, 18, 15),
+                       SDL2pp::Rect(pos.first, pos.second, size, size));
+    } else {
+        renderer->Copy(*sprites,
+                       SDL2pp::Rect(57, 17, 18, 19),
+                       SDL2pp::Rect(pos.first, pos.second, size, size));
+    }
 }
 
 void BumbyRenderer::render() {
