@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ServerReceiver.h"
 
 ServerReceiver::ServerReceiver(Socket* socket,

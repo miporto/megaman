@@ -15,7 +15,7 @@ AdjustedPos Camera::adjust_position(float x, float y) {
 
 AdjustedPos Camera::adjust_enemy_meg_position(float x, float y){
     calculate_baricenter();
-    int size = adjust_enemy_size();
+    int size = (int) (adjust_size() * 0.85);
     int adj_x = (int) ((x + offset_x) * size);
     int adj_y = (int) (renderer->GetOutputHeight() - (y + 1 + offset_y)*size);
     return AdjustedPos(adj_x, adj_y);
@@ -38,7 +38,7 @@ int Camera::adjust_enemy_size() {
     return (int) (adjust_size() * 0.75);
 }
 
-void Camera::add_megaman(int id, MMegaManRenderer *megaman) {
+void Camera::add_megaman(int id, MegaManRenderer *megaman) {
     megs[id] = megaman;
 }
 
@@ -72,5 +72,7 @@ void Camera::calculate_baricenter() {
     } else if (b_y > width * 0.75) {
         offset_y = b_y;
     }
+    offset_x *= 0.75;
+    offset_y *= 0.75;
 }
 Camera::~Camera() {}

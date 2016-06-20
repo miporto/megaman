@@ -19,7 +19,7 @@ public:
     AdjustedPos adjust_proyectile_position(float x, float y);
     int adjust_size();
     int adjust_enemy_size();
-    void add_megaman(int id, MMegaManRenderer* megaman);
+    void add_megaman(int id, MegaManRenderer* megaman);
     void delete_megaman(int id); //Deletes the megaman from the array, not
     // the object itself
     ~Camera();
@@ -28,7 +28,7 @@ private:
     SDL2pp::Renderer *renderer;
     float offset_x;
     float offset_y;
-    std::map<int, MMegaManRenderer*> megs;
+    std::map<int, MegaManRenderer*> megs;
 };
 
 

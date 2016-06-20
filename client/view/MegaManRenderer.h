@@ -8,15 +8,15 @@
 #include "Camera.h"
 
 class Camera;
-class MMegaManRenderer {
+class MegaManRenderer {
 public:
-    MMegaManRenderer(SDL2pp::Renderer *renderer, Camera &camera, float pos_x,
+    MegaManRenderer(SDL2pp::Renderer *renderer, Camera &camera, float pos_x,
                      float pos_y, int energy, const std::string &name);
     void update(float pos_x, float pos_y, int dir_x, int dir_y, float energy);
     void render();
     float get_x();
     float get_y();
-    ~MMegaManRenderer();
+    ~MegaManRenderer();
 private:
     void render_energy(int size);
     void render_name();
@@ -27,7 +27,6 @@ private:
     float pos_y;
     int dir_x;
     int dir_y;
-    int initial_energy;
     float actual_energy;
     const std::string &name;
 };
