@@ -151,11 +151,9 @@ void Receiver::receive_packet(const char id) {
             delete[] info;
             break;
         } default:
-            std::cout << "SWITCH Unknown packet id " << std::endl;
-            break;
             // Si el ID es desconocido, es posible que el resto del
             // paquete quede en el pipe del socket, arruinando la comm
-            //throw ReceiverError("Unknown packet id");
+            throw ReceiverError("Unknown packet id");
     }
 }
 
