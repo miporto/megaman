@@ -1,3 +1,5 @@
+#include <string>
+
 #include "Receiver.h"
 
 Receiver::Receiver(Socket* socket,
@@ -150,7 +152,7 @@ void Receiver::receive_packet(const char id) {
         } default:
             // Si el ID es desconocido, es posible que el resto del
             // paquete quede en el pipe del socket, arruinando la comm
-            break;
+            throw ReceiverError("Unknown packet id");
     }
 }
 
@@ -176,3 +178,6 @@ Receiver::~Receiver() {
     this->shutdown();
     if (started) this->join();
 }
+
+ReceiverError::ReceiverError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}
