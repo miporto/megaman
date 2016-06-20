@@ -14,13 +14,15 @@
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
         max_energy(EnergyTankFactory::maximum_energy()),
-        current_energy(EnergyTankFactory::maximum_energy()) {}
+        current_energy(EnergyTankFactory::maximum_energy()),
+        respawned(false) {}
 
 void EnergyTank::increase_energy(int amount) {
     this->current_energy += amount;
 }
 
 void EnergyTank::decrease_energy(int amount) {
+    this->respawned = false;
     if (this->current_energy < amount && this->lives > 0) {
         amount -= this->current_energy;
         this->reset();
@@ -43,6 +45,7 @@ void EnergyTank::reset() {
     }
     this->lives--;
     this->current_energy = this->max_energy;
+    this->respawned = true;
 }
 
 int EnergyTank::get_energy() {
@@ -51,6 +54,10 @@ int EnergyTank::get_energy() {
 
 float EnergyTank::get_energy_percentage() {
     return ((float)this->current_energy / (float)this->max_energy) * 100;
+}
+
+bool EnergyTank::just_respawned() {
+    return this->respawned;
 }
 
 EnergyTank::~EnergyTank() {}
@@ -123,7 +130,8 @@ FloatUpdate* MegaMan::update(const int id) {
                                   pos[X_COORD_POS], pos[Y_COORD_POS],
                                   (int)pos[DIRECTION_X_POS],
                                   (int)pos[DIRECTION_Y_POS],
-                                  this->tank.get_energy_percentage());
+                                  this->tank.get_energy_percentage(),
+                                  this->tank.just_respawned());
 }
 
 bool MegaMan::is_megaman() { return true; }

@@ -18,6 +18,7 @@ class EnergyTank {
         int lives;
         const int max_energy;
         int current_energy;
+        bool respawned;
 
     public:
         EnergyTank();
@@ -27,6 +28,7 @@ class EnergyTank {
         bool is_empty();
         int get_energy();
         float get_energy_percentage();
+        bool just_respawned();
         ~EnergyTank();
 };
 
