@@ -62,12 +62,6 @@ public:
     void render();
 };
 
-class MegaManRenderer : public ActorRenderer {
-public:
-    using ActorRenderer::ActorRenderer;
-    void render();
-};
-
 class ActorRendererFactory {
 public:
     ActorRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
@@ -77,7 +71,6 @@ public:
 private:
     SDL2pp::Renderer *renderer;
     Camera &camera;
-    SDL2pp::Texture *meg_sprites;
     SDL2pp::Texture *enemy_sprites;
     std::map<std::string, ActorRendererType> actor_renderers;
 };
