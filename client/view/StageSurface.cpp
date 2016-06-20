@@ -24,7 +24,7 @@ StageSurface::StageSurface(Client& client) : won_game(false), client(client){
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
                                     SDL_WINDOWPOS_UNDEFINED, 640, 480,
                                     SDL_WINDOW_RESIZABLE);
-        window->Maximize();
+//        window->Maximize();
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);
         // TODO: stage renderer should receive the stage info in its creation
         stage_renderer = new StageRenderer(renderer, s_stage_info);

@@ -11,6 +11,8 @@ MegaManRenderer::MegaManRenderer(SDL2pp::Renderer *renderer, Camera &camera,
                                                               camera(camera),
                                                               pos_x(pos_x),
                                                               pos_y(pos_y),
+                                                              prev_x(0),
+                                                              prev_y(0),
                                                               dir_x(0), dir_y(0),
                                                               actual_energy(energy),
                                                               name(name){
@@ -19,6 +21,8 @@ MegaManRenderer::MegaManRenderer(SDL2pp::Renderer *renderer, Camera &camera,
 
 void MegaManRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y,
                           float energy) {
+    prev_x = this->pos_x;
+    prev_y = this->pos_y;
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     this->dir_x = dir_x;
@@ -29,14 +33,28 @@ void MegaManRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y,
 void MegaManRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
-    if (dir_x < 0) {
-        renderer->Copy(*sprites, SDL2pp::Rect(103, 10, 21, 24),
-                       SDL2pp::Rect(pos.first , pos.second, size, size), 0.0,
-                       SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-    } else {
-        renderer->Copy(*sprites, SDL2pp::Rect(103, 10, 21, 24),
-                       SDL2pp::Rect(pos.first , pos.second, size, size));
+    int meg_x = 103;
+    int meg_y = 10;
+    int size_meg_x = 21;
+    int size_meg_y = 24;
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    if (prev_y < pos_y) {
+        meg_x = 265;
+        meg_y = 4;
+        size_meg_x = 26;
+        size_meg_y = 30;
+    } else if (prev_x != pos_x) {
+        meg_x = 103;
+        meg_y = 10;
+        size_meg_x = 21;
+        size_meg_y = 24;
+        if (prev_x > pos_x) {
+            flip = SDL_FLIP_HORIZONTAL;
+        }
     }
+    renderer->Copy(*sprites, SDL2pp::Rect(meg_x, meg_y, size_meg_x, size_meg_y),
+                   SDL2pp::Rect(pos.first , pos.second, size, size), 0.0,
+                   SDL2pp::NullOpt, flip);
     render_energy(size);
 }
 

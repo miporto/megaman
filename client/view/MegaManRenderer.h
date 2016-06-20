@@ -25,6 +25,9 @@ private:
     Camera &camera;
     float pos_x;
     float pos_y;
+    float prev_x;
+    float prev_y;
+    int running_phase;
     int dir_x;
     int dir_y;
     float actual_energy;
