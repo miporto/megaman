@@ -99,7 +99,6 @@ void StageRenderer::new_update(const std::string &name,
 }
 
 void StageRenderer::delete_renderer(int id) {
-    // TODO: check with camera, cause  if its a meg it has to delete it too
     if (tile_renderers.count(id) != 0) {
         TileRenderer *t_renderer = tile_renderers[id];
         tile_renderers.erase(id);
@@ -190,7 +189,6 @@ void StageRenderer::create_renderers(std::string &info) {
                 actor_renderers[id] = actor_factory
                         .build_actor_renderer(type, x, y);
             } else if (type.compare(MEGAMAN) == 0) {
-                // TODO: add name and energy
                 int energy = stoi(element_info["energy"]);
                 std::string name = element_info["name"];
                 MegaManRenderer *mega_man_renderer = new MegaManRenderer(
@@ -203,7 +201,6 @@ void StageRenderer::create_renderers(std::string &info) {
                         type, x, y);
             } else if (std::find(bosses.begin(), bosses.end(), type) !=
                     bosses.end()) {
-                // TODO: put actual energy.
                 int energy = stoi(element_info["energy"]);
                 boss_renderers[id] = boss_factory.build_boss_renderer(type,
                                                                       x, y,
