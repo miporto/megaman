@@ -126,6 +126,8 @@ FloatUpdate* Met::update(const int id) {
                                 this->helmet_on);
 }
 
+bool Met::status_changed() { return this->ticks % MET_HELMET_FREC == 0; }
+
 Met::~Met() {}
 
 Bumby::Bumby(const std::vector<float>& position) :
@@ -152,6 +154,8 @@ void Bumby::tick() {
 
     this->ticks++;
 }
+
+bool Bumby::status_changed() { return false; }
 
 Bumby::~Bumby() {}
 
@@ -196,6 +200,8 @@ FloatUpdate* Sniper::update(const int id) {
                                 pos[X_COORD_POS], pos[Y_COORD_POS],
                                 this->shield_on);
 }
+
+bool Sniper::status_changed() { return this->ticks % SNIPER_SHIELD_FREC == 0; }
 
 Sniper::~Sniper() {}
 
@@ -246,5 +252,7 @@ FloatUpdate* JumpingSniper::update(const int id) {
                                 pos[X_COORD_POS], pos[Y_COORD_POS],
                                 this->shield_on);
 }
+
+bool JumpingSniper::status_changed() { return this->ticks % SNIPER_SHIELD_FREC == 0; }
 
 JumpingSniper::~JumpingSniper() {}

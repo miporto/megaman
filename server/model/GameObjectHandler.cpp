@@ -92,7 +92,9 @@ std::vector<FloatUpdate*> GameObjectHandler::updates() {
     for (unsigned int i = 0; i < this->objects.size(); ++i)
         if (this->objects[i]->it_moved() ||
                 (this->objects[i]->is_megaman() &&
-                        ((MegaMan*)this->objects[i])->energy_changed()))
+                        ((MegaMan*)this->objects[i])->energy_changed()) ||
+                (this->objects[i]->is_enemy() &&
+                        ((Enemy*)this->objects[i])->status_changed()))
             updates.push_back(this->objects[i]->update
                     (this->object_id[this->objects[i]]));
     return updates;
