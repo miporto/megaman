@@ -100,8 +100,9 @@ std::vector<FloatUpdate*> GameObjectHandler::updates() {
 
 float GameObjectHandler::dist(const std::vector<float>& position,
                               const std::vector<float>& other_position) {
-    return sqrt(pow((position[X_COORD_POS] - other_position[X_COORD_POS]), 2) +
+    float d = sqrt(pow((position[X_COORD_POS] - other_position[X_COORD_POS]), 2) +
                 pow((position[Y_COORD_POS] - other_position[Y_COORD_POS]), 2));
+    return d;
 }
 
 std::vector<float> GameObjectHandler::closest_enemy_for_megaman
@@ -121,10 +122,13 @@ std::vector<float> GameObjectHandler::closest_megaman
     std::vector<float> result;
     result.push_back(std::numeric_limits<float>::infinity());
     result.push_back(std::numeric_limits<float>::infinity());
-    for (unsigned int i = 0; i < this->objects.size(); ++i)
+    for (unsigned int i = 0; i < this->objects.size(); ++i) {
         if ((this->objects[i]->is_megaman()) &&
-      dist(this->objects[i]->get_position(), position) < dist(result, position))
+            dist(this->objects[i]->get_position(), position) <
+            dist(result, position)) {
             result = this->objects[i]->get_position();
+        }
+    }
     return result;
 }
 

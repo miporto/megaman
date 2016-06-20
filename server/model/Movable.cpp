@@ -114,8 +114,12 @@ ProjectileMovable::ProjectileMovable(const std::vector<float>& position,
           potential_velocity_y(velocity_y) {}
 
 void ProjectileMovable::enable_y_movement() {
-    this->velocity_y = this->potential_velocity_y;
+    this->velocity_y = this->potential_velocity_y / PX_PER_CELL_RATIO;
 }
+
+bool ProjectileMovable::no_y_movement() { return this->velocity_y == 0; }
+
+void ProjectileMovable::disable_x_movement() { this->velocity_x = 0; }
 
 void ProjectileMovable::disable_y_movement() { this->velocity_y = 0; }
 
@@ -267,38 +271,28 @@ UserMovable::UserMovable(const std::vector<float>& respawn_position,
           respawn_position(respawn_position), on_stairs(false) {}
 
 void UserMovable::change_x_movement(bool start, bool forward) {
-    std::cout << "X movement" << std::endl;
     if (forward) {
-        std::cout << "forward" << std::endl;
         this->direction_x = FORWARD;
     } else {
-        std::cout << "backward" << std::endl;
         this->direction_x = BACKWARD;
     }
     if (start) {
-        std::cout << "start" << std::endl;
         this->current_vel_x = this->velocity_x * this->direction_x;
     } else {
-        std::cout << "stop" << std::endl;
         this->current_vel_x = 0;
     }
 }
 
 void UserMovable::change_y_movement(bool start, bool forward) {
     if (this->current_vel_y) return; //Si ya esta moviendose en y, ignoro la accion
-    std::cout << "Y movement" << std::endl;
     if (forward) {
-        std::cout << "forward" << std::endl;
         this->direction_y = FORWARD;
     } else {
-        std::cout << "backward" << std::endl;
         this->direction_y = BACKWARD;
     }
     if (start) {
-        std::cout << "start" << std::endl;
         this->current_vel_y = this->velocity_y * this->direction_y;
     } else {
-        std::cout << "stop" << std::endl;
         this->current_vel_y = 0;
     }
 }
@@ -309,8 +303,6 @@ void UserMovable::standing_on_stairs() {
 }
 
 void UserMovable::move() {
-//    std::cout << get_position()[0] << ", " << get_position()[1] << "// ";
-//    std::cout << current_vel_x << ", " << current_vel_y << std::endl;
     this->previous_position = this->get_position();
     if (!this->current_vel_x && !this->current_vel_y) return;
 
