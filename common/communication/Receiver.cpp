@@ -102,11 +102,13 @@ void Receiver::receive_packet(const char id) {
             int direction_x, direction_y;
             this->socket->receive((char *) &direction_x, sizeof(int));
             this->socket->receive((char *) &direction_y, sizeof(int));
+            char respawned;
+            this->socket->receive(&respawned, sizeof(char));
             this->packets.push(new MegaManFloatUpdate(name,
                                                       player_name, object_id,
                                                       x, y,
                                                       direction_x, direction_y,
-                                                      energy));
+                                                      energy, respawned));
             delete[] name;
             delete[] player_name;
             break;

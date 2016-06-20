@@ -163,6 +163,7 @@ class MegaManFloatUpdate : public FloatUpdate {
         const float energy;
         const int direction_x;
         const int direction_y;
+        const bool respawned;
 
     public:
         MegaManFloatUpdate(const std::string& name,
@@ -171,12 +172,14 @@ class MegaManFloatUpdate : public FloatUpdate {
                            const float x, const float y,
                            const int direction_x,
                            const int direction_y,
-                           const float energy);
+                           const float energy,
+                           const bool respawned);
         char get_id() const;
         const std::string& get_player_name() const;
         float get_energy() const;
         int get_direction_x() const;
         int get_direction_y() const;
+        bool just_respawned() const;
         std::string get_str() const;
         MegaManFloatUpdate* clone() const;
         ~MegaManFloatUpdate();
