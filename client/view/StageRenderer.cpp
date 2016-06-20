@@ -36,7 +36,7 @@ void StageRenderer::render() {
     }
 
     // Render mega mans
-    MMegaManRenderer *meg_renderer;
+    MegaManRenderer *meg_renderer;
     for (auto const &it: meg_renderers) {
         meg_renderer = it.second;
         meg_renderer->render();
@@ -70,7 +70,7 @@ void StageRenderer::new_update(const std::string &name,
         ActorRenderer *a_renderer = actor_renderers[id];
         a_renderer->update(x, y, covered);
     } else if (meg_renderers.count(id) != 0){
-        MMegaManRenderer *m_renderer = meg_renderers[id];
+        MegaManRenderer *m_renderer = meg_renderers[id];
         int dir_x = (int) update_info["dir_x"];
         int dir_y = (int) update_info["dir_y"];
         float energy =  update_info["energy"];
@@ -109,7 +109,7 @@ void StageRenderer::delete_renderer(int id) {
         actor_renderers.erase(id);
         delete a_renderer;
     } else if (meg_renderers.count(id) != 0) {
-        MMegaManRenderer *m_renderer = meg_renderers[id];
+        MegaManRenderer *m_renderer = meg_renderers[id];
         meg_renderers.erase(id);
         camera.delete_megaman(id);
         delete m_renderer;
@@ -193,7 +193,7 @@ void StageRenderer::create_renderers(std::string &info) {
                 // TODO: add name and energy
                 int energy = stoi(element_info["energy"]);
                 std::string name = element_info["name"];
-                MMegaManRenderer *mega_man_renderer = new MMegaManRenderer(
+                MegaManRenderer *mega_man_renderer = new MegaManRenderer(
                         renderer, camera, x, y, energy, name);
                 meg_renderers[id] = mega_man_renderer;
                 camera.add_megaman(id, mega_man_renderer);
@@ -229,7 +229,7 @@ void StageRenderer::delete_all_renderers(){
 
     for (auto const &it : meg_renderers) {
         camera.delete_megaman(it.first);
-        MMegaManRenderer *m_renderer = it.second;
+        MegaManRenderer *m_renderer = it.second;
         delete m_renderer;
     }
     meg_renderers.clear();

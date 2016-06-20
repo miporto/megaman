@@ -9,11 +9,12 @@ class Sender : public Thread {
     private:
         Socket* socket;
         PacketsQueueProtected& packets;
-        bool quit;
+        bool started, quit;
 
     public:
         Sender(Socket* socket,
                PacketsQueueProtected& packets);
+        void start();
         void run();
         void shutdown();
         ~Sender();

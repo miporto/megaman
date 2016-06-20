@@ -31,7 +31,8 @@ MainWindow::MainWindow(const char* hostname, const char* port) :
     waiting_loop = NULL;
     game_loop = NULL;
 	set_title("Mega Man");
-	set_size_request(640, 480);
+    maximize();
+//	set_size_request(640, 480);
     set_position(Gtk::WIN_POS_CENTER);
 	set_border_width(0);
 	layout.put(bg_image, 0, 0);

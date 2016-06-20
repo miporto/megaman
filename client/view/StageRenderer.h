@@ -39,7 +39,7 @@ private:
     std::map<int, TileRenderer*> tile_renderers;
     std::map<int, ActorRenderer*> actor_renderers;
     std::map<int, BossRenderer*> boss_renderers;
-    std::map<int, MMegaManRenderer*> meg_renderers;
+    std::map<int, MegaManRenderer*> meg_renderers;
     std::vector<std::string> actors;
     std::vector<std::string> bosses;
     std::vector<std::string> objects;
