@@ -63,8 +63,6 @@ std::pair<std::string, std::string> Projectile::info(const int id) {
 
 FloatUpdate* Projectile::update(const int id) {
     std::vector<float> pos = this->get_position();
-    //Logger::instance()->out << INFO << "UPDATE Projectile pos: " <<
-    //        pos[X_COORD_POS] << " " << pos[Y_COORD_POS];
     return new FloatUpdate(this->name, id, pos[X_COORD_POS], pos[Y_COORD_POS]);
 }
 
@@ -140,12 +138,15 @@ Magnet::Magnet(int damage, float velocity_x, float velocity_y,
 
 void Magnet::tick() {
     this->acknowledge_tick();
-    if (this->target_x_reached(target_position)) {
+    if (this->target_x_reached(target_position) && this->no_y_movement()) {
+        this->disable_x_movement();
         this->enable_y_movement();
-        if (this->target_below_proyectile(target_position))
+        if (this->target_below_proyectile(target_position)) {
             this->change_y_direction();
+        }
     }
     this->move();
+    std::vector<float> pos = this->get_position();
 }
 
 int Spark::spark_number = 0;

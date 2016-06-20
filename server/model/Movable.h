@@ -55,7 +55,9 @@ class ProjectileMovable : public IAMovable {
         ProjectileMovable(const std::vector<float>& position,
                           const float velocity_x, const float velocity_y,
                           const float side);
+        void disable_x_movement();
         void disable_y_movement();
+        bool no_y_movement();
         void enable_y_movement();
         bool target_x_reached(const std::vector<float>& target_position);
         bool target_below_proyectile(const std::vector<float>& target_position);
