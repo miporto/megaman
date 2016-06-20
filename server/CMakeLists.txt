@@ -26,8 +26,6 @@ set(SOURCES
         model/Cannon.cpp
         model/Map.h
         model/Map.cpp
-        model/Game.cpp
-        model/Game.h
         model/Movable.cpp
         model/Movable.h
         communication/InfoMaker.cpp
