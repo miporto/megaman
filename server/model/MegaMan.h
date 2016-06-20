@@ -18,6 +18,8 @@ class EnergyTank {
         int lives;
         const int max_energy;
         int current_energy;
+        int previous_energy;
+        bool respawned;
 
     public:
         EnergyTank();
@@ -27,6 +29,8 @@ class EnergyTank {
         bool is_empty();
         int get_energy();
         float get_energy_percentage();
+        bool just_respawned();
+        bool energy_changed();
         ~EnergyTank();
 };
 
@@ -53,6 +57,7 @@ class MegaMan : public UserMovable {
         void tick();
         bool is_dead();
         std::pair<std::string, std::string> info(const int id);
+        bool energy_changed();
         FloatUpdate* update(const int id);
         bool is_megaman();
         ~MegaMan();

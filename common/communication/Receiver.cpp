@@ -1,3 +1,5 @@
+#include <string>
+
 #include "Receiver.h"
 
 Receiver::Receiver(Socket* socket,
@@ -102,11 +104,13 @@ void Receiver::receive_packet(const char id) {
             int direction_x, direction_y;
             this->socket->receive((char *) &direction_x, sizeof(int));
             this->socket->receive((char *) &direction_y, sizeof(int));
+            char respawned;
+            this->socket->receive(&respawned, sizeof(char));
             this->packets.push(new MegaManFloatUpdate(name,
                                                       player_name, object_id,
                                                       x, y,
                                                       direction_x, direction_y,
-                                                      energy));
+                                                      energy, respawned));
             delete[] name;
             delete[] player_name;
             break;
@@ -148,7 +152,7 @@ void Receiver::receive_packet(const char id) {
         } default:
             // Si el ID es desconocido, es posible que el resto del
             // paquete quede en el pipe del socket, arruinando la comm
-            break;
+            throw ReceiverError("Unknown packet id");
     }
 }
 
@@ -174,3 +178,6 @@ Receiver::~Receiver() {
     this->shutdown();
     if (started) this->join();
 }
+
+ReceiverError::ReceiverError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}
