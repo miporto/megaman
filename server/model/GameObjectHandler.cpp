@@ -10,6 +10,9 @@
 #include "GameObjectSetter.h"
 #include "Enemy.h"
 #include "Boss.h"
+#include "MegaMan.h"
+
+unsigned int GameObjectHandler::objects_count = 0;
 
 void GameObjectHandler::set(const std::string& info) {
     GameObjectSetter setter(info, this);
@@ -17,7 +20,8 @@ void GameObjectHandler::set(const std::string& info) {
 
 void GameObjectHandler::add_game_object(GameObject* object) {
     this->objects.push_back(object);
-    this->object_id[object] = this->objects.size();
+    this->objects_count++;
+    this->object_id[object] = this->objects_count;//this->objects.size();
 }
 
 const std::string GameObjectHandler::status() {
@@ -90,7 +94,9 @@ void GameObjectHandler::create_new_projectiles() {
 std::vector<FloatUpdate*> GameObjectHandler::updates() {
     std::vector<FloatUpdate*> updates;
     for (unsigned int i = 0; i < this->objects.size(); ++i)
-        if (this->objects[i]->it_moved())
+        if (this->objects[i]->it_moved() ||
+                (this->objects[i]->is_megaman() &&
+                        ((MegaMan*)this->objects[i])->energy_changed()))
             updates.push_back(this->objects[i]->update
                     (this->object_id[this->objects[i]]));
     return updates;

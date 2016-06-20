@@ -23,11 +23,21 @@ void BossRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y,
     this->actual_energy = energy;
 }
 
+void BossRenderer::render_energy(int size) {
+    int energy_percent = 100 - actual_energy;
+//    std::cout << "Energy: " << actual_energy << ", " << energy_percent <<
+//            std::endl;
+    renderer->SetDrawColor(0xff, 0xff, 0);
+    renderer->FillRect(renderer->GetOutputWidth() - 150, 10,
+                       renderer->GetOutputWidth() - energy_percent - 50, size/2);
+}
+
 void BombManRenderer::render() {
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
     renderer->Copy(*sprites, SDL2pp::Rect(123, 12, 24, 24),
                    SDL2pp::Rect(pos.first , pos.second, size, size));
+    render_energy(size);
 }
 
 void MagnetManRenderer::render() {
@@ -35,6 +45,7 @@ void MagnetManRenderer::render() {
     int size = camera.adjust_size();
     renderer->Copy(*sprites, SDL2pp::Rect(6, 10, 28, 29),
                    SDL2pp::Rect(pos.first , pos.second, size, size));
+    render_energy(size);
 }
 
 void SparkManRenderer::render() {
@@ -42,6 +53,7 @@ void SparkManRenderer::render() {
     int size = camera.adjust_size();
     renderer->Copy(*sprites, SDL2pp::Rect(54, 17, 30, 31),
                    SDL2pp::Rect(pos.first , pos.second, size, size));
+    render_energy(size);
 }
 
 void RingManRenderer::render() {
@@ -49,6 +61,7 @@ void RingManRenderer::render() {
     int size = camera.adjust_size();
     renderer->Copy(*sprites, SDL2pp::Rect(7, 5, 25, 30),
                    SDL2pp::Rect(pos.first , pos.second, size, size));
+    render_energy(size);
 }
 
 void FireManRenderer::render() {
@@ -56,6 +69,7 @@ void FireManRenderer::render() {
     int size = camera.adjust_size();
     renderer->Copy(*sprites, SDL2pp::Rect(31, 11, 24, 31),
                    SDL2pp::Rect(pos.first , pos.second, size, size));
+    render_energy(size);
 }
 
 BossRendererFactory::BossRendererFactory(SDL2pp::Renderer *renderer,

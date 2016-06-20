@@ -7,10 +7,15 @@
 
 TeamWaiter::TeamWaiter(std::vector<std::string> &teammates,
                        ReceivedPacketsProtected &packets_received) :
-        teammates(teammates), packets_received(packets_received) { }
+        quit(false), started(false), teammates(teammates),
+        packets_received(packets_received) {}
 
+void TeamWaiter::start() {
+    started = true;
+    Thread::start();
+}
 void TeamWaiter::run() {
-    while (this->packets_received.is_empty(STAGE_PICK)) {
+    while (this->packets_received.is_empty(STAGE_PICK) && !quit) {
         if (!this->packets_received.is_empty(NEW_PLAYER)) {
             NewPlayer *packet = (NewPlayer *) this->packets_received
                     .pop(NEW_PLAYER);
@@ -21,7 +26,13 @@ void TeamWaiter::run() {
     }
 }
 
-TeamWaiter::~TeamWaiter() { }
+void TeamWaiter::shutdown() {
+    quit = true;
+}
+
+TeamWaiter::~TeamWaiter() {
+    if (started) join();
+}
 
 ClientCommunicator::ClientCommunicator
         (Socket &socket, std::vector<std::string> &teammates)
@@ -48,6 +59,15 @@ void ClientCommunicator::send_action(const std::string &name,
     this->packets_to_send.push(new Action(name, action_id, pressed));
 }
 
+char ClientCommunicator::receive_stage_id() {
+    if (new_stage_id()) {
+        StagePick *pick = (StagePick*) packets_received.pop(STAGE_PICK);
+        char id = pick->get_stage_id();
+        delete pick;
+        return id;
+    }
+    throw "No stage id present.";
+}
 const std::string ClientCommunicator::receive_stage_info() {
     if (!this->packets_received.is_empty(STAGE_INFO)) {
         StageInfo *stage = (StageInfo *) this->packets_received.pop(STAGE_INFO);
@@ -119,6 +139,7 @@ UpdatePacket ClientCommunicator::receive_megaman_update() {
     info["dir_x"] = update->get_direction_x();
     info["dir_y"] = update->get_direction_y();
     info["energy"] = update->get_energy();
+//    std::cout << info["energy"] << std::endl;
     update_pkt.first = update->get_name();
     update_pkt.second = info;
     delete update;
@@ -169,7 +190,7 @@ std::string ClientCommunicator::receive_chamber_info() {
     throw "ERROR: No chamber info on queue!";
 }
 
-bool ClientCommunicator::new_stage_pick() {
+bool ClientCommunicator::new_stage_id() {
     return !packets_received.is_empty(STAGE_PICK);
 }
 bool ClientCommunicator::new_update_packets() {
@@ -202,5 +223,5 @@ bool ClientCommunicator::new_chamber_info_packet() {
 }
 
 ClientCommunicator::~ClientCommunicator() {
-    this->waiter.join();
+    this->waiter.shutdown();
 }

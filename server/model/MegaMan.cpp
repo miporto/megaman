@@ -15,9 +15,12 @@ EnergyTank::EnergyTank() :
         max_lives(EnergyTankFactory::initial_lives()),
         lives(this->max_lives),
         max_energy(EnergyTankFactory::maximum_energy()),
-        current_energy(this->max_energy) {}
+        current_energy(max_energy),
+        previous_energy(max_energy),
+        respawned(false) {}
 
 void EnergyTank::increase_energy(const int amount) {
+    this->previous_energy = this->current_energy;
     if (this->current_energy + amount > this->max_energy)
         this->current_energy = this->max_energy;
     else
@@ -25,6 +28,8 @@ void EnergyTank::increase_energy(const int amount) {
 }
 
 void EnergyTank::decrease_energy(int amount) {
+    this->previous_energy = this->current_energy;
+    this->respawned = false;
     if (this->current_energy < amount && this->lives > 0) {
         amount -= this->current_energy;
         this->reset();
@@ -45,12 +50,14 @@ bool EnergyTank::is_empty() {
 }
 
 void EnergyTank::reset() {
+    this->previous_energy = this->current_energy;
     if (!this->lives) {
         this->current_energy = 0;
         return;
     }
     this->lives--;
     this->current_energy = this->max_energy;
+    this->respawned = true;
 }
 
 int EnergyTank::get_energy() {
@@ -58,7 +65,15 @@ int EnergyTank::get_energy() {
 }
 
 float EnergyTank::get_energy_percentage() {
-    return (this->current_energy / this->max_energy) * 100;
+    return ((float)this->current_energy / (float)this->max_energy) * 100;
+}
+
+bool EnergyTank::just_respawned() {
+    return this->respawned;
+}
+
+bool EnergyTank::energy_changed() {
+    return this->previous_energy != this->current_energy;
 }
 
 EnergyTank::~EnergyTank() {}
@@ -137,13 +152,18 @@ std::pair<std::string, std::string> MegaMan::info(const int id) {
     return std::make_pair(MEGAMAN_NAME, info.dump());
 }
 
+bool MegaMan::energy_changed() {
+    return this->tank.energy_changed();
+}
+
 FloatUpdate* MegaMan::update(const int id) {
     std::vector<float> pos = this->get_position();
     return new MegaManFloatUpdate(MEGAMAN_NAME, this->name, id,
                                   pos[X_COORD_POS], pos[Y_COORD_POS],
                                   (int)pos[DIRECTION_X_POS],
                                   (int)pos[DIRECTION_Y_POS],
-                                  this->tank.get_energy_percentage());
+                                  this->tank.get_energy_percentage(),
+                                  this->tank.just_respawned());
 }
 
 bool MegaMan::is_megaman() { return true; }

@@ -41,7 +41,7 @@ Player* BossChamber::player_with_name(const std::string& name) {
     std::map<std::string, Player*>::iterator it = this->players.find(name);
 
     if (it == this->players.end())
-        throw StageError("There is no player with that name");
+        throw BossChamberError("There is no player with that name");
 
     return it->second;
 }
@@ -125,7 +125,11 @@ void BossChamber::reward_players() {
          ++it) { it->second->add_reward(ammo_name); }
 }
 
-BossChamber::~BossChamber() {}
+BossChamber::~BossChamber() {
+    if (this->beated()) delete this->boss;
+    // De lo contrario, forma parte del GameObjectHandler y el se
+    // encarga de hacer el delete
+}
 
 BossChamberError::BossChamberError(const std::string error_msg) throw()
         : SystemError(error_msg) {}

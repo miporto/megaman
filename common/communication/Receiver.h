@@ -1,6 +1,8 @@
 #ifndef RECEIVER_H
 #define RECEIVER_H
 
+#include <string>
+
 #include "common/Thread.h"
 #include "Socket.h"
 #include "Packet.h"
@@ -20,6 +22,11 @@ class Receiver : public Thread {
         void run();
         void shutdown();
         virtual ~Receiver();
+};
+
+class ReceiverError : public SystemError {
+public:
+    explicit ReceiverError(const std::string error_msg) throw();
 };
 
 #endif //RECEIVER_H

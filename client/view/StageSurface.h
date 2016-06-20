@@ -13,11 +13,13 @@ class StageSurface {
 public:
     explicit StageSurface(Client& client);
     void run();
+    bool game_won();
     ~StageSurface();
 private:
     void send_events(std::vector<bool>& prev_input,
                      std::vector<bool>& new_input);
     // TODO: move this method to a more appropiate class
+    bool won_game;
     Client& client;
     SDL2pp::SDL* sdl;
     SDL2pp::Window* window;

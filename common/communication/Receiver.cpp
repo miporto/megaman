@@ -1,3 +1,5 @@
+#include <string>
+
 #include "Receiver.h"
 
 Receiver::Receiver(Socket* socket,
@@ -18,7 +20,7 @@ void Receiver::receive_packet(const char id) {
             name[length] = '\0';
             this->socket->receive(name, sizeof(char) * length);
             this->packets.push(new NewPlayer(name));
-            delete name;
+            delete[] name;
             break;
         } case STAGE_PICK: {
             char stage_id;
@@ -32,7 +34,7 @@ void Receiver::receive_packet(const char id) {
             info[length] = '\0';
             this->socket->receive(info, sizeof(char) * length);
             this->packets.push(new StageInfo(info));
-            delete info;
+            delete[] info;
             break;
         } case UPDATE: {
             int name_length;
@@ -46,7 +48,7 @@ void Receiver::receive_packet(const char id) {
             info[length] = '\0';
             this->socket->receive(info, sizeof(char) * length);
             this->packets.push(new Update(name, info));
-            delete info;
+            delete[] info;
             break;
         } case FLOAT_UPDATE: {
             int name_length;
@@ -60,7 +62,7 @@ void Receiver::receive_packet(const char id) {
             this->socket->receive((char *) &x, sizeof(float));
             this->socket->receive((char *) &y, sizeof(float));
             this->packets.push(new FloatUpdate(name, object_id, x, y));
-            delete name;
+            delete[] name;
             break;
         } case ENEMY_FLOAT_UPDATE: {
             int name_length;
@@ -77,7 +79,7 @@ void Receiver::receive_packet(const char id) {
             this->socket->receive(&covered, sizeof(char));
             this->packets.push(new EnemyFloatUpdate(name, object_id,
                                                     x, y, covered));
-            delete name;
+            delete[] name;
             break;
         } case MEGAMAN_FLOAT_UPDATE: {
             int name_length;
@@ -102,13 +104,15 @@ void Receiver::receive_packet(const char id) {
             int direction_x, direction_y;
             this->socket->receive((char *) &direction_x, sizeof(int));
             this->socket->receive((char *) &direction_y, sizeof(int));
+            char respawned;
+            this->socket->receive(&respawned, sizeof(char));
             this->packets.push(new MegaManFloatUpdate(name,
                                                       player_name, object_id,
                                                       x, y,
                                                       direction_x, direction_y,
-                                                      energy));
-            delete name;
-            delete player_name;
+                                                      energy, respawned));
+            delete[] name;
+            delete[] player_name;
             break;
         } case BOSS_FLOAT_UPDATE: {
             int name_length;
@@ -129,7 +133,7 @@ void Receiver::receive_packet(const char id) {
             this->packets.push(new BossFloatUpdate(name, object_id, x, y,
                                                    direction_x, direction_y,
                                                    energy));
-            delete name;
+            delete[] name;
             break;
         } case DECEASED: {
             int object_id;
@@ -143,12 +147,12 @@ void Receiver::receive_packet(const char id) {
             info[length] = '\0';
             this->socket->receive(info, sizeof(char) * length);
             this->packets.push(new ChamberInfo(info));
-            delete info;
+            delete[] info;
             break;
         } default:
             // Si el ID es desconocido, es posible que el resto del
             // paquete quede en el pipe del socket, arruinando la comm
-            break;
+            throw ReceiverError("Unknown packet id");
     }
 }
 
@@ -174,3 +178,6 @@ Receiver::~Receiver() {
     this->shutdown();
     if (started) this->join();
 }
+
+ReceiverError::ReceiverError(const std::string error_msg) throw()
+        : SystemError(error_msg) {}

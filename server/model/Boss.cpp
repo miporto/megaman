@@ -18,7 +18,7 @@
 #define RINGMAN_JUMP_FREC 150
 #define RINGMAN_SHUFFLE_FREC 10
 #define FIREMAN_JUMP_FREC 150
-#define FIREMAN_SHUFFLE_FREC 30
+#define FIREMAN_SHUFFLE_FREC 25
 #define MAGNETMAN_SHOOT_FREC 20
 #define MAGNETMAN_JUMP_FREC 100
 #define MAGNETMAN_SHUFFLE_FREC 50
@@ -87,7 +87,7 @@ bool Boss::shoots_per_tick() { return true; }
 bool Boss::is_boss() { return true; }
 
 float Boss::get_energy_percentage() {
-    return (this->energy / this->initial_energy) * 100;
+    return ((float)this->energy / (float)this->initial_energy) * 100;
 }
 
 FloatUpdate* Boss::update(const int id) {

@@ -16,6 +16,7 @@ class Acceptor : public Thread {
         Acceptor(Socket& socket, Match* match);
         void run();
         void shutdown();
+        void set_match(Match* match);
         ~Acceptor();
 };
 

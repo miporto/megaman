@@ -9,6 +9,7 @@
 
 class GameObjectHandler {
     private:
+        static unsigned int objects_count;
         std::map<GameObject*, int> object_id;
     protected:
         std::vector<GameObject*> objects;

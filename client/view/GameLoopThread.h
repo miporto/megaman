@@ -10,13 +10,13 @@ class MainWindow;
 
 class GameLoopThread : public Thread {
 public:
-    GameLoopThread(MainWindow& main_window, Client& client);
+    GameLoopThread(MainWindow &main_window, Client &client, char stage_id);
     void run();
-    void join();
     ~GameLoopThread();
 private:
     MainWindow& main_window;
     Client& client;
+    char stage_id;
 };
 
 

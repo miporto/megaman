@@ -17,7 +17,7 @@
 #define SCREEN_FPS 60
 #define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 
-StageSurface::StageSurface(Client& client) : client(client){
+StageSurface::StageSurface(Client& client) : won_game(false), client(client){
     try {
         std::string s_stage_info = client.receive_stage_info();
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
@@ -71,12 +71,21 @@ void StageSurface::run() {
             while (client.new_deceased()) {
                 stage_renderer->delete_renderer(client.receive_deceased());
             }
-            if (stage_renderer->game_ended()) return;
 
-            // Update screen
-            renderer->Clear();
-            stage_renderer->render();
-            renderer->Present();
+            if (stage_renderer->game_ended()) {
+                renderer->Clear();
+                stage_renderer->render();
+                stage_renderer->render_end_game_msg();
+                renderer->Present();
+                SDL_Delay(1000);
+                if (stage_renderer->game_won()) won_game = true;
+                return;
+            } else {
+                renderer->Clear();
+                stage_renderer->render();
+                renderer->Present();
+            }
+
             prev_input = new_input;
             frame_ticks = cap_timer.get_ticks();
             if (frame_ticks < SCREEN_TICKS_PER_FRAME) {
@@ -88,6 +97,10 @@ void StageSurface::run() {
         std::cerr << e.what() << std::endl;
         throw e;
     }
+}
+
+bool StageSurface::game_won() {
+    return won_game;
 }
 
 /*

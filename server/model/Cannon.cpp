@@ -18,7 +18,11 @@
 #define PELLET_DAMAGE 1
 
 #define BOMB_JUMP_FREC 20
-#define FIRE_SHUFFLE_FREC 30
+#define FIRE_SHUFFLE_FREC 25
+#define HORIZONTAL_SPARK_NUMBER 2
+#define DOWNWARD_SPARK_NUMBER 3
+#define HORIZONTAL_RING_NUMBER 2
+#define DOWNWARD_RING_NUMBER 3
 
 Projectile::Projectile(const std::string& name,
                        int damage,
@@ -142,18 +146,20 @@ void Magnet::tick() {
     this->move();
 }
 
-int Spark::spark_count = 0;
+int Spark::spark_number = 0;
 
 Spark::Spark(int damage, float velocity_x, float velocity_y,
              const std::vector<float>& initial_position, bool thrown_by_megaman)
         : Projectile(SPARK_NAME, damage, velocity_x,
                      velocity_y, initial_position, thrown_by_megaman) {
-    if (this->spark_count % 3 == 0)
-        this->change_y_direction();
-    else if (this->spark_count % 2 == 0)
+    if (this->spark_number == HORIZONTAL_SPARK_NUMBER) {
         this->disable_y_movement();
+    } else if (this->spark_number == DOWNWARD_SPARK_NUMBER) {
+        this->change_y_direction();
+        this->spark_number = 0;
+    }
 
-    this->spark_count++;
+    this->spark_number++;
 }
 
 void Spark::tick() {
@@ -174,18 +180,20 @@ void Fire::tick() {
     this->move();
 }
 
-int Ring::ring_count = 0;
+int Ring::ring_number = 0;
 
 Ring::Ring(int damage, float velocity_x, float velocity_y,
            const std::vector<float>& initial_position, bool thrown_by_megaman)
         : Projectile(RING_NAME, damage, velocity_x,
                      velocity_y, initial_position, thrown_by_megaman) {
-    if (this->ring_count % 3 == 0)
-        this->change_y_direction();
-    else if (this->ring_count % 2 == 0)
+    if (this->ring_number == HORIZONTAL_RING_NUMBER) {
         this->disable_y_movement();
+    } else if (this->ring_number == DOWNWARD_RING_NUMBER) {
+        this->change_y_direction();
+        this->ring_number = 0;
+    }
 
-    this->ring_count++;
+    this->ring_number++;
 }
 
 void Ring::collide_with(Object* object) {

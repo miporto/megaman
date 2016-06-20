@@ -150,6 +150,10 @@ std::string FloatUpdate::get_str() const {
     return str;
 }
 
+FloatUpdate* FloatUpdate::clone() const {
+    return new FloatUpdate(*this);
+}
+
 FloatUpdate::~FloatUpdate() {}
 
 EnemyFloatUpdate::EnemyFloatUpdate(const std::string& name, const int object_id,
@@ -197,6 +201,10 @@ std::string EnemyFloatUpdate::get_str() const {
     return str;
 }
 
+EnemyFloatUpdate* EnemyFloatUpdate::clone() const {
+    return new EnemyFloatUpdate(*this);
+}
+
 EnemyFloatUpdate::~EnemyFloatUpdate() {}
 
 MegaManFloatUpdate::MegaManFloatUpdate(const std::string& name,
@@ -205,10 +213,12 @@ MegaManFloatUpdate::MegaManFloatUpdate(const std::string& name,
                                        const float x, const float y,
                                        const int direction_x,
                                        const int direction_y,
-                                       const float energy)
+                                       const float energy,
+                                       const bool respawned)
         : FloatUpdate(name, object_id, x, y),
           player_name(player_name), energy(energy),
-          direction_x(direction_x), direction_y(direction_y) {}
+          direction_x(direction_x), direction_y(direction_y),
+          respawned(respawned) {}
 
 char MegaManFloatUpdate::get_id() const { return this->id; }
 
@@ -221,6 +231,8 @@ float MegaManFloatUpdate::get_energy() const { return this->energy; }
 int MegaManFloatUpdate::get_direction_x() const { return this->direction_x; }
 
 int MegaManFloatUpdate::get_direction_y() const { return this->direction_y; }
+
+bool MegaManFloatUpdate::just_respawned() const { return this->respawned; }
 
 std::string MegaManFloatUpdate::get_str() const {
     std::string str;
@@ -265,7 +277,16 @@ std::string MegaManFloatUpdate::get_str() const {
     for (unsigned int i = 0; i < sizeof(int); ++i)
         str.push_back(dir_y_arr[i]);
 
+    if (this->respawned)
+        str.push_back(TRUE_CODE);
+    else
+        str.push_back(FALSE_CODE);
+
     return str;
+}
+
+MegaManFloatUpdate* MegaManFloatUpdate::clone() const {
+    return new MegaManFloatUpdate(*this);
 }
 
 MegaManFloatUpdate::~MegaManFloatUpdate() {}
@@ -324,6 +345,10 @@ std::string BossFloatUpdate::get_str() const {
         str.push_back(dir_y_arr[i]);
 
     return str;
+}
+
+BossFloatUpdate* BossFloatUpdate::clone() const {
+    return new BossFloatUpdate(*this);
 }
 
 BossFloatUpdate::~BossFloatUpdate() {}

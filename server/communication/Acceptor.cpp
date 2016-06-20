@@ -35,6 +35,10 @@ void Acceptor::shutdown() {
     this->socket.shutdown();
 }
 
+void Acceptor::set_match(Match* match) {
+    this->match = match;
+}
+
 Acceptor::~Acceptor() {
     this->join();
 }

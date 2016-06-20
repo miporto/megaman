@@ -80,11 +80,12 @@ bool ServerCommunicator::disconnected() {
 }
 
 void ServerCommunicator::shutdown() {
+    this->sender.shutdown();
+    this->receiver.shutdown();
     this->peer->shutdown();
 }
 
 ServerCommunicator::~ServerCommunicator() {
-    this->peer->shutdown();
     delete this->peer;
 }
 
@@ -124,21 +125,32 @@ void StageIdWaiter::reset_stage_id() {
 StageIdWaiter::~StageIdWaiter() {}
 
 HostCommunicator::HostCommunicator(Socket* peer, EventQueue& events) :
-        ServerCommunicator(peer, events),
-        waiter(this->packets_received) { this->waiter.start(); }
+        ServerCommunicator(peer, events) {}
+        //,
+       // waiter(this->packets_received), stage_pick(0) {
+    //this->waiter.start();
+//}
 
 char HostCommunicator::check_stage_id() {
-    return this->waiter.get_stage_id();
+    //return this->waiter.get_stage_id();
+    if (this->packets_received.is_empty(STAGE_PICK))
+        return 0;
+    StagePick* packet = (StagePick*) this->packets_received.pop(STAGE_PICK);
+    this->stage_pick = packet->get_stage_id();
+    delete packet;
+    return this->stage_pick;
 }
 
 char HostCommunicator::receive_stage_id() {
-    this->waiter.join();
-    return this->waiter.get_stage_id();
+    //this->waiter.join();
+    //return this->waiter.get_stage_id();
+    return this->stage_pick;
 }
 
 void HostCommunicator::reset_stage_id() {
-    this->waiter.reset_stage_id();
-    this->waiter.start();
+    //this->waiter.reset_stage_id();
+    //this->waiter.start();
+    this->stage_pick = 0;
 }
 
 HostCommunicator::~HostCommunicator() {}

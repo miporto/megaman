@@ -55,6 +55,12 @@ class Packet {
         virtual ~Packet();
 };
 
+class Clonable {
+public:
+    virtual Clonable* clone() const = 0;
+    virtual ~Clonable() {}
+};
+
 class NewPlayer : public Packet {
     private:
         static const char id = NEW_PLAYER;
@@ -109,7 +115,7 @@ class Update : public Packet {
         ~Update();
 };
 
-class FloatUpdate : public Packet {
+class FloatUpdate : public Packet, public Clonable {
     private:
         static const char id = FLOAT_UPDATE;
 
@@ -128,6 +134,7 @@ class FloatUpdate : public Packet {
         float get_x() const;
         float get_y() const;
         virtual std::string get_str() const;
+        virtual FloatUpdate* clone() const;
         virtual ~FloatUpdate();
 };
 
@@ -144,6 +151,7 @@ class EnemyFloatUpdate : public FloatUpdate {
         char get_id() const;
         char is_covered();
         std::string get_str() const;
+        EnemyFloatUpdate* clone() const;
         ~EnemyFloatUpdate();
 };
 
@@ -155,6 +163,7 @@ class MegaManFloatUpdate : public FloatUpdate {
         const float energy;
         const int direction_x;
         const int direction_y;
+        const bool respawned;
 
     public:
         MegaManFloatUpdate(const std::string& name,
@@ -163,13 +172,16 @@ class MegaManFloatUpdate : public FloatUpdate {
                            const float x, const float y,
                            const int direction_x,
                            const int direction_y,
-                           const float energy);
+                           const float energy,
+                           const bool respawned);
         char get_id() const;
         const std::string& get_player_name() const;
         float get_energy() const;
         int get_direction_x() const;
         int get_direction_y() const;
+        bool just_respawned() const;
         std::string get_str() const;
+        MegaManFloatUpdate* clone() const;
         ~MegaManFloatUpdate();
 };
 
@@ -192,6 +204,7 @@ class BossFloatUpdate : public FloatUpdate {
         int get_direction_x() const;
         int get_direction_y() const;
         std::string get_str() const;
+        BossFloatUpdate* clone() const;
         ~BossFloatUpdate();
 };
 

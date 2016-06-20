@@ -4,13 +4,7 @@
 #include <vector>
 #include <string>
 
-class Clonable {
-    public:
-        virtual Clonable* clone() const = 0;
-        virtual ~Clonable() {}
-};
-
-class Position : public Clonable {
+class Position {
     private:
         float x, y;
 
@@ -26,7 +20,6 @@ class Position : public Clonable {
 
         bool operator==(const Position& other) const;
         std::string str() const;
-        Position* clone() const;
         ~Position();
 };
 
