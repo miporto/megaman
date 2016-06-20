@@ -46,11 +46,20 @@ void Camera::delete_megaman(int id) {
     megs.erase(id);
 }
 void Camera::calculate_baricenter() {
-    float max_x = -1;
-    float min_x = max_x;
-    float max_y = -1;
-    float min_y = max_y;
+    if (megs.size() == 0) return;
+    float max_x;
+    float min_x;
+    float max_y;
+    float min_y;
+    bool setup = true;
     for (auto const &it: megs) {
+        if (setup) {
+            max_x = it.second->get_x();
+            min_x = max_x;
+            max_y = it.second->get_x();
+            min_y = max_y;
+            setup = false;
+        }
         float act_x = it.second->get_x();
         float act_y = it.second->get_y();
         if (act_x > max_x) max_x = act_x;
@@ -58,21 +67,24 @@ void Camera::calculate_baricenter() {
         if (act_x > max_y) max_y = act_y;
         if (act_y < min_y) min_y = act_y;
     }
-    float b_x = (max_x + min_x) / 2;
-    float b_y = (max_y + min_y) / 2;
     int width = renderer->GetOutputWidth();
     int height = renderer->GetOutputHeight();
-    if (b_x <  width * 0.25) {
+    float b_x = (max_x + min_x) / 2;
+    float b_y = (max_y + min_y) / 2;
+    if (b_x <  0) {
+        offset_x = 0;
+    } else if (b_x > width) {
+        offset_x = width;
+    } else {
         offset_x = -b_x;
-    } else if (b_x > width * 0.75) {
-        offset_x = b_x;
     }
-    if (b_y < height * 0.25) {
-        offset_y = -b_y;
-    } else if (b_y > width * 0.75) {
-        offset_y = b_y;
+    if (b_y < 0) {
+        offset_y = 0;
+    } else if (b_y > height) {
+        offset_y = height;
+    } else {
+        offset_y = 0;
     }
-    offset_x *= 0.75;
-    offset_y *= 0.75;
+//    std::cout << offset_x << ", " << offset_y << std::endl;
 }
 Camera::~Camera() {}
