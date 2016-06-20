@@ -41,7 +41,7 @@ Player* BossChamber::player_with_name(const std::string& name) {
     std::map<std::string, Player*>::iterator it = this->players.find(name);
 
     if (it == this->players.end())
-        throw StageError("There is no player with that name");
+        throw BossChamberError("There is no player with that name");
 
     return it->second;
 }

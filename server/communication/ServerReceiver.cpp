@@ -18,6 +18,8 @@ void ServerReceiver::receive_packet(const char id) {
         this->socket->receive(&pressed, sizeof(char));
         this->events.push(new Action(name, action_id, pressed));
         delete[] name;
+    } else {
+        throw ReceiverError("Unknown packet id");
     }
 }
 
