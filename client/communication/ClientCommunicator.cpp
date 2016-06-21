@@ -139,7 +139,7 @@ UpdatePacket ClientCommunicator::receive_megaman_update() {
     info["dir_x"] = update->get_direction_x();
     info["dir_y"] = update->get_direction_y();
     info["energy"] = update->get_energy();
-//    std::cout << info["energy"] << std::endl;
+    info["respawn"] = update->just_respawned();
     update_pkt.first = update->get_name();
     update_pkt.second = info;
     delete update;

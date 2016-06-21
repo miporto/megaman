@@ -9,7 +9,7 @@
 #include "server/model/GameObjectParser.h"
 #include "client/communication/ClientCommunicator.h"
 #include "TileRenderer.h"
-#include "ActorRenderer.h"
+#include "EnemyRenderer.h"
 #include "Camera.h"
 #include "BossRenderer.h"
 #include "MegaManRenderer.h"
@@ -30,21 +30,20 @@ public:
     ~StageRenderer();
 
 private:
-    void render_ready_msg();
     void create_renderers(std::string &info);
     void delete_all_renderers();
     SDL2pp::Renderer *renderer;
     SDL2pp::Texture *background;
     Camera camera;
     std::map<int, TileRenderer*> tile_renderers;
-    std::map<int, ActorRenderer*> actor_renderers;
+    std::map<int, EnemyRenderer*> actor_renderers;
     std::map<int, BossRenderer*> boss_renderers;
     std::map<int, MegaManRenderer*> meg_renderers;
     std::vector<std::string> actors;
     std::vector<std::string> bosses;
     std::vector<std::string> objects;
     TileRendererFactory tile_factory;
-    ActorRendererFactory actor_factory;
+    EnemyRendererFactory actor_factory;
     BossRendererFactory boss_factory;
     bool on_boss_chamber = false;
 };

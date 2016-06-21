@@ -5,7 +5,7 @@
 #include <utility>
 #include <map>
 
-#include "ActorRenderer.h"
+#include "EnemyRenderer.h"
 #include "MegaManRenderer.h"
 
 class MegaManRenderer;

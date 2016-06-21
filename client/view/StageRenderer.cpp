@@ -43,7 +43,7 @@ void StageRenderer::render() {
     }
 
     // Render enemies
-    ActorRenderer *actor_renderer;
+    EnemyRenderer *actor_renderer;
     for (auto const &it: actor_renderers) {
         actor_renderer = it.second;
         actor_renderer->render();
@@ -67,14 +67,15 @@ void StageRenderer::new_update(const std::string &name,
         t_renderer->update(x,  y);
     } else if (actor_renderers.count(id) != 0) {
         char covered = (char) update_info["covered"];
-        ActorRenderer *a_renderer = actor_renderers[id];
+        EnemyRenderer *a_renderer = actor_renderers[id];
         a_renderer->update(x, y, covered);
     } else if (meg_renderers.count(id) != 0){
         MegaManRenderer *m_renderer = meg_renderers[id];
+        bool respawn = update_info["respawn"];
         int dir_x = (int) update_info["dir_x"];
         int dir_y = (int) update_info["dir_y"];
         float energy =  update_info["energy"];
-        m_renderer->update(x, y, dir_x,  dir_y, energy);
+        m_renderer->update(x, y, dir_x, dir_y, energy, respawn);
     } else if (boss_renderers.count(id) != 0) {
         int dir_x = (int) update_info["dir_x"];
         int dir_y = (int) update_info["dir_y"];
@@ -104,7 +105,7 @@ void StageRenderer::delete_renderer(int id) {
         tile_renderers.erase(id);
         delete t_renderer;
     } else if (actor_renderers.count(id) != 0) {
-        ActorRenderer *a_renderer = actor_renderers[id];
+        EnemyRenderer *a_renderer = actor_renderers[id];
         actor_renderers.erase(id);
         delete a_renderer;
     } else if (meg_renderers.count(id) != 0) {
@@ -129,22 +130,6 @@ bool StageRenderer::game_ended() {
 bool StageRenderer::game_won() {
     return on_boss_chamber && boss_renderers.size() == 0 &&
             meg_renderers.size() > 0;
-}
-
-void StageRenderer::render_ready_msg() {
-    SDL2pp::SDLTTF ttf;
-    SDL2pp::Font font("resources/megaman_2.ttf", 48);
-    std::string text = "READY?";
-    SDL2pp::Texture text_sprite(
-            *renderer,
-            font.RenderText_Blended(text, SDL_Color{255, 255, 255, 255}));
-    int text_w= text_sprite.GetWidth();
-    int text_h = text_sprite.GetHeight();
-    int hcenter = renderer->GetOutputWidth() / 2;
-    int vcenter = renderer->GetOutputHeight() / 2;
-    renderer->Copy(text_sprite, SDL2pp::NullOpt, SDL2pp::Rect(hcenter - text_w/2,
-                                                              vcenter - text_h/2,
-                                                              text_w, text_h));
 }
 
 void StageRenderer::render_end_game_msg() {
@@ -219,7 +204,7 @@ void StageRenderer::delete_all_renderers(){
 
     for (auto const &it : actor_renderers) {
         camera.delete_megaman(it.first);
-        ActorRenderer *a_renderer = it.second;
+        EnemyRenderer *a_renderer = it.second;
         delete a_renderer;
     }
     actor_renderers.clear();
@@ -241,28 +226,3 @@ StageRenderer::~StageRenderer() {
     }
     boss_renderers.clear();
 }
-
-//void StageRenderer::update(const std::string &name,
-//                           const std::string &update_info) {
-//    std::map<std::string, std::string> parsed_update =
-//            TickInfoParser::parse_update(update_info);
-//    int id = stoi(parsed_update["id"]);
-//    float x = std::stof(parsed_update["x"]);
-//    float y = std::stof(parsed_update["y"]);
-//    if (tile_renderers.count(id) != 0) {
-//        TileRenderer *t_renderer = tile_renderers[id];
-//        t_renderer->update(x,  y);
-//    } else if (actor_renderers.count(id) != 0) {
-//        ActorRenderer *a_renderer = actor_renderers[id];
-//        a_renderer->update(x, y, 0, 0);
-//    } else {
-//        if (std::find(objects.begin(), objects.end(), name) != objects.end()) {
-//            tile_renderers[id] = tile_factory.build_tile_renderer(
-//                    name, x, y);
-//        } else if (std::find(actors.begin(), actors.end(), name) !=
-//                   actors.end()){
-//            actor_renderers[id] = actor_factory.build_actor_renderer(name, x,
-//                                                                     y);
-//        }
-//    }
-//}
