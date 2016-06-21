@@ -73,10 +73,11 @@ void Camera::calculate_baricenter() {
     int height = renderer->GetOutputHeight();
     float b_x = (max_x + min_x) / 2;
     float b_y = (max_y + min_y) / 2;
-    if (b_x - x < 0) x = 0;
-    if (b_x*size <  width * 0.25) {
-        offset_x = 0;
-    } else if ((b_x - x)*size > width * 0.75) {
+//    if (b_x - x < 0) x = 0;
+    if ((b_x-x)*size <  width * 0.25 && b_x-x < 0) {
+        offset_x = b_x - x;
+        x = b_x - x;
+    } else if ((min_x - x)*size > width * 0.85) {
         offset_x = -b_x;
         x = b_x;
     }

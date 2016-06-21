@@ -61,8 +61,9 @@ void MegaManRenderer::render() {
 
 void MegaManRenderer::render_energy(int size, int x, int y) {
     float energy = actual_energy*size*1.5/100;
+    float size_y =  y-size/1.2;
     renderer->SetDrawColor(34, 139, 34);
-    renderer->FillRect(x, y-size, x + (int) energy, y-size/2);
+    renderer->FillRect(x, y-size, x + (int) energy,(int) size_y);
 }
 
 void MegaManRenderer::render_name(int x, int y) {
