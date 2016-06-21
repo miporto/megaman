@@ -68,7 +68,7 @@ void Camera::calculate_baricenter() {
         if (act_x > max_y) max_y = act_y;
         if (act_y < min_y) min_y = act_y;
     }
-    
+
     int width = renderer->GetOutputWidth();
     int height = renderer->GetOutputHeight();
     float b_x = (max_x + min_x) / 2;
