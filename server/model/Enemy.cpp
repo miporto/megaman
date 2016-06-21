@@ -16,7 +16,7 @@
 #define SNIPER_SHIELD_FREC 50
 #define JUMPINGSNIPER_JUMP_FREC 15
 
-#define ENEMY_SIDE 0.75
+#define ENEMY_SIDE 1
 
 Enemy::Enemy(const std::string& name,
              const std::vector<float>& position,
