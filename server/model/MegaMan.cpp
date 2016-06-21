@@ -9,7 +9,7 @@
 #include "common/communication/Packet.h"
 #include "GameObjectHandler.h"
 
-#define MEGAMAN_SIDE 0.75
+#define MEGAMAN_SIDE 1
 
 EnergyTank::EnergyTank() :
         lives(EnergyTankFactory::initial_lives()),
