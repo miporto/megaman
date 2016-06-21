@@ -62,17 +62,15 @@ void MegaManRenderer::render() {
 void MegaManRenderer::render_energy(int size, int x, int y) {
     float energy = actual_energy*size*1.5/100;
     renderer->SetDrawColor(34, 139, 34);
-    renderer->FillRect(x, y-size/2, (int) energy, y-size);
+    renderer->FillRect(x, y-size, x + (int) energy, y-size/2);
 }
 
 void MegaManRenderer::render_name(int x, int y) {
     SDL2pp::SDLTTF ttf;
     SDL2pp::Font font("resources/megaman_2.ttf", 10);
-    std::string text = name;
-    std::cout << text << std::endl;
     SDL2pp::Texture text_sprite(
             *renderer,
-            font.RenderText_Blended(text, SDL_Color{255, 255, 255, 255}));
+            font.RenderText_Blended(name, SDL_Color{255, 255, 255, 255}));
     int text_w= text_sprite.GetWidth();
     int text_h = text_sprite.GetHeight();
     renderer->Copy(text_sprite, SDL2pp::NullOpt, SDL2pp::Rect(x + text_w/2,
