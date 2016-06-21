@@ -13,10 +13,17 @@ MegaManRenderer::MegaManRenderer(SDL2pp::Renderer *renderer, Camera &camera,
                                                               pos_y(pos_y),
                                                               prev_x(0),
                                                               prev_y(0),
+                                                              running_phase(0),
                                                               dir_x(0), dir_y(0),
                                                               actual_energy(energy),
                                                               name(name){
     sprites = new SDL2pp::Texture(*renderer, "resources/8bitmegaman.png");
+//    phases.push_back(new SDL2pp::Rect(103, 10, 21, 24));
+//    phases.push_back(new SDL2pp::Rect(133, 10, 21, 24));
+//    phases.push_back(new SDL2pp::Rect(160, 10, 20, 24));
+    phases.push_back(new SDL2pp::Rect(188, 12, 24, 22));
+    phases.push_back(new SDL2pp::Rect(218, 10, 16, 23));
+    phases.push_back(new SDL2pp::Rect(239, 12, 21, 22));
 }
 
 void MegaManRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y,
@@ -43,18 +50,24 @@ void MegaManRenderer::render() {
         meg_y = 4;
         size_meg_x = 26;
         size_meg_y = 30;
+        renderer->Copy(*sprites, SDL2pp::Rect(meg_x, meg_y, size_meg_x, size_meg_y),
+                       SDL2pp::Rect(pos.first , pos.second, size, size), 0.0,
+                       SDL2pp::NullOpt, flip);
     } else if (prev_x != pos_x) {
-        meg_x = 103;
-        meg_y = 10;
-        size_meg_x = 21;
-        size_meg_y = 24;
+        SDL2pp::Rect *rect = phases.at(running_phase % phases.size());
         if (prev_x > pos_x) {
             flip = SDL_FLIP_HORIZONTAL;
         }
+        renderer->Copy(*sprites, *rect,
+                       SDL2pp::Rect(pos.first , pos.second, size, size), 0.0,
+                       SDL2pp::NullOpt, flip);
+        ++running_phase;
+    } else {
+        renderer->Copy(*sprites, SDL2pp::Rect(meg_x, meg_y, size_meg_x, size_meg_y),
+                       SDL2pp::Rect(pos.first , pos.second, size, size), 0.0,
+                       SDL2pp::NullOpt, flip);
+        running_phase = 0;
     }
-    renderer->Copy(*sprites, SDL2pp::Rect(meg_x, meg_y, size_meg_x, size_meg_y),
-                   SDL2pp::Rect(pos.first , pos.second, size, size), 0.0,
-                   SDL2pp::NullOpt, flip);
     render_energy(size, pos.first, pos.second);
     render_name(pos.first, pos.second);
 }
@@ -87,5 +100,9 @@ float MegaManRenderer::get_y() {
 }
 
 MegaManRenderer::~MegaManRenderer() {
+    for (auto const &it: phases) {
+        delete it;
+    }
+    phases.clear();
     delete sprites;
 }

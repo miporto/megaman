@@ -4,6 +4,7 @@
 
 #include <SDL2pp/SDL2pp.hh>
 #include <string>
+#include <vector>
 
 #include "Camera.h"
 
@@ -17,6 +18,7 @@ public:
     float get_x();
     float get_y();
     ~MegaManRenderer();
+
 private:
     void render_energy(int size, int x, int y);
     void render_name(int x, int y);
@@ -32,6 +34,7 @@ private:
     int dir_y;
     float actual_energy;
     const std::string name;
+    std::vector<SDL2pp::Rect*> phases;
 };
 
 
