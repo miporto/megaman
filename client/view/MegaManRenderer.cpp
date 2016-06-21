@@ -16,7 +16,7 @@ MegaManRenderer::MegaManRenderer(SDL2pp::Renderer *renderer, Camera &camera,
                                                               running_phase(0),
                                                               dir_x(0), dir_y(0),
                                                               actual_energy(energy),
-                                                              name(name){
+                                                              respawn(false), name(name){
     sprites = new SDL2pp::Texture(*renderer, "resources/8bitmegaman.png");
 //    phases.push_back(new SDL2pp::Rect(103, 10, 21, 24));
 //    phases.push_back(new SDL2pp::Rect(133, 10, 21, 24));
@@ -26,8 +26,7 @@ MegaManRenderer::MegaManRenderer(SDL2pp::Renderer *renderer, Camera &camera,
     phases.push_back(new SDL2pp::Rect(239, 12, 21, 22));
 }
 
-void MegaManRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y,
-                          float energy) {
+void MegaManRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y, float energy, bool respawn) {
     prev_x = this->pos_x;
     prev_y = this->pos_y;
     this->pos_x = pos_x;
@@ -35,9 +34,11 @@ void MegaManRenderer::update(float pos_x, float pos_y, int dir_x, int dir_y,
     this->dir_x = dir_x;
     this->dir_y = dir_y;
     this->actual_energy = energy;
+    this->respawn = respawn;
 }
 
 void MegaManRenderer::render() {
+    if (respawn) render_ready_msg();
     AdjustedPos pos = camera.adjust_position(pos_x, pos_y);
     int size = camera.adjust_size();
     int meg_x = 103;
@@ -72,6 +73,22 @@ void MegaManRenderer::render() {
     render_name(pos.first, pos.second);
 }
 
+void MegaManRenderer::render_ready_msg() {
+    SDL2pp::SDLTTF ttf;
+    SDL2pp::Font font("resources/megaman_2.ttf", 36);
+    std::string text = "GET READY " + name;
+    SDL2pp::Texture text_sprite(
+            *renderer,
+            font.RenderText_Blended(text, SDL_Color{255, 255, 255, 255}));
+    int text_w= text_sprite.GetWidth();
+    int text_h = text_sprite.GetHeight();
+    int hcenter = renderer->GetOutputWidth() / 2;
+    int vcenter = renderer->GetOutputHeight() / 2;
+    renderer->Copy(text_sprite, SDL2pp::NullOpt, SDL2pp::Rect(hcenter - text_w/2,
+                                                              vcenter - text_h/2,
+                                                              text_w, text_h));
+}
+
 void MegaManRenderer::render_energy(int size, int x, int y) {
     float energy = actual_energy*size*1.5/100;
     float size_y =  y-size/1.2;
@@ -91,6 +108,11 @@ void MegaManRenderer::render_name(int x, int y) {
                                                               y - text_h,
                                                               text_w, text_h));
 }
+
+std::string MegaManRenderer::get_name() {
+    return name;
+}
+
 float MegaManRenderer::get_x() {
     return pos_x;
 }

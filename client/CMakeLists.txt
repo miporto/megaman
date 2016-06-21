@@ -22,8 +22,19 @@ set(SOURCES
         view/GameLoopThread.h
         view/TileRenderer.cpp
         view/TileRenderer.h
-        view/ActorRenderer.cpp
-        view/ActorRenderer.h view/Camera.cpp view/Camera.h view/Timer.cpp view/Timer.h view/BossRenderer.cpp view/BossRenderer.h view/StageElementsConstants.h view/MegaManRenderer.cpp view/MegaManRenderer.h view/WaitingRoomThread.cpp view/WaitingRoomThread.h)
+        view/EnemyRenderer.cpp
+        view/EnemyRenderer.h
+        view/Camera.cpp
+        view/Camera.h
+        view/Timer.cpp
+        view/Timer.h
+        view/BossRenderer.cpp
+        view/BossRenderer.h
+        view/StageElementsConstants.h
+        view/MegaManRenderer.cpp
+        view/MegaManRenderer.h
+        view/WaitingRoomThread.cpp
+        view/WaitingRoomThread.h)
 
 include(CppLint)
 

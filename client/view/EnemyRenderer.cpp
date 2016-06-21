@@ -1,8 +1,8 @@
 #include <string>
-#include "ActorRenderer.h"
+#include "EnemyRenderer.h"
 #include "Camera.h"
 
-ActorRenderer::ActorRenderer(SDL2pp::Renderer *renderer,
+EnemyRenderer::EnemyRenderer(SDL2pp::Renderer *renderer,
                                SDL2pp::Texture *sprites, Camera &camera,
                                float pos_x, float pos_y) : renderer(renderer),
                                                            sprites(sprites),
@@ -10,17 +10,17 @@ ActorRenderer::ActorRenderer(SDL2pp::Renderer *renderer,
                                                            pos_x(pos_x),
                                                            pos_y(pos_y), covered(0){}
 
-void ActorRenderer::update(float pos_x, float pos_y, char covered) {
+void EnemyRenderer::update(float pos_x, float pos_y, char covered) {
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     this->covered = covered;
 }
 
-float ActorRenderer::get_x() {
+float EnemyRenderer::get_x() {
     return pos_x;
 }
 
-float ActorRenderer::get_y(){
+float EnemyRenderer::get_y(){
     return pos_y;
 }
 
@@ -62,7 +62,7 @@ void JumpingSniperRenderer::render() {
                    SDL2pp::Rect(pos.first, pos.second, size, size));
 }
 
-ActorRendererFactory::ActorRendererFactory(SDL2pp::Renderer *renderer,
+EnemyRendererFactory::EnemyRendererFactory(SDL2pp::Renderer *renderer,
                                            Camera &camera) : renderer(renderer),
                                                              camera(camera){
     enemy_sprites = new SDL2pp::Texture(*renderer, "resources/mm3_enemysheet."
@@ -73,12 +73,12 @@ ActorRendererFactory::ActorRendererFactory(SDL2pp::Renderer *renderer,
     actor_renderers["JumpingSniper"] = JSNIPER_R;
 }
 
-ActorRenderer *ActorRendererFactory::build_actor_renderer(std::string
+EnemyRenderer *EnemyRendererFactory::build_actor_renderer(std::string
                                                            tile_type,
                                                            float pos_x,
                                                            float pos_y) {
-    ActorRenderer *actor_renderer = NULL;
-    ActorRendererType tile_renderer_id = actor_renderers[tile_type];
+    EnemyRenderer *actor_renderer = NULL;
+    EnemyRendererType tile_renderer_id = actor_renderers[tile_type];
     switch (tile_renderer_id) {
         case MET_R:
             actor_renderer = new MetRenderer(renderer, enemy_sprites, camera,

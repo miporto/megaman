@@ -22,7 +22,7 @@ StageSurface::StageSurface(Client& client) : won_game(false), client(client){
         std::string s_stage_info = client.receive_stage_info();
         sdl = new SDL2pp::SDL(SDL_INIT_VIDEO);
         window = new SDL2pp::Window("Mega Man", SDL_WINDOWPOS_UNDEFINED,
-                                    SDL_WINDOWPOS_UNDEFINED, 640, 480,
+                                    SDL_WINDOWPOS_UNDEFINED, 1024, 768,
                                     SDL_WINDOW_RESIZABLE);
 //        window->Maximize();
         renderer = new SDL2pp::Renderer(*window, -1, SDL_RENDERER_SOFTWARE);

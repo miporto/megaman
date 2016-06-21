@@ -10,7 +10,7 @@
 
 class Camera;
 typedef std::pair<int, int> AdjustedPos;
-enum ActorRendererType {
+enum EnemyRendererType {
     MET_R,
     BUMBY_R,
     SNIPER_R,
@@ -19,15 +19,15 @@ enum ActorRendererType {
     BOMBMAN_R
 };
 
-class ActorRenderer {
+class EnemyRenderer {
 public:
-    ActorRenderer(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
+    EnemyRenderer(SDL2pp::Renderer *renderer, SDL2pp::Texture *sprites,
                        Camera &camera, float pos_x, float pos_y);
     void update(float pos_x, float pos_y, char covered);
     float get_x();
     float get_y();
     virtual void render() = 0;
-    virtual ~ActorRenderer() { }
+    virtual ~EnemyRenderer() { }
 
 protected:
     SDL2pp::Renderer *renderer;
@@ -38,41 +38,41 @@ protected:
     char covered;
 };
 
-class MetRenderer : public ActorRenderer {
+class MetRenderer : public EnemyRenderer {
 public:
-    using ActorRenderer::ActorRenderer;
+    using EnemyRenderer::EnemyRenderer;
     void render();
 };
 
-class BumbyRenderer : public ActorRenderer {
+class BumbyRenderer : public EnemyRenderer {
 public:
-    using ActorRenderer::ActorRenderer;
+    using EnemyRenderer::EnemyRenderer;
     void render();
 };
 
-class SniperRenderer : public ActorRenderer {
+class SniperRenderer : public EnemyRenderer {
 public:
-    using ActorRenderer::ActorRenderer;
+    using EnemyRenderer::EnemyRenderer;
     void render();
 };
 
-class JumpingSniperRenderer : public ActorRenderer {
+class JumpingSniperRenderer : public EnemyRenderer {
 public:
-    using ActorRenderer::ActorRenderer;
+    using EnemyRenderer::EnemyRenderer;
     void render();
 };
 
-class ActorRendererFactory {
+class EnemyRendererFactory {
 public:
-    ActorRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
-    ActorRenderer* build_actor_renderer(std::string tile_type, float pos_x,
+    EnemyRendererFactory(SDL2pp::Renderer *renderer, Camera &camera);
+    EnemyRenderer* build_actor_renderer(std::string tile_type, float pos_x,
                                          float pos_y);
-    virtual ~ActorRendererFactory() {}
+    virtual ~EnemyRendererFactory() {}
 private:
     SDL2pp::Renderer *renderer;
     Camera &camera;
     SDL2pp::Texture *enemy_sprites;
-    std::map<std::string, ActorRendererType> actor_renderers;
+    std::map<std::string, EnemyRendererType> actor_renderers;
 };
 
 #endif //MEGAMAN_METRENDERER_H
