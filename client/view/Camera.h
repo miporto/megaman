@@ -28,6 +28,8 @@ private:
     SDL2pp::Renderer *renderer;
     float offset_x;
     float offset_y;
+    float x;
+    float y;
     std::map<int, MegaManRenderer*> megs;
 };
 
