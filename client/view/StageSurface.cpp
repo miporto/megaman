@@ -14,7 +14,7 @@
 #include "StageSurface.h"
 #include "Timer.h"
 
-#define SCREEN_FPS 60
+#define SCREEN_FPS 10
 #define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 
 StageSurface::StageSurface(Client& client) : won_game(false), client(client){
