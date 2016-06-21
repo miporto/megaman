@@ -73,7 +73,6 @@ void Camera::calculate_baricenter() {
     int height = renderer->GetOutputHeight();
     float b_x = (max_x + min_x) / 2;
     float b_y = (max_y + min_y) / 2;
-//    if (b_x - x < 0) x = 0;
     if ((b_x-x)*size <  width * 0.25 && b_x-x < 0) {
         offset_x = b_x - x;
         x = b_x - x;
@@ -87,20 +86,5 @@ void Camera::calculate_baricenter() {
     } else if (b_y > width * 0.75) {
         offset_y = -b_y;
     }
-//    if (b_x*size > width*0.75) {
-//        std::cout << b_x << ", " << x << "Size: " << size << std::endl;
-//        offset_x = -width/size;
-//        x = b_x;
-//    } else {
-//        offset_x = 0;
-//    }
-//    if (b_y < 0) {
-//        offset_y = 0;
-//    } else if (b_y > height) {
-//        offset_y = height;
-//    } else {
-//        offset_y = 0;
-//    }
-//    std::cout << offset_x << ", " << offset_y << std::endl;
 }
 Camera::~Camera() {}
